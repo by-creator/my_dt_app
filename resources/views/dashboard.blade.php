@@ -54,8 +54,8 @@
             </div>
             <div class="page-content">
                @if(Auth::user()->role_id === 1 || Auth::user()->email === "admin@admin.sn")
-                        @include('partials.dashboard.admin.form_role')
-                        @include('partials.dashboard.admin.list_role')
+                        @include('partials.dashboard.admin.role.form_role')
+                        @include('partials.dashboard.admin.role.list_role')
                         @elseif(Auth::user()->role === 'manager')
                         @else
                         @endif

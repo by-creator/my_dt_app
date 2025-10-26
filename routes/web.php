@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
@@ -9,7 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [RoleController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -32,5 +34,22 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 
     Route::get('/dashboard/logout', [DashboardController::class, 'logout'])->name('dashboard.logout');
+
+    Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+
+    Route::post('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::put('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/role/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
+    Route::post('/role/import', [RoleController::class, 'import'])->name('role.import');
+    Route::get('/role/export', [RoleController::class, 'export'])->name('role.export');
+
+
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+
+    Route::post('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
+    Route::get('/user/export', [UserController::class, 'export'])->name('user.export');
 
 });

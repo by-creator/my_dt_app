@@ -5,17 +5,17 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form class="form form-horizontal">
+                <form action="{{route('role.create')}}" method="post" class="form form-horizontal">
+                    @csrf
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Name</label>
+                                <label>Nom</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
-                                        <input type="text" class="form-control"
-                                            placeholder="Name" id="first-name-icon">
+                                        <input type="text" name="name" class="form-control"placeholder="Entrez un rôle" id="first-name-icon">
                                         <div class="form-control-icon">
                                             <i class="bi bi-person"></i>
                                         </div>

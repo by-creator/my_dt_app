@@ -1,0 +1,136 @@
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            Simple Datatable
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="table1">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($roles as $role)
+                    <tr>
+                        <td>{{ $role->name }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $role->id }}" data-nom="{{ $role->nom }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <!-- Modal Modifier -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Modifier le rôle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if (session('update'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Modification',
+                                text: "{{ session('update') }}",
+                                showConfirmButton: true
+                            });
+                        </script>
+                        @endif
+                        <form id="editForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="editId" name="id">
+                            <div class="mb-3">
+                                <label for="editNom" class="form-label">Nom</label>
+                                <input type="text" class="form-control" name="nom" id="editNom" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Supprimer -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Supprimer le rôle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Êtes-vous sûr de vouloir supprimer ce rôle ?</p>
+                        @if (session('delete'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Suppression',
+                                text: "{{ session('delete') }}",
+                                showConfirmButton: true
+                            });
+                        </script>
+                        @endif
+                        <form id="deleteForm" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" id="deleteId" name="id">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let table1 = document.querySelector('#table1');
+
+            function attachEventListeners() {
+                document.querySelectorAll(".btn-edit").forEach(button => {
+                    button.addEventListener("click", function() {
+                        let id = this.getAttribute("data-id");
+                        let nom = this.getAttribute("data-nom");
+
+
+                        document.getElementById("editId").value = id;
+                        document.getElementById("editNom").value = nom;
+
+                        document.getElementById("editForm").action = "/role/update/" + id;
+                    });
+                });
+
+                document.querySelectorAll(".btn-delete").forEach(button => {
+                    button.addEventListener("click", function() {
+                        let id = this.getAttribute("data-id");
+                        document.getElementById("deleteId").value = id;
+                        document.getElementById("deleteForm").action = "/role/delete/" + id;
+                    });
+                });
+            }
+
+            // Attacher les événements initiaux
+            attachEventListeners();
+
+            // Réattacher les événements après chaque changement de page ou rechargement du tableau
+            let dataTable = new simpleDatatables.DataTable("#table1");
+            dataTable.on('datatable.init', attachEventListeners);
+            dataTable.on('datatable.page', attachEventListeners);
+            dataTable.on('datatable.search', attachEventListeners);
+        });
+    </script>
