@@ -1,12 +1,5 @@
 <li class="sidebar-item active ">
     <a href="#" class='sidebar-link'>
-        <i class="bi bi-grid-fill"></i>
-        <span>Accueil</span>
-    </a>
-</li>
-
-<li class="sidebar-item  ">
-    <a href="#" class='sidebar-link'>
         <i class="bi bi-file-earmark-medical-fill"></i>
         <span>Proforma</span>
     </a>
