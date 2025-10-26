@@ -1,23 +1,33 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Horizontal Form with Icons</h4>
+            <h4 class="card-title">Formulaire d'ajout de rôle</h4>
         </div>
         <div class="card-content">
             <div class="card-body">
                 <form action="{{route('role.create')}}" method="post" class="form form-horizontal">
                     @csrf
+                    @if (session('create'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Ajout',
+                            text: "{{ session('create') }}",
+                            showConfirmButton: true
+                        });
+                    </script>
+                    @endif
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Nom</label>
+                                <label>Rôle</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
-                                        <input type="text" name="name" class="form-control"placeholder="Entrez un rôle" id="first-name-icon">
+                                        <input type="text" name="name" class="form-control" placeholder="Entrez un rôle" id="first-name-icon">
                                         <div class="form-control-icon">
-                                            <i class="fa-solid fa-lock"></i>
+                                            <i class="fa-solid fa-user-lock"></i>
                                         </div>
                                     </div>
                                 </div>

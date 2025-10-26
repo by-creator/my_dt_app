@@ -63,7 +63,6 @@ class UserController extends Controller
         $user->role_id = $request->role_id;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->username = $request->username;
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }

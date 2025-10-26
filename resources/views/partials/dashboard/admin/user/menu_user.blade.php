@@ -1,6 +1,6 @@
 <li class="sidebar-item">
     <a href="{{ route('dashboard') }}" class='sidebar-link'>
-        <i class="fa-solid fa-lock"></i>
+        <i class="fa-solid fa-user-lock"></i>
         <span>Gestion des rôles</span>
     </a>
 </li>

@@ -1,7 +1,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            Simple Datatable
+            Liste des rôles
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">

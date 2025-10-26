@@ -34,6 +34,11 @@ class CreateAdminUser extends Command
         // Vérifier si la table roles est vide
         if (Role::count() == 0) {
             $role = Role::create(['name' => 'ADMIN']);
+            Role::create(['name' => 'ADMIN']);
+            Role::create(['name' => 'CLIENT']);
+            Role::create(['name' => 'VALIDATION']);
+            Role::create(['name' => 'FACTURATION']);
+            Role::create(['name' => 'BAD']);
             $this->info('Rôle ADMIN créé avec succès.');
         } else {
             $role = Role::where('name', 'ADMIN')->first();
