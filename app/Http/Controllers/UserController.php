@@ -18,7 +18,7 @@ class UserController extends Controller
         $users = User::orderBy('id', 'desc')->get();
         $roles = Role::all();
 
-        return view('pages.back.user.index', compact('users', 'roles'));
+        return view('dashboard.user.index', compact('users', 'roles'));
     }
 
     /**
@@ -90,18 +90,18 @@ class UserController extends Controller
      * Export users to an Excel file.
      *
      * @return \Illuminate\Support\Collection
-     */
+    
     public function export()
     {
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 
-    /**
+   
      * Import users from an Excel file.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
-     */
+     
     public function import(Request $request)
     {
         $request->validate([
@@ -112,4 +112,5 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'Utilisateurs importés avec succès.');
     }
+         */
 }

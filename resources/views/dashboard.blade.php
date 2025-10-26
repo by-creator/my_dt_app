@@ -24,7 +24,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         @if(Auth::user()->role_id === 1 || Auth::user()->email === "admin@admin.sn")
-                        @include('partials.dashboard.admin.menu_admin')
+                        @include('partials.dashboard.admin.role.menu_role')
                         @elseif(Auth::user()->role === 'manager')
                         @else
                         @endif
@@ -32,7 +32,7 @@
 
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
-                                <i class="bi bi-file-earmark-medical-fill"></i>
+                                <i class="fa-solid fa-right-from-bracket"></i>
                                 <span>Déconnexion</span>
                             </a>
                         </li>

@@ -1,13 +1,13 @@
-<li class="sidebar-item active ">
-    <a href="#" class='sidebar-link'>
-        <i class="bi bi-grid-fill"></i>
+<li class="sidebar-item">
+    <a href="{{ route('dashboard') }}" class='sidebar-link'>
+        <i class="fa-solid fa-lock"></i>
         <span>Gestion des rôles</span>
     </a>
 </li>
 
-<li class="sidebar-item  ">
-    <a href="#" class='sidebar-link'>
-        <i class="bi bi-file-earmark-medical-fill"></i>
+<li class="sidebar-item  active">
+    <a href="{{ route('user.index') }}" class='sidebar-link'>
+        <i class="fa-solid fa-users"></i>
         <span>Gestion des utilisateurs</span>
     </a>
 </li>
