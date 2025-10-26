@@ -25,7 +25,7 @@
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
-                                        <input type="text" name="bl" class="form-control" placeholder="Entrez le BL" id="first-name-icon">
+                                        <input type="text" name="bl" class="form-control" require placeholder="Entrez le BL" id="first-name-icon">
                                         <div class="form-control-icon">
                                             <i class="fa-solid fa-user-lock"></i>
                                         </div>
@@ -38,7 +38,7 @@
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
-                                        <input type="text" name="bl" class="form-control" placeholder="Entrez le compte du client" id="first-name-icon">
+                                        <input type="text" name="account" class="form-control" require placeholder="Entrez le compte du client" id="first-name-icon">
                                         <div class="form-control-icon">
                                             <i class="fa-solid fa-user-lock"></i>
                                         </div>
@@ -52,16 +52,16 @@
                                             <p class="card-text">Veuillez importer le connaissement et la déclaration
                                             </p>
                                             <!-- File uploader with multiple files upload -->
-                                            <input type="file" class="multiple-files-filepond" require multiple>
+                                            <input type="file" name="files[]" class="multiple-files-filepond" require multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit"
-                                    class="btn btn-primary me-1 mb-1">Submit</button>
+                                    class="btn btn-primary me-1 mb-1">Valider</button>
                                 <button type="reset"
-                                    class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    class="btn btn-light-secondary me-1 mb-1">Annuler</button>
                             </div>
                         </div>
                     </div>

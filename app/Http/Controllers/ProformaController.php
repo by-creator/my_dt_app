@@ -12,11 +12,12 @@ class ProformaController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'bl' => 'required|string|max:255',
-            'account' => 'required|string|max:255',
-            'file' => 'required|file|max:5120', // 5 MB max
+         $request->validate([
+            'bl' => 'nullable|string|max:255',
+            'account' => 'nullable|string|max:255',
+            'files.*' => 'required|file|max:5120', // max 5 Mo par fichier
         ]);
+
 
         $uploadedDocuments = [];
 
@@ -45,7 +46,7 @@ class ProformaController extends Controller
         $request->validate([
             'bl' => 'required|string|max:255',
             'account' => 'required|string|max:255',
-            'file' => 'required|file|max:5120', // 5 MB max
+            'document' => 'required|file|max:5120', // 5 MB max
         ]);
 
         if ($request->hasFile('file')) {
@@ -60,19 +61,19 @@ class ProformaController extends Controller
         return response()->json(['message' => 'Document mis à jour avec succès']);
     }
 
+   // Visualiser un document
     public function view($id)
     {
         $document = Proforma::findOrFail($id);
-
         return response($document->file_data)
             ->header('Content-Type', $document->mime_type)
             ->header('Content-Disposition', 'inline; filename="' . $document->filename . '"');
     }
 
+    // Télécharger un document
     public function download($id)
     {
         $document = Proforma::findOrFail($id);
-
         return response($document->file_data)
             ->header('Content-Type', $document->mime_type)
             ->header('Content-Disposition', 'attachment; filename="' . $document->filename . '"');
