@@ -21,3 +21,7 @@
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/vendors/simple-datatables/style.css')}}">
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/vendors/toastify/toastify.css')}}">
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">

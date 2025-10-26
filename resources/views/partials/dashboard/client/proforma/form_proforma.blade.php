@@ -1,5 +1,3 @@
-
-
 <div>
     <div class="card">
         <div class="card-header">
@@ -7,7 +5,7 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{route('proforma.store')}}" method="post" class="form form-horizontal">
+                <form action="{{route('proforma.store')}}" method="post" class="form form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @if (session('create'))
                     <script>
@@ -43,6 +41,18 @@
                                         <input type="text" name="bl" class="form-control" placeholder="Entrez le compte du client" id="first-name-icon">
                                         <div class="form-control-icon">
                                             <i class="fa-solid fa-user-lock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <p class="card-text">Veuillez importer le connaissement et la déclaration
+                                            </p>
+                                            <!-- File uploader with multiple files upload -->
+                                            <input type="file" class="multiple-files-filepond" require multiple>
                                         </div>
                                     </div>
                                 </div>
