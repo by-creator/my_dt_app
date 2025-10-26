@@ -23,7 +23,7 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id === 1 || Auth::user()->email === "admin@admin.sn")
+                        @if(Auth::user()->role_id === 1")
                         @include('partials.dashboard.admin.role.menu_role')
                         @elseif(Auth::user()->role === 'manager')
                         @else
@@ -53,7 +53,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-               @if(Auth::user()->role_id === 1 || Auth::user()->email === "admin@admin.sn")
+               @if(Auth::user()->role_id === 1")
                         @include('partials.dashboard.admin.role.form_role')
                         @include('partials.dashboard.admin.role.list_role')
                         @elseif(Auth::user()->role === 'manager')
