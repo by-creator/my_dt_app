@@ -7,7 +7,7 @@
           <div class="tm_invoice_content">
             <div class="tm_invoice_head tm_mb30">
               <div class="tm_invoice_left">
-                <div class="tm_logo"><img src="{{asset('site/images/logo.png')}}" alt="Logo" class="w-full h-auto"></div>
+                <div class="tm_logo"><img src="{{asset('templates/site/images/logo.png')}}" alt="Logo" class="w-full h-auto"></div>
               </div>
               <div class="tm_invoice_right tm_text_right">
                   <b class="tm_f20 tm_medium tm_primary_color">ATTESTATION D'OUVERTURE DE COMPTE</b>
@@ -27,7 +27,7 @@
                       <b class="tm_primary_color">{{ $data['date']->format('d-m-Y')}}</b>
                     </div>
                     <div>
-                      <h6>TYPE DE PERSONNE</h6> <br>
+                      <h6>PERSONNE</h6> <br>
                       <b class="tm_primary_color">{{ $data['type']}}</b>
                     </div>
                   </div>

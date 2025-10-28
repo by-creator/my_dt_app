@@ -8,7 +8,7 @@
             <div class="tm_invoice_content">
               <div class="tm_invoice_head tm_mb30">
               <div class="tm_invoice_left">
-                <div class="tm_logo"><img src="{{asset('site/images/logo.png')}}" alt="Logo"  class="w-full h-auto"></div>
+                <div class="tm_logo"><img src="{{asset('templates/site/images/logo.png')}}" alt="Logo"  class="w-full h-auto"></div>
               </div>
                 <div class="tm_invoice_right tm_text_right">
                   <b class="tm_f20 tm_medium tm_primary_color">FICHE D'OUVERTURE DE COMPTE</b>

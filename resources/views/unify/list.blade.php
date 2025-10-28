@@ -24,7 +24,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                        @include('partials.unify.menu_unify_form')
+                        @include('partials.unify.menu_unify_list')
                         @else
                         @endif
 
@@ -52,10 +52,13 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                @include('partials.unify.index')
-                @else
-                @endif
+               
+
+                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                    @include('partials.unify.list')
+                    @else
+                    @endif
+                    
             </div>
 
 

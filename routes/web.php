@@ -3,6 +3,7 @@
 use App\Http\Controllers\BadController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactureController;
+use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnifyController;
@@ -61,4 +62,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/unify/create', [UnifyController::class, 'create'])->name('unify.create');
     Route::get('/unify/tutorial', [UnifyController::class, 'tutorial'])->name('unify.tutorial');
     Route::post('/unify/add', [UnifyController::class, 'add'])->name('unify.add');
+
+
+
+    Route::get('/ipaki/admin', [IpakiController::class, 'admin'])->name('ipaki.admin');
+    Route::get('/ipaki/list', [IpakiController::class, 'list'])->name('ipaki.list');
+    Route::put('/ipaki/update/{id}', [IpakiController::class, 'update'])->name('ipaki.update');
+    Route::delete('/ipaki/delete/{id}', [IpakiController::class, 'delete'])->name('ipaki.delete');
+    Route::post('/ipaki/import', [IpakiController::class, 'import'])->name('ipaki.import');
+    Route::get('/ipaki/export', [IpakiController::class, 'export'])->name('ipaki.export');
+    Route::get('/ipaki/truncate', [IpakiController::class, 'truncate'])->name('ipaki.truncate');
+    Route::post('/ipaki/filter', [IpakiController::class, 'filter'])->name('ipaki.filter');
+    Route::post('/ipaki/form', [IpakiController::class, 'form'])->name('ipaki.form');
+    Route::post('/ipaki/create', [IpakiController::class, 'create'])->name('ipaki.create');
 });

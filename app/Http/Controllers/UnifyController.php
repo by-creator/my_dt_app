@@ -17,12 +17,12 @@ class UnifyController extends Controller
 
     public function create()
     {
-        return view('pages.back.facturation.unify.index');
+        return view('unify.index');
     }
 
     public function tutorial()
     {
-        return view('pages.back.facturation.unify.tutoriel');
+        return view('unify.tutoriel');
     }
 
     public function add(Request $request)
@@ -73,7 +73,7 @@ class UnifyController extends Controller
 
         Mail::to($destinataires)->send(new CreateUnifyTiersMail($raison_sociale,$ipaki_id));
 
-        return redirect()->back()->with('sendTiers', 'Un mail de vérification contenant le numéro de compte a bien été envoyé aux administrateurs');
+        return redirect()->back()->with('create', 'Un mail de vérification contenant le numéro de compte a bien été envoyé aux administrateurs');
 
     }
 
@@ -138,7 +138,7 @@ class UnifyController extends Controller
             'daf_phone' => $daf_phone,
 
         ];
-        return view('pages.back.facturation.unify.fiche', compact('data'));
+        return view('unify.fiche', compact('data'));
     }
 
     public function createAttestation(Request $request)
@@ -165,6 +165,6 @@ class UnifyController extends Controller
             'rc' => $rc,
 
         ];
-        return view('pages.back.facturation.unify.attestation', compact('data'));
+        return view('unify.attestation', compact('data'));
     }
 }

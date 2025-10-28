@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('partials.head')
+    @include('partials.dashboard.head')
 </head>
 
 <body>
@@ -23,9 +23,10 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id === 1)
+                        @if(Auth::user()->role_id == 1)
                         @include('partials.dashboard.admin.role.menu_role')
-                        @else
+                        @elseif(Auth::user()->role_id == 2)
+                        @include('partials.unify.menu_unify_form')
                         @endif
 
 
@@ -52,7 +53,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role_id === 1)
+                @if(Auth::user()->role_id == 1)
                 @include('partials.dashboard.admin.role.form_role')
                 @include('partials.dashboard.admin.role.list_role')
                 @else
@@ -74,7 +75,7 @@
             </footer>
         </div>
     </div>
-    @include('partials.script')
+    @include('partials.dashboard.script')
 </body>
 
 </html>

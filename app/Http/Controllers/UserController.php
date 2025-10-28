@@ -85,22 +85,25 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('delete', 'Utilisateur supprimé avec succès.');
     }
 
+
     /**
      * Export users to an Excel file.
      *
      * @return \Illuminate\Support\Collection
-    
+     */
+
     public function export()
     {
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 
-   
+    /**
      * Import users from an Excel file.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
-     
+     */
+
     public function import(Request $request)
     {
         $request->validate([
@@ -111,5 +114,4 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'Utilisateurs importés avec succès.');
     }
-         */
 }
