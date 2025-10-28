@@ -16,7 +16,7 @@
                     <tr>
                         <td>{{ $role->name }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $role->id }}" data-nom="{{ $role->nom }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $role->id }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
@@ -48,8 +48,8 @@
                             @method('PUT')
                             <input type="hidden" id="editId" name="id">
                             <div class="mb-3">
-                                <label for="editNom" class="form-label">Nom</label>
-                                <input type="text" class="form-control" name="nom" id="editNom" required>
+                                <label for="editName" class="form-label">Nom</label>
+                                <input type="text" class="form-control" name="name" id="editName" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Modifier</button>
@@ -105,11 +105,11 @@
                 document.querySelectorAll(".btn-edit").forEach(button => {
                     button.addEventListener("click", function() {
                         let id = this.getAttribute("data-id");
-                        let nom = this.getAttribute("data-nom");
+                        let name = this.getAttribute("data-name");
 
 
                         document.getElementById("editId").value = id;
-                        document.getElementById("editNom").value = nom;
+                        document.getElementById("editName").value = name;
 
                         document.getElementById("editForm").action = "/role/update/" + id;
                     });
