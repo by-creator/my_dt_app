@@ -54,21 +54,4 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
     Route::get('/user/export', [UserController::class, 'export'])->name('user.export');
-
-
-    Route::post('/proforma', [ProformaController::class, 'store'])->name('proforma.store');
-    Route::get('/proforma/view/{id}', [ProformaController::class, 'view'])->name('proforma.view');
-    Route::get('/proforma/download/{id}', [ProformaController::class, 'download'])->name('proforma.download');
-    Route::put('/proformas/{proforma}', [ProformaController::class, 'update'])->name('proformas.update');
-
-
-    Route::post('/facture', [FactureController::class, 'store'])->name('facture.store');
-    Route::get('/facture/view/{id}', [FactureController::class, 'view'])->name('facture.view');
-    Route::get('/facture/download/{id}', [FactureController::class, 'download'])->name('facture.download');
-    Route::put('/factures/{facture}', [FactureController::class, 'update'])->name('factures.update');
-
-    Route::post('/bad', [BadController::class, 'store'])->name('bad.store');
-    Route::get('/bad/view/{id}', [BadController::class, 'view'])->name('bad.view');
-    Route::get('/bad/download/{id}', [BadController::class, 'download'])->name('bad.download');
-    Route::put('/bads/{bad}', [BadController::class, 'update'])->name('bads.update');
 });

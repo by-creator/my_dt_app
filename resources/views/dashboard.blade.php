@@ -25,8 +25,6 @@
 
                         @if(Auth::user()->role_id === 1)
                         @include('partials.dashboard.admin.role.menu_role')
-                        @elseif(Auth::user()->role_id === 2)
-                        @include('partials.dashboard.client.proforma.menu_proforma')
                         @else
                         @endif
 
@@ -57,8 +55,6 @@
                 @if(Auth::user()->role_id === 1)
                 @include('partials.dashboard.admin.role.form_role')
                 @include('partials.dashboard.admin.role.list_role')
-                @elseif(Auth::user()->role_id === 2)
-                @include('partials.dashboard.client.proforma.form_proforma')
                 @else
                 @endif
             </div>

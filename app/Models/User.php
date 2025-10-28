@@ -68,8 +68,4 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function proforma()
-    {
-        return $this->belongsTo(Proforma::class);
-    }
 }

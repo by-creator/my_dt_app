@@ -34,10 +34,7 @@ class CreateAdminUser extends Command
         // Vérifier si la table roles est vide
         if (Role::count() == 0) {
             $role_admin = Role::create(['name' => 'ADMIN']);
-            $role_client = Role::create(['name' => 'CLIENT']);
-            $role_validation = Role::create(['name' => 'VALIDATION']);
             $role_facturation = Role::create(['name' => 'FACTURATION']);
-            $role_bad = Role::create(['name' => 'BAD']);
             $this->info('Rôles créés avec succès.');
         } else {
             $role = Role::where('name', 'ADMIN')->first();
@@ -58,32 +55,7 @@ class CreateAdminUser extends Command
                 'profile_photo_path' => null,
                 'current_team_id' => null,
             ]);
-             User::create([
-                'role_id' => $role_client->id,
-                'name' => 'client',
-                'username' => 'client',
-                'email' => 'client@client.sn',
-                'email_verified_at' => now(),
-                'password' => Hash::make('passer1234'),
-                'two_factor_secret' => null,
-                'two_factor_recovery_codes' => null,
-                'remember_token' => Str::random(10),
-                'profile_photo_path' => null,
-                'current_team_id' => null,
-            ]);
-            User::create([
-                'role_id' => $role_validation->id,
-                'name' => 'validation',
-                'username' => 'validation',
-                'email' => 'validation@validation.sn',
-                'email_verified_at' => now(),
-                'password' => Hash::make('passer1234'),
-                'two_factor_secret' => null,
-                'two_factor_recovery_codes' => null,
-                'remember_token' => Str::random(10),
-                'profile_photo_path' => null,
-                'current_team_id' => null,
-            ]);
+            
             User::create([
                 'role_id' => $role_facturation->id,
                 'name' => 'facturation',
@@ -97,19 +69,7 @@ class CreateAdminUser extends Command
                 'profile_photo_path' => null,
                 'current_team_id' => null,
             ]);
-            User::create([
-                'role_id' => $role_bad->id,
-                'name' => 'bad',
-                'username' => 'bad',
-                'email' => 'bad@bad.sn',
-                'email_verified_at' => now(),
-                'password' => Hash::make('passer1234'),
-                'two_factor_secret' => null,
-                'two_factor_recovery_codes' => null,
-                'remember_token' => Str::random(10),
-                'profile_photo_path' => null,
-                'current_team_id' => null,
-            ]);
+            
             $this->info('Utilisateur(s) créés avec succès.');
         } else {
             $this->info('La table users n\'est pas vide. Aucun utilisateur admin n\'a été créé.');
