@@ -14,21 +14,29 @@
 
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
-        <i class="bi bi-pen-fill"></i>
-        <span>Form Editor</span>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Unify</span>
     </a>
     <ul class="submenu ">
         <li class="submenu-item ">
-            <a href="form-editor-quill.html">Quill</a>
+            
+            <a href="form-editor-quill.html"><i class="fa-solid fa-clipboard-list"></i>  Formulaire</a>
         </li>
         <li class="submenu-item ">
-            <a href="form-editor-ckeditor.html">CKEditor</a>
+            <a href="form-editor-ckeditor.html"><i class="fa-solid fa-list"></i>  Liste</a>
+        </li>
+         <li class="submenu-item ">
+            <a href="form-editor-ckeditor.html"><i class="fa-solid fa-circle-info"></i>  Tutoriel</a>
         </li>
         <li class="submenu-item ">
-            <a href="form-editor-summernote.html">Summernote</a>
-        </li>
-        <li class="submenu-item ">
-            <a href="form-editor-tinymce.html">TinyMCE</a>
+            <a href="form-editor-summernote.html"><i class="fa-solid fa-toolbox"></i>  Admin</a>
         </li>
     </ul>
+</li>
+
+<li class="sidebar-item">
+    <a href="{{ route('settings') }}" class='sidebar-link'>
+        <i class="fa-solid fa-gear"></i>
+        <span>Paramètres</span>
+    </a>
 </li>

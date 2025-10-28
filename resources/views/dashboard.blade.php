@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('partials.dashboard.head')
+    @include('partials.head')
 </head>
 
 <body>
@@ -74,7 +74,7 @@
             </footer>
         </div>
     </div>
-    @include('partials.dashboard.script')
+    @include('partials.script')
 </body>
 
 </html>

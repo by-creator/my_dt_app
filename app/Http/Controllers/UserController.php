@@ -18,7 +18,7 @@ class UserController extends Controller
         $users = User::orderBy('id', 'desc')->get();
         $roles = Role::all();
 
-        return view('dashboard.user.index', compact('users', 'roles'));
+        return view('dashboard.index', compact('users', 'roles'));
     }
 
     /**

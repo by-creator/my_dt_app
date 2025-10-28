@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UnifyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -54,4 +55,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
     Route::get('/user/export', [UserController::class, 'export'])->name('user.export');
+
+
+    Route::get('/unify', [UnifyController::class, 'index'])->name('unify.index');
+    Route::get('/unify/create', [UnifyController::class, 'create'])->name('unify.create');
+    Route::get('/unify/tutorial', [UnifyController::class, 'tutorial'])->name('unify.tutorial');
+    Route::post('/unify/add', [UnifyController::class, 'add'])->name('unify.add');
 });
