@@ -63,7 +63,7 @@
                     });
                 </script>
                 @endif
-                <form method="post" action="{{route('ies.send-create')}}" class="form" enctype="multipart/form-data">
+                <form method="post" action="{{route('telephone-fixe.create')}}" class="form" enctype="multipart/form-data">
                     @csrf
                     <div class="row match-height">
                         @include('partials.stock.telephone.form')
