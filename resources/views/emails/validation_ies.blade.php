@@ -15,6 +15,6 @@ Aucune pièce jointe n’a été transmise.
 
 ---
 
-Cet e-mail a été envoyé automatiquement via l’application de dématérialisation.
+DAKAR-TERMINAL
 
 @endcomponent

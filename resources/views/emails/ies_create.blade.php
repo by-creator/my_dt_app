@@ -18,6 +18,7 @@ LIEN D'ACCÈS PLATEFORME
 
 
 
-Merci,<br>
-{{ config('app.name') }}
+---
+
+DAKAR-TERMINAL
 @endcomponent

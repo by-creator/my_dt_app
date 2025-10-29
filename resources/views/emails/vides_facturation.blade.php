@@ -9,6 +9,7 @@ Veuillez trouver ci-joint le fichier Excel filtré selon le mois choisi et les s
 Merci.
 
 
-Thanks,<br>
-{{ config('app.name') }}
+---
+
+DAKAR-TERMINAL
 </x-mail::message>

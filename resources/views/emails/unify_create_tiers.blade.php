@@ -12,6 +12,7 @@ Merci de bien vouloir vérifier le terme de paiement de ce compte tiers afin de 
 <br>
 <br>
 
-Cordialement,<br>
-{{ config('app.name') }}
+---
+
+DAKAR-TERMINAL
 @endcomponent

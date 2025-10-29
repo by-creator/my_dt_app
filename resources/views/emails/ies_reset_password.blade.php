@@ -16,6 +16,7 @@ Merci de vous connecter en cliquant sur le lien ci-dessous :
 LIEN D'ACCÈS PLATEFORME
 @endcomponent
 
-Merci,<br>
-{{ config('app.name') }}
+---
+
+DAKAR-TERMINAL
 @endcomponent

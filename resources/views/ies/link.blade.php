@@ -53,12 +53,12 @@
             </div>
             <div class="page-content">
                 @if(Auth::user()->role_id == 1)
-                @if (session('create'))
+                @if (session('link'))
                 <script>
                     Swal.fire({
                         icon: 'success',
-                        title: 'Création de compte',
-                        text: "{{ session('create') }}",
+                        title: 'Redirection vers plateforme',
+                        text: "{{ session('link') }}",
                         showConfirmButton: true
                     });
                 </script>

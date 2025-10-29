@@ -33,7 +33,28 @@
         </li>
     </ul>
 </li>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Ipaki Extranet</span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
 
+            <a href="{{ route('ies.create') }}"><i class="fa-solid fa-user-plus"></i> Création</a>
+        </li>
+        <li class="submenu-item ">
+            <a href="{{ route('ies.reset-password') }}"><i class="fa-solid fa-pen-to-square"></i> Réinitialisation</a>
+        </li>
+         <li class="submenu-item">
+
+            <a href="{{ route('ies.link') }}"><i class="fa-solid fa-envelope"></i> Lien</a>
+        </li>
+        <li class="submenu-item ">
+            <a href="{{ route('ies.demat') }}"><i class="fa-solid fa-link"></i> Plateforme</a>
+        </li>
+    </ul>
+</li>
 @elseif(Auth::user()->role_id == 2)
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>

@@ -9,19 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CreateIpakiExtranetServiceMail extends Mailable
+class LinkIesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $email, $password;
+    public $email;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($email, $password)
+    public function __construct($email)
     {
         $this->email = $email;
-        $this->password = $password;
     }
 
     /**
@@ -30,7 +29,7 @@ class CreateIpakiExtranetServiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Création de compte Ipaki Extranet Service',
+            subject: 'Lien d\'accès à la plateforme',
         );
     }
 
@@ -40,7 +39,7 @@ class CreateIpakiExtranetServiceMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.ies_create',
+            markdown: 'emails.link_ies',
         );
     }
 

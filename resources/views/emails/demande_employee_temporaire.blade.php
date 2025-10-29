@@ -12,6 +12,7 @@ Merci de vous connecter afin de valider ou rejeter la demande.
 Se connecter
 @endcomponent
 
-Merci,<br>
-{{ config('app.name') }}
+---
+
+DAKAR-TERMINAL
 @endcomponent
