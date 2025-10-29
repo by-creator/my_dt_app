@@ -15,7 +15,8 @@
                             showConfirmButton: true
                         });
                     </script>
-                    
+                    @endif
+
                     <form action="{{route('ipaki.create')}}" method="post" id="userForm" class="form form-horizontal">
                         @csrf
                         <div class="form-body">
@@ -222,56 +223,49 @@
             </div>
         </div>
     </div>
-    </section>
-</div>
-</div>
-</div>
-</div>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let table1 = document.querySelector('#table1');
 
-        function attachEventListeners() {
-            document.querySelectorAll(".btn-edit").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    let code = this.getAttribute("data-code");
-                    let label = this.getAttribute("data-label");
-                    let active = this.getAttribute("data-active");
-                    let billable = this.getAttribute("data-billable");
-                    let accounting_id = this.getAttribute("data-accounting_id");
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let table1 = document.querySelector('#table1');
 
-                    document.getElementById("editId").value = id;
-                    document.getElementById("editCode").value = code;
-                    document.getElementById("editLabel").value = label;
-                    document.getElementById("editActive").value = active;
-                    document.getElementById("editBillable").value = billable;
-                    document.getElementById("editAccountingId").value = accounting_id;
+            function attachEventListeners() {
+                document.querySelectorAll(".btn-edit").forEach(button => {
+                    button.addEventListener("click", function() {
+                        let id = this.getAttribute("data-id");
+                        let code = this.getAttribute("data-code");
+                        let label = this.getAttribute("data-label");
+                        let active = this.getAttribute("data-active");
+                        let billable = this.getAttribute("data-billable");
+                        let accounting_id = this.getAttribute("data-accounting_id");
 
-                    document.getElementById("editForm").action = "/ipaki/update/" + id;
+                        document.getElementById("editId").value = id;
+                        document.getElementById("editCode").value = code;
+                        document.getElementById("editLabel").value = label;
+                        document.getElementById("editActive").value = active;
+                        document.getElementById("editBillable").value = billable;
+                        document.getElementById("editAccountingId").value = accounting_id;
+
+                        document.getElementById("editForm").action = "/ipaki/update/" + id;
+                    });
                 });
-            });
 
-            document.querySelectorAll(".btn-delete").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    document.getElementById("deleteId").value = id;
-                    document.getElementById("deleteForm").action = "/ipaki/delete/" + id;
+                document.querySelectorAll(".btn-delete").forEach(button => {
+                    button.addEventListener("click", function() {
+                        let id = this.getAttribute("data-id");
+                        document.getElementById("deleteId").value = id;
+                        document.getElementById("deleteForm").action = "/ipaki/delete/" + id;
+                    });
                 });
-            });
-        }
+            }
 
-        // Attacher les événements initiaux
-        attachEventListeners();
+            // Attacher les événements initiaux
+            attachEventListeners();
 
-        // Réattacher les événements après chaque changement de page ou rechargement du tableau
-        let dataTable = new simpleDatatables.DataTable("#table1");
-        dataTable.on('datatable.init', attachEventListeners);
-        dataTable.on('datatable.page', attachEventListeners);
-        dataTable.on('datatable.search', attachEventListeners);
-    });
-</script>
-
-</div>
+            // Réattacher les événements après chaque changement de page ou rechargement du tableau
+            let dataTable = new simpleDatatables.DataTable("#table1");
+            dataTable.on('datatable.init', attachEventListeners);
+            dataTable.on('datatable.page', attachEventListeners);
+            dataTable.on('datatable.search', attachEventListeners);
+        });
+    </script>

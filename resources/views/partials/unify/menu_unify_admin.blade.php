@@ -17,8 +17,8 @@
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Unify</span>
     </a>
-    <ul class="submenu active">
-        <li class="submenu-item active">
+    <ul class="submenu">
+        <li class="submenu-item">
 
             <a href="{{ route('unify.index') }}"><i class="fa-solid fa-clipboard-list"></i> Formulaire</a>
         </li>
@@ -52,7 +52,7 @@
             <a href="{{ route('unify.tutorial') }}"><i class="fa-solid fa-circle-info"></i> Tutoriel</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('ipaki.admin') }}"><i class="fa-solid fa-toolbox"></i> Admin</a>
+            <a href="{{ route('ipaki.admin') }}" id="showError"><i class="fa-solid fa-toolbox"></i> Admin</a>
         </li>
     </ul>
 </li>
@@ -67,3 +67,5 @@ Swal.fire({
 });
 </script>
 @endif
+
+

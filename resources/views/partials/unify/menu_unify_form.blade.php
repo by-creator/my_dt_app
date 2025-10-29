@@ -17,8 +17,8 @@
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Unify</span>
     </a>
-    <ul class="submenu active">
-        <li class="submenu-item active">
+    <ul class="submenu">
+        <li class="submenu-item">
 
             <a href="{{ route('unify.index') }}"><i class="fa-solid fa-clipboard-list"></i> Formulaire</a>
         </li>
