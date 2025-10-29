@@ -9,38 +9,19 @@ use Illuminate\Support\Facades\Mail;
 
 class IpakiExtranetServiceController extends Controller
 {
-    public function index()
-    {
-        $cards = [
-            [
-                'id' => 1,
-                'name' => 'Création de compte',
-                'header' => 'Création de compte',
-                'description' => 'Gestion des créations de compte',
-                'route' => route('ies.create')
-
-            ],
-            [
-                'id' => 2,
-                'name' => 'Réinitialisation de mot de passe',
-                'header' => 'Réinitialisation de mot de passe',
-                'description' => 'Gestion de réinitialisation de mot de passe',
-                'route' => route('ies.reset-password')
-
-            ],
-            
-        ];
-        return view('dashboard', compact('cards'));
-    }
-
     public function create()
     {
-        return view('pages.back.facturation.ies.create');
+        return view('ies.create');
     }
 
     public function resetPassword()
     {
-        return view('pages.back.facturation.ies.reset-password');
+        return view('ies.reset-password');
+    }
+
+    public function link()
+    {
+        return view('ies.link');
     }
 
     public function sendResetPassword(Request $request)
@@ -63,5 +44,22 @@ class IpakiExtranetServiceController extends Controller
 
         return redirect()->route('ies.create')->with('create', 'Un mail contenant les informations de connexion a bien été envoyé à cette adresse : '.$email);
 
+    }
+
+    
+
+    public function sendLink()
+    {
+
+    }
+
+    public function sendValidation()
+    {
+
+    }
+
+    public function demat()
+    {
+        return view('ies.demat');
     }
 }

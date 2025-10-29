@@ -4,6 +4,7 @@ use App\Http\Controllers\BadController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\IpakiController;
+use App\Http\Controllers\IpakiExtranetServiceController;
 use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnifyController;
@@ -15,6 +16,10 @@ use Livewire\Volt\Volt;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/demat', function () {
+    return view('demat');
+})->name('demat');
 
 Route::get('dashboard', [RoleController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -64,7 +69,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/unify/add', [UnifyController::class, 'add'])->name('unify.add');
 
 
-
     Route::get('/ipaki/admin', [IpakiController::class, 'admin'])->name('ipaki.admin');
     Route::get('/ipaki/list', [IpakiController::class, 'list'])->name('ipaki.list');
     Route::put('/ipaki/update/{id}', [IpakiController::class, 'update'])->name('ipaki.update');
@@ -75,4 +79,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ipaki/filter', [IpakiController::class, 'filter'])->name('ipaki.filter');
     Route::post('/ipaki/form', [IpakiController::class, 'form'])->name('ipaki.form');
     Route::post('/ipaki/create', [IpakiController::class, 'create'])->name('ipaki.create');
+
+
+    Route::get('/ies/demat', [IpakiExtranetServiceController::class, 'demat'])->name('ies.demat');
+    
+    Route::get('/ies/create', [IpakiExtranetServiceController::class, 'create'])->name('ies.create');
+    Route::get('/ies/link', [IpakiExtranetServiceController::class, 'link'])->name('ies.link');
+    Route::get('/ies/reset-password', [IpakiExtranetServiceController::class, 'resetPassword'])->name('ies.reset-password');
+    Route::post('/ies/send-create', [IpakiExtranetServiceController::class, 'sendCreate'])->name('ies.send-create');
+    Route::post('/ies/send-link', [IpakiExtranetServiceController::class, 'sendLink'])->name('ies.send-link');
+    Route::post('/ies/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
+    Route::post('/ies/send-reset-password', [IpakiExtranetServiceController::class, 'sendResetPassword'])->name('ies.send-reset-password');
 });
