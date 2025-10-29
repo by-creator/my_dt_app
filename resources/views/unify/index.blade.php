@@ -54,6 +54,7 @@
             <div class="page-content">
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                 @include('partials.unify.index')
+                @include('partials.unify.form')
                 @else
                 @endif
             </div>
