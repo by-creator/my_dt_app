@@ -10,21 +10,13 @@
         <li class="nav-item col-3">
             <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-3">
                 <i class="fa-solid fa-laptop-file"></i>
-                <h4 class="d-none d-lg-block">Ipaki Extranet</h4>
-            </a>
-        </li>
-        <li class="nav-item col-3">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-4">
-                <i class="fa-solid fa-laptop-file"></i>
-                <h4 class="d-none d-lg-block">MyTouchPoint</h4>
+                <h4 class="d-none d-lg-block">Digitalisation</h4>
             </a>
         </li>
 
     </ul> <!--End Tab Nav-->
 
     <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
-
-
 
         <div class="tab-pane fade active show" id="features-tab-3">
             <div class="row">
@@ -44,7 +36,7 @@
                         Afin de vous connecter à cette plateforme merci de bien vouloir cliquer sur le bouton ci-dessous :
                     </p>
                     <div class="col-md-12 text-center">
-                        <a href="https://ies.aglgroup.com/dkrp/Login" target="_blank" class="btn btn-dark">CLIQUEZ ICI</a>
+                        <a href="{{ route('demat') }}" target="_blank" class="btn btn-dark">CLIQUEZ ICI</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
@@ -53,7 +45,7 @@
             </div>
         </div><!--End Tab Content Item -->
 
-        <div class="tab-pane fade" id="features-tab-4">
+        <!--<div class="tab-pane fade" id="features-tab-4">
             <div class="row">
                 <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0">
                     <h3>Effectuez vos opérations de paiement de factures à distance</h3>
@@ -77,7 +69,7 @@
                     <img src="{{asset('site/images/hero_9.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
-        </div> <!--End Tab Content Item -->
+        </div> End Tab Content Item -->
         <!--
                     <div class="tab-pane fade" id="features-tab-3">
                         <div class="row">
