@@ -1,12 +1,9 @@
 <?php
 
-use App\Http\Controllers\BadController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FactureController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
 use App\Http\Controllers\OrdinateurController;
-use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TelephoneFixeController;
 use App\Http\Controllers\UnifyController;
