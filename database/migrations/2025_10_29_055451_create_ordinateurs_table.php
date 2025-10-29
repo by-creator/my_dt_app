@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('ordinateurs', function (Blueprint $table) {
             $table->id();
+            $table->string('serie')->nullable();
+            $table->string('model')->nullable();
+            $table->string('type')->nullable();
+            $table->string('utilisateur')->nullable();
+            $table->string('service')->nullable();
+            $table->string('site')->nullable();
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@
                 <div class="col-md-8">
                     <div class="form-group has-icon-left">
                         <div class="position-relative">
-                            <input required type="email" id="email-column" class="form-control" placeholder="Saisissez une adresse mail" name="email">
+                            <input required type="email" name="email" id="email-column" class="form-control" placeholder="Saisissez une adresse mail" >
                             <div class="form-control-icon">
                                 <i class="fa-solid fa-envelope"></i>
                             </div>
@@ -25,7 +25,7 @@
                 <div class="col-md-8">
                     <div class="form-group has-icon-left">
                         <div class="position-relative">
-                            <input required type="password" id="password" class="form-control" placeholder="Saisissez le mot de passe" name="password">
+                            <input required type="password" name="password" id="password" class="form-control" placeholder="Saisissez le mot de passe" >
                             <div class="form-control-icon">
                             <i class="fa-solid fa-lock"></i>
                             </div>

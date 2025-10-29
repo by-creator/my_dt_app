@@ -5,8 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
+use App\Http\Controllers\OrdinateurController;
 use App\Http\Controllers\ProformaController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TelephoneFixeController;
 use App\Http\Controllers\UnifyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -82,7 +84,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/ies/demat', [IpakiExtranetServiceController::class, 'demat'])->name('ies.demat');
-    
+
     Route::get('/ies/create', [IpakiExtranetServiceController::class, 'create'])->name('ies.create');
     Route::get('/ies/link', [IpakiExtranetServiceController::class, 'link'])->name('ies.link');
     Route::get('/ies/reset-password', [IpakiExtranetServiceController::class, 'resetPassword'])->name('ies.reset-password');
@@ -90,4 +92,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ies/send-link', [IpakiExtranetServiceController::class, 'sendLink'])->name('ies.send-link');
     Route::post('/ies/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
     Route::post('/ies/send-reset-password', [IpakiExtranetServiceController::class, 'sendResetPassword'])->name('ies.send-reset-password');
+
+    Route::get('/ordinateur/index', [OrdinateurController::class, 'index'])->name('ordinateur.index');
+    Route::post('/ordinateur/create', [OrdinateurController::class, 'create'])->name('ordinateur.create');
+    Route::put('/ordinateur/update/{id}', [OrdinateurController::class, 'update'])->name('ordinateur.update');
+    Route::delete('/ordinateur/delete/{id}', [OrdinateurController::class, 'delete'])->name('ordinateur.delete');
+    Route::post('/ordinateur/import', [OrdinateurController::class, 'import'])->name('ordinateur.import');
+    Route::get('/ordinateur/export', [OrdinateurController::class, 'export'])->name('ordinateur.export');
+
+    Route::get('/telephone-fixe', [TelephoneFixeController::class, 'index'])->name('telephone-fixe.index');
+    Route::post('/telephone-fixe/create', [TelephoneFixeController::class, 'create'])->name('telephone-fixe.create');
+    Route::put('/telephone-fixe/update/{id}', [TelephoneFixeController::class, 'update'])->name('telephone-fixe.update');
+    Route::delete('/telephone-fixe/delete/{id}', [TelephoneFixeController::class, 'delete'])->name('telephone-fixe.delete');
+    Route::post('/telephone-fixe/import', [TelephoneFixeController::class, 'import'])->name('telephone-fixe.import');
+    Route::get('/telephone-fixe/export', [TelephoneFixeController::class, 'export'])->name('telephone-fixe.export');
+    Route::get('/telephone-fixe/tutorial', [TelephoneFixeController::class, 'tutorial'])->name('telephone-fixe.tutorial');
 });

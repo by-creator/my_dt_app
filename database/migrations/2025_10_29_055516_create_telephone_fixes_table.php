@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('telephone_fixes', function (Blueprint $table) {
             $table->id();
+            $table->string('annuaire');
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('type');
+            $table->string('entite');
+            $table->string('role');
             $table->timestamps();
         });
     }

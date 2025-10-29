@@ -37,6 +37,11 @@ class IpakiExtranetServiceController extends Controller
 
     public function sendCreate(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
         $email = $request->input('email');
         $password = $request->input('password');
 
@@ -54,10 +59,7 @@ class IpakiExtranetServiceController extends Controller
         return redirect()->route('ies.link')->with('link', 'Un mail contenant un lien  vers la plateforme a bien été envoyé à cette adresse : ' . $email);
     }
 
-    public function sendValidation() 
-    {
-        
-    }
+    public function sendValidation() {}
 
     public function demat()
     {
