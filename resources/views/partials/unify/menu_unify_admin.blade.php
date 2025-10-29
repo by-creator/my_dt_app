@@ -1,10 +1,4 @@
-@if(Auth::user()->role_id == 1)
-@include('partials.dashboard.admin.role.menu_role')
-@endif
 
-@if(Auth::user()->role_id == 1)
-@include('partials.dashboard.admin.user.menu_user')
-@endif
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>

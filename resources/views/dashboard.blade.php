@@ -25,8 +25,6 @@
 
                         @if(Auth::user()->role_id == 1)
                         @include('partials.dashboard.admin.role.menu_role')
-                        @elseif(Auth::user()->role_id == 2)
-                        @include('partials.unify.menu_unify_form')
                         @endif
 
 
