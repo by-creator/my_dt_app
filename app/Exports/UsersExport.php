@@ -15,7 +15,7 @@ class UsersExport implements FromCollection, WithHeadings
     public function collection()
     {
         return User::join('roles', 'users.role_id', '=', 'roles.id')
-                    ->select('roles.nom as role', 'users.name', 'users.email', 'users.username')
+                    ->select('roles.name as role', 'users.name', 'users.email')
                     ->get();
     }
 
@@ -28,7 +28,6 @@ class UsersExport implements FromCollection, WithHeadings
             'Role',
             'Name',
             'Email',
-            'Username',
         ];
     }
 }
