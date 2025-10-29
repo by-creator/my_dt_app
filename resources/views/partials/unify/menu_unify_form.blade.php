@@ -35,7 +35,7 @@
 </li>
 
 @elseif(Auth::user()->role_id == 2)
-<li class="sidebar-item  has-sub">
+<li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Unify</span>
