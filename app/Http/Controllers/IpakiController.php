@@ -70,7 +70,7 @@ class IpakiController extends Controller
         }
         else
         {
-            return redirect()->back()->withErrors('Action inconnue.');
+            return redirect()->back()->with('error', 'Vous ne disposez pas des droits requis pour effectuer cette action !');
         }
         
     }

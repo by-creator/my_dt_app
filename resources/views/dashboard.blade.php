@@ -30,7 +30,7 @@
                         @endif
 
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span>Déconnexion</span>
@@ -56,24 +56,8 @@
                 @if(Auth::user()->role_id == 1)
                 @include('partials.dashboard.admin.role.form_role')
                 @include('partials.dashboard.admin.role.list_role')
-                @elseif(Auth::user()->role_id == 2)
-                @include('partials.unify.form')
                 @endif
             </div>
-
-
-
-            <footer>
-                <div class="footer clearfix mb-0 text-muted">
-                    <div class="float-start">
-                        <p>2021 &copy; Mazer</p>
-                    </div>
-                    <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="http://ahmadsaugi.com">A. Saugi</a></p>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
     @include('partials.dashboard.script')

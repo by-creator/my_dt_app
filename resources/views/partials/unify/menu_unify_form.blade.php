@@ -52,9 +52,19 @@
             <a href="{{ route('unify.tutorial') }}"><i class="fa-solid fa-circle-info"></i> Tutoriel</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('ipaki.admin') }}"><i class="fa-solid fa-toolbox"></i> Admin</a>
+            <a href="{{ route('ipaki.admin') }}" id="showError"><i class="fa-solid fa-toolbox"></i> Admin</a>
         </li>
     </ul>
 </li>
 @endif
+@if (session('error'))
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'Erreur',
+    text: "{{ session('error') }}",
+});
+</script>
+@endif
+
 

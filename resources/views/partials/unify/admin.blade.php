@@ -15,16 +15,7 @@
                             showConfirmButton: true
                         });
                     </script>
-                    else@if (session('error'))
-                    <script>
-                        Swal.fire({
-                            icon: 'danger',
-                            title: 'Erreur',
-                            text: "{{ session('error') }}",
-                            showConfirmButton: true
-                        });
-                    </script>
-                    @endif
+                    
                     <form action="{{route('ipaki.create')}}" method="post" id="userForm" class="form form-horizontal">
                         @csrf
                         <div class="form-body">
