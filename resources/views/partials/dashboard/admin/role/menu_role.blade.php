@@ -55,3 +55,18 @@
         </li>
     </ul>
 </li>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Stock</span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
+
+            <a href="{{ route('ordinateur.index') }}"><i class="fa-solid fa-computer"></i> Ordinateur</a>
+        </li>
+        <li class="submenu-item ">
+            <a href="{{ route('telephone-fixe.index') }}"><i class="fa-solid fa-phone"></i> Postes fixes</a>
+        </li>
+    </ul>
+</li>
