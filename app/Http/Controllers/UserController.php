@@ -10,6 +10,8 @@ use App\Imports\UsersImport;
 use App\Models\Role;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -29,6 +31,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+        
         $request->validate([
             'role_id' => 'required|exists:roles,id',
             'name' => 'required|string|max:255',
@@ -36,16 +39,20 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-
         User::create([
-            'role_id' => $request->role_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        dd($request->all());
+                'role_id' =>  $request->role_id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'email_verified_at' => now(),
+                'password' => Hash::make($request->password),
+                'two_factor_secret' => null,
+                'two_factor_recovery_codes' => null,
+                'remember_token' => Str::random(10),
+                'profile_photo_path' => null,
+                'current_team_id' => null,
+            ]);
 
-        //return redirect()->route('user.index')->with('create', 'Utilisateur créé avec succès.');
+        return redirect()->route('user.index')->with('create', 'Utilisateur créé avec succès.');
     }
 
     /**
