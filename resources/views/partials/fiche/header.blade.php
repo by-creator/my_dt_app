@@ -2,7 +2,7 @@
 
             <a href="/index" class="logo d-flex align-items-center me-auto">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <img src="{{asset('fiche/assets/img/logo.png')}}" alt="">
+                <img src="{{asset('templates/fiche/assets/img/logo.png')}}" alt="">
                 <!-- <h1 class="sitename">Dakar-Terminal</h1>-->
             </a>
 

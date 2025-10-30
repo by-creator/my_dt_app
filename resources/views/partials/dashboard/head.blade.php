@@ -11,7 +11,9 @@
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/css/app.css')}}">
+
 <link rel="shortcut icon" href="{{asset('templates/mazer/dist/assets/images/favicon.svg')}}" type="image/x-icon">
+
 
 
 <link rel="preconnect" href="https://fonts.gstatic.com">

@@ -12,14 +12,13 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Favicon standard -->
-    <link rel="icon" href="{{ asset('templates/icons/icon-192x192.png') }}" type="image/png">
-
+    <link href="{{asset('templates/fiche/assets/img/logo.png')}}" rel="icon">
     <!-- Pour Android -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#0d6efd">
 
     <!-- Pour iOS -->
-    <link rel="apple-touch-icon" href="{{ asset('templates/icons/icon-512x512.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">

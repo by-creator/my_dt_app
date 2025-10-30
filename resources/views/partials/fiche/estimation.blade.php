@@ -73,7 +73,7 @@
                         </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="{{asset('fiche/assets/img/hero_2.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('templates/fiche/assets/img/hero_2.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
         </div><!--End Tab Content Item -->
@@ -122,7 +122,7 @@
                         </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="{{asset('fiche/assets/img/working-5.jpg')}}" alt="" class="img-fluid">
+                    <img src="{{asset('templates/fiche/assets/img/working-5.jpg')}}" alt="" class="img-fluid">
                 </div>
             </div>
         </div> <!--End Tab Content Item -->
@@ -147,7 +147,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-6 order-1 order-lg-2 text-center">
-                                <img src="{{asset('fiche/assets/img/working-3.jpg')}}" alt="" class="img-fluid">
+                                <img src="{{asset('templates/fiche/assets/img/working-3.jpg')}}" alt="" class="img-fluid">
                             </div>
                         </div>
                     </div> End Tab Content Item 
@@ -172,7 +172,7 @@
                                 </ul>
                             </div>
                             <div class="col-lg-6 order-1 order-lg-2 text-center">
-                                <img src="{{asset('fiche/assets/img/working-4.jpg')}}" alt="" class="img-fluid">
+                                <img src="{{asset('templates/fiche/assets/img/working-4.jpg')}}" alt="" class="img-fluid">
                             </div>
                         </div>
                     </div>End Tab Content Item -->

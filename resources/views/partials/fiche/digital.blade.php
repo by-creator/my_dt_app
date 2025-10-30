@@ -10,13 +10,22 @@
         <li class="nav-item col-3">
             <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-3">
                 <i class="fa-solid fa-laptop-file"></i>
-                <h4 class="d-none d-lg-block">Digitalisation</h4>
+                <h4 class="d-none d-lg-block">DIGITALISATION</h4>
             </a>
         </li>
+        <!--
+        <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-4">
+                <i class="fa-solid fa-laptop-file"></i>
+                <h4 class="d-none d-lg-block">MyTouchPoint</h4>
+            </a>
+        </li>-->
 
     </ul> <!--End Tab Nav-->
 
     <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+
 
         <div class="tab-pane fade active show" id="features-tab-3">
             <div class="row">
@@ -26,9 +35,7 @@
                         L'objectif étant de gagner du temps avec nos cannaux digitaux
                     </p>
                     <ul>
-                        <li><i class="bi bi-check2-all"></i>
-                            <span>Générez vos factures proforma afin d'avoir un aperçu des montants à payer</span>
-                        </li>
+                        <li><i class="bi bi-check2-all"></i><span>Générez vos factures proforma afin d'avoir un aperçu des montants à payer</span></li>
                         <li><i class="bi bi-check2-all"></i> <span>Validez vos factures définitives afin de procéder aux paiments</span></li>
                         <li><i class="bi bi-check2-all"></i> <span>Recevez votre BAD directement sur notre plateforme une fois le paiement effectué</span></li>
                     </ul>
@@ -40,7 +47,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="{{asset('site/images/hero_8.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('templates/site/images/hero_8.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
         </div><!--End Tab Content Item -->
@@ -66,7 +73,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="{{asset('site/images/hero_9.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('templates/site/images/hero_9.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
         </div> End Tab Content Item -->

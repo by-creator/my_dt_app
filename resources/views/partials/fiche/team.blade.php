@@ -10,7 +10,7 @@
 
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="member">
-                            <div class="pic"><img src="{{asset('fiche/assets/img/team/team-1.jpg')}}" class="img-fluid" alt=""></div>
+                            <div class="pic"><img src="{{asset('templates/fiche/assets/img/team/team-1.jpg')}}" class="img-fluid" alt=""></div>
                             <div class="member-info">
                                 <h4>Walter White</h4>
                                 <span>Chief Executive Officer</span>
@@ -26,7 +26,7 @@
 
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="member">
-                            <div class="pic"><img src="{{asset('fiche/assets/img/team/team-2.jpg')}}" class="img-fluid" alt=""></div>
+                            <div class="pic"><img src="{{asset('templates/fiche/assets/img/team/team-2.jpg')}}" class="img-fluid" alt=""></div>
                             <div class="member-info">
                                 <h4>Sarah Jhonson</h4>
                                 <span>Product Manager</span>
@@ -42,7 +42,7 @@
 
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                         <div class="member">
-                            <div class="pic"><img src="{{asset('fiche/assets/img/team/team-3.jpg')}}" class="img-fluid" alt=""></div>
+                            <div class="pic"><img src="{{asset('templates/fiche/assets/img/team/team-3.jpg')}}" class="img-fluid" alt=""></div>
                             <div class="member-info">
                                 <h4>William Anderson</h4>
                                 <span>CTO</span>

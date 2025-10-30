@@ -11,7 +11,7 @@
                     <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
                         <div class="service-item">
                             <div class="img">
-                                <img src="{{asset('fiche/assets/img/services-4.png')}}" class="img-fluid" alt="">
+                                <img src="{{asset('templates/fiche/assets/img/services-4.png')}}" class="img-fluid" alt="">
                             </div>
                             <div class="details position-relative">
                                 <div class="icon">
@@ -28,7 +28,7 @@
                     <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
                         <div class="service-item">
                             <div class="img">
-                                <img src="{{asset('fiche/assets/img/hero_1.jpeg')}}" class="img-fluid" alt="">
+                                <img src="{{asset('templates/fiche/assets/img/hero_1.jpeg')}}" class="img-fluid" alt="">
                             </div>
                             <div class="details position-relative">
                                 <div class="icon">
@@ -45,7 +45,7 @@
                     <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
                         <div class="service-item">
                             <div class="img">
-                                <img src="{{asset('fiche/assets/img/services-0.png')}}" class="img-fluid" alt="">
+                                <img src="{{asset('templates/fiche/assets/img/services-0.png')}}" class="img-fluid" alt="">
                             </div>
                             <div class="details position-relative">
                                 <div class="icon">
@@ -62,7 +62,7 @@
                     <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
                         <div class="service-item">
                             <div class="img">
-                                <img src="{{asset('fiche/assets/img/services-1.jpg')}}" class="img-fluid" alt="">
+                                <img src="{{asset('templates/fiche/assets/img/services-1.jpg')}}" class="img-fluid" alt="">
                             </div>
                             <div class="details position-relative">
                                 <div class="icon">
@@ -79,7 +79,7 @@
                     <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
                         <div class="service-item">
                             <div class="img">
-                                <img src="{{asset('fiche/assets/img/ies_all.png')}}" class="img-fluid" alt="">
+                                <img src="{{asset('templates/fiche/assets/img/ies_all.png')}}" class="img-fluid" alt="">
                             </div>
                             <div class="details position-relative">
                                 <div class="icon">
