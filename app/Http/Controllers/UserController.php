@@ -32,7 +32,6 @@ class UserController extends Controller
         $request->validate([
             'role_id' => 'required|exists:roles,id',
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -41,12 +40,12 @@ class UserController extends Controller
         User::create([
             'role_id' => $request->role_id,
             'name' => $request->name,
-            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        dd($request->all());
 
-        return redirect()->route('user.index')->with('create', 'Utilisateur créé avec succès.');
+        //return redirect()->route('user.index')->with('create', 'Utilisateur créé avec succès.');
     }
 
     /**
