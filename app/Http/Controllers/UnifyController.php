@@ -65,10 +65,10 @@ class UnifyController extends Controller
         $ipaki_id = $ipaki_id = str_replace(' ', '', $request->ipaki_id);
 
         $destinataires = [
-            /*
+            
             'sophie-yande.diouf@dakar-terminal.com',
-            'dieynaba.sy@dakar-terminal.com',*/
-            'noreplysitedt@gmail.com'
+            'dieynaba.sy@dakar-terminal.com'
+            //'noreplysitedt@gmail.com'
         ];
 
         Mail::to($destinataires)->send(new CreateUnifyTiersMail($raison_sociale,$ipaki_id));
