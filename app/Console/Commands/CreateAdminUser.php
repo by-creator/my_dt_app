@@ -34,6 +34,7 @@ class CreateAdminUser extends Command
         // Vérifier si la table roles est vide
         if (Role::count() == 0) {
             $role_admin = Role::create(['name' => 'ADMIN']);
+            $role_facturation = Role::create(['name' => 'FACTURATION']);
             $this->info('Rôles créés avec succès.');
         } else {
             $role = Role::where('name', 'ADMIN')->first();
@@ -44,10 +45,22 @@ class CreateAdminUser extends Command
             User::create([
                 'role_id' => $role_admin->id,
                 'name' => 'admin',
-                'username' => 'admin',
                 'email' => 'marc.bongoyeba@dakar-terminal.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('passer1234'),
+                'two_factor_secret' => null,
+                'two_factor_recovery_codes' => null,
+                'remember_token' => Str::random(10),
+                'profile_photo_path' => null,
+                'current_team_id' => null,
+            ]);
+            
+            User::create([
+                'role_id' => $role_facturation->id,
+                'name' => 'Mohamed NGOM',
+                'email' => 'facturation@facturation.sn',
+                'email_verified_at' => now(),
+                'password' => Hash::make('SenegalDT2025@@'),
                 'two_factor_secret' => null,
                 'two_factor_recovery_codes' => null,
                 'remember_token' => Str::random(10),
