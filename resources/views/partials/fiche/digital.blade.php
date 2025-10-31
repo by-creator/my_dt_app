@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="{{asset('templates/site/images/hero_8.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('templates/site/images/hero_11.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
         </div><!--End Tab Content Item -->
