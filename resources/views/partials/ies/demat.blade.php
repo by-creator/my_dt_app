@@ -126,7 +126,7 @@
       <div class="tab-content">
         <!-- Accueil -->
         <div class="text-center tab-pane fade show active" id="home">
-          <img src="{{asset('templates/site/images/hero_10.png')}}" class="img-fluid rounded mb-3" alt="Accueil">
+          <img src="{{asset('templates/site/images/hero_12.jpeg')}}" class="img-fluid rounded mb-3" alt="Accueil">
           <h3><u>VALIDATION</u></h3>
           <p>Veuillez remplir le formulaire ci-dessous pour demander la validation de votre dossier.</p>
           <form method="post" action="{{route('ies.send-validation')}}" class="form" enctype="multipart/form-data">
