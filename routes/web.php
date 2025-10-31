@@ -20,6 +20,9 @@ Route::get('/demat', function () {
     return view('demat');
 })->name('demat.index');
 
+Route::post('/demat/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
+
+
 Route::get('/register', function () {
     return view('livewire.auth.login');
 })->name('register');
@@ -83,15 +86,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ipaki/form', [IpakiController::class, 'form'])->name('ipaki.form');
     Route::post('/ipaki/create', [IpakiController::class, 'create'])->name('ipaki.create');
 
-
-    Route::get('/ies/demat', [IpakiExtranetServiceController::class, 'demat'])->name('ies.demat');
-
+    
     Route::get('/ies/create', [IpakiExtranetServiceController::class, 'create'])->name('ies.create');
     Route::get('/ies/link', [IpakiExtranetServiceController::class, 'link'])->name('ies.link');
     Route::get('/ies/reset-password', [IpakiExtranetServiceController::class, 'resetPassword'])->name('ies.reset-password');
     Route::post('/ies/send-create', [IpakiExtranetServiceController::class, 'sendCreate'])->name('ies.send-create');
     Route::post('/ies/send-link', [IpakiExtranetServiceController::class, 'sendLink'])->name('ies.send-link');
-    Route::post('/ies/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
     Route::post('/ies/send-reset-password', [IpakiExtranetServiceController::class, 'sendResetPassword'])->name('ies.send-reset-password');
 
     Route::get('/ordinateur/index', [OrdinateurController::class, 'index'])->name('ordinateur.index');

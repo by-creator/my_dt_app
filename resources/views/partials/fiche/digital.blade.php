@@ -43,7 +43,7 @@
                         Afin de vous connecter à cette plateforme merci de bien vouloir cliquer sur le bouton ci-dessous :
                     </p>
                     <div class="col-md-12 text-center">
-                        <a href="{{ route('demat') }}" target="_blank" class="btn btn-dark">CLIQUEZ ICI</a>
+                        <a href="{{ route('ies.demat') }}" target="_blank" class="btn btn-dark">CLIQUEZ ICI</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center">
