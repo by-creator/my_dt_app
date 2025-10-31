@@ -50,9 +50,6 @@
 
             <a href="{{ route('ies.link') }}"><i class="fa-solid fa-envelope"></i> Lien</a>
         </li>
-        <li class="submenu-item ">
-            <a href="{{ route('ies.demat') }}"><i class="fa-solid fa-link"></i> Plateforme</a>
-        </li>
     </ul>
 </li>
 <li class="sidebar-item  has-sub">
