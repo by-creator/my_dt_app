@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\CreateIpakiExtranetServiceMail;
 use App\Mail\LinkIesMail;
 use App\Mail\ResetPasswordIpakiExtranetServiceMail;
+use App\Mail\ValidationIesMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -41,7 +42,7 @@ class IpakiExtranetServiceController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
+
         $email = $request->input('email');
         $password = $request->input('password');
 
@@ -59,7 +60,52 @@ class IpakiExtranetServiceController extends Controller
         return redirect()->route('ies.link')->with('link', 'Un mail contenant un lien  vers la plateforme a bien été envoyé à cette adresse : ' . $email);
     }
 
-    public function sendValidation() {}
+    public function sendValidation(Request $request)
+    {
+        $data = $request->validate([
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|email',
+            'bl' => 'required|string',
+            'compte' => 'required|string',
+            'documents.*' => 'file|max:10240',
+        ]);
+
+        $documents = [];     // Chemins des fichiers
+        $fileNames = [];     // Noms originaux
+
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $file) {
+                $documents[] = $file; // 🔹 on garde directement l'objet UploadedFile
+                $fileNames[] = $file->getClientOriginalName();
+            }
+        }
+
+        $destinataires = [
+            
+            'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',
+            //'noreplysitedt@gmail.com'
+        ];
+
+
+        $nomComplet = $data['prenom'] . ' ' . $data['nom'];
+
+        Mail::to($destinataires)->send(
+            new ValidationIesMail(
+                bl: $data['bl'],
+                compte: $data['compte'],
+                documents: $documents,   // fichiers bruts
+                fileNames: $fileNames,   // noms d’origine
+                expediteurEmail: $data['email'],
+                expediteurNom: $nomComplet
+            )
+        );
+
+        return redirect()
+            ->route('demat.index')
+            ->with('sendValidation', 'Un mail de demande de validation a bien été envoyé.');
+    }
 
     public function demat()
     {

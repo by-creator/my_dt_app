@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('/demat', function () {
     return view('demat');
-})->name('demat');
+})->name('demat.index');
 
 Route::get('/register', function () {
     return view('livewire.auth.login');
