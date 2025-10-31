@@ -20,6 +20,10 @@ Route::get('/demat', function () {
     return view('demat');
 })->name('demat');
 
+Route::get('/register', function () {
+    return view('livewire.auth.login');
+})->name('register');
+
 Route::get('dashboard', [RoleController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
