@@ -119,13 +119,10 @@
                                     data-active="{{ $t->active }}" data-billable="{{ $t->billable }}"
                                     data-accounting_id="{{ $t->accounting_id }}" data-bs-toggle="modal"
                                     data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <form method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
+                               
                                     <button type="button" class="btn btn-danger btn-delete" data-id="{{ $t->id }}"
                                         data-bs-toggle="modal" data-bs-target="#deleteModal"><i
                                             class="fa-solid fa-trash"></i></button>
-                                </form>
                             </td>
                         </tr>
                         @endforeach
