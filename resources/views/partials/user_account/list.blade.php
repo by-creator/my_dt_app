@@ -20,16 +20,22 @@
                         <th>Nom & Prénom(s)</th>
                         <th>Département</th>
                         <th>Email</th>
-                        <th>Job Title</th>
-                        <th>Actions</th>
+                        <th>Job Title</th>                       
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($user_accounts as $user_account)
                     <tr>
-                        <td>{{ $user_account->name }}</td>
+                        <td>{{ $user_account->created_date }}</td>
+                        <td>{{ $user_account->employee_end_date }}</td>
+                        <td>{{ $user_account->display_name }}</td>
+                        <td>{{ $user_account->department }}</td>
+                        <td>{{ $user_account->email }}</td>
+                        <td>{{ $user_account->job_title }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user_account->id }}" data-name="{{ $user_account->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user_account->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
@@ -111,39 +117,39 @@
 </section>
 
 <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let table1 = document.querySelector('#table1');
+    document.addEventListener("DOMContentLoaded", function() {
+        let table1 = document.querySelector('#table1');
 
-            function attachEventListeners() {
-                document.querySelectorAll(".btn-edit").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        let name = this.getAttribute("data-name");
+        function attachEventListeners() {
+            document.querySelectorAll(".btn-edit").forEach(button => {
+                button.addEventListener("click", function() {
+                    let id = this.getAttribute("data-id");
+                    let name = this.getAttribute("data-name");
 
 
-                        document.getElementById("editId").value = id;
-                        document.getElementById("editName").value = name;
+                    document.getElementById("editId").value = id;
+                    document.getElementById("editName").value = name;
 
-                        document.getElementById("editForm").action = "/user_account/update/" + id;
-                    });
+                    document.getElementById("editForm").action = "/user_account/update/" + id;
                 });
+            });
 
-                document.querySelectorAll(".btn-delete").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/user_account/delete/" + id;
-                    });
+            document.querySelectorAll(".btn-delete").forEach(button => {
+                button.addEventListener("click", function() {
+                    let id = this.getAttribute("data-id");
+                    document.getElementById("deleteId").value = id;
+                    document.getElementById("deleteForm").action = "/user_account/delete/" + id;
                 });
-            }
+            });
+        }
 
-            // Attacher les événements initiaux
-            attachEventListeners();
+        // Attacher les événements initiaux
+        attachEventListeners();
 
-            // Réattacher les événements après chaque changement de page ou rechargement du tableau
-            let dataTable = new simpleDatatables.DataTable("#table1");
-            dataTable.on('datatable.init', attachEventListeners);
-            dataTable.on('datatable.page', attachEventListeners);
-            dataTable.on('datatable.search', attachEventListeners);
-        });
-    </script>
+        // Réattacher les événements après chaque changement de page ou rechargement du tableau
+        let dataTable = new simpleDatatables.DataTable("#table1");
+        dataTable.on('datatable.init', attachEventListeners);
+        dataTable.on('datatable.page', attachEventListeners);
+        dataTable.on('datatable.search', attachEventListeners);
+    });
+</script>

@@ -22,7 +22,7 @@ class UserAccountController extends Controller
             'file' => 'required|file|mimes:csv,xlsx,txt',
         ]);
 
-        Excel::import(new UserAccountsImport, $request->file('csv_file'));
+        Excel::import(new UserAccountsImport, $request->file('file'));
 
         return response()->json(['message' => 'Importation terminée']);
     }
