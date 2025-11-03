@@ -19,7 +19,7 @@ class UserAccountController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'csv_file' => 'required|file|mimes:csv,xlsx,txt',
+            'file' => 'required|file|mimes:csv,xlsx,txt',
         ]);
 
         Excel::import(new UserAccountsImport, $request->file('csv_file'));
