@@ -28,7 +28,12 @@
                         @else
                         @endif
 
-
+                        <li class="sidebar-item">
+                            <a href="{{ route('settings') }}" class='sidebar-link'>
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Paramètres</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -52,13 +57,13 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-               
 
-                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                    @include('partials.unify.list')
-                    @else
-                    @endif
-                    
+
+                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                @include('partials.unify.list')
+                @else
+                @endif
+
             </div>
         </div>
     </div>

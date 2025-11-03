@@ -8,7 +8,6 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,6 +16,8 @@
                         <td>{{ $role->name }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-edit" data-id="{{ $role->id }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </td>
+                        <td>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
@@ -98,39 +99,39 @@
 </section>
 
 <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let table1 = document.querySelector('#table1');
+    document.addEventListener("DOMContentLoaded", function() {
+        let table1 = document.querySelector('#table1');
 
-            function attachEventListeners() {
-                document.querySelectorAll(".btn-edit").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        let name = this.getAttribute("data-name");
+        function attachEventListeners() {
+            document.querySelectorAll(".btn-edit").forEach(button => {
+                button.addEventListener("click", function() {
+                    let id = this.getAttribute("data-id");
+                    let name = this.getAttribute("data-name");
 
 
-                        document.getElementById("editId").value = id;
-                        document.getElementById("editName").value = name;
+                    document.getElementById("editId").value = id;
+                    document.getElementById("editName").value = name;
 
-                        document.getElementById("editForm").action = "/role/update/" + id;
-                    });
+                    document.getElementById("editForm").action = "/role/update/" + id;
                 });
+            });
 
-                document.querySelectorAll(".btn-delete").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/role/delete/" + id;
-                    });
+            document.querySelectorAll(".btn-delete").forEach(button => {
+                button.addEventListener("click", function() {
+                    let id = this.getAttribute("data-id");
+                    document.getElementById("deleteId").value = id;
+                    document.getElementById("deleteForm").action = "/role/delete/" + id;
                 });
-            }
+            });
+        }
 
-            // Attacher les événements initiaux
-            attachEventListeners();
+        // Attacher les événements initiaux
+        attachEventListeners();
 
-            // Réattacher les événements après chaque changement de page ou rechargement du tableau
-            let dataTable = new simpleDatatables.DataTable("#table1");
-            dataTable.on('datatable.init', attachEventListeners);
-            dataTable.on('datatable.page', attachEventListeners);
-            dataTable.on('datatable.search', attachEventListeners);
-        });
-    </script>
+        // Réattacher les événements après chaque changement de page ou rechargement du tableau
+        let dataTable = new simpleDatatables.DataTable("#table1");
+        dataTable.on('datatable.init', attachEventListeners);
+        dataTable.on('datatable.page', attachEventListeners);
+        dataTable.on('datatable.search', attachEventListeners);
+    });
+</script>

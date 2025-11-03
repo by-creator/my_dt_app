@@ -102,7 +102,6 @@
                             <th>Accounting Id</th>
                             <th>Active</th>
                             <th>Billable</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,10 +118,11 @@
                                     data-active="{{ $t->active }}" data-billable="{{ $t->billable }}"
                                     data-accounting_id="{{ $t->accounting_id }}" data-bs-toggle="modal"
                                     data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
-                               
-                                    <button type="button" class="btn btn-danger btn-delete" data-id="{{ $t->id }}"
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-                                            class="fa-solid fa-trash"></i></button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $t->id }}"
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal"><i
+                                        class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                         @endforeach

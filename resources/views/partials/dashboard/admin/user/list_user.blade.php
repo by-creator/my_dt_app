@@ -18,7 +18,6 @@
                         <th>Role</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,7 +33,8 @@
                         <td>{{ $user->email }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-username="{{ $user->username }}" data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
-
+                        </td>
+                        <td>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
@@ -133,45 +133,45 @@
 </section>
 
 <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let table1 = document.querySelector('#table1');
+    document.addEventListener("DOMContentLoaded", function() {
+        let table1 = document.querySelector('#table1');
 
-            function attachEventListeners() {
-                document.querySelectorAll(".btn-edit").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        let role = this.getAttribute("data-role");
-                        let name = this.getAttribute("data-name");
-                        let email = this.getAttribute("data-email");
-                        let username = this.getAttribute("data-username");
-                        let password = this.getAttribute("data-password");
+        function attachEventListeners() {
+            document.querySelectorAll(".btn-edit").forEach(button => {
+                button.addEventListener("click", function() {
+                    let id = this.getAttribute("data-id");
+                    let role = this.getAttribute("data-role");
+                    let name = this.getAttribute("data-name");
+                    let email = this.getAttribute("data-email");
+                    let username = this.getAttribute("data-username");
+                    let password = this.getAttribute("data-password");
 
-                        document.getElementById("editId").value = id;
-                        document.getElementById("editRole").value = role;
-                        document.getElementById("editName").value = name;
-                        document.getElementById("editEmail").value = email;
-                        document.getElementById("editPassword").value = password;
+                    document.getElementById("editId").value = id;
+                    document.getElementById("editRole").value = role;
+                    document.getElementById("editName").value = name;
+                    document.getElementById("editEmail").value = email;
+                    document.getElementById("editPassword").value = password;
 
-                        document.getElementById("editForm").action = "/user/update/" + id;
-                    });
+                    document.getElementById("editForm").action = "/user/update/" + id;
                 });
+            });
 
-                document.querySelectorAll(".btn-delete").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/user/delete/" + id;
-                    });
+            document.querySelectorAll(".btn-delete").forEach(button => {
+                button.addEventListener("click", function() {
+                    let id = this.getAttribute("data-id");
+                    document.getElementById("deleteId").value = id;
+                    document.getElementById("deleteForm").action = "/user/delete/" + id;
                 });
-            }
+            });
+        }
 
-            // Attacher les événements initiaux
-            attachEventListeners();
+        // Attacher les événements initiaux
+        attachEventListeners();
 
-            // Réattacher les événements après chaque changement de page ou rechargement du tableau
-            let dataTable = new simpleDatatables.DataTable("#table1");
-            dataTable.on('datatable.init', attachEventListeners);
-            dataTable.on('datatable.page', attachEventListeners);
-            dataTable.on('datatable.search', attachEventListeners);
-        });
-    </script>
+        // Réattacher les événements après chaque changement de page ou rechargement du tableau
+        let dataTable = new simpleDatatables.DataTable("#table1");
+        dataTable.on('datatable.init', attachEventListeners);
+        dataTable.on('datatable.page', attachEventListeners);
+        dataTable.on('datatable.search', attachEventListeners);
+    });
+</script>
