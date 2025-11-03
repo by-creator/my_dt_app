@@ -11,7 +11,18 @@
         <span>Gestion des utilisateurs</span>
     </a>
 </li>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>IT_DT</span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
 
+            <a href="{{ route('user_accounts.index') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des comptes</a>
+        </li>
+    </ul>
+</li>
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>

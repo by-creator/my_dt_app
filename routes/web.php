@@ -7,6 +7,7 @@ use App\Http\Controllers\OrdinateurController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TelephoneFixeController;
 use App\Http\Controllers\UnifyController;
+use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -86,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ipaki/form', [IpakiController::class, 'form'])->name('ipaki.form');
     Route::post('/ipaki/create', [IpakiController::class, 'create'])->name('ipaki.create');
 
-    
+
     Route::get('/ies/create', [IpakiExtranetServiceController::class, 'create'])->name('ies.create');
     Route::get('/ies/link', [IpakiExtranetServiceController::class, 'link'])->name('ies.link');
     Route::get('/ies/reset-password', [IpakiExtranetServiceController::class, 'resetPassword'])->name('ies.reset-password');
@@ -108,4 +109,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/telephone-fixe/import', [TelephoneFixeController::class, 'import'])->name('telephone-fixe.import');
     Route::get('/telephone-fixe/export', [TelephoneFixeController::class, 'export'])->name('telephone-fixe.export');
     Route::get('/telephone-fixe/tutorial', [TelephoneFixeController::class, 'tutorial'])->name('telephone-fixe.tutorial');
+
+
+    Route::get('/user_accounts', [UserAccountController::class, 'index'])->name('user_accounts.index');
+
+    Route::post('/user_accounts/create', [UserAccountController::class, 'create'])->name('user_accounts.create');
+    Route::put('/user_accounts/update/{id}', [UserAccountController::class, 'update'])->name('user_accounts.update');
+    Route::delete('/user_accounts/delete/{id}', [UserAccountController::class, 'delete'])->name('user_accounts.delete');
+    Route::post('/user_accounts/import', [UserAccountController::class, 'import']);
+    Route::get('/user_accounts/export', [UserAccountController::class, 'export']);
 });
