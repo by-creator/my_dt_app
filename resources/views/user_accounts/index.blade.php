@@ -18,15 +18,15 @@
                         </div>
                     </div>
                 </div>
-                <a href="index.html"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
+                <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
                         @if(Auth::user()->role_id == 1)
-                        @include('partials.ies.menu_ies')
-                        @else
+                        @include('partials.user_account.menu_user_account')
                         @endif
+
 
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
@@ -34,9 +34,7 @@
                                 <span>Paramètres</span>
                             </a>
                         </li>
-
-
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span>Déconnexion</span>
@@ -60,33 +58,8 @@
             </div>
             <div class="page-content">
                 @if(Auth::user()->role_id == 1)
-                @if (session('reset'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Réinitialisation de compte',
-                        text: "{{ session('reset') }}",
-                        showConfirmButton: true
-                    });
-                </script>
-                @endif
-                <form method="post" action="{{route('ies.send-reset-password')}}" class="form" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row match-height">
-                        @include('partials.ies.form_reset')
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <button type="submit" name="submit" class="btn btn-primary me-1 mb-1">Envoyer</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                @else
+                @include('partials.user_account.form')
+                @include('partials.user_account.list')
                 @endif
             </div>
         </div>

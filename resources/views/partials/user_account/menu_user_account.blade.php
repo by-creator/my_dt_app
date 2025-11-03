@@ -19,7 +19,7 @@
     <ul class="submenu">
         <li class="submenu-item">
 
-            <a href="{{ route('user_account.index') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des comptes</a>
+            <a href="{{ route('user_accounts.index') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des comptes</a>
         </li>
     </ul>
 </li>

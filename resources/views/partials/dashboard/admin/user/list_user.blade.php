@@ -1,7 +1,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            Liste des utilisateurs
+            <h4 class="card-title"><u>Liste des utilisateurs</u></h4>
         </div>
         <div class="card-body">
             <form action="{{ route('user.import') }}" method="post" enctype="multipart/form-data">

@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Imports\UserAccountsImport;
 use App\Exports\UserAccountsExport;
+use App\Models\UserAccount;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserAccountController extends Controller
 {
+    public function index()
+    {
+        $user_accounts = UserAccount::orderBy('id', 'desc')->get();
+        return view('user_accounts.index', compact('user_accounts'));
+    }
+
     public function import(Request $request)
     {
         $request->validate([

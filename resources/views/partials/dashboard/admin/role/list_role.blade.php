@@ -1,7 +1,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            Liste des rôles
+            <h4 class="card-title"><u>Liste des rôles</u></h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">

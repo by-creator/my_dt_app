@@ -28,6 +28,13 @@
                         @else
                         @endif
 
+                        <li class="sidebar-item">
+                            <a href="{{ route('settings') }}" class='sidebar-link'>
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Paramètres</span>
+                            </a>
+                        </li>
+
 
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>

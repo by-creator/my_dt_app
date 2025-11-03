@@ -28,6 +28,12 @@
                         @else
                         @endif
 
+                        <li class="sidebar-item">
+                            <a href="{{ route('settings') }}" class='sidebar-link'>
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Paramètres</span>
+                            </a>
+                        </li>
 
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
@@ -72,7 +78,6 @@
                                 <div class="card-body">
                                     <div class="col-12 d-flex justify-content-center">
                                         <button type="submit" name="submit" class="btn btn-primary me-1 mb-1">Envoyer</button>
-
                                     </div>
                                 </div>
                             </div>

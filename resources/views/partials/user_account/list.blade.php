@@ -12,12 +12,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $role)
+                    @foreach ($user_accounts as $user_account)
                     <tr>
-                        <td>{{ $role->name }}</td>
+                        <td>{{ $user_account->name }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $role->id }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user_account->id }}" data-name="{{ $user_account->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user_account->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     @endforeach
@@ -111,7 +111,7 @@
                         document.getElementById("editId").value = id;
                         document.getElementById("editName").value = name;
 
-                        document.getElementById("editForm").action = "/role/update/" + id;
+                        document.getElementById("editForm").action = "/user_account/update/" + id;
                     });
                 });
 
@@ -119,7 +119,7 @@
                     button.addEventListener("click", function() {
                         let id = this.getAttribute("data-id");
                         document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/role/delete/" + id;
+                        document.getElementById("deleteForm").action = "/user_account/delete/" + id;
                     });
                 });
             }

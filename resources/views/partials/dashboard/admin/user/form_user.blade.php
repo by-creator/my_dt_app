@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Formulaire d'ajout des utilisateurs</h4>
+            <h4 class="card-title"><u>Formulaire d'ajout des utilisateurs</u></h4>
         </div>
         <div class="card-content">
             <div class="card-body">
@@ -20,7 +20,7 @@
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Role</label>
+                                <label>Rôle</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">
