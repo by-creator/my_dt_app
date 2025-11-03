@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form">
+                        <form class="form" method="post" action="route{{ ('user_accounts.create') }}">
                             <div class="row">
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
@@ -23,18 +23,18 @@
                                           name="employee_end_date">
                                     </div>
                                 </div>
+                                 <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="display-name-column">Nom & prénom(s)</label>
+                                        <input type="text" id="display-name-column" class="form-control"
+                                            placeholder="Entrez le nom et prénom(s)" name="display_name">
+                                    </div>
+                                </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="department-column">Département</label>
                                         <input type="text" id="department-column" class="form-control"
                                             placeholder="Entrez le département" name="department">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="display-name-column">Nom d'affichage</label>
-                                        <input type="text" id="display-name-column" class="form-control"
-                                            placeholder="Entrez le nom d'affichage" name="display_name">
                                     </div>
                                 </div>
                                  <div class="col-md-6 col-12">

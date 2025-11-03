@@ -1,13 +1,26 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            Liste des rôles
+            <h4><u>Liste des comptes</u></h4>
         </div>
         <div class="card-body">
+            <form action="{{ route('user_accounts.import') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
+                <br>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Importer</button>
+                <a href="{{ route('user_accounts.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
+            </form>
+            <br>
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
-                        <th>Nom</th>
+                        <th>Date début</th>
+                        <th>Date de fin</th>
+                        <th>Nom & Prénom(s)</th>
+                        <th>Département</th>
+                        <th>Email</th>
+                        <th>Job Title</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

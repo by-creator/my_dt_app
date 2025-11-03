@@ -116,6 +116,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user_accounts/create', [UserAccountController::class, 'create'])->name('user_accounts.create');
     Route::put('/user_accounts/update/{id}', [UserAccountController::class, 'update'])->name('user_accounts.update');
     Route::delete('/user_accounts/delete/{id}', [UserAccountController::class, 'delete'])->name('user_accounts.delete');
-    Route::post('/user_accounts/import', [UserAccountController::class, 'import']);
-    Route::get('/user_accounts/export', [UserAccountController::class, 'export']);
+    Route::post('/user_accounts/import', [UserAccountController::class, 'import'])->name('user_accounts.import');
+    Route::get('/user_accounts/export', [UserAccountController::class, 'export'])->name('user_accounts.export');
 });
