@@ -53,4 +53,21 @@ trait ConvertsDates
 
         return parent::setAttribute($key, $value);
     }
+
+    public function getAttribute($key)
+    {
+        $value = parent::getAttribute($key);
+
+        // Si le champ fait partie des dates et qu’il a une valeur
+        if (in_array($key, $this->getDates()) && $value) {
+            try {
+                return Carbon::parse($value)->format('d-m-Y H:i');
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::warning("Erreur de formatage de la date [$key]: $value");
+                return $value; // retourne la valeur brute si problème
+            }
+        }
+
+        return $value;
+    }
 }

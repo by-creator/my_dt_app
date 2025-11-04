@@ -15,19 +15,19 @@
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
-                        <th>Date début</th>
-                        <th>Date de fin</th>
+                        <th>Date de Début</th>
+                        <th>Date de Fin</th>
                         <th>Nom & Prénom(s)</th>
                         <th>Département</th>
                         <th>Email</th>
-                        <th>Job Title</th>                       
+                        <th>Job Title</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($user_accounts as $user_account)
                     <tr>
-                        <td>{{ $user_account->created_date }}</td>
-                        <td>{{ $user_account->employee_end_date }}</td>
+                        <td>{{ $user_account->created_time_formatted ?? '—' }}</td>
+                        <td>{{ $user_account->employee_end_date_formatted ?? '—' }}</td>
                         <td>{{ $user_account->display_name }}</td>
                         <td>{{ $user_account->department }}</td>
                         <td>{{ $user_account->email }}</td>
