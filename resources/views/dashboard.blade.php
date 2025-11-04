@@ -23,9 +23,9 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id == 1)
+                        @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.role.menu_role')
-                        @elseif(Auth::user()->role_id == 2)
+                        @elseif(Auth::user()->role->name == "FACTURATION")
                         @include('partials.unify.menu_unify_form')
                         @endif
 
@@ -59,7 +59,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role_id == 1)
+                @if(Auth::user()->role->name == "ADMIN")
                 @include('partials.dashboard.admin.role.form_role')
                 @include('partials.dashboard.admin.role.list_role')
                 @endif

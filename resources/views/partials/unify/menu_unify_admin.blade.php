@@ -1,4 +1,4 @@
-@if(Auth::user()->role_id == 1)
+@if(Auth::user()->role->name == "ADMIN")
 <li class="sidebar-item ">
     <a href="{{ route('role.index') }}" class='sidebar-link'>
         <i class="fa-solid fa-user-lock"></i>
@@ -79,7 +79,7 @@
         </li>
     </ul>
 </li>
-@elseif(Auth::user()->role_id == 2)
+@elseif(Auth::user()->role->name == "FACTURATION")
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
