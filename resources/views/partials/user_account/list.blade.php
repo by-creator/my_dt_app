@@ -33,7 +33,11 @@
                         <td>{{ $user_account->email }}</td>
                         <td>{{ $user_account->job_title }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user_account->id }}" data-name="{{ $user_account->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-primary btn-edit"
+                                data-id="{{ $user_account->id }}" data-created-time="{{ $user_account->created_time }}" data-employee-end-date="{{ $user_account->employee_end_date }}"
+                                data-display-name="{{ $user_account->display_name }}" data-department="{{ $user_account->department }}" data-email="{{ $user_account->email }}"
+                                data-job-title="{{ $user_account->job_title }}"
+                                data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user_account->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
@@ -48,7 +52,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Modifier le rôle</h5>
+                        <h5 class="modal-title" id="editModalLabel">Modifier le compte</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -67,8 +71,31 @@
                             @method('PUT')
                             <input type="hidden" id="editId" name="id">
                             <div class="mb-3">
-                                <label for="editName" class="form-label">Nom</label>
-                                <input type="text" class="form-control" name="name" id="editName" required>
+                                <label for="editCreatedTime" class="form-label">Date début</label>
+                                <input type="datetime-local" class="form-control" name="created_time" id="editCreatedTime" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="editEmployeeEndDate" class="form-label">Date fin</label>
+                                <input type="datetime-local" class="form-control" name="employee_end_date" id="editEmployeeEndDate" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="editDisplayName" class="form-label">Nom & prénom(s)</label>
+                                <input type="text" class="form-control" name="display_name" id="editDisplayName" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="editDepartment" class="form-label">Département</label>
+                                <input type="text" class="form-control" name="department" id="editDepartment" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">Email</label>
+                                <input type="text" class="form-control" name="email" id="editEmail" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editJobTitle" class="form-label">Job Tilte</label>
+                                <input type="text" class="form-control" name="job_title" id="editJobTitle" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Modifier</button>
@@ -84,11 +111,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Supprimer le rôle</h5>
+                        <h5 class="modal-title" id="deleteModalLabel">Supprimer le compte</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Êtes-vous sûr de vouloir supprimer ce rôle ?</p>
+                        <p>Êtes-vous sûr de vouloir supprimer ce compte ?</p>
                         @if (session('delete'))
                         <script>
                             Swal.fire({
@@ -117,39 +144,37 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let table1 = document.querySelector('#table1');
+document.addEventListener("DOMContentLoaded", function() {
+    const table = document.getElementById('table1');
 
-        function attachEventListeners() {
-            document.querySelectorAll(".btn-edit").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    let name = this.getAttribute("data-name");
+    // Event delegation pour Edit
+    table.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-edit');
+        if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
-
-                    document.getElementById("editId").value = id;
-                    document.getElementById("editName").value = name;
-
-                    document.getElementById("editForm").action = "/user_account/update/" + id;
-                });
-            });
-
-            document.querySelectorAll(".btn-delete").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    document.getElementById("deleteId").value = id;
-                    document.getElementById("deleteForm").action = "/user_account/delete/" + id;
-                });
-            });
-        }
-
-        // Attacher les événements initiaux
-        attachEventListeners();
-
-        // Réattacher les événements après chaque changement de page ou rechargement du tableau
-        let dataTable = new simpleDatatables.DataTable("#table1");
-        dataTable.on('datatable.init', attachEventListeners);
-        dataTable.on('datatable.page', attachEventListeners);
-        dataTable.on('datatable.search', attachEventListeners);
+        const id = btn.dataset.id;
+        document.getElementById("editId").value = id;
+        document.getElementById("editCreatedTime").value = btn.dataset.createdTime || '';
+        document.getElementById("editEmployeeEndDate").value = btn.dataset.employeeEndDate || '';
+        document.getElementById("editDisplayName").value = btn.dataset.displayName || '';
+        document.getElementById("editDepartment").value = btn.dataset.department || '';
+        document.getElementById("editEmail").value = btn.dataset.email || '';
+        document.getElementById("editJobTitle").value = btn.dataset.jobTitle || '';
+        document.getElementById("editForm").action = "/user_accounts/update/" + id;
     });
+
+    // Event delegation pour Delete
+    table.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-delete');
+        if (!btn) return;
+
+        const id = btn.dataset.id;
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteForm").action = "/user_accounts/delete/" + id;
+    });
+
+    // Initialiser la datatable
+    new simpleDatatables.DataTable("#table1");
+});
 </script>
+
