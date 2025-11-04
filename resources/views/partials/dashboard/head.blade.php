@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/css/app.css')}}">
 
-<link href="{{asset('templates/fiche/assets/img/logo.png')}}" rel="icon">
+<link rel="icon" href="{{asset('templates/fiche/assets/img/logo.png')}}" >
 <link rel="manifest" href="{{ asset('manifest.json') }}">
 <link rel="apple-touch-icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
 <meta name="apple-mobile-web-app-capable" content="yes">
