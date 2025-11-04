@@ -150,50 +150,36 @@
  </div>
 
  <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let table1 = document.querySelector('#table1');
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById('table1');
 
-            function attachEventListeners() {
-                document.querySelectorAll(".btn-edit").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        let serie = this.getAttribute("data-serie");
-                        let model = this.getAttribute("data-model");
-                        let type = this.getAttribute("data-type");
-                        let utilisateur = this.getAttribute("data-utilisateur");
-                        let service = this.getAttribute("data-service");
-                        let site = this.getAttribute("data-site");
+        // Event delegation pour Edit
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-edit');
+            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
-
-                        document.getElementById("editId").value = id;
-                        document.getElementById("editSerie").value = serie;
-                        document.getElementById("editModel").value = model;
-                        document.getElementById("editType").value = type;
-                        document.getElementById("editUtilisateur").value = utilisateur;
-                        document.getElementById("editService").value = service;
-                        document.getElementById("editSite").value = site;
-
-
-                        document.getElementById("editForm").action = "/ordinateur/update/" + id;
-                    });
-                });
-
-                document.querySelectorAll(".btn-delete").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/ordinateur/delete/" + id;
-                    });
-                });
-            }
-
-            // Attacher les événements initiaux
-            attachEventListeners();
-
-            // Réattacher les événements après chaque changement de page ou rechargement du tableau
-            let dataTable = new simpleDatatables.DataTable("#table1");
-            dataTable.on('datatable.init', attachEventListeners);
-            dataTable.on('datatable.page', attachEventListeners);
-            dataTable.on('datatable.search', attachEventListeners);
+            const id = btn.dataset.id;
+            document.getElementById("editId").value = id;
+            document.getElementById("editSerie").value = btn.dataset.serie || '';
+            document.getElementById("editModel").value = btn.dataset.model || '';
+            document.getElementById("editType").value = btn.dataset.type || '';
+            document.getElementById("editUtilisateur").value = btn.dataset.utilisateur || '';
+            document.getElementById("editService").value = btn.dataset.service || '';
+            document.getElementById("editSite").value = btn.dataset.site || '';
+            document.getElementById("editForm").action = "/user/update/" + id;
         });
-    </script>
+
+        // Event delegation pour Delete
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-delete');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteForm").action = "/user/delete/" + id;
+        });
+
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
+    });
+</script>
