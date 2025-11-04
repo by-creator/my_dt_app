@@ -221,48 +221,36 @@
         </div>
     </div>
 
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            let table1 = document.querySelector('#table1');
+            const table = document.getElementById('table1');
 
-            function attachEventListeners() {
-                document.querySelectorAll(".btn-edit").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        let code = this.getAttribute("data-code");
-                        let label = this.getAttribute("data-label");
-                        let active = this.getAttribute("data-active");
-                        let billable = this.getAttribute("data-billable");
-                        let accounting_id = this.getAttribute("data-accounting_id");
+            // Event delegation pour Edit
+            table.addEventListener('click', function(e) {
+                const btn = e.target.closest('.btn-edit');
+                if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
-                        document.getElementById("editId").value = id;
-                        document.getElementById("editCode").value = code;
-                        document.getElementById("editLabel").value = label;
-                        document.getElementById("editActive").value = active;
-                        document.getElementById("editBillable").value = billable;
-                        document.getElementById("editAccountingId").value = accounting_id;
+                const id = btn.dataset.id;
+                document.getElementById("editId").value = id;
+                document.getElementById("editCode").value = btn.dataset.code || '';
+                document.getElementById("editLabel").value = btn.dataset.label || '';
+                document.getElementById("editActive").value = btn.dataset.active || '';
+                document.getElementById("editBillable").value = btn.dataset.billable || '';
+                document.getElementById("editAccountingId").value = btn.dataset.accounting_id || '';
+                document.getElementById("editForm").action = "/ipaki/update/" + id;
+            });
 
-                        document.getElementById("editForm").action = "/ipaki/update/" + id;
-                    });
-                });
+            // Event delegation pour Delete
+            table.addEventListener('click', function(e) {
+                const btn = e.target.closest('.btn-delete');
+                if (!btn) return;
 
-                document.querySelectorAll(".btn-delete").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/ipaki/delete/" + id;
-                    });
-                });
-            }
+                const id = btn.dataset.id;
+                document.getElementById("deleteId").value = id;
+                document.getElementById("deleteForm").action = "/ipaki/delete/" + id;
+            });
 
-            // Attacher les événements initiaux
-            attachEventListeners();
-
-            // Réattacher les événements après chaque changement de page ou rechargement du tableau
-            let dataTable = new simpleDatatables.DataTable("#table1");
-            dataTable.on('datatable.init', attachEventListeners);
-            dataTable.on('datatable.page', attachEventListeners);
-            dataTable.on('datatable.search', attachEventListeners);
+            // Initialiser la datatable
+            new simpleDatatables.DataTable("#table1");
         });
     </script>

@@ -100,38 +100,30 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let table1 = document.querySelector('#table1');
+        const table = document.getElementById('table1');
 
-        function attachEventListeners() {
-            document.querySelectorAll(".btn-edit").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    let name = this.getAttribute("data-name");
+        // Event delegation pour Edit
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-edit');
+            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
+            const id = btn.dataset.id;
+            document.getElementById("editId").value = id;
+            document.getElementById("editName").value = btn.dataset.name || '';
+            document.getElementById("editForm").action = "/role/update/" + id;
+        });
 
-                    document.getElementById("editId").value = id;
-                    document.getElementById("editName").value = name;
+        // Event delegation pour Delete
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-delete');
+            if (!btn) return;
 
-                    document.getElementById("editForm").action = "/role/update/" + id;
-                });
-            });
+            const id = btn.dataset.id;
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteForm").action = "/role/delete/" + id;
+        });
 
-            document.querySelectorAll(".btn-delete").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    document.getElementById("deleteId").value = id;
-                    document.getElementById("deleteForm").action = "/role/delete/" + id;
-                });
-            });
-        }
-
-        // Attacher les événements initiaux
-        attachEventListeners();
-
-        // Réattacher les événements après chaque changement de page ou rechargement du tableau
-        let dataTable = new simpleDatatables.DataTable("#table1");
-        dataTable.on('datatable.init', attachEventListeners);
-        dataTable.on('datatable.page', attachEventListeners);
-        dataTable.on('datatable.search', attachEventListeners);
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
     });
 </script>

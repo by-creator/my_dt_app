@@ -134,44 +134,33 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let table1 = document.querySelector('#table1');
+        const table = document.getElementById('table1');
 
-        function attachEventListeners() {
-            document.querySelectorAll(".btn-edit").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    let role = this.getAttribute("data-role");
-                    let name = this.getAttribute("data-name");
-                    let email = this.getAttribute("data-email");
-                    let username = this.getAttribute("data-username");
-                    let password = this.getAttribute("data-password");
+        // Event delegation pour Edit
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-edit');
+            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
-                    document.getElementById("editId").value = id;
-                    document.getElementById("editRole").value = role;
-                    document.getElementById("editName").value = name;
-                    document.getElementById("editEmail").value = email;
-                    document.getElementById("editPassword").value = password;
+            const id = btn.dataset.id;
+            document.getElementById("editId").value = id;
+            document.getElementById("editRole").value = btn.dataset.role || '';
+            document.getElementById("editName").value = btn.dataset.name || '';
+            document.getElementById("editEmail").value = btn.dataset.email || '';
+            document.getElementById("editPassword").value = btn.dataset.password || '';
+            document.getElementById("editForm").action = "/user/update/" + id;
+        });
 
-                    document.getElementById("editForm").action = "/user/update/" + id;
-                });
-            });
+        // Event delegation pour Delete
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-delete');
+            if (!btn) return;
 
-            document.querySelectorAll(".btn-delete").forEach(button => {
-                button.addEventListener("click", function() {
-                    let id = this.getAttribute("data-id");
-                    document.getElementById("deleteId").value = id;
-                    document.getElementById("deleteForm").action = "/user/delete/" + id;
-                });
-            });
-        }
+            const id = btn.dataset.id;
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteForm").action = "/user/delete/" + id;
+        });
 
-        // Attacher les événements initiaux
-        attachEventListeners();
-
-        // Réattacher les événements après chaque changement de page ou rechargement du tableau
-        let dataTable = new simpleDatatables.DataTable("#table1");
-        dataTable.on('datatable.init', attachEventListeners);
-        dataTable.on('datatable.page', attachEventListeners);
-        dataTable.on('datatable.search', attachEventListeners);
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
     });
 </script>
