@@ -8,8 +8,8 @@
                 @csrf
                 <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
                 <br>
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i>  IMPORTER</button>
-                <a href="{{ route('telephone-fixe.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i>  EXPORTER</a>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> IMPORTER</button>
+                <a href="{{ route('telephone-fixe.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> EXPORTER</a>
             </form>
             <br>
             <table class="table table-striped" id="table1">
@@ -139,48 +139,37 @@
 </div>
 
 <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let table1 = document.querySelector('#table1');
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById('table1');
 
-            function attachEventListeners() {
-                document.querySelectorAll(".btn-edit").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        let annuaire = this.getAttribute("data-annuaire");
-                        let nom = this.getAttribute("data-nom");
-                        let prenom = this.getAttribute("data-prenom");
-                        let type = this.getAttribute("data-type");
-                        let entite = this.getAttribute("data-entite");
-                        let role = this.getAttribute("data-role");
+        // Event delegation pour Edit
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-edit');
+            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
-                        document.getElementById("editId").value = id;
-                        document.getElementById("editAnnuaire").value = annuaire;
-                        document.getElementById("editNom").value = nom;
-                        document.getElementById("editPrenom").value = prenom;
-                        document.getElementById("editType").value = type;
-                        document.getElementById("editEntite").value = entite;
-                        document.getElementById("editRole").value = role;
-
-                        document.getElementById("editForm").action = "/telephone-fixe/update/" + id;
-                    });
-                });
-
-                document.querySelectorAll(".btn-delete").forEach(button => {
-                    button.addEventListener("click", function() {
-                        let id = this.getAttribute("data-id");
-                        document.getElementById("deleteId").value = id;
-                        document.getElementById("deleteForm").action = "/telephone-fixe/delete/" + id;
-                    });
-                });
-            }
-
-            // Attacher les événements initiaux
-            attachEventListeners();
-
-            // Réattacher les événements après chaque changement de page ou rechargement du tableau
-            let dataTable = new simpleDatatables.DataTable("#table1");
-            dataTable.on('datatable.init', attachEventListeners);
-            dataTable.on('datatable.page', attachEventListeners);
-            dataTable.on('datatable.search', attachEventListeners);
+            const id = btn.dataset.id;
+            document.getElementById("editId").value = id;
+            document.getElementById("editAnnuaire").value = btn.dataset.annuaire || '';
+            document.getElementById("editNom").value = btn.dataset.nom || '';
+            document.getElementById("editPrenom").value = btn.dataset.prenom || '';
+            document.getElementById("editType").value = btn.dataset.type || '';
+            document.getElementById("editEntite").value = btn.dataset.entite || '';
+            document.getElementById("editRole").value = btn.dataset.role || '';
+            document.getElementById("editForm").action = "/telephone-fixe/update/" + id;
         });
-    </script>
+
+        // Event delegation pour Delete
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-delete');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteForm").action = "/telephone-fixe/delete/" + id;
+        });
+
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
+    });
+</script>
+
