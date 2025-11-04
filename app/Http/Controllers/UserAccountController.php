@@ -20,8 +20,7 @@ class UserAccountController extends Controller
     {
         $data = $request->validate([
             'created_time' => 'required|date',
-            'employee_end_date' => 'nullable|date|after_or_equal:created_time',
-
+            'employee_end_date' => 'required|date',
             'display_name' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'email' => 'required|email|max:255',

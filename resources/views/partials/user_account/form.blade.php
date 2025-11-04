@@ -7,23 +7,35 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="route{{ ('user_accounts.create') }}">
+                        <form class="form" method="POST" action="{{ route('user_accounts.create') }}">
+                            @csrf
+                            @csrf
+                            @if (session('create'))
+                            <script>
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Ajout',
+                                    text: "{{ session('create') }}",
+                                    showConfirmButton: true
+                                });
+                            </script>
+                            @endif
                             <div class="row">
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="created-date-column">Date de début</label>
                                         <input type="datetime-local" id="created-date-column" class="form-control"
-                                          name="created_date">
+                                            name="created_time">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="employee-end-date-column">Date de fin</label>
                                         <input type="datetime-local" id="employee-end-date-column" class="form-control"
-                                          name="employee_end_date">
+                                            name="employee_end_date">
                                     </div>
                                 </div>
-                                 <div class="col-md-6 col-12">
+                                <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="display-name-column">Nom & prénom(s)</label>
                                         <input type="text" id="display-name-column" class="form-control"
@@ -37,7 +49,7 @@
                                             placeholder="Entrez le département" name="department">
                                     </div>
                                 </div>
-                                 <div class="col-md-6 col-12">
+                                <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="email-column">Email</label>
                                         <input type="email" id="email-column" class="form-control"
