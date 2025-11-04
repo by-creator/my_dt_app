@@ -21,7 +21,6 @@
                         <th>Type</th>
                         <th>Entite</th>
                         <th>Role</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,11 +34,9 @@
                         <td>{{ $fixe->role }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-edit" data-id="{{ $fixe->id }}" data-annuaire="{{ $fixe->annuaire }}" data-nom="{{ $fixe->nom }}" data-prenom="{{ $fixe->prenom }}" data-type="{{ $fixe->type }}" data-entite="{{ $fixe->entite }}" data-role="{{ $fixe->role }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <form method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $fixe->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
-                            </form>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $fixe->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     @endforeach
@@ -172,4 +169,3 @@
         new simpleDatatables.DataTable("#table1");
     });
 </script>
-

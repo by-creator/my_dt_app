@@ -8,8 +8,8 @@
                  @csrf
                  <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
                  <br>
-                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i>  IMPORTER</button>
-                 <a href="{{ route('ordinateur.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i>  EXPORTER</a>
+                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> IMPORTER</button>
+                 <a href="{{ route('ordinateur.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> EXPORTER</a>
              </form>
              <br>
              <table class="table table-striped" id="table1">
@@ -21,7 +21,6 @@
                          <th>Utilisateur</th>
                          <th>Service</th>
                          <th>Site</th>
-                         <th>Actions</th>
                      </tr>
                  </thead>
                  <tbody>
@@ -46,11 +45,9 @@
                                  data-bs-target="#editModal">
                                  <i class="fa-solid fa-pen-to-square"></i>
                              </button>
-                             <form method="POST" style="display:inline;">
-                                 @csrf
-                                 @method('DELETE')
-                                 <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordinateur->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
-                             </form>
+                         </td>
+                         <td>
+                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordinateur->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                          </td>
                      </tr>
                      @endforeach
@@ -150,36 +147,36 @@
  </div>
 
  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const table = document.getElementById('table1');
+     document.addEventListener("DOMContentLoaded", function() {
+         const table = document.getElementById('table1');
 
-        // Event delegation pour Edit
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-edit');
-            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
+         // Event delegation pour Edit
+         table.addEventListener('click', function(e) {
+             const btn = e.target.closest('.btn-edit');
+             if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
-            const id = btn.dataset.id;
-            document.getElementById("editId").value = id;
-            document.getElementById("editSerie").value = btn.dataset.serie || '';
-            document.getElementById("editModel").value = btn.dataset.model || '';
-            document.getElementById("editType").value = btn.dataset.type || '';
-            document.getElementById("editUtilisateur").value = btn.dataset.utilisateur || '';
-            document.getElementById("editService").value = btn.dataset.service || '';
-            document.getElementById("editSite").value = btn.dataset.site || '';
-            document.getElementById("editForm").action = "/user/update/" + id;
-        });
+             const id = btn.dataset.id;
+             document.getElementById("editId").value = id;
+             document.getElementById("editSerie").value = btn.dataset.serie || '';
+             document.getElementById("editModel").value = btn.dataset.model || '';
+             document.getElementById("editType").value = btn.dataset.type || '';
+             document.getElementById("editUtilisateur").value = btn.dataset.utilisateur || '';
+             document.getElementById("editService").value = btn.dataset.service || '';
+             document.getElementById("editSite").value = btn.dataset.site || '';
+             document.getElementById("editForm").action = "/user/update/" + id;
+         });
 
-        // Event delegation pour Delete
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-delete');
-            if (!btn) return;
+         // Event delegation pour Delete
+         table.addEventListener('click', function(e) {
+             const btn = e.target.closest('.btn-delete');
+             if (!btn) return;
 
-            const id = btn.dataset.id;
-            document.getElementById("deleteId").value = id;
-            document.getElementById("deleteForm").action = "/user/delete/" + id;
-        });
+             const id = btn.dataset.id;
+             document.getElementById("deleteId").value = id;
+             document.getElementById("deleteForm").action = "/user/delete/" + id;
+         });
 
-        // Initialiser la datatable
-        new simpleDatatables.DataTable("#table1");
-    });
-</script>
+         // Initialiser la datatable
+         new simpleDatatables.DataTable("#table1");
+     });
+ </script>
