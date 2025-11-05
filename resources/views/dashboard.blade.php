@@ -25,6 +25,8 @@
 
                         @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.role.menu_role')
+                         @elseif(Auth::user()->role->name == "SUPER_U")
+                        @include('partials.user_account.menu_user_account')
                         @elseif(Auth::user()->role->name == "FACTURATION")
                         @include('partials.unify.menu_unify_form')
                         @endif
