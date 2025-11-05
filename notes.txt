@@ -1,0 +1,15 @@
+Cadence : nombre d'unités à manipuler dans une heure (en tonnage pour général cargo)
+    5 types de cadences : lourd, léger, conteneur roro/lolo, bois, général cargo
+
+Sous mari contient les informations de base
+
+Timeshit
+
+Renseigner les informations ed façon électronique
+
+Calcul des cadences
+
+
+- Boubacar soumare
+- Ndiome Mbaye
+- 
