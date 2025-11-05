@@ -23,11 +23,10 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
                         @include('partials.unify.menu_unify_form')
                         @else
                         @endif
-
 
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
@@ -58,15 +57,12 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
                 @include('partials.unify.form')
                 @else
                 @endif
             </div>
 
-
-
-            
         </div>
     </div>
     @include('partials.dashboard.script')

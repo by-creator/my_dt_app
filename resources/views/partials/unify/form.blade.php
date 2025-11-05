@@ -12,7 +12,7 @@
     </script>
     @endif
 
-    @if(Auth::user()->role_id === 1 || Auth::user()->role_id === 2)
+    @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
     @include('partials.unify.unify_infos')
     @include('partials.unify.personal_infos')
     @include('partials.unify.society_infos')

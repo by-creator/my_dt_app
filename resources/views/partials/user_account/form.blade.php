@@ -25,42 +25,42 @@
                                     <div class="form-group">
                                         <label for="created-date-column">Date de début</label>
                                         <input type="datetime-local" id="created-date-column" class="form-control"
-                                            name="created_time">
+                                            required name="created_time">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="employee-end-date-column">Date de fin</label>
                                         <input type="datetime-local" id="employee-end-date-column" class="form-control"
-                                            name="employee_end_date">
+                                            required name="employee_end_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="display-name-column">Nom & prénom(s)</label>
                                         <input type="text" id="display-name-column" class="form-control"
-                                            placeholder="Entrez le nom et prénom(s)" name="display_name">
+                                            placeholder="Entrez le nom et prénom(s)" required name="display_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="department-column">Département</label>
                                         <input type="text" id="department-column" class="form-control"
-                                            placeholder="Entrez le département" name="department">
+                                            placeholder="Entrez le département" required name="department">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="email-column">Email</label>
                                         <input type="email" id="email-column" class="form-control"
-                                            placeholder="Entrez l'adresse mail" name="email">
+                                            placeholder="Entrez l'adresse mail" required name="email">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="job-title-column">Job Tiltle</label>
                                         <input type="text" id="job-title-column" class="form-control"
-                                            placeholder="Entrez le Job Tiltle" name="job_title">
+                                            placeholder="Entrez le Job Tiltle" required name="job_title">
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
