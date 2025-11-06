@@ -36,7 +36,7 @@ class CreateAdminUser extends Command
             $role_admin = Role::create(['name' => 'ADMIN']);
             $this->info('Rôles créés avec succès.');
         } else {
-            $role = Role::where('name', 'ADMIN')->first();
+            $role_admin = Role::where('name', 'ADMIN')->first();
         }
 
         // Vérifier si la table users est vide
