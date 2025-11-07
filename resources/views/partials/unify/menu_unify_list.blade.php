@@ -27,7 +27,7 @@
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
-        <span>Unify</span>
+        <span>Facturation</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
@@ -88,7 +88,7 @@
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
-        <span>Unify</span>
+        <span>Facturation</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
