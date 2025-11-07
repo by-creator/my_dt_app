@@ -35,6 +35,7 @@
                             </a>
                         </li>
 
+
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -59,25 +60,26 @@
             </div>
             <div class="page-content">
                 @if(Auth::user()->role->name == "ADMIN")
-                @if (session('link'))
+                @if (session('validation'))
                 <script>
                     Swal.fire({
                         icon: 'success',
-                        title: 'Redirection vers plateforme',
-                        text: "{{ session('link') }}",
+                        title: 'Validation de compte',
+                        text: "{{ session('validation') }}",
                         showConfirmButton: true
                     });
                 </script>
                 @endif
-                <form method="post" action="{{route('ies.send-link')}}" class="form" enctype="multipart/form-data">
+                <form method="post" action="{{route('ies.send-validation-account')}}" class="form" enctype="multipart/form-data">
                     @csrf
                     <div class="row match-height">
-                        @include('partials.ies.link')
+                        @include('partials.ies.form_validation')
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-12 d-flex justify-content-center">
                                         <button type="submit" name="submit" class="btn btn-primary me-1 mb-1">Envoyer</button>
+
                                     </div>
                                 </div>
                             </div>

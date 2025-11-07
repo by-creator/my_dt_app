@@ -3,14 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Mail\CreateIpakiExtranetServiceMail;
+use App\Mail\InvalideAccountIesMail;
 use App\Mail\LinkIesMail;
 use App\Mail\ResetPasswordIpakiExtranetServiceMail;
 use App\Mail\ValidationIesMail;
+use App\Mail\ValideAccountIesMail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class IpakiExtranetServiceController extends Controller
 {
+    public function validation()
+    {
+        $users = User::whereHas('role', function ($query) {
+            $query->where('name', 'FACTURATION');
+        })->get();
+
+
+        return view('ies.validation', compact('users'));
+    }
     public function create()
     {
         return view('ies.create');
@@ -25,7 +37,30 @@ class IpakiExtranetServiceController extends Controller
     {
         return view('ies.link');
     }
+    public function sendValidationAccount(Request $request)
+    {
+        // Validation des champs
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'email' => 'required|email',
+            'statut' => 'required|in:VALIDE,INVALIDE',
+        ]);
 
+        $user = User::findOrFail($request->user_id);
+        $email = $request->email;
+
+        // Selon le statut, on envoie un mail différent
+        if ($request->statut === 'VALIDE') {
+            Mail::to($user->email)->send(new ValideAccountIesMail($user, $email));
+            $message = "Mail de validation envoyé à {$user->email}";
+        } else {
+            Mail::to($user->email)->send(new InvalideAccountIesMail($user, $email));
+            $message = "Mail d’invalidation envoyé à {$user->email}";
+        }
+
+        return redirect()->route('ies.validation')->with('validation', $message);
+    }
+    
     public function sendResetPassword(Request $request)
     {
         $email = $request->input('email');
@@ -82,7 +117,7 @@ class IpakiExtranetServiceController extends Controller
         }
 
         $destinataires = [
-            
+
             'sn004-proforma@dakar-terminal.com',
             'sn004-facturation@dakar-terminal.com',
             //'noreplysitedt@gmail.com'

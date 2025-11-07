@@ -23,7 +23,7 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id == 1)
+                        @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.ies.menu_ies')
                         @else
                         @endif
@@ -59,7 +59,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role_id == 1)
+                @if(Auth::user()->role->name == "ADMIN")
                 @if (session('create'))
                 <script>
                     Swal.fire({

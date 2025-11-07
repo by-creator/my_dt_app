@@ -51,6 +51,10 @@
     <ul class="submenu">
         <li class="submenu-item">
 
+            <a href="{{ route('ies.validation') }}"><i class="fa-solid fa-check-to-slot"></i> Validation</a>
+        </li>
+        <li class="submenu-item">
+
             <a href="{{ route('ies.create') }}"><i class="fa-solid fa-user-plus"></i> Création</a>
         </li>
         <li class="submenu-item ">

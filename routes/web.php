@@ -88,9 +88,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ipaki/create', [IpakiController::class, 'create'])->name('ipaki.create');
 
 
+    Route::get('/ies/validation', [IpakiExtranetServiceController::class, 'validation'])->name('ies.validation');
     Route::get('/ies/create', [IpakiExtranetServiceController::class, 'create'])->name('ies.create');
     Route::get('/ies/link', [IpakiExtranetServiceController::class, 'link'])->name('ies.link');
     Route::get('/ies/reset-password', [IpakiExtranetServiceController::class, 'resetPassword'])->name('ies.reset-password');
+    Route::post('/ies/send-validation-account', [IpakiExtranetServiceController::class, 'sendValidationAccount'])->name('ies.send-validation-account');
     Route::post('/ies/send-create', [IpakiExtranetServiceController::class, 'sendCreate'])->name('ies.send-create');
     Route::post('/ies/send-link', [IpakiExtranetServiceController::class, 'sendLink'])->name('ies.send-link');
     Route::post('/ies/send-reset-password', [IpakiExtranetServiceController::class, 'sendResetPassword'])->name('ies.send-reset-password');
