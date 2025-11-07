@@ -24,7 +24,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
-                        @include('partials.unify.menu_unify_form')
+                        @include('partials.facturation.menu_unify_form')
                         @else
                         @endif
 
@@ -58,7 +58,7 @@
             </div>
             <div class="page-content">
                 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
-                @include('partials.unify.form')
+                @include('partials.facturation.form')
                 @else
                 @endif
             </div>

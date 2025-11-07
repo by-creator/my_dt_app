@@ -13,9 +13,9 @@
     @endif
 
     @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
-    @include('partials.unify.unify_infos')
-    @include('partials.unify.personal_infos')
-    @include('partials.unify.society_infos')
+    @include('partials.facturation.unify_infos')
+    @include('partials.facturation.personal_infos')
+    @include('partials.facturation.society_infos')
     @else
     @endif
     <div class="col-12">

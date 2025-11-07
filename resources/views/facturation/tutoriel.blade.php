@@ -3,7 +3,7 @@
     <div id="main-content">
         <section id="multiple-column-form">
             <div class="row match-height">
-                @include('partials.unify.tutorial')
+                @include('partials.facturation.tutorial')
             </div>
         </section>
     </div>

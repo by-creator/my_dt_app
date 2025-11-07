@@ -23,10 +23,11 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                        @include('partials.unify.menu_unify_list')
+                        @if(Auth::user()->role_id == 1)
+                        @include('partials.facturation.menu_unify_admin')
                         @else
                         @endif
+
 
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
@@ -34,6 +35,7 @@
                                 <span>Paramètres</span>
                             </a>
                         </li>
+                        
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -60,7 +62,7 @@
 
 
                 @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                @include('partials.unify.list')
+                @include('partials.facturation.admin')
                 @else
                 @endif
 

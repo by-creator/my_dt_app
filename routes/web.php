@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
 use App\Http\Controllers\OrdinateurController;
+use App\Http\Controllers\RattachementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TelephoneFixeController;
 use App\Http\Controllers\UnifyController;
@@ -120,4 +121,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user_accounts/delete/{id}', [UserAccountController::class, 'delete'])->name('user_accounts.delete');
     Route::post('/user_accounts/import', [UserAccountController::class, 'import'])->name('user_accounts.import');
     Route::get('/user_accounts/export', [UserAccountController::class, 'export'])->name('user_accounts.export');
+
+
+    Route::get('/rattachement', [RattachementController::class, 'index'])->name('rattachement.index');
+
+    Route::post('/rattachement/create', [RattachementController::class, 'create'])->name('rattachement.create');
+    Route::put('/rattachement/update/{id}', [RattachementController::class, 'update'])->name('rattachement.update');
+    Route::delete('/rattachement/delete/{id}', [RattachementController::class, 'delete'])->name('rattachement.delete');
 });

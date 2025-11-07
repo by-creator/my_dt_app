@@ -35,7 +35,7 @@ class IpakiController extends Controller
     public function list()
     {
         $tiers = TiersIpaki::orderBy('id', 'desc')->get();
-        return view('unify.list', compact('tiers'));
+        return view('facturation.list', compact('tiers'));
     }
 
     public function update(Request $request, $id)
@@ -66,7 +66,7 @@ class IpakiController extends Controller
         $tiers = TiersIpaki::orderBy('id', 'desc')->get();
         if(Auth::user()->role_id == 1)
         {
-            return view('unify.admin', compact('tiers'));
+            return view('facturation.admin', compact('tiers'));
         }
         else
         {

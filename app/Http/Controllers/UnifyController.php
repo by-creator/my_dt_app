@@ -12,17 +12,17 @@ class UnifyController extends Controller
 {
     public function index()
     {
-        return view('unify.index');
+        return view('facturation.index');
     }
 
     public function create()
     {
-        return view('unify.index');
+        return view('facturation.index');
     }
 
     public function tutorial()
     {
-        return view('unify.tutoriel');
+        return view('facturation.tutoriel');
     }
 
     public function add(Request $request)
@@ -138,7 +138,7 @@ class UnifyController extends Controller
             'daf_phone' => $daf_phone,
 
         ];
-        return view('unify.fiche', compact('data'));
+        return view('facturation.fiche', compact('data'));
     }
 
     public function createAttestation(Request $request)
@@ -165,6 +165,6 @@ class UnifyController extends Controller
             'rc' => $rc,
 
         ];
-        return view('unify.attestation', compact('data'));
+        return view('facturation.attestation', compact('data'));
     }
 }

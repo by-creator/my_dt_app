@@ -63,5 +63,5 @@
         </div>
     </div>
     
-        @include('partials.unify.society_infos_plus')
+        @include('partials.facturation.society_infos_plus')
 </div>
