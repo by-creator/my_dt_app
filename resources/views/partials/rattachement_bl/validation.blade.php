@@ -59,7 +59,7 @@
                         <script>
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Modification',
+                                title: 'Succès',
                                 text: "{{ session('invalide') }}",
                                 showConfirmButton: true
                             });
@@ -106,7 +106,7 @@
                         <script>
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Validation',
+                                title: 'Succès',
                                 text: "{{ session('valide') }}",
                                 showConfirmButton: true
                             });
