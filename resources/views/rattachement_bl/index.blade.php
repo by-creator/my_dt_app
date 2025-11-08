@@ -59,7 +59,6 @@
             <div class="page-content">
                 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
                 @include('partials.rattachement_bl.validation')
-                @include('partials.rattachement_bl.list')
                 @else
                 @endif
             </div>

@@ -127,5 +127,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/rattachement/create', [RattachementController::class, 'create'])->name('rattachement.create');
     Route::put('/rattachement/update/{id}', [RattachementController::class, 'update'])->name('rattachement.update');
-    Route::delete('/rattachement/delete/{id}', [RattachementController::class, 'delete'])->name('rattachement.delete');
+    Route::put('/rattachement/delete/{id}', [RattachementController::class, 'delete'])->name('rattachement.delete');
 });
