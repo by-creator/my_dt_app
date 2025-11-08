@@ -1,34 +1,36 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><u>Liste des rattachements</u></h4>
+            <h4 class="card-title"><u>Liste des rattachements en attente de validation</u></h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
                         <th>Agent</th>
-                        <th>Création</th>
-                        <th>Modification</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
                         <th>Numéro de BL</th>
                         <th>Compte société</th>
                         <th>Statut</th>
-                        <th>Durée</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rattachements as $rattachement)
+                    @foreach ($rattachement_validations as $rattachement_validation)
                     <tr>
-                        <td>{{ $rattachement->user->name }}</td>
-                        <td>{{ $rattachement->bl }}</td>
-                        <td>{{ $rattachement->compte }}</td>
-                        <td>{{ $rattachement->statut }}</td>
-                        <td>{{ $rattachement->time_elapsed }}</td>
+                        <td>{{ $rattachement_validation->user->name }}</td>
+                        <td>{{ $rattachement_validation->nom }}</td>
+                        <td>{{ $rattachement_validation->prenom }}</td>
+                        <td>{{ $rattachement_validation->email }}</td>
+                        <td>{{ $rattachement_validation->bl }}</td>
+                        <td>{{ $rattachement_validation->compte }}</td>
+                        <td>{{ $rattachement_validation->statut }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $rattachement->id }}" data-nom="{{ $rattachement->nom }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $rattachement_validation->id }}" data-nom="{{ $rattachement_validation->nom }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $rattachement->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $rattachement_validation->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     @endforeach
