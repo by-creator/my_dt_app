@@ -1,4 +1,7 @@
 @component('mail::message')
+
+<img src="https://site-dt-staging-4682ed3f9fbf.herokuapp.com/templates/site/images/logo.png" alt="Logo" width="150" style="margin-bottom: 20px;">
+
 # Redirection vers plateforme
 
 
