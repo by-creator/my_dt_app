@@ -1,7 +1,7 @@
 @component('mail::message')
 
 <p style="text-align: center;">
-    <img src="https://site-dt-staging-4682ed3f9fbf.herokuapp.com/templates/site/images/logo.png" 
+    <img src="https://site-dt-production-98050a853413.herokuapp.com/templates/site/images/logo.png" 
          alt="Logo" width="150" style="margin-bottom: 20px;">
 </p>
 

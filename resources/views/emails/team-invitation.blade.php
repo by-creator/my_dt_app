@@ -1,4 +1,11 @@
 @component('mail::message')
+
+<p style="text-align: center;">
+    <img src="https://site-dt-production-98050a853413.herokuapp.com/templates/site/images/logo.png" 
+         alt="Logo" width="150" style="margin-bottom: 20px;">
+</p>
+
+
 {{ __('You have been invited to join the :team team!', ['team' => $invitation->team->name]) }}
 
 @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::registration()))
