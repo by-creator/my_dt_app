@@ -29,11 +29,11 @@ class RattachementController extends Controller
             $rattachement->statut = "VALIDÉ";
 
             $destinataires = [
-            /*
+            
             'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',*/
+            'sn004-facturation@dakar-terminal.com',
             $rattachement->email,
-            'noreplysitedt@gmail.com'
+            //'noreplysitedt@gmail.com'
         ];
 
             Mail::to($destinataires)->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
@@ -56,11 +56,11 @@ class RattachementController extends Controller
             $rattachement->statut = "REJETÉ";
 
             $destinataires = [
-            /*
+            
             'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',*/
+            'sn004-facturation@dakar-terminal.com',
             $rattachement->email,
-            'noreplysitedt@gmail.com'
+            //'noreplysitedt@gmail.com'
         ];
 
             $motif = $request->motif;

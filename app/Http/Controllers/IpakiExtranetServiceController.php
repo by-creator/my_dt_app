@@ -118,10 +118,10 @@ class IpakiExtranetServiceController extends Controller
         }
 
         $destinataires = [
-            /*
+            
             'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',*/
-            'noreplysitedt@gmail.com'
+            'sn004-facturation@dakar-terminal.com',
+            //'noreplysitedt@gmail.com'
         ];
 
 
@@ -138,6 +138,7 @@ class IpakiExtranetServiceController extends Controller
             )
         );
 
+        /*
         $data_create = $request->validate([
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
@@ -146,7 +147,7 @@ class IpakiExtranetServiceController extends Controller
             'compte' => 'required|string',
         ]);
 
-        RattachementBl::create($data_create);
+        RattachementBl::create($data_create);*/
 
         return redirect()
             ->route('demat.index')

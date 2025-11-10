@@ -41,8 +41,10 @@ class SendRappelRattachementBl extends Command
 
         // Définir le ou les destinataires du mail
         $destinataires = [
-            'noreplysitedt@gmail.com'
-        ]; // 
+            'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',
+            // 'noreplysitedt@gmail.com'
+        ]; 
 
         foreach ($destinataires as $email) {
             Mail::to($email)->send(new RattachementBlRappelMail($count, $dossiersEnAttente));
