@@ -37,10 +37,10 @@
                                 data-id="{{ $user_account->id }}" data-created-time="{{ $user_account->created_time }}" data-employee-end-date="{{ $user_account->employee_end_date }}"
                                 data-display-name="{{ $user_account->display_name }}" data-department="{{ $user_account->department }}" data-email="{{ $user_account->email }}"
                                 data-job-title="{{ $user_account->job_title }}"
-                                data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                                data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user_account->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user_account->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
                         </td>
                     </tr>
                     @endforeach
@@ -98,8 +98,8 @@
                                 <input type="text" class="form-control" name="job_title" id="editJobTitle" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Modifier</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
                             </div>
                         </form>
                     </div>
@@ -131,8 +131,8 @@
                             @method('DELETE')
                             <input type="hidden" id="deleteId" name="id">
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
                             </div>
                         </form>
                     </div>
