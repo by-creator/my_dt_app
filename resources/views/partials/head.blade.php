@@ -4,7 +4,7 @@
 <title>{{ $title ?? config('app.name') }}</title>
 
 <link rel="icon" href="{{asset('templates/fiche/assets/img/logo.png')}}">
-<link rel="manifest" href="{{ asset('manifest.json') }}">
+<link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
