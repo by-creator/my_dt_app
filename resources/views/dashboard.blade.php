@@ -21,12 +21,20 @@
                 <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
+                        <li class="sidebar-item">
+                            <a href="{{ url()->previous() ?? route('home') }}"  class='sidebar-link'>
+                                <i class="fa-solid fa-left-long"></i>
+                                <span>Retour</span>
+                            </a>
+                        </li>
                         <li class="sidebar-title">Menu</li>
 
                         @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.role.menu_role')
                         @elseif(Auth::user()->role->name == "SUPER_U")
                         @include('partials.user_account.menu_user_account')
+                        @include('partials.facturation.menu_unify_form')
+                        @include('partials.stock.menu_stock')
                         @elseif(Auth::user()->role->name == "FACTURATION")
                         @include('partials.facturation.menu_unify_form')
                         @endif
@@ -38,6 +46,7 @@
                                 <span>Paramètres</span>
                             </a>
                         </li>
+                        
                         <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>

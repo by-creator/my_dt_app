@@ -85,7 +85,7 @@
         </li>
     </ul>
 </li>
-@elseif(Auth::user()->role->name == "FACTURATION")
+@elseif(Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
