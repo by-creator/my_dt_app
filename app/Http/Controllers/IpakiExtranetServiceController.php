@@ -123,10 +123,10 @@ class IpakiExtranetServiceController extends Controller
         }
 
         $destinataires = [
-            
+            /*
             'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            //'noreplysitedt@gmail.com'
+            'sn004-facturation@dakar-terminal.com',*/
+            'noreplysitedt@gmail.com'
         ];
 
 
@@ -151,6 +151,9 @@ class IpakiExtranetServiceController extends Controller
             'bl' => 'required|string',
             'compte' => 'required|string',
         ]);
+
+        $data_create['bl'] = strtoupper($data_create['bl']);
+        $data_create['compte'] = strtoupper($data_create['compte']);
 
         RattachementBl::create($data_create);
 
