@@ -7,7 +7,7 @@
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
-                        <th>Date</th>
+                        <th>Date & Heure</th>
                         <th>Agent</th>
                         <th>Nom & Prénom</th>
                         <th>Email</th>
