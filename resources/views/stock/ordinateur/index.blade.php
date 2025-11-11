@@ -22,7 +22,7 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-item">
-                            <a href="{{ url()->previous() ?? route('home') }}"  class='sidebar-link'>
+                            <a href="javascript:history.back()"  class='sidebar-link'>
                                 <i class="fa-solid fa-left-long"></i>
                                 <span>Retour</span>
                             </a>

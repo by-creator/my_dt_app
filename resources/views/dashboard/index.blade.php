@@ -22,14 +22,14 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-item">
-                            <a href="{{ url()->previous() ?? route('home') }}"  class='sidebar-link'>
+                            <a href="javascript:history.back()"  class='sidebar-link'>
                                 <i class="fa-solid fa-left-long"></i>
                                 <span>Retour</span>
                             </a>
                         </li>
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role_id == 1)
+                        @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.user.menu_user')
                         @endif
 
@@ -62,7 +62,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role_id == 1)
+                @if(Auth::user()->role->name == "ADMIN")
                 @include('partials.dashboard.admin.user.form_user')
                 @include('partials.dashboard.admin.user.list_user')
                 @endif

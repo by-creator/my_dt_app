@@ -22,7 +22,7 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-item">
-                            <a href="{{ url()->previous() ?? route('home') }}"  class='sidebar-link'>
+                            <a href="javascript:history.back()"  class='sidebar-link'>
                                 <i class="fa-solid fa-left-long"></i>
                                 <span>Retour</span>
                             </a>
@@ -32,9 +32,7 @@
                         @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.role.menu_role')
                         @elseif(Auth::user()->role->name == "SUPER_U")
-                        @include('partials.user_account.menu_user_account')
-                        @include('partials.facturation.menu_unify_form')
-                        @include('partials.stock.menu_stock')
+                        @include('partials.dashboard.admin.super_u.menu')
                         @elseif(Auth::user()->role->name == "FACTURATION")
                         @include('partials.facturation.menu_unify_form')
                         @endif

@@ -22,14 +22,14 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-item">
-                            <a href="{{ url()->previous() ?? route('home') }}"  class='sidebar-link'>
+                            <a href="javascript:history.back()"  class='sidebar-link'>
                                 <i class="fa-solid fa-left-long"></i>
                                 <span>Retour</span>
                             </a>
                         </li>
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role->name == "ADMIN"  || Auth::user()->role->name == "FACTURATION" )
+                        @if(Auth::user()->role->name == "ADMIN"  || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U" )
                         @include('partials.facturation.menu_unify_list')
                         @else
                         @endif
@@ -65,7 +65,7 @@
             <div class="page-content">
 
 
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
                 @include('partials.facturation.list')
                 @else
                 @endif

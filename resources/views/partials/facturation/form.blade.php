@@ -12,7 +12,7 @@
     </script>
     @endif
 
-    @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION")
+    @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
     @include('partials.facturation.unify_infos')
     @include('partials.facturation.personal_infos')
     @include('partials.facturation.society_infos')
