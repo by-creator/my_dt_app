@@ -14,7 +14,7 @@
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
-        <span>IT_DT</span>
+        <span>Informatique</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
