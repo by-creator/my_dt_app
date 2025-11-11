@@ -7,9 +7,9 @@
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
+                        <th>Date</th>
                         <th>Agent</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
+                        <th>Nom & Prénom</th>
                         <th>Email</th>
                         <th>BL</th>
                         <th>Compte</th>
@@ -20,14 +20,14 @@
                 <tbody>
                     @foreach ($rattachement_validations as $rattachement_validation)
                     <tr>
+                        <td>{{ $rattachement_validation->created_at_date_formatted ?? '—' }}</td>
                         <td>
                             @php
                             $user = $users->firstWhere('id', $rattachement_validation->user_id);
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
-                        <td>{{ $rattachement_validation->nom }}</td>
-                        <td>{{ $rattachement_validation->prenom }}</td>
+                        <td>{{ $rattachement_validation->nom }} {{ $rattachement_validation->prenom }}</td>
                         <td>{{ $rattachement_validation->email }}</td>
                         <td>{{ $rattachement_validation->bl }}</td>
                         <td>{{ $rattachement_validation->compte }}</td>
