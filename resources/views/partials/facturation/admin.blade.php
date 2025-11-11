@@ -66,8 +66,8 @@
                                 <br>
                                 <br>
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">VALIDER</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">ANNULER</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
+                                    <button type="reset" class="btn btn-danger me-1 mb-1"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
                                 </div>
                             </div>
                         </div>
@@ -88,9 +88,9 @@
                         accept=".xlsx,.csv" required>
                     <br>
                     <button type="submit" name="submit" class="btn btn-primary" value="import"><i
-                            class="fa-solid fa-upload"></i> IMPORTER</button>
+                            class="fa-solid fa-upload"></i> Importer</button>
                     <a href="{{ route('ipaki.export') }}" class="btn btn-danger"><i
-                            class="fa-solid fa-download"></i> EXPORTER</a>
+                            class="fa-solid fa-download"></i> Exporter</a>
 
                 </form>
                 <br>
@@ -117,12 +117,12 @@
                                     data-code="{{ $t->code }}" data-label="{{ $t->label }}"
                                     data-active="{{ $t->active }}" data-billable="{{ $t->billable }}"
                                     data-accounting_id="{{ $t->accounting_id }}" data-bs-toggle="modal"
-                                    data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-delete" data-id="{{ $t->id }}"
                                     data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-                                        class="fa-solid fa-trash"></i></button>
+                                        class="fa-solid fa-trash"></i> Supprimer</button>
                             </td>
                         </tr>
                         @endforeach
@@ -174,9 +174,9 @@
                                         name="accounting_id">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Modifier</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Fermer</button>
                                 </div>
                             </form>
                         </div>
@@ -209,9 +209,9 @@
                                 @method('DELETE')
                                 <input type="hidden" id="deleteId" name="id">
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
                                 </div>
                             </form>
                         </div>

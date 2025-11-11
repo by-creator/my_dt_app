@@ -34,9 +34,9 @@
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit"
-                                    class="btn btn-primary me-1 mb-1">Submit</button>
+                                    class="btn btn-primary me-1 mb-1"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
                                 <button type="reset"
-                                    class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    class="btn btn-danger me-1 mb-1"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
                             </div>
                         </div>
                     </div>

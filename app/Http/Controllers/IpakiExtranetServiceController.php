@@ -59,6 +59,8 @@ class IpakiExtranetServiceController extends Controller
             $message = "Mail d’invalidation envoyé à {$user->email}";
         }
 
+        Mail::to($email)->send(new LinkIesMail($email));
+
         return redirect()->route('ies.validation')->with('validation', $message);
     }
     
@@ -138,7 +140,7 @@ class IpakiExtranetServiceController extends Controller
             )
         );
 
-        /*
+        
         $data_create = $request->validate([
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
@@ -147,7 +149,7 @@ class IpakiExtranetServiceController extends Controller
             'compte' => 'required|string',
         ]);
 
-        RattachementBl::create($data_create);*/
+        RattachementBl::create($data_create);
 
         return redirect()
             ->route('demat.index')
