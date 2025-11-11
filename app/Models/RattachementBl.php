@@ -21,7 +21,8 @@ class RattachementBl extends Model
         'statut',
     ];
 
-    protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime', ];
+
+    protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime',];
 
     /**
      * Accessor : retourne la durée écoulée entre created_at et updated_at

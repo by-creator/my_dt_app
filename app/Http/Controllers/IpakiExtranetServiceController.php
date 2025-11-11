@@ -63,7 +63,7 @@ class IpakiExtranetServiceController extends Controller
 
         return redirect()->route('ies.validation')->with('validation', $message);
     }
-    
+
     public function sendResetPassword(Request $request)
     {
         $email = $request->input('email');
@@ -109,6 +109,9 @@ class IpakiExtranetServiceController extends Controller
             'documents.*' => 'file|max:10240',
         ]);
 
+        $data['bl'] = strtoupper($data['bl']);
+        $data['compte'] = strtoupper($data['compte']);
+
         $documents = [];     // Chemins des fichiers
         $fileNames = [];     // Noms originaux
 
@@ -140,7 +143,7 @@ class IpakiExtranetServiceController extends Controller
             )
         );
 
-        
+
         $data_create = $request->validate([
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
