@@ -33,10 +33,10 @@
                         <td>{{ $fixe->entite }}</td>
                         <td>{{ $fixe->role }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $fixe->id }}" data-annuaire="{{ $fixe->annuaire }}" data-nom="{{ $fixe->nom }}" data-prenom="{{ $fixe->prenom }}" data-type="{{ $fixe->type }}" data-entite="{{ $fixe->entite }}" data-role="{{ $fixe->role }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $fixe->id }}" data-annuaire="{{ $fixe->annuaire }}" data-nom="{{ $fixe->nom }}" data-prenom="{{ $fixe->prenom }}" data-type="{{ $fixe->type }}" data-entite="{{ $fixe->entite }}" data-role="{{ $fixe->role }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $fixe->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $fixe->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
                         </td>
                     </tr>
                     @endforeach
@@ -91,8 +91,8 @@
                                 <input type="text" class="form-control" id="editRole" required name="role">
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Modifier</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Fermer</button>
                             </div>
                         </form>
                     </div>
@@ -124,8 +124,8 @@
                             @method('DELETE')
                             <input type="hidden" id="deleteId" name="id">
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
                             </div>
                         </form>
                     </div>

@@ -8,8 +8,8 @@
                  @csrf
                  <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
                  <br>
-                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> IMPORTER</button>
-                 <a href="{{ route('ordinateur.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> EXPORTER</a>
+                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Importer</button>
+                 <a href="{{ route('ordinateur.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
              </form>
              <br>
              <table class="table table-striped" id="table1">
@@ -43,11 +43,11 @@
                                  data-site="{{ $ordinateur->site }}"
                                  data-bs-toggle="modal"
                                  data-bs-target="#editModal">
-                                 <i class="fa-solid fa-pen-to-square"></i>
+                                 <i class="fa-solid fa-pen-to-square"></i> Modifier
                              </button>
                          </td>
                          <td>
-                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordinateur->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i></button>
+                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordinateur->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
                          </td>
                      </tr>
                      @endforeach
@@ -102,8 +102,8 @@
                                  <input type="text" class="form-control" id="editSite" required name="site">
                              </div>
                              <div class="modal-footer">
-                                 <button type="submit" class="btn btn-primary">Modifier</button>
-                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
+                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Fermer</button>
                              </div>
                          </form>
                      </div>
@@ -135,8 +135,8 @@
                              @method('DELETE')
                              <input type="hidden" id="deleteId" name="id">
                              <div class="modal-footer">
-                                 <button type="submit" class="btn btn-danger">Supprimer</button>
-                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
                              </div>
                          </form>
                      </div>
