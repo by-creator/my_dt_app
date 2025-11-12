@@ -81,19 +81,19 @@
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('clavier.index') }}"><i class="fa-solid fa-computer"></i> Clavier</a>
+            <a href="{{ route('clavier.index') }}"><i class="fa-solid fa-keyboard"></i> Clavier</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('souris.index') }}"><i class="fa-solid fa-computer"></i> Souris</a>
+            <a href="{{ route('souris.index') }}"><i class="fa-solid fa-computer-mouse"></i> Souris</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('ecran.index') }}"><i class="fa-solid fa-computer"></i> Ecran</a>
+            <a href="{{ route('ecran.index') }}"><i class="fa-solid fa-desktop"></i> Ecran</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('station.index') }}"><i class="fa-solid fa-computer"></i> Station</a>
+            <a href="{{ route('station.index') }}"><i class="fa-solid fa-shuffle"></i> Station</a>
         </li>
         <li class="submenu-item ">
             <a href="{{ route('telephone-fixe.index') }}"><i class="fa-solid fa-phone"></i> Postes fixes</a>
