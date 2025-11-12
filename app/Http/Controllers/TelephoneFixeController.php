@@ -25,6 +25,8 @@ class TelephoneFixeController extends Controller
             'type' => 'required|string|max:255',
             'entite' => 'required|string|max:255',
             'role' => 'required|string|max:255',
+            'date_reception' => 'nullable||date',
+            'date_deploiement' => 'nullable||date',
 
         ]);
 
@@ -43,6 +45,8 @@ class TelephoneFixeController extends Controller
         $fixe->type = $request->type;
         $fixe->entite = $request->entite;
         $fixe->role = $request->role;
+        $fixe->date_reception = $request->date_reception;
+        $fixe->date_deploiement = $request->date_deploiement;
         
         $fixe->save();
 

@@ -21,6 +21,32 @@
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-4">
+                                 <label>Date de réception</label>
+                             </div>
+                             <div class="col-md-8">
+                                 <div class="form-group has-icon-left">
+                                     <div class="position-relative">
+                                         <input name="date_reception" id="date_reception" type="datetime-local" class="form-control">
+                                         <div class="form-control-icon">
+                                             <i class="fa-solid fa-file-signature"></i>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="col-md-4">
+                                 <label>Date de déploiement</label>
+                             </div>
+                             <div class="col-md-8">
+                                 <div class="form-group has-icon-left">
+                                     <div class="position-relative">
+                                         <input name="date_deploiement" id="date_deploiement" type="datetime-local" class="form-control">
+                                         <div class="form-control-icon">
+                                             <i class="fa-solid fa-file-signature"></i>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                            <div class="col-md-4">
                                 <label>Annuaire</label>
                             </div>
                             <div class="col-md-8">

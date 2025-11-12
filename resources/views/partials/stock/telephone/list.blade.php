@@ -15,6 +15,8 @@
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
+                        <th>Date de réception</th>
+                        <th>Date de déploiement</th>
                         <th>Annuaire</th>
                         <th>Nom</th>
                         <th>Prenom</th>
@@ -26,6 +28,8 @@
                 <tbody>
                     @foreach ($fixes as $fixe)
                     <tr>
+                        <td>{{ $fixe->date_reception_formatted ?? '—'  }}</td>
+                        <td>{{ $fixe->date_deploiement_formatted ?? '—'  }}</td>
                         <td>{{ $fixe->annuaire }}</td>
                         <td>{{ $fixe->nom }}</td>
                         <td>{{ $fixe->prenom }}</td>
@@ -33,7 +37,13 @@
                         <td>{{ $fixe->entite }}</td>
                         <td>{{ $fixe->role }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $fixe->id }}" data-annuaire="{{ $fixe->annuaire }}" data-nom="{{ $fixe->nom }}" data-prenom="{{ $fixe->prenom }}" data-type="{{ $fixe->type }}" data-entite="{{ $fixe->entite }}" data-role="{{ $fixe->role }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
+                            <button type="button" class="btn btn-primary btn-edit"
+                                data-id="{{ $fixe->id }}" data-date_reception="{{ $fixe->date_reception}}"
+                                data-date_deploiement="{{ $fixe->date_deploiement }}"
+                                data-annuaire="{{ $fixe->annuaire }}"
+                                data-nom="{{ $fixe->nom }}" data-prenom="{{ $fixe->prenom }}"
+                                data-type="{{ $fixe->type }}" data-entite="{{ $fixe->entite }}"
+                                data-role="{{ $fixe->role }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $fixe->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
@@ -66,6 +76,14 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" id="editId" name="id">
+                            <div class="mb-3">
+                                <label for="editDateReception" class="form-label">Date de réception</label>
+                                <input type="datetime-local" class="form-control" id="editDateReception" name="date_reception">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editDateDeploiement" class="form-label">Date de déploiement</label>
+                                <input type="datetime-local" class="form-control" id="editDateDeploiement" name="date_deploiement">
+                            </div>
                             <div class="mb-3">
                                 <label for="editAnnuaire" class="form-label">Annuaire</label>
                                 <input type="text" class="form-control" id="editAnnuaire" required name="annuaire">
@@ -146,6 +164,8 @@
 
             const id = btn.dataset.id;
             document.getElementById("editId").value = id;
+            document.getElementById("editDateReception").value = btn.dataset.date_reception || '';
+            document.getElementById("editDateDeploiement").value = btn.dataset.date_deploiement || '';
             document.getElementById("editAnnuaire").value = btn.dataset.annuaire || '';
             document.getElementById("editNom").value = btn.dataset.nom || '';
             document.getElementById("editPrenom").value = btn.dataset.prenom || '';
