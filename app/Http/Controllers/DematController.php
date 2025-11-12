@@ -55,7 +55,7 @@ class DematController extends Controller
 
             return redirect()
                 ->route('demat.index')
-                ->with('sendValidation', 'Une erreur est survenue lors de l’envoi.');
+                ->with('error', 'Une erreur est survenue lors de l’envoi.');
         }
     }
 }

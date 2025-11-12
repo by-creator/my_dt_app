@@ -202,7 +202,7 @@
     Swal.fire({
       icon: 'error',
       title: 'Demande de validation échouée ❌',
-      text: "{{ session('sendValidation') }}",
+      text: "{{ session('error') }}",
       showConfirmButton: true
     });
   </script>
