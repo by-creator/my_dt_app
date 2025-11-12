@@ -8,6 +8,10 @@
 
 # Demande de validation du dossier
 
+Bonjour,
+
+Je me présente {{ $prenom }} {{ $nom }} et je souhaite valider le dossier ci-dessous : 
+
 **Bil of Lading (BL)** : {{ $bl }}  
 **Compte Client** : {{ $compte }}
 
