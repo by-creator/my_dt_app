@@ -34,6 +34,10 @@ class ValidationDematMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new \Illuminate\Mail\Mailables\Address(
+            $this->data['email'], // adresse e-mail de l’expéditeur
+            strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
+        ),
             subject: 'Demande de validation - ' . $this->data['bl']
         );
     }
