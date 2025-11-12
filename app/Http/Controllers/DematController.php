@@ -6,8 +6,17 @@ use Illuminate\Http\Request;
 
 class DematController extends Controller
 {
-    public function validation()
+    public function validation(Request $request)
     {
-        echo 'validation';
+        $data = $request->validate([
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|email',
+            'bl' => 'required|string',
+            'compte' => 'required|string',
+            'documents.*' => 'file',
+        ]);
+
+        
     }
 }
