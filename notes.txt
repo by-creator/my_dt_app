@@ -1,15 +1,47 @@
-Cadence : nombre d'unités à manipuler dans une heure (en tonnage pour général cargo)
-    5 types de cadences : lourd, léger, conteneur roro/lolo, bois, général cargo
+$documents = [];     // Chemins des fichiers
+        $fileNames = [];     // Noms originaux
 
-Sous mari contient les informations de base
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $file) {
+                $documents[] = $file; // 🔹 on garde directement l'objet UploadedFile
+                $fileNames[] = $file->getClientOriginalName();
+            }
+        }
 
-Timeshit
+        $destinataires = [
 
-Renseigner les informations ed façon électronique
+            /*'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',*/
+            'noreplysitedt@gmail.com'
+        ];
 
-Calcul des cadences
+
+        $nomComplet = $data['prenom'] . ' ' . $data['nom'];
+
+        dd('avant mail');
+
+        Mail::to($destinataires)->send(
+            new ValidationIesMail(
+                bl: $data['bl'],
+                compte: $data['compte'],
+                documents: $documents,   // fichiers bruts
+                fileNames: $fileNames,   // noms d’origine
+                expediteurEmail: $data['email'],
+                expediteurNom: $nomComplet
+            )
+        );
 
 
-- Boubacar soumare
-- Ndiome Mbaye
-- 
+        $data_create = $request->validate([
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|email',
+            'bl' => 'required|string',
+            'compte' => 'required|string',
+        ]);
+
+        RattachementBl::create($data_create);
+
+        return redirect()
+            ->route('demat.index')
+            ->with('sendValidation', 'Un mail de demande de validation a bien été envoyé au service facturation qui vous fera un retour par mail une fois la validation effecuée.');

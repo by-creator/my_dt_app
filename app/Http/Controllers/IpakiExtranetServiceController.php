@@ -106,11 +106,8 @@ class IpakiExtranetServiceController extends Controller
             'email' => 'required|email',
             'bl' => 'required|string',
             'compte' => 'required|string',
-            'documents.*' => 'file|max:10240',
+            'documents.*' => 'file',
         ]);
-
-        $data['bl'] = strtoupper($data['bl']);
-        $data['compte'] = strtoupper($data['compte']);
 
         $documents = [];     // Chemins des fichiers
         $fileNames = [];     // Noms originaux
@@ -123,10 +120,10 @@ class IpakiExtranetServiceController extends Controller
         }
 
         $destinataires = [
-            
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            //'noreplysitedt@gmail.com'
+
+            /*'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',*/
+            'noreplysitedt@gmail.com'
         ];
 
 
@@ -134,15 +131,14 @@ class IpakiExtranetServiceController extends Controller
 
         Mail::to($destinataires)->send(
             new ValidationIesMail(
-                bl: $data['bl'],
-                compte: $data['compte'],
+                bl: strtoupper($data['bl']),
+                compte: strtoupper($data['compte']),
                 documents: $documents,   // fichiers bruts
                 fileNames: $fileNames,   // noms d’origine
                 expediteurEmail: $data['email'],
                 expediteurNom: $nomComplet
             )
         );
-
 
         $data_create = $request->validate([
             'prenom' => 'required|string|max:255',
@@ -161,6 +157,7 @@ class IpakiExtranetServiceController extends Controller
             ->route('demat.index')
             ->with('sendValidation', 'Un mail de demande de validation a bien été envoyé au service facturation qui vous fera un retour par mail une fois la validation effecuée.');
     }
+
 
     public function demat()
     {

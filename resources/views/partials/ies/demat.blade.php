@@ -159,7 +159,7 @@
              <div class="mb-3">
               <input type="file" name="documents[]" multiple class="text-center form-control" required >
             </div>
-            <button class="btn btn-gradient w-100">VALIDATION</button>
+            <button type="submit" class="btn btn-gradient w-100">VALIDATION</button>
           </form>
         </div>
 
