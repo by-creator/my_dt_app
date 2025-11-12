@@ -131,19 +131,6 @@
           <p>Veuillez remplir le formulaire ci-dessous pour demander la validation de votre dossier.</p>
           <form method="POST" action="{{ route('ies.send-validation') }}" enctype="multipart/form-data" class="form">
             @csrf
-            @if (session('sendValidation'))
-            <!--
-            <script>
-              Swal.fire({
-                icon: 'success',
-                title: 'Demande de validation envoyée ✅',
-                text: "{{ session('sendValidation') }}",
-                showConfirmButton: true
-              });
-            </script>
-            -->
-            @endif
-
             <div class="mb-3">
               <input type="text" name="nom" class="text-center form-control" required placeholder="Nom du transitaire (ex : THIAW)">
             </div>
@@ -201,6 +188,16 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  @if (session('sendValidation'))
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Demande de validation envoyée ✅',
+      text: "{{ session('sendValidation') }}",
+      showConfirmButton: true
+    });
+  </script>
+  @endif
 </body>
 
 </html>
