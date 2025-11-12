@@ -152,7 +152,7 @@
             </div>
 
             <div class="mb-3">
-              <input type="file" name="documents[]" class="text-center form-control" required>
+              <input type="file" name="documents[]" class="text-center form-control" multiple required>
               <small class="text-muted">Vous pouvez sélectionner plusieurs fichiers (optionnel sur mobile pour test)</small>
             </div>
 

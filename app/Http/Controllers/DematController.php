@@ -17,7 +17,7 @@ class DematController extends Controller
             'documents.*' => 'file',
         ]);
 
-        dd($data);
+        echo $data['email'];
         
     }
 }
