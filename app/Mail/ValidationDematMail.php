@@ -77,15 +77,5 @@ class ValidationDematMail extends Mailable
         }
 
         return $attachments;
-
-        /*
-        $attachments = [];
-
-        foreach ($this->files as $path) {
-            $attachments[] = Attachment::fromPath(storage_path('app/' . $path));
-        }
-
-        return $attachments;
-        */
     }
 }
