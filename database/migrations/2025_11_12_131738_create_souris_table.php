@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('souris', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('date_reception')->nullable();
+            $table->dateTime('date_deploiement')->nullable();
+            $table->string('marque')->nullable();
+            $table->string('utilisateur')->nullable();
             $table->timestamps();
         });
     }
