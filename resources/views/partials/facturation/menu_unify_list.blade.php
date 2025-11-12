@@ -152,9 +152,25 @@
         <span>Stock</span>
     </a>
     <ul class="submenu">
-        <li class="submenu-item">
+       <li class="submenu-item">
 
             <a href="{{ route('ordinateur.index') }}"><i class="fa-solid fa-computer"></i> Ordinateur</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('clavier.index') }}"><i class="fa-solid fa-computer"></i> Clavier</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('souris.index') }}"><i class="fa-solid fa-computer"></i> Souris</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('ecran.index') }}"><i class="fa-solid fa-computer"></i> Ecran</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('station.index') }}"><i class="fa-solid fa-computer"></i> Station</a>
         </li>
         <li class="submenu-item ">
             <a href="{{ route('telephone-fixe.index') }}"><i class="fa-solid fa-phone"></i> Postes fixes</a>

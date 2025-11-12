@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\ClavierController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EcranController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
 use App\Http\Controllers\OrdinateurController;
 use App\Http\Controllers\RattachementController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SourisControlller;
+use App\Http\Controllers\StationController;
 use App\Http\Controllers\TelephoneFixeController;
 use App\Http\Controllers\UnifyController;
 use App\Http\Controllers\UserAccountController;
@@ -104,6 +108,34 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/ordinateur/delete/{id}', [OrdinateurController::class, 'delete'])->name('ordinateur.delete');
     Route::post('/ordinateur/import', [OrdinateurController::class, 'import'])->name('ordinateur.import');
     Route::get('/ordinateur/export', [OrdinateurController::class, 'export'])->name('ordinateur.export');
+
+    Route::get('/clavier/index', [ClavierController::class, 'index'])->name('clavier.index');
+    Route::post('/clavier/create', [ClavierController::class, 'create'])->name('clavier.create');
+    Route::put('/clavier/update/{id}', [ClavierController::class, 'update'])->name('clavier.update');
+    Route::delete('/clavier/delete/{id}', [ClavierController::class, 'delete'])->name('clavier.delete');
+    Route::post('/clavier/import', [ClavierController::class, 'import'])->name('clavier.import');
+    Route::get('/clavier/export', [ClavierController::class, 'export'])->name('clavier.export');
+
+    Route::get('/souris/index', [SourisControlller::class, 'index'])->name('souris.index');
+    Route::post('/souris/create', [SourisControlller::class, 'create'])->name('souris.create');
+    Route::put('/souris/update/{id}', [SourisControlller::class, 'update'])->name('souris.update');
+    Route::delete('/souris/delete/{id}', [SourisControlller::class, 'delete'])->name('souris.delete');
+    Route::post('/souris/import', [SourisControlller::class, 'import'])->name('souris.import');
+    Route::get('/souris/export', [SourisControlller::class, 'export'])->name('souris.export');
+
+    Route::get('/ecran/index', [EcranController::class, 'index'])->name('ecran.index');
+    Route::post('/ecran/create', [EcranController::class, 'create'])->name('ecran.create');
+    Route::put('/ecran/update/{id}', [EcranController::class, 'update'])->name('ecran.update');
+    Route::delete('/ecran/delete/{id}', [EcranController::class, 'delete'])->name('ecran.delete');
+    Route::post('/ecran/import', [EcranController::class, 'import'])->name('ecran.import');
+    Route::get('/ecran/export', [EcranController::class, 'export'])->name('ecran.export');
+
+    Route::get('/station/index', [StationController::class, 'index'])->name('station.index');
+    Route::post('/station/create', [StationController::class, 'create'])->name('station.create');
+    Route::put('/station/update/{id}', [StationController::class, 'update'])->name('station.update');
+    Route::delete('/station/delete/{id}', [StationController::class, 'delete'])->name('station.delete');
+    Route::post('/station/import', [StationController::class, 'import'])->name('station.import');
+    Route::get('/station/export', [StationController::class, 'export'])->name('station.export');
 
     Route::get('/telephone-fixe', [TelephoneFixeController::class, 'index'])->name('telephone-fixe.index');
     Route::post('/telephone-fixe/create', [TelephoneFixeController::class, 'create'])->name('telephone-fixe.create');
