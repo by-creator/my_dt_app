@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class DematController extends Controller
 {
 
-    /*
+    
     public function validation(Request $request)
     {
 
@@ -72,8 +72,9 @@ class DematController extends Controller
                 ->route('demat.index')
                 ->with('error', 'Une erreur est survenue lors de l’envoi.');
         }
-    }*/
+    }
 
+    /*
     public function validation(Request $request)
     {
         try {
@@ -145,4 +146,5 @@ class DematController extends Controller
                 ->with('error', 'Une erreur est survenue lors de l’envoi.');
         }
     }
+    */
 }
