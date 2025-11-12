@@ -14,10 +14,10 @@ class DematController extends Controller
             'email' => 'required|email',
             'bl' => 'required|string',
             'compte' => 'required|string',
-            //'documents.*' => 'file',
+            'documents' => 'required',
         ]);
 
-        echo $data['email'];
+        dd($data);
         
     }
 }
