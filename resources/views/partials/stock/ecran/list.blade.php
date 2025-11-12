@@ -156,12 +156,7 @@
              if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
              const id = btn.dataset.id;
-             const date_reception = btn.dataset.date_reception;
-             const date_deploiement = btn.dataset.date_deploiement;
-             const service_tag = btn.dataset.service_tag;
-             const etiquetage = btn.dataset.etiquetage;
-             const service = btn.dataset.service;
-             const utilisateur = btn.dataset.utilisateur;
+             
              document.getElementById("editId").value = id;
              document.getElementById("editDateReception").value = btn.dataset.date_reception || '';
              document.getElementById("editDateDeploiement").value = btn.dataset.date_deploiement || '';
