@@ -19,16 +19,13 @@ class ClavierController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
-            'serie' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
-            'utilisateur' => 'required|string|max:255',
-            'service' => 'required|string|max:255',
-            'site' => 'required|string|max:255',
-
-
+            'date_reception' => 'nullable||date',
+            'date_deploiement' => 'nullable||date',
+            'marque' => 'nullable||string|max:255',
+            'utilisateur' => 'nullable||string|max:255',
         ]);
 
+        
         Clavier::create($data);
 
         return redirect()->route('clavier.index')->with('create', 'clavier créé avec succès.');
@@ -38,12 +35,10 @@ class ClavierController extends Controller
     {
         $clavier = Clavier::findOrFail($id);
 
-        $clavier->serie = $request->serie;
-        $clavier->model = $request->model;
-        $clavier->type = $request->type;
+        $clavier->date_reception = $request->date_reception;
+        $clavier->date_deploiement = $request->date_deploiement;
+        $clavier->marque = $request->marque;
         $clavier->utilisateur = $request->utilisateur;
-        $clavier->service = $request->service;
-        $clavier->site = $request->site;
 
         $clavier->save();
 

@@ -70,11 +70,11 @@
                     });
                 </script>
                 @endif
-                <form method="post" action="{{route('ordinateur.create')}}" class="form" enctype="multipart/form-data">
+                <form method="post" action="{{route('clavier.create')}}" class="form" enctype="multipart/form-data">
                     @csrf
                     <div class="row match-height">
-                        @include('partials.stock.ordinateur.form')
-                        @include('partials.stock.ordinateur.list')
+                        @include('partials.stock.clavier.form')
+                        @include('partials.stock.clavier.list')
                     </div>
                 </form>
                 @else

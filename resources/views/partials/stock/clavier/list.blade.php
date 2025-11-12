@@ -6,7 +6,7 @@
          <div class="card-body">
              <form action="{{ route('clavier.import') }}" method="post" enctype="multipart/form-data">
                  @csrf
-                 <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
+                 <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx">
                  <br>
                  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Importer</button>
                  <a href="{{ route('clavier.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
@@ -15,32 +15,26 @@
              <table class="table table-striped" id="table1">
                  <thead>
                      <tr>
-                         <th>Numéro de série</th>
-                         <th>Modèle</th>
-                         <th>Type</th>
+                         <th>Date de réception</th>
+                         <th>Date de déploiement</th>
+                         <th>Marque</th>
                          <th>Utilisateur</th>
-                         <th>Service</th>
-                         <th>Site</th>
                      </tr>
                  </thead>
                  <tbody>
                      @foreach ($claviers as $clavier)
                      <tr>
-                         <td>{{ $clavier->serie }}</td>
-                         <td>{{ $clavier->model }}</td>
-                         <td>{{ $clavier->type }}</td>
+                         <td>{{ $clavier->date_reception_formatted ?? '—'  }}</td>
+                         <td>{{ $clavier->date_deploiement_formatted ?? '—'  }}</td>
+                         <td>{{ $clavier->marque }}</td>
                          <td>{{ $clavier->utilisateur }}</td>
-                         <td>{{ $clavier->service }}</td>
-                         <td>{{ $clavier->site }}</td>
                          <td>
                              <button type="button" class="btn btn-primary btn-edit"
                                  data-id="{{ $clavier->id }}"
-                                 data-serie="{{ $clavier->serie }}"
-                                 data-model="{{ $clavier->model }}"
-                                 data-type="{{ $clavier->type }}"
+                                 data-date_reception="{{ $clavier->date_reception}}"
+                                 data-date_deploiement="{{ $clavier->date_deploiement }}"
+                                 data-marque="{{ $clavier->marque }}"
                                  data-utilisateur="{{ $clavier->utilisateur }}"
-                                 data-service="{{ $clavier->service }}"
-                                 data-site="{{ $clavier->site }}"
                                  data-bs-toggle="modal"
                                  data-bs-target="#editModal">
                                  <i class="fa-solid fa-pen-to-square"></i> Modifier
@@ -59,7 +53,7 @@
              <div class="modal-dialog">
                  <div class="modal-content">
                      <div class="modal-header">
-                         <h5 class="modal-title" id="editModalLabel">Modifier cet clavier</h5>
+                         <h5 class="modal-title" id="editModalLabel">Modifier ce clavier</h5>
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <div class="modal-body">
@@ -78,28 +72,20 @@
                              @method('PUT')
                              <input type="hidden" id="editId" name="id">
                              <div class="mb-3">
-                                 <label for="editSerie" class="form-label">Numéro de série</label>
-                                 <input type="text" class="form-control" id="editSerie" required name="serie">
+                                 <label for="editDateReception" class="form-label">Date de réception</label>
+                                 <input type="datetime-local" class="form-control" id="editDateReception" name="date_reception">
                              </div>
                              <div class="mb-3">
-                                 <label for="editModel" class="form-label">Modèle</label>
-                                 <input type="text" class="form-control" id="editModel" required name="model">
+                                 <label for="editDateDeploiement" class="form-label">Date de déploiement</label>
+                                 <input type="datetime-local" class="form-control" id="editDateDeploiement" name="date_deploiement">
                              </div>
                              <div class="mb-3">
-                                 <label for="editType" class="form-label">Type</label>
-                                 <input type="text" class="form-control" id="editType" required name="type">
+                                 <label for="editMarque" class="form-label">Marque</label>
+                                 <input type="text" class="form-control" id="editMarque" name="marque">
                              </div>
                              <div class="mb-3">
                                  <label for="editUtilisateur" class="form-label">Utilisateur</label>
-                                 <input type="text" class="form-control" id="editUtilisateur" required name="utilisateur">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="editService" class="form-label">Service</label>
-                                 <input type="text" class="form-control" id="editService" required name="service">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="editSite" class="form-label">Site</label>
-                                 <input type="text" class="form-control" id="editSite" required name="site">
+                                 <input type="text" class="form-control" id="editUtilisateur" name="utilisateur">
                              </div>
                              <div class="modal-footer">
                                  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
@@ -129,7 +115,7 @@
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <div class="modal-body">
-                         <p>Êtes-vous sûr de vouloir supprimer cet clavier ?</p>
+                         <p>Êtes-vous sûr de vouloir supprimer ce clavier ?</p>
                          <form id="deleteForm" method="POST">
                              @csrf
                              @method('DELETE')
@@ -156,14 +142,16 @@
              if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
              const id = btn.dataset.id;
+             const date_reception = btn.dataset.date_reception;
+             const date_deploiement = btn.dataset.date_deploiement;
+             const marque = btn.dataset.marque;
+             const utilisateur = btn.dataset.utilisateur;
              document.getElementById("editId").value = id;
-             document.getElementById("editSerie").value = btn.dataset.serie || '';
-             document.getElementById("editModel").value = btn.dataset.model || '';
-             document.getElementById("editType").value = btn.dataset.type || '';
+             document.getElementById("editDateReception").value = btn.dataset.date_reception || '';
+             document.getElementById("editDateDeploiement").value = btn.dataset.date_deploiement || '';
+             document.getElementById("editMarque").value = btn.dataset.type || '';
              document.getElementById("editUtilisateur").value = btn.dataset.utilisateur || '';
-             document.getElementById("editService").value = btn.dataset.service || '';
-             document.getElementById("editSite").value = btn.dataset.site || '';
-             document.getElementById("editForm").action = "/user/update/" + id;
+             document.getElementById("editForm").action = "/clavier/update/" + id;
          });
 
          // Event delegation pour Delete
@@ -173,7 +161,7 @@
 
              const id = btn.dataset.id;
              document.getElementById("deleteId").value = id;
-             document.getElementById("deleteForm").action = "/user/delete/" + id;
+             document.getElementById("deleteForm").action = "/clavier/delete/" + id;
          });
 
          // Initialiser la datatable
