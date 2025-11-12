@@ -109,7 +109,7 @@
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
                                         <input name="entite" id="entite" type="text" class="form-control"
-                                            placeholder="Saisissez une entite" required>
+                                            placeholder="Saisissez une entite" value="130" required>
                                         <div class="form-control-icon">
                                             <i class="fa-solid fa-file-signature"></i>
                                         </div>
@@ -123,7 +123,7 @@
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
                                         <input name="role" id="role" type="text" class="form-control"
-                                            placeholder="Saisissez un role" required>
+                                            placeholder="Saisissez un role" value="Défaut" required>
                                         <div class="form-control-icon">
                                             <i class="fa-solid fa-file-signature"></i>
                                         </div>
