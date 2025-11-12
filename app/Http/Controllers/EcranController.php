@@ -19,12 +19,12 @@ class EcranController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
-            'serie' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
-            'utilisateur' => 'required|string|max:255',
-            'service' => 'required|string|max:255',
-            'site' => 'required|string|max:255',
+            'date_reception' => 'nullable||date',
+            'date_deploiement' => 'nullable||date',
+            'service_tag' => 'nullable||string|max:255',
+            'etiquetage' => 'nullable||string|max:255',
+            'service' => 'nullable||string|max:255',
+            'utilisateur' => 'nullable||string|max:255',
 
 
         ]);
@@ -38,12 +38,12 @@ class EcranController extends Controller
     {
         $ecran = Ecran::findOrFail($id);
 
-        $ecran->serie = $request->serie;
-        $ecran->model = $request->model;
-        $ecran->type = $request->type;
-        $ecran->utilisateur = $request->utilisateur;
+        $ecran->date_reception = $request->date_reception;
+        $ecran->date_deploiement = $request->date_deploiement;
+        $ecran->service_tag = $request->service_tag;
+        $ecran->etiquetage = $request->etiquetage;
         $ecran->service = $request->service;
-        $ecran->site = $request->site;
+        $ecran->utilisateur = $request->utilisateur;
 
         $ecran->save();
 

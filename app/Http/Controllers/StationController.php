@@ -19,12 +19,12 @@ class StationController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
-            'serie' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
-            'utilisateur' => 'required|string|max:255',
-            'service' => 'required|string|max:255',
-            'site' => 'required|string|max:255',
+            'date_reception' => 'nullable||date',
+            'date_deploiement' => 'nullable||date',
+            'service_tag' => 'nullable||string|max:255',
+            'marque' => 'nullable||string|max:255',
+            'utilisateur' => 'nullable||string|max:255',
+
 
 
         ]);
@@ -38,12 +38,11 @@ class StationController extends Controller
     {
         $station = Station::findOrFail($id);
 
-        $station->serie = $request->serie;
-        $station->model = $request->model;
-        $station->type = $request->type;
+        $station->date_reception = $request->date_reception;
+        $station->date_deploiement = $request->date_deploiement;
+        $station->service_tag = $request->service_tag;
+        $station->marque = $request->marque;
         $station->utilisateur = $request->utilisateur;
-        $station->service = $request->service;
-        $station->site = $request->site;
 
         $station->save();
 

@@ -34,7 +34,7 @@
                                  </div>
                              </div>
                              <div class="col-md-4">
-                                 <label>Date de dépliement</label>
+                                 <label>Date de déploiement</label>
                              </div>
                              <div class="col-md-8">
                                  <div class="form-group has-icon-left">
