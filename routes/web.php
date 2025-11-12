@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClavierController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DematController;
 use App\Http\Controllers\EcranController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
@@ -27,6 +28,7 @@ Route::get('/demat', function () {
 })->name('demat.index');
 
 Route::post('/demat/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
+Route::post('/demat/validation', [DematController::class, 'validation'])->name('demat.validation');
 
 
 Route::get('/register', function () {

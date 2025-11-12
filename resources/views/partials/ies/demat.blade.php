@@ -129,7 +129,7 @@
           <img src="{{asset('templates/site/images/hero_12.jpeg')}}" class="img-fluid rounded mb-3" alt="Accueil">
           <h3><u>VALIDATION</u></h3>
           <p>Veuillez remplir le formulaire ci-dessous pour demander la validation de votre dossier.</p>
-          <form method="POST" action="{{ route('ies.send-validation') }}" enctype="multipart/form-data" class="form">
+          <form method="POST" action="{{ route('demat.validation') }}" enctype="multipart/form-data" class="form">
             @csrf
             <div class="mb-3">
               <input type="text" name="nom" class="text-center form-control" required placeholder="Nom du transitaire (ex : THIAW)">
