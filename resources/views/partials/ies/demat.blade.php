@@ -157,7 +157,7 @@
               <input type="text" name="compte" class="text-center form-control" required placeholder="Numéro de compte société (ex : SN../ND../1234)">
             </div>
              <div class="mb-3">
-              <input type="file" name="documents[]" multiple class="text-center form-control" required >
+              <input type="file" name="documents[]" multiple class="text-center form-control" >
             </div>
             <button type="submit" class="btn btn-gradient w-100">VALIDATION</button>
           </form>
