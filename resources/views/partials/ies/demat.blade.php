@@ -131,8 +131,8 @@
           <p>Veuillez remplir le formulaire ci-dessous pour demander la validation de votre dossier.</p>
           <form method="POST" action="{{ route('ies.send-validation') }}" enctype="multipart/form-data" class="form">
             @csrf
-
             @if (session('sendValidation'))
+            <!--
             <script>
               Swal.fire({
                 icon: 'success',
@@ -141,6 +141,7 @@
                 showConfirmButton: true
               });
             </script>
+            -->
             @endif
 
             <div class="mb-3">
