@@ -21,7 +21,7 @@ class ValidationDematMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($data, $files)
+    public function __construct($data, $files = [])
     {
         $this->data = $data;
         $this->files = $files;
@@ -66,6 +66,7 @@ class ValidationDematMail extends Mailable
      */
     public function attachments(): array
     {
+        /*
         $attachments = [];
 
         foreach ($this->files as $file) {
@@ -73,6 +74,14 @@ class ValidationDematMail extends Mailable
                 fn() => file_get_contents($file->getRealPath()),
                 $file->getClientOriginalName()
             )->withMime($file->getMimeType());
+        }
+
+        return $attachments;*/
+
+        $attachments = [];
+
+        foreach ($this->files as $path) {
+            $attachments[] = Attachment::fromPath(storage_path('app/' . $path));
         }
 
         return $attachments;
