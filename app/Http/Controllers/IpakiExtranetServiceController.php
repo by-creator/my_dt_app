@@ -128,7 +128,7 @@ class IpakiExtranetServiceController extends Controller
 
 
         $nomComplet = $data['prenom'] . ' ' . $data['nom'];
-        /*
+        
         Mail::to($destinataires)->send(
             new ValidationIesMail(
                 bl: strtoupper($data['bl']),
@@ -138,7 +138,7 @@ class IpakiExtranetServiceController extends Controller
                 expediteurEmail: $data['email'],
                 expediteurNom: $nomComplet
             )
-        );*/
+        );
 
         $data_create = $request->validate([
             'prenom' => 'required|string|max:255',
@@ -153,12 +153,12 @@ class IpakiExtranetServiceController extends Controller
 
         RattachementBl::create($data_create);
 
-        dd($data_create);
-        /*
+        
+        
         return redirect()
             ->route('demat.index')
             ->with('sendValidation', 'Un mail de demande de validation a bien été envoyé au service facturation qui vous fera un retour par mail une fois la validation effecuée.');
-   */
+   
     }
 
 
