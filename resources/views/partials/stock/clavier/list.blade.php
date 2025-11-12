@@ -1,15 +1,15 @@
  <div class="col-md-12 col-12">
      <div class="card">
          <div class="card-header">
-             <h4 class="card-title"><u>Liste des ordinateurs</u></h4>
+             <h4 class="card-title"><u>Liste des claviers</u></h4>
          </div>
          <div class="card-body">
-             <form action="{{ route('ordinateur.import') }}" method="post" enctype="multipart/form-data">
+             <form action="{{ route('clavier.import') }}" method="post" enctype="multipart/form-data">
                  @csrf
                  <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
                  <br>
                  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Importer</button>
-                 <a href="{{ route('ordinateur.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
+                 <a href="{{ route('clavier.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
              </form>
              <br>
              <table class="table table-striped" id="table1">
@@ -24,30 +24,30 @@
                      </tr>
                  </thead>
                  <tbody>
-                     @foreach ($ordinateurs as $ordinateur)
+                     @foreach ($claviers as $clavier)
                      <tr>
-                         <td>{{ $ordinateur->serie }}</td>
-                         <td>{{ $ordinateur->model }}</td>
-                         <td>{{ $ordinateur->type }}</td>
-                         <td>{{ $ordinateur->utilisateur }}</td>
-                         <td>{{ $ordinateur->service }}</td>
-                         <td>{{ $ordinateur->site }}</td>
+                         <td>{{ $clavier->serie }}</td>
+                         <td>{{ $clavier->model }}</td>
+                         <td>{{ $clavier->type }}</td>
+                         <td>{{ $clavier->utilisateur }}</td>
+                         <td>{{ $clavier->service }}</td>
+                         <td>{{ $clavier->site }}</td>
                          <td>
                              <button type="button" class="btn btn-primary btn-edit"
-                                 data-id="{{ $ordinateur->id }}"
-                                 data-serie="{{ $ordinateur->serie }}"
-                                 data-model="{{ $ordinateur->model }}"
-                                 data-type="{{ $ordinateur->type }}"
-                                 data-utilisateur="{{ $ordinateur->utilisateur }}"
-                                 data-service="{{ $ordinateur->service }}"
-                                 data-site="{{ $ordinateur->site }}"
+                                 data-id="{{ $clavier->id }}"
+                                 data-serie="{{ $clavier->serie }}"
+                                 data-model="{{ $clavier->model }}"
+                                 data-type="{{ $clavier->type }}"
+                                 data-utilisateur="{{ $clavier->utilisateur }}"
+                                 data-service="{{ $clavier->service }}"
+                                 data-site="{{ $clavier->site }}"
                                  data-bs-toggle="modal"
                                  data-bs-target="#editModal">
                                  <i class="fa-solid fa-pen-to-square"></i> Modifier
                              </button>
                          </td>
                          <td>
-                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordinateur->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
+                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $clavier->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
                          </td>
                      </tr>
                      @endforeach
@@ -59,7 +59,7 @@
              <div class="modal-dialog">
                  <div class="modal-content">
                      <div class="modal-header">
-                         <h5 class="modal-title" id="editModalLabel">Modifier cet ordinateur</h5>
+                         <h5 class="modal-title" id="editModalLabel">Modifier cet clavier</h5>
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <div class="modal-body">
@@ -125,11 +125,11 @@
              <div class="modal-dialog">
                  <div class="modal-content">
                      <div class="modal-header">
-                         <h5 class="modal-title" id="deleteModalLabel">Supprimer cet ordinateur</h5>
+                         <h5 class="modal-title" id="deleteModalLabel">Supprimer cet clavier</h5>
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <div class="modal-body">
-                         <p>Êtes-vous sûr de vouloir supprimer cet ordinateur ?</p>
+                         <p>Êtes-vous sûr de vouloir supprimer cet clavier ?</p>
                          <form id="deleteForm" method="POST">
                              @csrf
                              @method('DELETE')

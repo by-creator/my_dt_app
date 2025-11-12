@@ -106,7 +106,7 @@ class IpakiExtranetServiceController extends Controller
             'email' => 'required|email',
             'bl' => 'required|string',
             'compte' => 'required|string',
-            'documents.*' => 'file|1024',
+            'documents.*' => 'file',
         ]);
 
         $documents = [];     // Chemins des fichiers
