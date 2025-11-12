@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ValidationDematMail;
-use App\Mail\ValidationIesMail;
 use App\Models\RattachementBl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -35,9 +34,9 @@ class DematController extends Controller
 
             // Destinataires
             $destinataires = [
-                //'sn004-proforma@dakar-terminal.com',
-                //'sn004-facturation@dakar-terminal.com',
-                'noreplysitedt@gmail.com',
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com',
             ];
 
             // Envoi du mail
@@ -45,6 +44,17 @@ class DematController extends Controller
                 ->send(new ValidationDematMail($data, $files));
 
             Log::info('Demande de validation envoyée', ['email' => $data['email']]);
+
+            $data_create = $request->validate([
+                'prenom' => 'required|string|max:255',
+                'nom' => 'required|string|max:255',
+                'email' => 'required|email',
+                'bl' => 'required|string',
+                'compte' => 'required|string',
+
+            ]);
+
+            RattachementBl::create($data_create);
 
             return redirect()
                 ->route('demat.index')
