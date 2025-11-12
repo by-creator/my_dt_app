@@ -149,7 +149,7 @@
              document.getElementById("editId").value = id;
              document.getElementById("editDateReception").value = btn.dataset.date_reception || '';
              document.getElementById("editDateDeploiement").value = btn.dataset.date_deploiement || '';
-             document.getElementById("editMarque").value = btn.dataset.type || '';
+             document.getElementById("editMarque").value = btn.dataset.marque || '';
              document.getElementById("editUtilisateur").value = btn.dataset.utilisateur || '';
              document.getElementById("editForm").action = "/clavier/update/" + id;
          });
