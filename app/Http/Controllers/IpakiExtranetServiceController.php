@@ -97,7 +97,7 @@ class IpakiExtranetServiceController extends Controller
         Mail::to($email)->send(new LinkIesMail($email));
         return redirect()->route('ies.link')->with('link', 'Un mail contenant un lien  vers la plateforme a bien été envoyé à cette adresse : ' . $email);
     }
-
+/*
     public function sendValidation(Request $request)
     {
         $data = $request->validate([
@@ -121,9 +121,9 @@ class IpakiExtranetServiceController extends Controller
 
         $destinataires = [
 
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            //'noreplysitedt@gmail.com'
+            //'sn004-proforma@dakar-terminal.com',
+            //'sn004-facturation@dakar-terminal.com',
+            'noreplysitedt@gmail.com'
         ];
 
 
@@ -161,7 +161,7 @@ class IpakiExtranetServiceController extends Controller
    
     }
 
-
+*/
     public function demat()
     {
         return view('ies.demat');

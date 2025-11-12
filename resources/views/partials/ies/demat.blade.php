@@ -197,6 +197,15 @@
       showConfirmButton: true
     });
   </script>
+  @elseif (session('sendValidation'))
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Demande de validation échouée ❌',
+      text: "{{ session('sendValidation') }}",
+      showConfirmButton: true
+    });
+  </script>
   @endif
 </body>
 
