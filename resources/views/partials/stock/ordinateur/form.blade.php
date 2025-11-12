@@ -54,8 +54,11 @@
                              <div class="col-md-8">
                                  <div class="form-group has-icon-left">
                                      <div class="position-relative">
-                                         <input name="type" id="type" type="text" class="form-control"
-                                             placeholder="Saisissez un type" required>
+                                         <select name="type" id="" class="form-control">
+                                            <option value="">Choisissez le type</option>
+                                            <option value="DESKTOP">DESKTOP</option>
+                                            <option value="LAPTOP">LAPTOP</option>
+                                         </select>
                                          <div class="form-control-icon">
                                              <i class="fa-solid fa-file-signature"></i>
                                          </div>
