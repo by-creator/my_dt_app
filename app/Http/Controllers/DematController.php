@@ -23,7 +23,7 @@ class DematController extends Controller
                 'email' => 'required|email',
                 'bl' => 'required|string',
                 'compte' => 'required|string',
-                'documents' => 'required',
+                'documents' => 'required|max:20480',
             ]);
 
             // Récupération des fichiers
