@@ -25,6 +25,8 @@ class OrdinateurController extends Controller
             'utilisateur' => 'required|string|max:255',
             'service' => 'required|string|max:255',
             'site' => 'required|string|max:255',
+            'date_reception' => 'nullable||date',
+            'date_deploiement' => 'nullable||date',
 
 
         ]);
@@ -44,6 +46,8 @@ class OrdinateurController extends Controller
         $ordinateur->utilisateur = $request->utilisateur;
         $ordinateur->service = $request->service;
         $ordinateur->site = $request->site;
+        $ordinateur->date_reception = $request->date_reception;
+        $ordinateur->date_deploiement = $request->date_deploiement;
 
         $ordinateur->save();
 
