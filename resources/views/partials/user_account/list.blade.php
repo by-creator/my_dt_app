@@ -6,7 +6,7 @@
         <div class="card-body">
             <form action="{{ route('user_accounts.import') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
+                <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" >
                 <br>
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Importer</button>
                 <a href="{{ route('user_accounts.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
@@ -72,30 +72,30 @@
                             <input type="hidden" id="editId" name="id">
                             <div class="mb-3">
                                 <label for="editCreatedTime" class="form-label">Date début</label>
-                                <input type="datetime-local" class="form-control" name="created_time" id="editCreatedTime" required>
+                                <input type="datetime-local" class="form-control" name="created_time" id="editCreatedTime" >
                             </div>
 
                             <div class="mb-3">
                                 <label for="editEmployeeEndDate" class="form-label">Date fin</label>
-                                <input type="datetime-local" class="form-control" name="employee_end_date" id="editEmployeeEndDate" required>
+                                <input type="datetime-local" class="form-control" name="employee_end_date" id="editEmployeeEndDate" >
                             </div>
 
                             <div class="mb-3">
                                 <label for="editDisplayName" class="form-label">Nom & prénom(s)</label>
-                                <input type="text" class="form-control" name="display_name" id="editDisplayName" required>
+                                <input type="text" class="form-control" name="display_name" id="editDisplayName" >
                             </div>
 
                             <div class="mb-3">
                                 <label for="editDepartment" class="form-label">Département</label>
-                                <input type="text" class="form-control" name="department" id="editDepartment" required>
+                                <input type="text" class="form-control" name="department" id="editDepartment" >
                             </div>
                             <div class="mb-3">
                                 <label for="editEmail" class="form-label">Email</label>
-                                <input type="text" class="form-control" name="email" id="editEmail" required>
+                                <input type="text" class="form-control" name="email" id="editEmail" >
                             </div>
                             <div class="mb-3">
                                 <label for="editJobTitle" class="form-label">Job Tilte</label>
-                                <input type="text" class="form-control" name="job_title" id="editJobTitle" required>
+                                <input type="text" class="form-control" name="job_title" id="editJobTitle" >
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
