@@ -65,12 +65,13 @@ class UserAccountController extends Controller
 
         Excel::import(new UserAccountsImport, $request->file('file'));
 
-        return response()->json(['message' => 'Importation terminée']);
+        return redirect()->back()->with('success', 'Compte importé avec succès.');
     }
 
     public function export()
     {
         $fileName = 'user_accounts_' . now()->format('Ymd_His') . '.csv';
-        return Excel::download(new UserAccountsExport, $fileName);
+        Excel::download(new UserAccountsExport, $fileName);
+        return redirect()->back()->with('success', 'Compte exporté avec succès.');
     }
 }
