@@ -64,7 +64,7 @@
         <li class="submenu-item ">
             <a href="{{ route('ies.reset-password') }}"><i class="fa-solid fa-pen-to-square"></i> Réinitialisation</a>
         </li>
-         <li class="submenu-item">
+        <li class="submenu-item">
 
             <a href="{{ route('ies.link') }}"><i class="fa-solid fa-envelope"></i> Lien</a>
         </li>
@@ -76,7 +76,7 @@
         <span>Stock</span>
     </a>
     <ul class="submenu">
-                <li class="submenu-item">
+        <li class="submenu-item">
 
             <a href="{{ route('ordinateur.index') }}"><i class="fa-solid fa-computer"></i> Ordinateur</a>
         </li>
