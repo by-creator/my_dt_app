@@ -14,10 +14,10 @@ Bonjour,
 Il y a actuellement **{{ $count }} dossier(s)** avec le statut **EN ATTENTE**.
 
 @component('mail::table')
-| Nom | Prénom | Email | BL | Créé le |
-|-----|---------|-------|----|---------|
+| Nom | Prénom  | Numéro BL | Compte | Créé le |
+|-----|---------|-----------|--------|---------|
 @foreach ($dossiers as $d)
-| {{ $d->nom }} | {{ $d->prenom }} | {{ $d->email }} | {{ $d->bl }} | {{ $d->created_at->format('d/m/Y H:i') }} |
+| {{ $d->nom }} | {{ $d->prenom }} | {{ $d->bl }} | {{ $d->compte }} | {{ $d->created_at->format('d/m/Y H:i') }} |
 @endforeach
 @endcomponent
 
