@@ -148,7 +148,7 @@
             </div>
 
             <div class="mb-3">
-              <input type="text" name="compte" class="text-center form-control" required placeholder="Numéro de compte société (ex : SN../ND../1234)">
+              <input type="text" name="compte" class="text-center form-control" required placeholder="Société (ex : Dakar-Terminal SN../ND../1234)">
             </div>
 
             <div class="mb-3">
