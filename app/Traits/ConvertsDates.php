@@ -13,10 +13,12 @@ trait ConvertsDates
 
             // Liste des formats possibles (ajuste selon ton CSV)
             $formats = [
+                'd/m/Y H:i:s',
                 'd/m/Y H:i',
                 'd/m/Y',
                 'Y-m-d H:i:s',
                 'Y-m-d',
+                'd-m-Y H:i:s',
                 'd-m-Y H:i',
                 'd-m-Y',
             ];
@@ -49,6 +51,7 @@ trait ConvertsDates
             } else {
                 $value = null; // ou garde la valeur brute si tu préfères
             }
+
         }
 
         return parent::setAttribute($key, $value);

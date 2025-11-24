@@ -28,7 +28,7 @@
                                      <div class="position-relative">
                                          <input name="date_reception" id="date_reception" type="datetime-local" class="form-control">
                                          <div class="form-control-icon">
-                                             <i class="fa-solid fa-file-signature"></i>
+                                             <i class="fa-solid fa-calendar"></i>
                                          </div>
                                      </div>
                                  </div>
@@ -41,7 +41,7 @@
                                      <div class="position-relative">
                                          <input name="date_deploiement" id="date_deploiement" type="datetime-local" class="form-control">
                                          <div class="form-control-icon">
-                                             <i class="fa-solid fa-file-signature"></i>
+                                             <i class="fa-solid fa-calendar"></i>
                                          </div>
                                      </div>
                                  </div>

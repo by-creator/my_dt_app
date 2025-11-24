@@ -21,16 +21,10 @@
                 <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                       
+                        
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role->name == "ADMIN")
-                        @include('partials.dashboard.admin.role.menu_role')
-                        @elseif(Auth::user()->role->name == "SUPER_U")
-                        @include('partials.dashboard.admin.super_u.menu')
-                        @elseif(Auth::user()->role->name == "FACTURATION")
-                        @include('partials.facturation.menu_unify_form')
-                        @elseif(Auth::user()->role->name == "OPERATIONS")
+                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS")
                         @include('partials.ordre_approche.menu')
                         @endif
 
@@ -41,7 +35,6 @@
                                 <span>Paramètres</span>
                             </a>
                         </li>
-                        
                         <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -65,9 +58,9 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN")
-                @include('partials.dashboard.admin.role.form_role')
-                @include('partials.dashboard.admin.role.list_role')
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS")
+                @include('partials.ordre_approche.form')
+                @include('partials.ordre_approche.list')
                 @endif
             </div>
         </div>
