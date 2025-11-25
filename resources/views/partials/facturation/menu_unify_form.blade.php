@@ -3,7 +3,7 @@
 @elseif(Auth::user()->role->name == "SUPER_U")
 @include('partials.dashboard.admin.super_u.menu')
 @elseif(Auth::user()->role->name == "FACTURATION")
-<li class="sidebar-item  has-sub active">
+<li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Facturation</span>
