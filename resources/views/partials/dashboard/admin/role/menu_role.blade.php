@@ -1,4 +1,4 @@
-<li class="sidebar-item active ">
+<li class="sidebar-item ">
     <a href="{{ route('role.index') }}" class='sidebar-link'>
         <i class="fa-solid fa-user-lock"></i>
         <span>Gestion des rôles</span>
@@ -97,6 +97,26 @@
         </li>
         <li class="submenu-item ">
             <a href="{{ route('telephone-fixe.index') }}"><i class="fa-solid fa-phone"></i> Postes fixes</a>
+        </li>
+    </ul>
+</li>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Ordre d'approche</span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
+
+            <a href="{{ route('ordre_approche.vehicule') }}"><i class="fa-solid fa-car"></i> Véhicule</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('ordre_approche.conteneur') }}"><i class="fa-solid fa-box"></i> Conteneur</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('ordre_approche.gk') }}"><i class="fa-solid fa-boxes-stacked"></i> GK</a>
         </li>
     </ul>
 </li>

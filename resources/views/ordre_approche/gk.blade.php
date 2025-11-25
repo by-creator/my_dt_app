@@ -24,7 +24,7 @@
                         
                         <li class="sidebar-title">Menu</li>
 
-                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS")
+                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
                         @include('partials.ordre_approche.menu')
                         @endif
 
@@ -58,7 +58,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS")
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
                 @include('partials.ordre_approche.form')
                 @include('partials.ordre_approche.list')
                 @endif
