@@ -197,7 +197,16 @@
       showConfirmButton: true
     });
   </script>
-  @elseif (session('sendValidation'))
+  @elseif (session('info'))
+  <script>
+    Swal.fire({
+      icon: 'warning',
+      title: 'Validation en cours  ℹ️',
+      text: "{{ session('info') }}",
+      showConfirmButton: true
+    });
+  </script>
+  @elseif (session('error'))
   <script>
     Swal.fire({
       icon: 'error',

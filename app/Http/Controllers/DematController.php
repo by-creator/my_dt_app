@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class DematController extends Controller
 {
 
-    
+
     public function validation(Request $request)
     {
 
@@ -30,6 +30,15 @@ class DematController extends Controller
 
             ]);
 
+            // Vérifier si le BL existe déjà
+            $blExiste = RattachementBl::where('bl', $data['bl'])->exists();
+
+            if ($blExiste) {
+                return redirect()
+                    ->route('demat.index')
+                    ->with('info', 'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation');
+            }
+
             // Récupération des fichiers
             $files = $request->file('documents');
             if ($files instanceof \Illuminate\Http\UploadedFile) {
@@ -38,9 +47,9 @@ class DematController extends Controller
 
             // Destinataires
             $destinataires = [
-                'sn004-proforma@dakar-terminal.com',
-                'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com',
+                //'sn004-proforma@dakar-terminal.com',
+                //'sn004-facturation@dakar-terminal.com',
+                'noreplysitedt@gmail.com',
             ];
 
             // Envoi du mail
@@ -73,6 +82,4 @@ class DematController extends Controller
                 ->with('error', 'Une erreur est survenue lors de l’envoi.');
         }
     }
-
-    
 }
