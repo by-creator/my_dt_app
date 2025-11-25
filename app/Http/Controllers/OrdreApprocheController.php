@@ -53,7 +53,23 @@ class OrdreApprocheController extends Controller
 
         OrdreApproche::create($data);
 
-        return redirect()->route('ordre_approche.index')->with('create', 'Ordre créé avec succès.');
+        // Redirection selon le type
+        if ($data['type'] === 'VEHICULE') {
+            return redirect()->route('ordre_approche.vehicule')
+                ->with('create', 'Ordre appproche véhicule créé avec succès.');
+        }
+        else if ($data['type'] === 'CONTENEUR') {
+            return redirect()->route('ordre_approche.conteneur')
+                ->with('create', 'Ordre appproche conteneur créé avec succès.');
+        }
+        else if ($data['type'] === 'GK') {
+            return redirect()->route('ordre_approche.gk')
+                ->with('create', 'Ordre appproche gk créé avec succès.');
+        }
+
+        // Redirection par défaut
+        return redirect()->route('ordre_approche.index')
+            ->with('create', 'Ordre créé avec succès.');
     }
 
     public function update(Request $request, $id)
