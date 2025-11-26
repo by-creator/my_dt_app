@@ -14,7 +14,5 @@ class OrdreApproche extends Model
     protected $fillable = [
         'date',
         'numero',
-        'client',
-        'type',
     ];
 }

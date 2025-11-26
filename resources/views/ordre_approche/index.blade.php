@@ -21,7 +21,7 @@
                 <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
-
+                        
                         <li class="sidebar-title">Menu</li>
 
                         @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
@@ -57,38 +57,15 @@
             <div class="page-heading">
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
+            <div class="page-content">
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
+                @include('partials.ordre_approche.form')
+                @include('partials.ordre_approche.list')
+                @endif
+            </div>
         </div>
     </div>
     @include('partials.dashboard.script')
 </body>
-
-@if (session('create'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Ajout',
-        text: "{{ session('create') }}",
-        showConfirmButton: true
-    });
-</script>
-@elseif (session('update'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Modification',
-        text: "{{ session('update') }}",
-        showConfirmButton: true
-    });
-</script>
-@elseif (session('delete'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Suppression',
-        text: "{{ session('delete') }}",
-        showConfirmButton: true
-    });
-</script>
-@endif
 
 </html>

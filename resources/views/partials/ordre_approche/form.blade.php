@@ -34,47 +34,15 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Numéro</label>
+                                <label>Numéro de BL</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
                                         <input name="numero" id="numero" type="text"
-                                            class="form-control" placeholder="Saisissez le numéro" required>
+                                            class="form-control" placeholder="Saisissez le numéro de BL" required>
                                         <div class="form-control-icon">
                                             <i class="fa-solid fa-arrow-down-1-9"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Client facturé</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group has-icon-left">
-                                    <div class="position-relative">
-                                        <input name="client" id="client" type="text"
-                                            class="form-control" placeholder="Saisissez le client facturé" required>
-                                        <div class="form-control-icon">
-                                            <i class="fa-solid fa-user"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Type</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group has-icon-left">
-                                    <div class="position-relative">
-                                        <select class="form-control" name="type" id="type" required>
-                                            <option value="">Sélectionnez un type</option>
-                                            <option value="VEHICULE">VEHICULE</option>
-                                            <option value="CONTENEUR">CONTENEUR</option>
-                                            <option value="GK">GK</option>
-                                        </select>
-                                        <div class="form-control-icon">
-                                            <i class="fa-solid fa-file"></i>
                                         </div>
                                     </div>
                                 </div>

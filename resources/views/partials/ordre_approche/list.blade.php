@@ -7,26 +7,24 @@
              <table class="table table-striped" id="table1">
                  <thead>
                      <tr>
-                         <th>Date</th>
-                         <th>Numéro</th>
-                         <th>Client</th>
-                         <th>Type</th>
+                         <th>Date entrée</th>
+                         <th>Date sortie</th>
+                         <th>Numéro de BL</th>
+                         
                      </tr>
                  </thead>
                  <tbody>
                      @foreach ($ordres as $ordre)
                      <tr>
                          <td>{{ $ordre->date}}</td>
+                         <td></td>
                          <td>{{ $ordre->numero }}</td>
-                         <td>{{ $ordre->client }}</td>
-                         <td>{{ $ordre->type }}</td>
+                         
                          <td>
                              <button type="button" class="btn btn-primary btn-edit"
                                  data-id="{{ $ordre->id }}"
                                  data-date="{{ $ordre->date}}"
                                  data-numero="{{ $ordre->numero }}"
-                                 data-client="{{ $ordre->client }}"
-                                 data-type="{{ $ordre->type }}"
                                  data-bs-toggle="modal"
                                  data-bs-target="#editModal">
                                  <i class="fa-solid fa-pen-to-square"></i>
@@ -69,21 +67,8 @@
                                  <input type="text" class="form-control" id="editDate" name="date">
                              </div>
                              <div class="mb-3">
-                                 <label for="editNumero" class="form-label">Numéro</label>
+                                 <label for="editNumero" class="form-label">Numéro de BL</label>
                                  <input type="text" class="form-control" id="editNumero" name="numero">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="editClient" class="form-label">Client</label>
-                                 <input type="text" class="form-control" id="editClient" name="client">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="editType" class="form-label">Type</label>
-                                 <select class="form-control" name="type" id="editType" required>
-                                     <option value="">Sélectionnez un type</option>
-                                     <option value="VEHICULE">VEHICULE</option>
-                                     <option value="CONTENEUR">CONTENEUR</option>
-                                     <option value="GK">GK</option>
-                                 </select>
                              </div>
 
                              <div class="modal-footer">
@@ -144,8 +129,6 @@
              document.getElementById("editId").value = id;
              document.getElementById("editDate").value = btn.dataset.date || '';
              document.getElementById("editNumero").value = btn.dataset.numero || '';
-             document.getElementById("editClient").value = btn.dataset.client || '';
-             document.getElementById("editType").value = btn.dataset.type || '';
              document.getElementById("editForm").action = "/ordre-approche/update/" + id;
          });
 

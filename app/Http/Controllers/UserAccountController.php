@@ -19,7 +19,7 @@ class UserAccountController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
-            'created_time' => 'requirenullabled|date',
+            'created_time' => 'nullable|date',
             'employee_end_date' => 'nullable|date',
             'display_name' => 'nullable|string|max:255',
             'department' => 'nullable|string|max:255',

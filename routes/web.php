@@ -166,10 +166,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/ordre-approche/index', [OrdreApprocheController::class, 'index'])->name('ordre_approche.index');
     
-    Route::get('/ordre-approche/vehicule', [OrdreApprocheController::class, 'vehicule'])->name('ordre_approche.vehicule');
-    Route::get('/ordre-approche/conteneur', [OrdreApprocheController::class, 'conteneur'])->name('ordre_approche.conteneur');
-    Route::get('/ordre-approche/gk', [OrdreApprocheController::class, 'gk'])->name('ordre_approche.gk');
-
     Route::post('/ordre-approche/create', [OrdreApprocheController::class, 'create'])->name('ordre_approche.create');
     Route::put('/ordre-approche/update/{id}', [OrdreApprocheController::class, 'update'])->name('ordre_approche.update');
     Route::delete('/ordre-approche/delete/{id}', [OrdreApprocheController::class, 'delete'])->name('ordre_approche.delete');

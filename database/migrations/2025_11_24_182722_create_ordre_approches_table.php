@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('date')->nullable();
             $table->string('numero')->nullable();
-            $table->string('client')->nullable();
-            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

@@ -11,63 +11,21 @@ class OrdreApprocheController extends Controller
 
     public function index()
     {
-        return view('ordre_approche.index');
+        $ordres = OrdreApproche::orderBy('id', 'desc')->get();
+        return view('ordre_approche.index', compact('ordres'));
     }
 
-    public function vehicule()
-    {
-        $ordres = OrdreApproche::where('type', 'VEHICULE')
-            ->orderBy('id', 'desc')
-            ->get();
-
-        return view('ordre_approche.vehicule', compact('ordres'));
-    }
-
-    public function conteneur()
-    {
-        $ordres = OrdreApproche::where('type', 'CONTENEUR')
-            ->orderBy('id', 'desc')
-            ->get();
-
-        return view('ordre_approche.conteneur', compact('ordres'));
-    }
-
-    public function gk()
-    {
-        $ordres = OrdreApproche::where('type', 'GK')
-            ->orderBy('id', 'desc')
-            ->get();
-
-        return view('ordre_approche.gk', compact('ordres'));
-    }
-
+   
     public function create(Request $request)
     {
         $data = $request->validate([
             'numero' => 'required|string|max:255',
-            'client' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
             'date' => 'nullable||string',
 
         ]);
 
         OrdreApproche::create($data);
 
-        // Redirection selon le type
-        if ($data['type'] === 'VEHICULE') {
-            return redirect()->route('ordre_approche.vehicule')
-                ->with('create', 'Ordre appproche véhicule créé avec succès.');
-        }
-        else if ($data['type'] === 'CONTENEUR') {
-            return redirect()->route('ordre_approche.conteneur')
-                ->with('create', 'Ordre appproche conteneur créé avec succès.');
-        }
-        else if ($data['type'] === 'GK') {
-            return redirect()->route('ordre_approche.gk')
-                ->with('create', 'Ordre appproche gk créé avec succès.');
-        }
-
-        // Redirection par défaut
         return redirect()->route('ordre_approche.index')
             ->with('create', 'Ordre créé avec succès.');
     }
@@ -77,8 +35,6 @@ class OrdreApprocheController extends Controller
         $ordre = OrdreApproche::findOrFail($id);
 
         $ordre->numero = $request->numero;
-        $ordre->client = $request->client;
-        $ordre->type = $request->type;
         $ordre->date = $request->date;
 
         $ordre->save();
