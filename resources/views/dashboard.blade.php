@@ -56,7 +56,7 @@
                                     <div class="card-body">
                                         <p class="card-text">{{ $card['description'] }}</p>
                                         <a href="{{ $card['route'] }}" class="btn btn-primary w-100">
-                                            Accéder
+                                            Ouvrir
                                         </a>
                                     </div>
 

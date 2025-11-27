@@ -11,7 +11,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-       
+
         $user = Auth::user();
 
         $cards = [];
@@ -63,12 +63,12 @@ class DashboardController extends Controller
                         'route' => route('ordinateur.index')
                     ],
                 ];
-                
+
                 break;
 
-                case "SUPER_U":
+            case "SUPER_U":
                 $cards = [
-                    
+
                     [
                         'id' => 1,
                         'name' => 'Facturation',
@@ -105,11 +105,11 @@ class DashboardController extends Controller
                         'route' => route('ordinateur.index')
                     ],
                 ];
-                
+
                 break;
-                 case "FACTURATION":
+            case "FACTURATION":
                 $cards = [
-                    
+
                     [
                         'id' => 1,
                         'name' => 'Facturation',
@@ -117,9 +117,23 @@ class DashboardController extends Controller
                         'description' => 'Gestion Facturation',
                         'route' => route('rattachement.index')
                     ],
-                    
+
                 ];
-                
+
+                break;
+            case "OPERATIONS":
+                $cards = [
+
+                    [
+                        'id' => 1,
+                        'name' => 'Opérations',
+                        'header' => 'Opérations',
+                        'description' => 'Gestion des Opérations',
+                        'route' => route('ordre_approche.index')
+                    ],
+
+                ];
+
                 break;
         }
 
@@ -135,5 +149,4 @@ class DashboardController extends Controller
 
         return redirect('/login');
     }
-
 }
