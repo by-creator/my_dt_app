@@ -23,12 +23,13 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
 
-                        <li class="sidebar-title">
-                            <a href="{{ route('dashboard') }}">
+                        <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard') }}" class="sidebar-link">
                                 <i class="fa-solid fa-home"></i>
                                 <span>Accueil</span>
                             </a>
                         </li>
+
 
 
                         @if(Auth::user()->role->name == "SUPER_U")
@@ -64,7 +65,7 @@
     <main class="py-4">
         @yield('content')
     </main>
-@include('partials.dashboard.script')
+    @include('partials.dashboard.script')
 
 </body>
 
