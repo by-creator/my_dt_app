@@ -1,14 +1,18 @@
-<li class="sidebar-item">
-    <a href="{{ route('role.index') }}" class='sidebar-link'>
-        <i class="fa-solid fa-user-lock"></i>
-        <span>Gestion des rôles</span>
+<li class="sidebar-item  has-sub active">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Administration</span>
     </a>
-</li>
+    <ul class="submenu">
 
-<li class="sidebar-item">
-    <a href="{{ route('user.index') }}" class='sidebar-link'>
-        <i class="fa-solid fa-users"></i>
-        <span>Gestion des utilisateurs</span>
-    </a>
-</li>
+        <li class="submenu-item">
 
+            <a href="{{ route('role.index') }}"><i class="fa-solid fa-user-lock"></i> Gestion des rôles</a>
+        </li>
+        <li class="submenu-item">
+
+            <a href="{{ route('user.index') }}"><i class="fa-solid fa-users"></i> Gestion des utilisateurs</a>
+        </li>
+        
+    </ul>
+</li>
