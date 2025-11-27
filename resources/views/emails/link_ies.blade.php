@@ -9,7 +9,7 @@
 
 
 
-Afin de vous connecter sur notre plateforme merci de bien vouloir cliquer sur le lien ci-dessous : 
+Désormais pour toutes vos demandes de validation, obtention de factures et paiement merci de cliquer sur le lien ci-dessous : 
 
 @component('mail::button', ['url' => 'https://site-dt-production-98050a853413.herokuapp.com/demat'])
 LIEN D'ACCÈS PLATEFORME
