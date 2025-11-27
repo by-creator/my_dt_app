@@ -29,7 +29,7 @@
                             </a>
                         </li>
 
-                        @if(Auth::user()->role->name == "ADMIN")
+                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
                         @include('partials.ies.menu_ies')
                         @else
                         @endif
@@ -64,7 +64,7 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN")
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
                 @if (session('link'))
                 <script>
                     Swal.fire({

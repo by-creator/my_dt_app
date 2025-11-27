@@ -1,4 +1,3 @@
-@if(Auth::user()->role->name == "ADMIN")
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
@@ -30,6 +29,3 @@
         </li>
     </ul>
 </li>
-@elseif(Auth::user()->role->name == "SUPER_U")
-@include('partials.dashboard.admin.super_u.menu')
-@endif

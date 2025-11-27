@@ -60,8 +60,64 @@ class DashboardController extends Controller
                         'name' => 'Stock',
                         'header' => 'Stock',
                         'description' => 'Gestion de Stock',
-                        'route' => route('clavier.index')
+                        'route' => route('ordinateur.index')
                     ],
+                ];
+                
+                break;
+
+                case "SUPER_U":
+                $cards = [
+                    
+                    [
+                        'id' => 1,
+                        'name' => 'Facturation',
+                        'header' => 'Facturation',
+                        'description' => 'Gestion Facturation',
+                        'route' => route('rattachement.index')
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'Informatique',
+                        'header' => 'Informatique',
+                        'description' => 'Gestion Informatique',
+                        'route' => route('user_accounts.index')
+                    ],
+                    [
+                        'id' => 3,
+                        'name' => 'Ipaki Extranet (IES)',
+                        'header' => 'Ipaki Extranet (IES)',
+                        'description' => 'Gestion Ipaki Extranet (IES)',
+                        'route' => route('ies.validation')
+                    ],
+                    [
+                        'id' => 4,
+                        'name' => 'Opérations',
+                        'header' => 'Opérations',
+                        'description' => 'Gestion des Opérations',
+                        'route' => route('ordre_approche.index')
+                    ],
+                    [
+                        'id' => 5,
+                        'name' => 'Stock',
+                        'header' => 'Stock',
+                        'description' => 'Gestion de Stock',
+                        'route' => route('ordinateur.index')
+                    ],
+                ];
+                
+                break;
+                 case "FACTURATION":
+                $cards = [
+                    
+                    [
+                        'id' => 1,
+                        'name' => 'Facturation',
+                        'header' => 'Facturation',
+                        'description' => 'Gestion Facturation',
+                        'route' => route('rattachement.index')
+                    ],
+                    
                 ];
                 
                 break;

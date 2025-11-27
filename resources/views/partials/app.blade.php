@@ -30,17 +30,6 @@
                             </a>
                         </li>
 
-
-
-                        @if(Auth::user()->role->name == "SUPER_U")
-                        @include('partials.dashboard.admin.super_u.menu')
-                        @elseif(Auth::user()->role->name == "FACTURATION")
-                        @include('partials.facturation.menu_unify_form')
-                        @elseif(Auth::user()->role->name == "OPERATIONS")
-                        @include('partials.ordre_approche.menu')
-                        @endif
-
-
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-gear"></i>

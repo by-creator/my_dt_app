@@ -1,4 +1,3 @@
-@if(Auth::user()->role->name == "ADMIN")
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
@@ -22,4 +21,3 @@
         </li>
     </ul>
 </li>
-@endif
