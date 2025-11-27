@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('partials.app')
 
-<head>
-    @include('partials.dashboard.head')
-</head>
-
-<body>
+@section('content')
     <div id="app">
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
@@ -22,7 +17,12 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         
-                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-title">
+                        <a href="{{ route('dashboard') }}">
+                            <i class="fa-solid fa-home"></i>
+                            <span>Accueil</span>
+                        </a>
+                    </li>
 
                         @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.user.menu_user')
@@ -64,7 +64,4 @@
             </div>
         </div>
     </div>
-    @include('partials.dashboard.script')
-</body>
-
-</html>
+@endsection

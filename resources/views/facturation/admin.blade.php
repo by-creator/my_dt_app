@@ -21,8 +21,13 @@
                 <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        
-                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-title">
+                            <a href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-home"></i>
+                                <span>Accueil</span>
+                            </a>
+                        </li>
 
                         @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.facturation.menu_unify_admin')
@@ -36,7 +41,7 @@
                                 <span>Paramètres</span>
                             </a>
                         </li>
-                        
+
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>

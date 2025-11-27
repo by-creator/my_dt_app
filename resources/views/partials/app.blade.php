@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     @include('partials.dashboard.head')
 </head>
 
 <body>
-    <div id="app">
+
+    <nav>
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
@@ -29,10 +30,15 @@
                             </a>
                         </li>
 
-                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
+
+                        @if(Auth::user()->role->name == "SUPER_U")
+                        @include('partials.dashboard.admin.super_u.menu')
+                        @elseif(Auth::user()->role->name == "FACTURATION")
                         @include('partials.facturation.menu_unify_form')
-                        @else
+                        @elseif(Auth::user()->role->name == "OPERATIONS")
+                        @include('partials.ordre_approche.menu')
                         @endif
+
 
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
@@ -41,7 +47,7 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item  ">
+                        <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 <span>Déconnexion</span>
@@ -53,26 +59,13 @@
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
         </div>
-        <div id="main">
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header>
+    </nav>
 
-            <div class="page-heading">
-                <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
-            </div>
-            <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
-                @include('partials.rattachement_bl.validation')
-                @else
-                @endif
-            </div>
+    <main class="py-4">
+        @yield('content')
+    </main>
+@include('partials.dashboard.script')
 
-        </div>
-    </div>
-    @include('partials.dashboard.script')
 </body>
 
 </html>

@@ -21,7 +21,12 @@
                 <a href="index.html"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-title">
+                            <a href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-home"></i>
+                                <span>Accueil</span>
+                            </a>
+                        </li>
 
                         @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                         @include('partials.ies.menu_ies')

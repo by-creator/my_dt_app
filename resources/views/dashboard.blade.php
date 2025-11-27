@@ -1,78 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('partials.app')
 
-<head>
-    @include('partials.dashboard.head')
-</head>
+@section('content')
 
-<body>
-    <div id="app">
-        <div id="sidebar" class="active">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                        </div>
-                        <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                       
-                        <li class="sidebar-title">Menu</li>
+<div id="app">
+    <div id="main">
 
-                        @if(Auth::user()->role->name == "ADMIN")
-                        @include('partials.dashboard.admin.role.menu_role')
-                        @elseif(Auth::user()->role->name == "SUPER_U")
-                        @include('partials.dashboard.admin.super_u.menu')
-                        @elseif(Auth::user()->role->name == "FACTURATION")
-                        @include('partials.facturation.menu_unify_form')
-                        @elseif(Auth::user()->role->name == "OPERATIONS")
-                        @include('partials.ordre_approche.menu')
-                        @endif
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
 
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('settings') }}" class='sidebar-link'>
-                                <i class="fa-solid fa-gear"></i>
-                                <span>Paramètres</span>
-                            </a>
-                        </li>
-                        
-                        <li class="sidebar-item">
-                            <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                                <span>Déconnexion</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-            </div>
+        <div class="page-heading">
+            <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
         </div>
-        <div id="main">
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header>
 
-            <div class="page-heading">
-                <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
-            </div>
-            <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN")
-                @include('partials.dashboard.admin.role.form_role')
-                @include('partials.dashboard.admin.role.list_role')
-                @endif
+        <div class="page-content">
+            <div id="main-content">
+                <section id="basic-input-groups">
+                    <div class="row">
+                        
+                        <!-- BARRE DE RECHERCHE -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center"><u>Effectuer une recherche</u></h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                            <input type="search" id="searchInput"
+                                                class="form-control text-center"
+                                                placeholder="Saisissez les éléments de recherche">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LES CARDS -->
+                        <div class="row">
+                            @foreach ($cards as $card)
+                            <div class="col-md-3 mb-3">
+                                <div class="card shadow-sm h-100" 
+                                     data-card-id="{{ $card['id'] }}"
+                                     data-card-name="{{ $card['header'] }}"> <!-- 👈 OBLIGATOIRE -->
+                                    
+                                    <div class="card-header bg-white text-white">
+                                        <h5 class="card-title mb-0">
+                                            <u>{{ $card['header'] }}</u>
+                                        </h5>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <p class="card-text">{{ $card['description'] }}</p>
+                                        <a href="{{ $card['route'] }}" class="btn btn-primary w-100">
+                                            Accéder
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                    </div>
+                </section>
             </div>
         </div>
     </div>
-    @include('partials.dashboard.script')
-</body>
+</div>
 
-</html>
+<!-- SCRIPT DE RECHERCHE -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const searchInput = document.getElementById("searchInput");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", function(e) {
+        const searchQuery = e.target.value.toLowerCase().trim();
+
+        const cards = document.querySelectorAll(".card[data-card-name]");
+
+        cards.forEach((card) => {
+            const cardName = card.getAttribute("data-card-name").toLowerCase();
+
+            const wrapper = card.closest(".col-md-3");
+
+            if (cardName.includes(searchQuery)) {
+                wrapper.style.display = "";
+            } else {
+                wrapper.style.display = "none";
+            }
+        });
+    });
+});
+</script>
+
+@endsection

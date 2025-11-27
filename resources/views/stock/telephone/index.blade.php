@@ -21,14 +21,18 @@
                 <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                       
-                        <li class="sidebar-title">Menu</li>
 
+                        <li class="sidebar-title">
+                            <a href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-home"></i>
+                                <span>Accueil</span>
+                            </a>
+                        </li>
                         @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
                         @include('partials.stock.menu_stock')
                         @else
                         @endif
-                        
+
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-gear"></i>

@@ -6,6 +6,7 @@ use App\Http\Controllers\DematController;
 use App\Http\Controllers\EcranController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrdinateurController;
 use App\Http\Controllers\OrdreApprocheController;
 use App\Http\Controllers\RattachementController;
@@ -24,6 +25,10 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
+Route::post('/login', [LoginController::class, 'store'])
+    ->middleware(['guest'])
+    ->name('login.custom.store');
+
 Route::get('/demat', function () {
     return view('demat');
 })->name('demat.index');
@@ -36,8 +41,8 @@ Route::get('/register', function () {
     return view('livewire.auth.login');
 })->name('register');
 
-Route::get('dashboard', [RoleController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
