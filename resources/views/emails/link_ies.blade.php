@@ -7,7 +7,7 @@
 
 # Redirection vers plateforme
 
-
+Bonjour,
 
 Désormais pour toutes vos demandes de validation, obtention de factures et paiement merci de cliquer sur le lien ci-dessous : 
 
