@@ -57,6 +57,13 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 5,
+                        'name' => 'Ressources Humanines',
+                        'header' => 'Ressources Humaines',
+                        'description' => 'Gestion des Ressources Humaines',
+                        'route' => route('ordre_approche.index')
+                    ],
+                    [
+                        'id' => 5,
                         'name' => 'Stock',
                         'header' => 'Stock',
                         'description' => 'Gestion de Stock',
@@ -95,6 +102,13 @@ class DashboardController extends Controller
                         'name' => 'Opérations',
                         'header' => 'Opérations',
                         'description' => 'Gestion des Opérations',
+                        'route' => route('ordre_approche.index')
+                    ],
+                    [
+                        'id' => 5,
+                        'name' => 'Ressources Humanines',
+                        'header' => 'Ressources Humaines',
+                        'description' => 'Gestion des Ressources Humaines',
                         'route' => route('ordre_approche.index')
                     ],
                     [
