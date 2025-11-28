@@ -65,4 +65,9 @@ class RattachementBl extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function dossierFacturation()
+    {
+        return $this->hasMany(DossierFacturation::class);
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClavierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DematController;
+use App\Http\Controllers\DossierFacturationController;
 use App\Http\Controllers\EcranController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
@@ -20,6 +21,15 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+
+Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'])->name('dossier_facturation.index');
+Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
+Route::get('/dossier-facturation/list', [DossierFacturationController::class, 'list'])->name('dossier_facturation.list');
+Route::get('/dossier-facturation/{id}', [DossierFacturationController::class, 'show'])
+     ->name('dossier.show');
+
+
+
 
 Route::get('/', function () {
     return view('index');
