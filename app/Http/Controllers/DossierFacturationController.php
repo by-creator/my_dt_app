@@ -43,7 +43,9 @@ class DossierFacturationController extends Controller
                 $saveData[$field . '_original_name'] = $request->file($field)->getClientOriginalName();
 
                 // upload du fichier
-                $saveData[$field] = $request->file($field)->store("documents/$field", 'public');
+                //$saveData[$field] = $request->file($field)->store("documents/$field", 'public');
+                $saveData[$field] = $request->file($field)->store("documents/$field", 'b2');
+
             }
         }
 

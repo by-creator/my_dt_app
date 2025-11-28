@@ -11,11 +11,12 @@
             <th>Proforma</th>
             <td>
                 @if ($dossier->proforma)
-                    <a href="{{ asset('storage/' . $dossier->proforma) }}" target="_blank">
-                        {{ $dossier->proforma_original_name }}
-                    </a>
+                <a href="{{ Storage::disk('b2')->url($dossier->proforma) }}" target="_blank">
+                    {{ $dossier->proforma_original_name }}
+                </a>
+
                 @else
-                    <span class="text-muted">Pas de fichier</span>
+                <span class="text-muted">Pas de fichier</span>
                 @endif
             </td>
         </tr>
@@ -24,11 +25,11 @@
             <th>Facture</th>
             <td>
                 @if ($dossier->facture)
-                    <a href="{{ asset('storage/' . $dossier->facture) }}" target="_blank">
-                        {{ $dossier->facture_original_name }}
-                    </a>
+                <a href="{{ Storage::disk('b2')->url($dossier->facture) }}" target="_blank">
+                    {{ $dossier->facture_original_name }}
+                </a>
                 @else
-                    <span class="text-muted">Pas de fichier</span>
+                <span class="text-muted">Pas de fichier</span>
                 @endif
             </td>
         </tr>
@@ -37,11 +38,11 @@
             <th>Bon</th>
             <td>
                 @if ($dossier->bon)
-                    <a href="{{ asset('storage/' . $dossier->bon) }}" target="_blank">
-                        {{ $dossier->bon_original_name }}
-                    </a>
+                <a href="{{ Storage::disk('b2')->url($dossier->bon) }}" target="_blank">
+                    {{ $dossier->bon_original_name }}
+                </a>
                 @else
-                    <span class="text-muted">Pas de fichier</span>
+                <span class="text-muted">Pas de fichier</span>
                 @endif
             </td>
         </tr>

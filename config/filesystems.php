@@ -32,13 +32,20 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app/documents'),
+            'root' => storage_path('app/private'),
             'serve' => true,
             'throw' => false,
             'report' => false,
-            'url' => env('APP_URL') . '/storage/documents',
-            'visibility' => 'public',
         ],
+
+        'b2' => [
+            'driver' => 'b2',
+            'accountId' => env('B2_KEY_ID'),
+            'applicationKey' => env('B2_APPLICATION_KEY'),
+            'bucketName' => env('B2_BUCKET_NAME'),
+            'bucketId' => env('B2_BUCKET_ID'),
+        ],
+
 
         'public' => [
             'driver' => 'local',
