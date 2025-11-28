@@ -25,7 +25,7 @@ Route::get('/ping', function () {
     return response()->json(['message' => 'API is working ✅']);
 });
 
-//api ordre-approche-vehicule
+//ordre-approche-vehicule
 Route::post('/ask-powerbi/ordre-approche-vehicule', function(Request $request) {
     return response()->json([
         'BL' => $request->numero
