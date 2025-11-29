@@ -19,7 +19,9 @@
             <div id="main-content">
                 <section id="basic-input-groups">
                     <div class="row">
-                        
+                        @if(Auth::user()->role->name == "CLIENT_FACTURATION" )
+                        @include('dossier_facturation.index')
+                        @else
                         <!-- BARRE DE RECHERCHE -->
                         <div class="col-12">
                             <div class="card">
@@ -38,6 +40,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <!-- LES CARDS -->
                         <div class="row">

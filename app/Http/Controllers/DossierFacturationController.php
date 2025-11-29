@@ -21,7 +21,7 @@ class DossierFacturationController extends Controller
     public function list()
     {
         $dossiers = DossierFacturation::orderBy('created_at', 'desc')->get();
-        return view('dossier_facturation.list               ', compact('dossiers'));
+        return view('dossier_facturation.list', compact('dossiers'));
     }
 
     public function store(Request $request)

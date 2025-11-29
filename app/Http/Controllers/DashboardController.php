@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DossierFacturation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -11,6 +12,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $dossiers = DossierFacturation::all();
 
         $user = Auth::user();
 
@@ -151,7 +153,7 @@ class DashboardController extends Controller
                 break;
         }
 
-        return view('dashboard', compact('cards'));
+        return view('dashboard', compact('cards','dossiers'));
     }
 
     public function logout()
