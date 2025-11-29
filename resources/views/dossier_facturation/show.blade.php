@@ -1,4 +1,4 @@
-@extends('partials.app') {{-- ou ton layout --}}
+@extends('partials.app')
 
 @section('content')
 <div class="container">
@@ -9,7 +9,10 @@
             <h3>{{ ucfirst($type) }}</h3>
 
             @php
+                // récupère le tableau de fichiers pour ce type
                 $files = $dossier->$type ?? [];
+                // filtre les fichiers sans path
+                $files = array_filter($files, fn($f) => !empty($f['path']));
             @endphp
 
             @if (!empty($files))
@@ -19,7 +22,7 @@
                             $url = Storage::disk('b2')->url($file['path']);
                         @endphp
                         <li class="mb-1">
-                            📄 {{ $file['original'] }} 
+                            📄 {{ $file['original'] ?? 'Fichier inconnu' }}
                             <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
                                 Ouvrir
                             </a>
@@ -27,7 +30,7 @@
                     @endforeach
                 </ul>
             @else
-                <p class="text-muted">Aucun fichier disponible.</p>
+                <p class="text-muted">Aucun fichier disponible pour {{ $type }}.</p>
             @endif
         </div>
     @endforeach
