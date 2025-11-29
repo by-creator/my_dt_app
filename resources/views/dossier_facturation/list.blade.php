@@ -1,14 +1,17 @@
 
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title"><u>Liste des dossiers</u></h4>
-            @if($dossiers->isEmpty())
-            <p class="text-muted">Aucun dossier enregistré.</p>
-            @else
+    <h2 class="mb-3">Liste des dossiers</h2>
+
+    @if($dossiers->isEmpty())
+        <p class="text-muted">Aucun dossier enregistré.</p>
+    @else
+        <!-- Barre de recherche -->
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par ID...">
         </div>
-        <div class="card-body">
-            <table class="table table-striped" id="table1">
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="dossiersTable">
                 <thead class="table-light">
                     <tr>
                         <th>ID</th>
@@ -17,19 +20,18 @@
                 </thead>
                 <tbody>
                     @foreach($dossiers as $dossier)
-                    <tr>
-                        <td>{{ $dossier->id }}</td>
-                        <td>
-                            <a href="{{ route('dossier_facturation.show', $dossier->id) }}" class="btn btn-sm btn-primary">
-                                Voir les documents
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $dossier->id }}</td>
+                            <td>
+                                <a href="{{ route('dossier_facturation.show', $dossier->id) }}" class="btn btn-sm btn-primary">
+                                    Voir
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
     @endif
 </div>
 
@@ -47,34 +49,5 @@
                 row.style.display = 'none';
             }
         });
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const table = document.getElementById('table1');
-
-        // Event delegation pour Edit
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-edit');
-            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
-
-            const id = btn.dataset.id;
-            document.getElementById("editId").value = id;
-            document.getElementById("editName").value = btn.dataset.name || '';
-            document.getElementById("editForm").action = "/role/update/" + id;
-        });
-
-        // Event delegation pour Delete
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-delete');
-            if (!btn) return;
-
-            const id = btn.dataset.id;
-            document.getElementById("deleteId").value = id;
-            document.getElementById("deleteForm").action = "/role/delete/" + id;
-        });
-
-        // Initialiser la datatable
-        new simpleDatatables.DataTable("#table1");
     });
 </script>
