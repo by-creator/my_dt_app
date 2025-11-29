@@ -3,6 +3,7 @@
 @section('content')
 <div id="app">
 
+    
     <div id="main">
         <header class="mb-3">
             <a href="#" class="burger-btn d-block d-xl-none">
@@ -18,7 +19,7 @@
         </div>
         <div class="page-content">
             @if(Auth::user()->role->name == "CLIENT_FACTURATION")
-            @include('dossier_facturation.list')
+            @include('partials.dossier_facturation.list')
             @endif
         </div>
     </div>
