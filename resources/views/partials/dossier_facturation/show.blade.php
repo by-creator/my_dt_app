@@ -17,11 +17,6 @@
                     <a href="#" class="btn btn-sm btn-light text-dark">
                         <i class="fa-solid fa-file"></i> Générer Proforma
                     </a>
-
-                    @elseif($type === 'facture')
-                    <a href="#" class="btn btn-sm btn-light text-dark">
-                        <i class="fa-solid fa-file"></i> Demander BAD
-                    </a>
                     @endif
                 </div>
                 <div class="card-body">
@@ -35,7 +30,7 @@
                             <span>{{ $file['original'] }}</span>
                             @if(!empty($file['path']))
                             <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
-                                <i class="fa-solid fa-eye"></i> 
+                                <i class="fa-solid fa-eye"></i>
                             </a>
                             @if($type === 'proforma')
                             <a href="#" class="btn btn-sm btn-success ms-2">
@@ -43,6 +38,10 @@
                             </a>
                             <a href="#" class="btn btn-sm btn-danger ms-2">
                                 <i class="fa-solid fa-trash"> </i>
+                            </a>
+                            @elseif($type === 'facture')
+                            <a href="#" class="btn btn-sm btn-primary ms-2">
+                                <i class="fa-solid fa-plus"> </i>
                             </a>
                             @endif
                             @else
@@ -53,6 +52,23 @@
                     </ul>
                     @else
                     <p class="text-muted mb-0">Aucun fichier disponible pour {{ $type }}.</p>
+                    @endif
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text"></p>
+                    @if($type === 'proforma')
+                    <a href="#" class="btn btn-primary w-100">
+                        <i class="fa-solid fa-bell"></i> Effectuer une relance
+                    </a>
+                    @elseif($type === 'facture')
+                    <a href="#" class="btn btn-primary w-100">
+                        <i class="fa-solid fa-bell"></i> Effectuer une relance
+                    </a>
+                    @elseif($type === 'bon')
+                    <a href="#" class="btn btn-primary w-100">
+                        <i class="fa-solid fa-bell"></i> Effectuer une relance
+                    </a>
                     @endif
                 </div>
 
