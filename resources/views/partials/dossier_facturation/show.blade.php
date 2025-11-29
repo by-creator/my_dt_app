@@ -1,46 +1,44 @@
+<div class="container mt-4">
+    <h4 class="mb-4"><u>Liste des documents</u></h4>
 
-<u><h4 class="mb-4">Liste des documents</h4></u>
+    <div class="row">
+        @foreach(['proforma', 'facture', 'bon'] as $type)
+            @php
+                $files = $dossier->$type ?? [];
+                $files = array_filter($files, fn($f) => !empty($f['path']));
+            @endphp
 
-@foreach (['proforma', 'facture', 'bon'] as $type)
-    <div class="mb-4">
-        <h5 class="mb-2">{{ ucfirst($type) }}</h5>
-
-        @php
-            $files = $dossier->$type ?? [];
-            $files = array_filter($files, fn($f) => !empty($f['path']));
-        @endphp
-
-        @if (!empty($files))
-            <table class="table table-bordered table-striped table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Nom du fichier</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($files as $index => $file)
-                        @php
-                            $url = Storage::disk('b2')->url($file['path']);
-                        @endphp
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>
-                                <span class="badge bg-info text-dark">{{ $file['original'] }}</span>
-                            </td>
-                            <td>
-                                <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
-                                    <i class="fa-solid fa-eye"></i> Consulter
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p class="text-muted">Aucun fichier disponible pour {{ $type }}.</p>
-        @endif
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <span>{{ ucfirst($type) }}</span>
+                        <span class="badge bg-light text-dark">{{ count($files) }}</span>
+                    </div>
+                    <div class="card-body">
+                        @if(count($files) > 0)
+                            <ul class="list-group list-group-flush">
+                                @foreach($files as $file)
+                                    @php
+                                        $url = Storage::disk('b2')->url($file['path'] ?? '');
+                                    @endphp
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>{{ $file['original'] }}</span>
+                                        @if(!empty($file['path']))
+                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="fa-solid fa-eye"></i> Consulter
+                                            </a>
+                                        @else
+                                            <span class="text-muted">Pas de fichier</span>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-muted mb-0">Aucun fichier disponible pour {{ $type }}.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
-@endforeach
-
+</div>

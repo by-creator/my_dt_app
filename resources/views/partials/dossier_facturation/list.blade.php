@@ -30,7 +30,7 @@
                     </td>
                     <td>
                         @if($rattachement)
-                        <a href="{{ route('dossier_facturation.show', $rattachement->id) }}"
+                        <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
                             class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-eye"></i> Consulter
                         </a>
