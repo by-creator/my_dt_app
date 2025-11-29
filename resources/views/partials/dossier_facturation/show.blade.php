@@ -12,12 +12,12 @@
             <div class="card h-100 shadow-sm">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <span>{{ ucfirst($type) }}</span>
-                    <span class="badge bg-light text-dark">{{ count($files) }}</span>
                     @if($type === 'proforma')
                     <a href="#" class="btn btn-sm btn-light text-dark">
                         <i class="fa-solid fa-file"></i> Générer Proforma
                     </a>
                     @endif
+                    <span class="badge bg-light text-dark">{{ count($files) }}</span>
                 </div>
                 <div class="card-body">
                     @if(count($files) > 0)
