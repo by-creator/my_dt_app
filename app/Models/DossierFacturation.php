@@ -24,7 +24,12 @@ class DossierFacturation extends Model
 
     ];
 
-    protected $casts = ['date_proforma' => 'datetime'];
+    protected $casts = [
+        'date_proforma' => 'datetime',
+        'proforma' => 'array',
+        'facture' => 'array',
+        'bon' => 'array',
+    ];
 
     public function getDateProformaFormattedAttribute()
     {

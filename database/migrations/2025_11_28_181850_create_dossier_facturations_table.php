@@ -19,13 +19,13 @@ return new class extends Migration
             
             $table->dateTime('date_proforma')->nullable();
 
-            $table->string('proforma')->nullable();
+            $table->json('proforma')->nullable();
             $table->string('proforma_original_name')->nullable();
 
-            $table->string('facture')->nullable();
+            $table->json('facture')->nullable();
             $table->string('facture_original_name')->nullable();
 
-            $table->string('bon')->nullable();
+            $table->json('bon')->nullable();
             $table->string('bon_original_name')->nullable();
 
             $table->timestamps();

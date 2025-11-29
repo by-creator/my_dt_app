@@ -2,52 +2,66 @@
 
 @section('content')
 
-<div class="container mt-4">
+<tr>
+    <th>Proforma</th>
+    <td>
+        @if ($dossier->proforma)
+        @foreach ($dossier->proforma as $file)
+        @if (!empty($file['path']) && $file['path'] !== false)
+        <a href="{{ Storage::disk('b2')->url($file['path']) }}" target="_blank">
+            {{ $file['original'] }}
+        </a>
+        @else
+        <span class="text-danger">⚠️ Fichier non disponible</span>
+        @endif
+        @endforeach
 
-    <h2 class="mb-4">Documents du dossier</h2>
 
-    <table class="table table-bordered">
-        <tr>
-            <th>Proforma</th>
-            <td>
-                @if ($dossier->proforma)
-                <a href="{{ Storage::disk('b2')->url($dossier->proforma) }}" target="_blank">
-                    {{ $dossier->proforma_original_name }}
-                </a>
 
-                @else
-                <span class="text-muted">Pas de fichier</span>
-                @endif
-            </td>
-        </tr>
+        @endif
+    </td>
+</tr>
 
-        <tr>
-            <th>Facture</th>
-            <td>
-                @if ($dossier->facture)
-                <a href="{{ Storage::disk('b2')->url($dossier->facture) }}" target="_blank">
-                    {{ $dossier->facture_original_name }}
-                </a>
-                @else
-                <span class="text-muted">Pas de fichier</span>
-                @endif
-            </td>
-        </tr>
+<tr>
+    <th>Facture</th>
+    <td>
+        @if ($dossier->facture)
+        @foreach ($dossier->facture as $file)
+        @if (!empty($file['path']) && $file['path'] !== false)
+        <a href="{{ Storage::disk('b2')->url($file['path']) }}" target="_blank">
+            {{ $file['original'] }}
+        </a>
+        @else
+        <span class="text-danger">⚠️ Fichier non disponible</span>
+        @endif
+        @endforeach
 
-        <tr>
-            <th>Bon</th>
-            <td>
-                @if ($dossier->bon)
-                <a href="{{ Storage::disk('b2')->url($dossier->bon) }}" target="_blank">
-                    {{ $dossier->bon_original_name }}
-                </a>
-                @else
-                <span class="text-muted">Pas de fichier</span>
-                @endif
-            </td>
-        </tr>
-    </table>
 
-</div>
+
+        @endif
+    </td>
+</tr>
+
+<tr>
+    <th>Bon</th>
+    <td>
+        @if ($dossier->bon)
+        @foreach ($dossier->proforma as $file)
+        @if (!empty($file['path']) && $file['path'] !== false)
+        <a href="{{ Storage::disk('b2')->url($file['path']) }}" target="_blank">
+            {{ $file['original'] }}
+        </a>
+        @else
+        <span class="text-danger">⚠️ Fichier non disponible</span>
+        @endif
+        @endforeach
+
+
+
+        @endif
+    </td>
+</tr>
+
+
 
 @endsection
