@@ -15,12 +15,12 @@
                     <span class="badge bg-light text-dark">{{ count($files) }}</span>
                     @if($type === 'proforma')
                     <a href="#" class="btn btn-sm btn-light text-dark">
-                        <i class="fa-solid fa-upload"></i> Générer Proforma
+                        <i class="fa-solid fa-file"></i> Générer Proforma
                     </a>
 
                     @elseif($type === 'facture')
                     <a href="#" class="btn btn-sm btn-light text-dark">
-                        <i class="fa-solid fa-upload"></i> Demander BAD
+                        <i class="fa-solid fa-file"></i> Demander BAD
                     </a>
                     @endif
                 </div>
@@ -34,12 +34,12 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span>{{ $file['original'] }}</span>
                             @if(!empty($file['path']))
-                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                <i class="fa-solid fa-eye"></i> Consulter
+                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye"></i> 
                             </a>
                             @if($type === 'proforma')
-                            <a href="#" class="btn btn-sm btn-danger ms-2">
-                                <i class="fa-solid fa-trash"> </i>
+                            <a href="#" class="btn btn-sm btn-success ms-2">
+                                <i class="fa-solid fa-check-to-slot"></i>
                             </a>
                             <a href="#" class="btn btn-sm btn-danger ms-2">
                                 <i class="fa-solid fa-trash"> </i>
