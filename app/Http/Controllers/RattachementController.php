@@ -20,29 +20,35 @@ class RattachementController extends Controller
         return view('rattachement_bl.index', compact('rattachements', 'rattachement_validations', 'users'));
     }
 
-    public function delete($id)
+    public function create($id)
     {
         $rattachement = RattachementBl::findOrFail($id);
 
-        if ($rattachement->statut == "EN ATTENTE") {
+        if ($rattachement->statut == "EN ATTENTE VALIDATION") {
             $rattachement->user_id = Auth::user()->id;
             $rattachement->statut = "VALIDÉ";
 
             $destinataires = [
-            
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            $rattachement->email,
-            //'noreplysitedt@gmail.com'
-        ];
+
+                //'sn004-proforma@dakar-terminal.com',
+                //'sn004-facturation@dakar-terminal.com',
+                $rattachement->email,
+                'noreplysitedt@gmail.com'
+            ];
 
             Mail::to($destinataires)->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
 
             $rattachement->save();
 
+            $rattachement->dossierFacturation()->create([
+                'date_proforma' => now(),
+                'proforma' => [],
+                'facture' => [],
+                'bon' => [],
+            ]);
+
             return redirect()->back()->with('valide', 'Dossier validé avec succès.');
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', 'Dossier déjà traité.');
         }
     }
@@ -51,17 +57,17 @@ class RattachementController extends Controller
     {
         $rattachement = RattachementBl::findOrFail($id);
 
-        if ($rattachement->statut == "EN ATTENTE") {
+        if ($rattachement->statut == "EN ATTENTE VALIDATION") {
             $rattachement->user_id = Auth::user()->id;
             $rattachement->statut = "REJETÉ";
 
             $destinataires = [
-            
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            $rattachement->email,
-            //'noreplysitedt@gmail.com'
-        ];
+
+                //'sn004-proforma@dakar-terminal.com',
+                //'sn004-facturation@dakar-terminal.com',
+                $rattachement->email,
+                'noreplysitedt@gmail.com'
+            ];
 
             $motif = $request->motif;
 
@@ -70,8 +76,7 @@ class RattachementController extends Controller
             $rattachement->save();
 
             return redirect()->back()->with('valide', 'Dossier rejeté avec succès.');
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', 'Dossier déjà traité.');
         }
     }

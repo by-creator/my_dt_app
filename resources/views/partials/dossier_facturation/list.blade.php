@@ -8,29 +8,40 @@
     @else
     <!-- Barre de recherche -->
     <div class="mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par ID...">
+        <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par BL...">
     </div>
 
     <div class="table-responsive">
         <table class="table table-striped table-hover" id="dossiersTable">
             <thead class="table-white">
                 <tr>
-                    <th>ID</th>
+                    <th>Numéro de BL</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($dossiers as $dossier)
                 <tr>
-                    <td>{{ $dossier->id }}</td>
                     <td>
-                        <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
+                        @php
+                        $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
+                        @endphp
+                        {{ $rattachement ? $rattachement->bl : 'Rattachement non trouvé' }}
+                    </td>
+                    <td>
+                        @if($rattachement)
+                        <a href="{{ route('dossier_facturation.show', $rattachement->id) }}"
                             class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-eye"></i> Consulter
                         </a>
+                        @else
+                        <span class="text-muted">Aucun rattachement</span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
+
+
             </tbody>
         </table>
     </div>

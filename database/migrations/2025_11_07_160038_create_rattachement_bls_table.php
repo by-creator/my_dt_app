@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('bl');
             $table->string('compte');
-            $table->string('statut')->default("EN ATTENTE");
+            $table->string('statut')->default("EN ATTENTE VALIDATION");
             $table->timestamps();
         });
     }

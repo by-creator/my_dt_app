@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DossierFacturation;
+use App\Models\RattachementBl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -13,6 +14,8 @@ class DashboardController extends Controller
     public function index()
     {
         $dossiers = DossierFacturation::orderBy('id', 'desc')->paginate(2);
+
+        $rattachements = RattachementBl::where('email', Auth::user()->email)->get();
 
         $user = Auth::user();
 
@@ -153,7 +156,7 @@ class DashboardController extends Controller
                 break;
         }
 
-        return view('dashboard', compact('cards','dossiers'));
+        return view('dashboard', compact('cards', 'dossiers', 'rattachements'));
     }
 
     public function logout()

@@ -164,7 +164,7 @@
             const email = btn.dataset.email;
             document.getElementById("deleteId").value = id;
             document.getElementById("deleteEmail").value = email;
-            document.getElementById("deleteForm").action = "/rattachement/delete/" + id;
+            document.getElementById("deleteForm").action = "/rattachement/create/" + id;
         });
 
         // Initialiser la datatable
