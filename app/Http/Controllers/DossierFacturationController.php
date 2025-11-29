@@ -27,33 +27,37 @@ class DossierFacturationController extends Controller
     public function store(Request $request)
     {
         $fields = ['proforma', 'facture', 'bon'];
-        $dataToSave = [];
+
+        $validated = $request->validate([
+            'proforma.*' => 'nullable|mimes:pdf|max:2048',
+            'facture.*' => 'nullable|mimes:pdf|max:2048',
+            'bon.*' => 'nullable|mimes:pdf|max:2048',
+            'date_proforma' => 'nullable|date',
+        ]);
+
+        $saveData = [
+            'date_proforma' => $request->date_proforma,
+        ];
 
         foreach ($fields as $field) {
-
-            $filesArray = [];
+            $saveData[$field] = [];
 
             if ($request->hasFile($field)) {
-
                 foreach ($request->file($field) as $file) {
+                    $path = $file->store("documents/$field", 'b2'); // B2 disk
 
-                    $originalName = $file->getClientOriginalName();
-
-                    // chemin dans le bucket
-                    $path = $file->store("documents/$field", 'b2');
-
-                    $filesArray[] = [
-                        'original' => $originalName,
-                        'path' => $path,
-                    ];
+                    if ($path) {
+                        $saveData[$field][] = [
+                            'original' => $file->getClientOriginalName(),
+                            'path' => $path,
+                        ];
+                    }
                 }
             }
-
-            $dataToSave[$field] = $filesArray;
         }
 
-        DossierFacturation::create($dataToSave);
+        DossierFacturation::create($saveData);
 
-        return back()->with('success', 'Dossier enregistré avec succès !');
+        return back()->with('success', 'Documents enregistrés avec succès !');
     }
 }
