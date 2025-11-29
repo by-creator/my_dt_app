@@ -1,6 +1,4 @@
-@extends('partials.app')
 
-@section('content')
 
 @foreach (['proforma', 'facture', 'bon'] as $type)
     <div class="mb-4">
@@ -58,4 +56,3 @@
     </div>
 @endforeach
 
-@endsection

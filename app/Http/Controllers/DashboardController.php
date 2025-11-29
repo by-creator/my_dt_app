@@ -12,7 +12,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $dossiers = DossierFacturation::all();
+        $dossiers = DossierFacturation::orderBy('id', 'desc')->paginate(2);
 
         $user = Auth::user();
 

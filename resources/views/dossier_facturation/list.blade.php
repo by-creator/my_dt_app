@@ -1,9 +1,9 @@
 
 <div class="container mt-4">
-    <h2 class="mb-3">Liste des dossiers</h2>
+    <h2 class="mb-4">Liste des dossiers</h2>
 
     @if($dossiers->isEmpty())
-        <p class="text-muted">Aucun dossier enregistré.</p>
+        <p class="text-muted text-center">Aucun dossier enregistré.</p>
     @else
         <!-- Barre de recherche -->
         <div class="mb-3">
@@ -11,8 +11,8 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="dossiersTable">
-                <thead class="table-light">
+            <table class="table table-striped table-hover" id="dossiersTable">
+                <thead class="table-white">
                     <tr>
                         <th>ID</th>
                         <th>Actions</th>
@@ -23,8 +23,9 @@
                         <tr>
                             <td>{{ $dossier->id }}</td>
                             <td>
-                                <a href="{{ route('dossier_facturation.show', $dossier->id) }}" class="btn btn-sm btn-primary">
-                                    Voir
+                                <a href="{{ route('dossier_facturation.show', $dossier->id) }}" 
+                                   class="btn btn-sm btn-primary">
+                                   Voir
                                 </a>
                             </td>
                         </tr>
@@ -32,22 +33,22 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination Bootstrap -->
+        <div class="mt-3">
+            {{ $dossiers->links('pagination::bootstrap-5') }}
+        </div>
     @endif
 </div>
 
-<!-- Script pour filtrer par ID -->
 <script>
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        let filter = this.value.trim();
-        let rows = document.querySelectorAll('#dossiersTable tbody tr');
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    let filter = this.value.trim();
+    let rows = document.querySelectorAll('#dossiersTable tbody tr');
 
-        rows.forEach(row => {
-            let id = row.cells[0].textContent;
-            if (id.includes(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
+    rows.forEach(row => {
+        let id = row.cells[0].textContent;
+        row.style.display = id.includes(filter) ? '' : 'none';
     });
+});
 </script>

@@ -22,10 +22,6 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 
-Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'])->name('dossier_facturation.index');
-Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
-Route::get('/dossier-facturation/list', [DossierFacturationController::class, 'list'])->name('dossier_facturation.list');
-Route::get('/dossier-facturations/{dossier}', [DossierFacturationController::class, 'show'])->name('dossier_facturation.show');
 
 
 
@@ -180,8 +176,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/rattachement/delete/{id}', [RattachementController::class, 'delete'])->name('rattachement.delete');
 
     Route::get('/ordre-approche/index', [OrdreApprocheController::class, 'index'])->name('ordre_approche.index');
-    
+
     Route::post('/ordre-approche/create', [OrdreApprocheController::class, 'create'])->name('ordre_approche.create');
     Route::put('/ordre-approche/update/{id}', [OrdreApprocheController::class, 'update'])->name('ordre_approche.update');
     Route::delete('/ordre-approche/delete/{id}', [OrdreApprocheController::class, 'delete'])->name('ordre_approche.delete');
+
+    Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'])->name('dossier_facturation.index');
+    Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
+    Route::get('/dossier-facturation/list', [DossierFacturationController::class, 'list'])->name('dossier_facturation.list');
+    Route::get('/dossier-facturations/{dossier}', [DossierFacturationController::class, 'show'])->name('dossier_facturation.show');
 });
