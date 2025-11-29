@@ -1,43 +1,35 @@
-<h3>Documents Proforma</h3>
+@extends('partials.app') {{-- ou ton layout --}}
 
-@if ($dossier->proforma)
-    <ul>
-        @foreach ($dossier->proforma as $file)
-            <li>
-                <a href="{{ Storage::disk('b2')->url($file['path']) }}" target="_blank">
-                    📄 {{ $file['original'] }}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-@else
-    <p class="text-muted">Aucun fichier</p>
-@endif
+@section('content')
+<div class="container">
+    <h1>Dossier Facturation #{{ $dossier->id }}</h1>
 
+    @foreach (['proforma', 'facture', 'bon'] as $type)
+        <div class="mb-4">
+            <h3>{{ ucfirst($type) }}</h3>
 
-<h3>Documents Facture</h3>
-@if ($dossier->facture)
-    <ul>
-        @foreach ($dossier->facture as $file)
-            <li>
-                <a href="{{ Storage::disk('b2')->url($file['path']) }}" target="_blank">
-                    📄 {{ $file['original'] }}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-@endif
+            @php
+                $files = $dossier->$type ?? [];
+            @endphp
 
-
-<h3>Documents Bon</h3>
-@if ($dossier->bon)
-    <ul>
-        @foreach ($dossier->bon as $file)
-            <li>
-                <a href="{{ Storage::disk('b2')->url($file['path']) }}" target="_blank">
-                    📄 {{ $file['original'] }}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-@endif
+            @if (!empty($files))
+                <ul>
+                    @foreach ($files as $file)
+                        @php
+                            $url = Storage::disk('b2')->url($file['path']);
+                        @endphp
+                        <li class="mb-1">
+                            📄 {{ $file['original'] }} 
+                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
+                                Ouvrir
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p class="text-muted">Aucun fichier disponible.</p>
+            @endif
+        </div>
+    @endforeach
+</div>
+@endsection

@@ -18,11 +18,10 @@ class DossierFacturationController extends Controller
         return view('dossier_facturation.show', compact('dossier'));
     }
 
-
     public function list()
     {
-        $dossiers = DossierFacturation::all();
-        return view('dossier_facturation.list', compact('dossiers'));
+        $dossiers = DossierFacturation::orderBy('created_at', 'desc')->get();
+        return view('dossier_facturation.list               ', compact('dossiers'));
     }
 
     public function store(Request $request)
