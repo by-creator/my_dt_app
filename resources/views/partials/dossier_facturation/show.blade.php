@@ -14,7 +14,7 @@
                     <span>{{ ucfirst($type) }}</span>
                     @if($type === 'proforma')
                     <a href="#" class="btn btn-sm btn-light text-dark">
-                        <i class="fa-solid fa-file"></i> Générer Proforma
+                        <i class="fa-solid fa-file"></i> Générer
                     </a>
                     @endif
                     <span class="badge bg-light text-dark">{{ count($files) }}</span>
