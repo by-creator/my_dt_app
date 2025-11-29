@@ -1,35 +1,29 @@
-@extends('partials.app')
 
-@section('content')
+<h2>Liste des dossiers</h2>
 
-<div class="container mt-4">
-
-    <h2 class="mb-4">Documents du dossier</h2>
-
-    <table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date Proforma</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($dossiers as $dossier)
-            <tr>
-                <td>{{ $dossier->id }}</td>
-                <td>{{ $dossier->date_proforma }}</td>
-                <td>
-                    <a href="{{ route('dossier.show', $dossier->id) }}" class="btn btn-primary btn-sm">
-                        Voir documents
-                    </a>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
+@if($dossiers->isEmpty())
+    <p>Aucun dossier enregistré.</p>
+@else
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Date Proforma</th>
+        <th>Proforma</th>
+        <th>Facture</th>
+        <th>Bon</th>
+        <th>Actions</th>
+    </tr>
+    @foreach($dossiers as $dossier)
+    <tr>
+        <td>{{ $dossier->id }}</td>
+        <td>{{ $dossier->date_proforma?->format('d/m/Y') }}</td>
+        <td>{{ $dossier->proforma_original_name ?? '—' }}</td>
+        <td>{{ $dossier->facture_original_name ?? '—' }}</td>
+        <td>{{ $dossier->bon_original_name ?? '—' }}</td>
+        <td>
+            <a href="{{ route('dossier_facturation.show', $dossier->id) }}">Voir</a>
+        </td>
+    </tr>
+    @endforeach
 </table>
-
-
-</div>
-
-@endsection
+@endif

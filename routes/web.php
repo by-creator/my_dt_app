@@ -26,7 +26,7 @@ Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'
 Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
 Route::get('/dossier-facturation/list', [DossierFacturationController::class, 'list'])->name('dossier_facturation.list');
 Route::get('/dossier-facturation/{id}', [DossierFacturationController::class, 'show'])
-     ->name('dossier.show');
+     ->name('dossier_facturation.show');
 
 
 

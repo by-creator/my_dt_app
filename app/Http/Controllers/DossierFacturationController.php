@@ -13,10 +13,8 @@ class DossierFacturationController extends Controller
         return view('dossier_facturation.form');
     }
 
-    public function show($id)
+    public function show(DossierFacturation $dossier)
     {
-        $dossier = DossierFacturation::findOrFail($id);
-
         return view('dossier_facturation.show', compact('dossier'));
     }
 
@@ -29,24 +27,23 @@ class DossierFacturationController extends Controller
 
     public function store(Request $request)
     {
+        $saveData = $request->validate([
+            'proforma.*' => 'nullable|mimes:pdf|max:2048',
+            'facture.*'  => 'nullable|mimes:pdf|max:2048',
+            'bon.*'      => 'nullable|mimes:pdf|max:2048',
+        ]);
+
         $data = [];
 
         foreach (['proforma', 'facture', 'bon'] as $field) {
-
             $filesArray = [];
 
             if ($request->hasFile($field)) {
                 foreach ($request->file($field) as $file) {
-
-                    $storedPath = $file->store("documents/$field", 'b2');
-
-                    // n'enregistrer QUE si l'upload réussit
-                    if ($storedPath && $storedPath !== false) {
-                        $filesArray[] = [
-                            "original" => $file->getClientOriginalName(),
-                            "path" => $storedPath
-                        ];
-                    }
+                    $filesArray[] = [
+                        'original' => $file->getClientOriginalName(),
+                        'path' => $file->store("documents/$field", 'b2')
+                    ];
                 }
             }
 

@@ -1,3 +1,5 @@
 Code 
 
 https://chatgpt.com/share/692a2361-ecc4-8001-9316-62565d0e07df
+
+'endpoint' => 'https://s3.us-east-005.backblazeb2.com', // endpoint du bucket

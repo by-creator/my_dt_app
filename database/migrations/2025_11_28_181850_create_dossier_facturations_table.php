@@ -16,17 +16,12 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('rattachement_bl_id')->nullable()->constrained()->onDelete('set null');
-            
-            $table->dateTime('date_proforma')->nullable();
+
+            $table->string('date_proforma')->nullable();
 
             $table->json('proforma')->nullable();
-            $table->string('proforma_original_name')->nullable();
-
             $table->json('facture')->nullable();
-            $table->string('facture_original_name')->nullable();
-
             $table->json('bon')->nullable();
-            $table->string('bon_original_name')->nullable();
 
             $table->timestamps();
         });

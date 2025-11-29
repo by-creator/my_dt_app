@@ -1,17 +1,21 @@
 
+<h1>Ajouter un dossier</h1>
+
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
 <form action="{{ route('dossier_facturation.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
-    <label>Proforma (PDF) :</label>
-    <input type="file" name="proforma[]" multiple accept="application/pdf">
+    <label>Proforma (plusieurs fichiers)</label>
+    <input type="file" name="proforma[]" multiple>
 
-    <label>Facture (PDF) :</label>
-    <input type="file" name="facture[]" multiple accept="application/pdf">
+    <label>Facture (plusieurs fichiers)</label>
+    <input type="file" name="facture[]" multiple>
 
-    <label>Bon (PDF) :</label>
-    <input type="file" name="bon[]" multiple accept="application/pdf">
+    <label>Bon (plusieurs fichiers)</label>
+    <input type="file" name="bon[]" multiple>
 
-    <button type="submit">Enregistrer</button>
+    <button type="submit">Envoyer</button>
 </form>
-
