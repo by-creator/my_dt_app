@@ -105,14 +105,14 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal">
-                        Annuler
-                    </button>
 
                     <button type="submit" class="btn btn-primary">
-                        Générer et envoyer
+                        <i class="fa-solid fa-check-to-slot"></i> Générer
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal">
+                        <i class="fa-solid fa-square-xmark"></i> Annuler
                     </button>
                 </div>
 

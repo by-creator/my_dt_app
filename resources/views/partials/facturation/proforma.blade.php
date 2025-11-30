@@ -40,128 +40,72 @@
                 </tbody>
             </table>
         </div>
-        <!-- Modal Modifier -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Rejet du dossier</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    Envoyer des documents
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="deleteForm" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir envoyer le(s) document(s) pour ce dossier ?</p>
+
+                    <input type="hidden" name="dossier_id" id="deleteId">
+                    <input type="hidden" name="email" id="deleteEmail">
+
+                    <div class="mb-3">
+                        <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
+                        <input 
+                            type="file" 
+                            name="documents[]" 
+                            class="form-control" 
+                            multiple 
+                            required
+                        >
                     </div>
-                    <div class="modal-body">
-                        @if (session('invalide'))
+
+                    @if (session('valide'))
                         <script>
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Succès',
-                                text: "{{ session('invalide') }}",
-                                showConfirmButton: true
+                                text: "{{ session('valide') }}"
                             });
                         </script>
-                        @elseif (session('error'))
+                    @elseif (session('error'))
                         <script>
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Erreur',
-                                text: "{{ session('error') }}",
-                                showConfirmButton: true
+                                text: "{{ session('error') }}"
                             });
                         </script>
-                        @endif
-                        <form id="editForm" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" id="editId" name="id">
-                            <input type="hidden" id="editEmail" name="email">
-                            <div class="mb-3">
-                                <label for="editNom" class="form-label">Êtes-vous sûr de vouloir rejeter ce dossier ?</label>
-                                <textarea class="form-control" name="motif" rows="3" required placeholder="Merci de saisir le motif du refus de validation"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
-                            </div>
-                        </form>
-                    </div>
+                    @endif
                 </div>
-            </div>
-        </div>
-        <!-- Modal Supprimer -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Valider le BL</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Êtes-vous sûr d'avoir valider ce dossier ?</p>
-                        @if (session('valide'))
-                        <script>
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Succès',
-                                text: "{{ session('valide') }}",
-                                showConfirmButton: true
-                            });
-                        </script>
-                        @elseif (session('error'))
-                        <script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Erreur',
-                                text: "{{ session('error') }}",
-                                showConfirmButton: true
-                            });
-                        </script>
-                        @endif
-                        <form id="deleteForm" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" id="deleteId" name="id">
-                            <input type="hidden" id="deleteEmail" name="email">
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
-                            </div>
-                        </form>
-                    </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-check-to-slot"></i> Oui
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-square-xmark"></i> Non
+                    </button>
                 </div>
-            </div>
+            </form>
+
         </div>
+    </div>
+</div>
+
+        
     </div>
 
 </section>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const table = document.getElementById('table1');
-
-        // Event delegation pour Edit
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-edit');
-            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
-
-            const id = btn.dataset.id;
-            const email = btn.dataset.email;
-            document.getElementById("editId").value = id;
-            document.getElementById("editEmail").value = btn.dataset.email || '';
-            document.getElementById("editForm").action = "/rattachement/update/" + id;
-        });
-
-        // Event delegation pour Delete
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-delete');
-            if (!btn) return;
-
-            const id = btn.dataset.id;
-            const email = btn.dataset.email;
-            document.getElementById("deleteId").value = id;
-            document.getElementById("deleteEmail").value = email;
-            document.getElementById("deleteForm").action = "/rattachement/create/" + id;
-        });
-
-        // Initialiser la datatable
-        new simpleDatatables.DataTable("#table1");
-    });
-</script>
