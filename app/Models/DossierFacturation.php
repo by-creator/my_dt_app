@@ -13,14 +13,12 @@ class DossierFacturation extends Model
     protected $fillable = [
         'rattachement_bl_id',
         'date_proforma',
-        'proforma',
         'facture',
         'bon',
     ];
 
     protected $casts = [
         'date_proforma' => 'datetime',
-        'proforma' => 'array',
         'facture' => 'array',
         'bon' => 'array',
     ];
