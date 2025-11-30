@@ -10,7 +10,6 @@
                         <th>Date & Heure</th>
                         <th>Agent</th>
                         <th>Nom & Prénom</th>
-                        <th>Email</th>
                         <th>BL</th>
                         <th>Compte</th>
                         <th>Statut</th>
@@ -28,7 +27,6 @@
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
                         <td>{{ $rattachement_validation->nom }} {{ $rattachement_validation->prenom }}</td>
-                        <td>{{ $rattachement_validation->email }}</td>
                         <td>{{ $rattachement_validation->bl }}</td>
                         <td>{{ $rattachement_validation->compte }}</td>
                         <td>{{ $rattachement_validation->statut }}</td>

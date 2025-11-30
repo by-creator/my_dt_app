@@ -4,6 +4,7 @@ use App\Http\Controllers\ClavierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DematController;
 use App\Http\Controllers\DossierFacturationController;
+use App\Http\Controllers\DossierFacturationProformaController;
 use App\Http\Controllers\EcranController;
 use App\Http\Controllers\IpakiController;
 use App\Http\Controllers\IpakiExtranetServiceController;
@@ -185,11 +186,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
     Route::get('/dossier-facturation/list', [DossierFacturationController::class, 'list'])->name('dossier_facturation.list');
     Route::get('/dossier-facturations/{dossier}', [DossierFacturationController::class, 'show'])->name('dossier_facturation.show');
-    Route::get('/dossier-facturation/proforma', [DossierFacturationController::class, 'proforma'])->name('dossier_facturation.proforma');
     Route::get('/dossier-facturation/facture', [DossierFacturationController::class, 'facture'])->name('dossier_facturation.facture');
     Route::get('/dossier-facturation/bon', [DossierFacturationController::class, 'bon'])->name('dossier_facturation.bon');
 
-    Route::post('/dossier-facturations/{id}/proforma/generate', [DossierFacturationController::class, 'proformaGenerate'])
-    ->name('dossier_facturation.proforma.generate');
 
+    Route::get('/dossier-facturation/proforma', [DossierFacturationProformaController::class, 'proforma'])->name('dossier_facturation.proforma');
+
+    Route::post('/dossier-facturations/{id}/proforma/generate', [DossierFacturationProformaController::class, 'proformaGenerate'])
+        ->name('dossier_facturation.proforma.generate');
 });
