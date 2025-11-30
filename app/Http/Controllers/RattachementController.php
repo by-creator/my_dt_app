@@ -42,6 +42,13 @@ class RattachementController extends Controller
 
             $rattachement->save();
 
+            $rattachement->dossierFacturation()->create([
+                'date_proforma' => now(),
+                'proforma' => [],
+                'facture' => [],
+                'bon' => [],
+            ]);
+
             return redirect()->back()->with('valide', 'Dossier validé avec succès.');
         } else {
             return redirect()->back()->with('error', 'Dossier déjà traité.');
