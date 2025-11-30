@@ -33,31 +33,64 @@ class DossierFacturationController extends Controller
             [
                 'title' => 'Validation',
                 'description' => 'Commment envoyer une demande de validation ?',
-                'image' => null, 
+                'image' => null,
                 'link' => '#'
             ],
             [
                 'title' => 'Proforma',
                 'description' => 'Commment avoir sa facture proforma ?',
-                'image' => null, 
+                'image' => null,
                 'link' => '#'
             ],
             [
                 'title' => 'Facture définitive',
                 'description' => 'Commment avoir sa facture définitive ?',
-                'image' => null, 
+                'image' => null,
                 'link' => '#'
             ],
             [
                 'title' => 'BAD',
                 'description' => 'Commment avoir son  BAD ?',
-                'image' => null, 
+                'image' => null,
                 'link' => '#'
             ],
         ];
 
         return view('dossier_facturation.tuto_video', compact('videos'));
     }
+
+    public function indexTutoPdf()
+    {
+        $pdfs = [
+            [
+                'title' => 'Validation',
+                'description' => 'Commment envoyer une demande de validation ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Proforma',
+                'description' => 'Commment avoir sa facture proforma ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Facture définitive',
+                'description' => 'Commment avoir sa facture définitive ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'BAD',
+                'description' => 'Commment avoir son  BAD ?',
+                'image' => null,
+                'link' => '#'
+            ],
+        ];
+
+        return view('dossier_facturation.tuto_pdf', compact('pdfs'));
+    }
+
 
 
     public function show(DossierFacturation $dossier)

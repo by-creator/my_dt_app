@@ -19,7 +19,7 @@
 
                 <!-- HEADER -->
                 <div class="card-header text-center fw-bold">
-                    {{ $video['title'] }}
+                    <u>{{ $video['title'] }}</u>
                 </div>
 
                 <!-- BODY -->
