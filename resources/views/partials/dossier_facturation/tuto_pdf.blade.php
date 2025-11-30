@@ -1,7 +1,11 @@
 <div class="container mt-4">
 
     <u>
-        <h4 class="mb-4">Liste des documents PDF</h4>
+        <h4 class="mb-4">
+            <i class="bi bi-file-earmark-pdf-fill" style="font-size:30px; color:primary"></i> 
+
+            <u>Liste des documents PDF</u>
+        </h4>
     </u>
 
     <!-- Barre de recherche -->

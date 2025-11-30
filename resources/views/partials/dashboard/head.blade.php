@@ -35,6 +35,17 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
+<style>
+    .card-hover {
+        transition: 0.25s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-6px);
+        box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
+    }
+</style>
+
 
   <style>
 

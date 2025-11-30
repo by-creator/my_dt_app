@@ -1,7 +1,11 @@
 <div class="container mt-4">
 
-<u>
-        <h4 class="mb-4">Liste des vidéos</h4>
+    <u>
+        <h4 class="mb-4">
+            <i class="bi bi-play-circle-fill"
+                style="font-size: 30px; color: primary;">
+            </i> <u>Liste des vidéos</u>
+        </h4>
     </u>
 
     <!-- Barre de recherche -->
@@ -26,25 +30,19 @@
                 <div class="card-body text-center">
 
                     <a href="{{ $video['link'] }}" target="_blank">
-                        @if($video['image'])
-                        <img src="{{ $video['image'] }}"
-                            class="img-fluid rounded"
-                            style="height: 170px; object-fit: cover;">
-                        @else
                         <i class="bi bi-play-circle-fill"
                             style="font-size: 80px; color: primary;"></i>
-                        @endif
                     </a>
 
                     <p class="mt-3">{{ $video['description'] }}</p>
 
                 </div>
 
-                 <!-- FOOTER -->
+                <!-- FOOTER -->
                 <div class="card-footer text-center">
 
                     <a href="{{ $video['link'] }}" target="_blank"
-                       class="btn btn-primary w-100">
+                        class="btn btn-primary w-100">
                         ▶ Regarder la vidéo
                     </a>
 
