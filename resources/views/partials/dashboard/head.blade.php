@@ -36,14 +36,64 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
-    .card-hover {
-        transition: 0.25s ease;
-    }
+    body {
+    background: #f6f8fc;
+}
 
-    .card-hover:hover {
-        transform: translateY(-6px);
-        box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
-    }
+.card-hover {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    transition: 0.4s ease;
+    border: 1px solid rgba(255,255,255,.5);
+}
+
+.card-hover:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.folder-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    box-shadow: 0 10px 25px rgba(13,110,253,0.4);
+}
+
+.folder-icon i {
+    font-size: 38px;
+    color: white;
+}
+
+.badge-bl {
+    background: rgba(13, 110, 253, 0.07);
+    border: 1px dashed #0d6efd;
+    color: #0d6efd;
+    font-size: 13px;
+    padding: 10px 16px;
+    border-radius: 50px;
+}
+
+.btn-modern {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 22px;
+    border-radius: 50px;
+    transition: 0.3s;
+}
+
+.btn-modern:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
 </style>
 
 

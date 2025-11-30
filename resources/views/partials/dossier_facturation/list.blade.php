@@ -32,48 +32,46 @@
         @endphp
 
         <div class="col-md-4 col-lg-3 mb-4 dossier-card"
-             data-bl="{{ $rattachement ? strtolower($rattachement->bl) : '' }}">
+     data-bl="{{ $rattachement ? strtolower($rattachement->bl) : '' }}">
 
-            <div class="card h-100 shadow-sm border-0 rounded-4 p-3 card-hover">
+    <div class="card h-100 p-4 card-hover d-flex flex-column">
 
-                <!-- ICÔNE -->
-                <div class="text-center mb-3">
-                    <i class="fa-solid fa-folder-open text-primary"
-                       style="font-size: 50px;"></i>
-                </div>
-
-                <!-- BL -->
-                <h6 class="text-center mb-3">
-
-                    @if($rattachement)
-                    <span class="badge bg-light text-dark border px-3 py-2">
-                        {{ $rattachement->bl }}
-                    </span>
-                    @else
-                    <span class="text-muted">
-                        Rattachement non trouvé
-                    </span>
-                    @endif
-
-                </h6>
-
-                <!-- ACTION -->
-                <div class="mt-auto text-center">
-                    @if($rattachement)
-                    <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
-                       class="btn btn-primary btn-sm rounded-pill px-4">
-                        <i class="fa-solid fa-eye me-1"></i>
-                        Consulter
-                    </a>
-                    @else
-                    <span class="text-muted">
-                        Aucun rattachement
-                    </span>
-                    @endif
-                </div>
-
-            </div>
+        <!-- ICÔNE MODERNE -->
+        <div class="folder-icon mb-4">
+            <i class="fa-solid fa-folder-open"></i>
         </div>
+
+        <!-- BL -->
+        <div class="text-center mb-4">
+            @if($rattachement)
+                <span class="badge-bl">
+                    {{ $rattachement->bl }}
+                </span>
+            @else
+                <span class="text-muted small">
+                    Rattachement non trouvé
+                </span>
+            @endif
+        </div>
+
+        <!-- BOUTON -->
+        <div class="mt-auto text-center">
+            @if($rattachement)
+                <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
+                   class="btn btn-modern">
+                    <i class="fa-solid fa-eye me-1"></i>
+                    Ouvrir
+                </a>
+            @else
+                <span class="text-muted small">
+                    Aucun rattachement
+                </span>
+            @endif
+        </div>
+
+    </div>
+</div>
+
 
         @endforeach
 

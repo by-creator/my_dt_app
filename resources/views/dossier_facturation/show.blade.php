@@ -11,9 +11,6 @@
         </header>
 
         <div class="page-heading">
-            <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
-            <br>
-            <br>
             <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
         </div>
         <div class="page-content">
