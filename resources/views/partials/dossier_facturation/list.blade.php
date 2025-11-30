@@ -37,7 +37,7 @@
                                 BL
                             </th>
                             <th class="text-end">
-                                Actions
+                                Action
                             </th>
                         </tr>
                     </thead>
