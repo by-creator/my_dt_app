@@ -195,5 +195,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dossier-facturations/{id}/proforma/generate', [DossierFacturationProformaController::class, 'proformaGenerate'])
         ->name('dossier_facturation.proforma.generate');
 
-    Route::post('/dossier-facturation/proforma/send/{id}', [DossierFacturationController::class, 'sendDocuments'])->name('dossier_facturation.proforma.send');
+    Route::post('/dossier-facturation/proforma/send/{id}', [DossierFacturationProformaController::class, 'sendDocuments'])->name('dossier_facturation.proforma.send');
 });

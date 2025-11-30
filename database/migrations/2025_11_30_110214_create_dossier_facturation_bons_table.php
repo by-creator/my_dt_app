@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('dossier_facturation_bons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('dossier_facturation_id')->nullable()->constrained()->onDelete('set null');
             $table->json('bon')->nullable();
             $table->timestamps();
         });

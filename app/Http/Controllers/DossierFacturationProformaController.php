@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class DossierFacturationProformaController extends Controller
@@ -74,21 +76,72 @@ class DossierFacturationProformaController extends Controller
         return redirect()->back()->with('success', "Votre facture sera disponible dans 10 minutes ");
     }
 
-    public function sendDocuments(Request $request)
-    {
-        $fields = ['proforma'];
 
-        $validated = $request->validate([
-            'proforma.*' => 'nullable|mimes:pdf|max:2048',
-            'dossier_id' => 'required|exists:dossier_facturations,id',
+    public function sendDocuments(Request $request, $id)
+    {
+        Log::info("Début de l'envoi des documents pour le dossier ID : $id");
+
+        $dossier = $this->getDossier($id);
+        Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
+
+        $rattachement = $this->getRattachement($dossier);
+        Log::info("Rattachement récupéré", [
+            'rattachement_id' => $rattachement->id ?? null,
+            'email' => $rattachement->email
         ]);
 
-        $dossier = DossierFacturation::findOrFail($request->dossier_id);
+        $filesData = $this->handleUpload($request, ['proforma']);
+        Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
+
+        $proforma = $this->saveProforma($dossier, $filesData);
+        Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
+
+        $this->updateDossier($dossier, $proforma);
+        Log::info("Dossier mis à jour", [
+            'user_id' => $dossier->user_id,
+            'statut' => $dossier->statut,
+            'time_elapsed' => $dossier->time_elapsed
+        ]);
+
+        $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
+        Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
+
+        Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+
+        return back()->with('success', 'Documents envoyés et mail transmis avec succès !');
+    }
+
+
+    // -----------------------------
+    // Étape 1 : Récupérer le dossier
+    // -----------------------------
+    private function getDossier($id)
+    {
+        return DossierFacturation::findOrFail($id);
+    }
+
+    // -----------------------------
+    // Étape 2 : Récupérer le rattachement
+    // -----------------------------
+    private function getRattachement(DossierFacturation $dossier)
+    {
         $rattachement = $dossier->rattachement_bl;
 
         if (!$rattachement || !$rattachement->email) {
-            return back()->with('error', 'Aucun rattachement BL trouvé pour ce dossier.');
+            abort(400, 'Aucun rattachement BL trouvé pour ce dossier.');
         }
+
+        return $rattachement;
+    }
+
+    // -----------------------------
+    // Étape 3 : Gestion de l’upload
+    // -----------------------------
+    private function handleUpload(Request $request, array $fields)
+    {
+        $request->validate([
+            'proforma.*' => 'nullable|mimes:pdf|max:2048',
+        ]);
 
         $saveData = [];
 
@@ -109,28 +162,52 @@ class DossierFacturationProformaController extends Controller
             }
         }
 
-        $proforma = new DossierFacturationProforma($saveData);
+        return $saveData;
+    }
+
+    // -----------------------------
+    // Étape 4 : Sauvegarder la proforma
+    // -----------------------------
+    private function saveProforma(DossierFacturation $dossier, array $filesData)
+    {
+        $proforma = new DossierFacturationProforma($filesData);
         $proforma->dossier_facturation_id = $dossier->id;
         $proforma->save();
+
+        return $proforma;
+    }
+
+    // -----------------------------
+    // Étape 5 : Mettre à jour le dossier
+    // -----------------------------
+    private function updateDossier(DossierFacturation $dossier, DossierFacturationProforma $proforma)
+    {
+        $dossier->user_id = Auth::id();
+        $dossier->statut = "EN ATTENTE FACTURATION";
 
         // Mettre à jour time_elapsed
         $dossier->time_elapsed = Carbon::parse($proforma->created_at)
             ->diffInSeconds($dossier->updated_at);
-        $dossier->save();
 
-        // Envoyer le mail
+        $dossier->save();
+    }
+
+    // -----------------------------
+    // Étape 6 : Envoyer le mail
+    // -----------------------------
+    private function sendMailToRattachement($rattachement, DossierFacturationProforma $proforma, $documents)
+    {
         $data = [
+            'email'  => $rattachement->email, // ajouter cette ligne
             'prenom' => $rattachement->prenom,
             'nom'    => $rattachement->nom,
             'bl'     => $rattachement->bl,
             'date'   => $proforma->created_at->format('d/m/Y H:i'),
-            'documents' => $saveData['proforma'],
+            'documents' => $documents,
         ];
 
         Mail::to($rattachement->email)
             ->cc('noreplysitedt@gmail.com')
             ->send(new ProformaDocumentsMail($data));
-
-        return back()->with('success', 'Documents envoyés et mail transmis avec succès !');
     }
 }

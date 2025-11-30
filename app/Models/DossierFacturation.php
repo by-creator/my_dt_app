@@ -54,9 +54,16 @@ class DossierFacturation extends Model
         return $this->hasOne(DossierFacturationProforma::class);
     }
 
-    public function getTimeElapsedForHumansAttribute()
+    public function getTimeElapsedAttribute()
     {
-        if (!$this->proforma) return null;
-        return $this->proforma->created_at->diffForHumans($this->updated_at, true);
+        if (!$this->proforma || !$this->updated_at) {
+            return null;
+        }
+
+        $start = Carbon::parse($this->proforma->created_at);
+        $end   = Carbon::parse($this->updated_at);
+
+        return $start->diffForHumans($end, true);
+        // ex : "2 hours", "5 minutes"
     }
 }
