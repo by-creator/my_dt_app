@@ -186,8 +186,8 @@ class DossierFacturationProformaController extends Controller
         $dossier->statut = "EN ATTENTE FACTURATION";
 
         // Mettre à jour time_elapsed
-        $dossier->time_elapsed = Carbon::parse($proforma->created_at)
-            ->diffInSeconds($dossier->updated_at);
+        $dossier->time_elapsed = $dossier->updated_at->diffInSeconds($proforma->created_at);
+
 
         $dossier->save();
     }
