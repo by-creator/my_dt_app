@@ -32,3 +32,55 @@
 <link rel="stylesheet" href="{{asset('templates/mazer/dist/assets/vendors/toastify/toastify.css')}}">
 <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+
+
+  <style>
+
+    /* Conteneur principal */
+    .premium-card {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    
+
+
+    .tab-pane {
+      padding: 2rem;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Boutons personnalisés */
+    .btn-gradient {
+      background: linear-gradient(45deg, #0d6efd, #6610f2);
+      border: none;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-gradient:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #888;
+    }
+  </style>

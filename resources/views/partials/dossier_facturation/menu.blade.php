@@ -1,0 +1,20 @@
+<li class="sidebar-item">
+    <a href="{{ route('dossier_facturation.validation-index') }}" class='sidebar-link'>
+        <i class="fa-solid fa-check-to-slot"></i>
+        <span>Validation</span>
+    </a>
+</li>
+<li class="sidebar-item  has-sub ">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Comment ça marche </span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
+            <a href="#"><i class="fa-solid fa-clipboard-list"></i> Format PDF</a>
+        </li>
+        <li class="submenu-item ">
+            <a href="#"><i class="fa-solid fa-video"></i> Format vidéo</a>
+        </li>
+    </ul>
+</li>

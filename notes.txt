@@ -8,3 +8,5 @@ RattachementBl::chunk(100, function ($rows) {
         }
     }
 });
+
+

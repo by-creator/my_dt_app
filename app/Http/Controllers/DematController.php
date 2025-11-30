@@ -69,16 +69,14 @@ class DematController extends Controller
 
             RattachementBl::create($data_create);
 
-            return redirect()
-                ->route('demat.index')
+            return redirect()->back()
                 ->with('sendValidation', 'Votre demande a été envoyée avec succès.');
         } catch (\Exception $e) {
             Log::error('Erreur mail validation : ' . $e->getMessage(), [
                 'data' => $request->all()
             ]);
 
-            return redirect()
-                ->route('demat.index')
+            return redirect()->back()
                 ->with('error', 'Une erreur est survenue lors de l’envoi.');
         }
     }

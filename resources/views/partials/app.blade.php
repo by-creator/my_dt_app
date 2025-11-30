@@ -29,7 +29,10 @@
                                 <span>Accueil</span>
                             </a>
                         </li>
-
+                        @if(Auth::user()->role->name == "CLIENT_FACTURATION")
+                        @include('partials.dossier_facturation.menu')
+                        @else
+                        @endif
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-gear"></i>
