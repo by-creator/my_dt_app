@@ -63,6 +63,23 @@ class DossierFacturation extends Model
         // ex : "2 hours", "5 minutes"
     }
 
+    public function getTimeElapsedForHumansAttribute()
+    {
+        $seconds = (int) $this->time_elapsed; // force en entier
+
+        if ($seconds <= 0) {
+            return null; // ou '—' si tu veux afficher quelque chose
+        }
+
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        return sprintf('%02dh %02dm %02ds', $hours, $minutes, $seconds);
+    }
+
+
+
     public function proformas()
     {
         return $this->hasMany(DossierFacturationProforma::class);
