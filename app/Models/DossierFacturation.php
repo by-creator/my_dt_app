@@ -30,8 +30,18 @@ class DossierFacturation extends Model
         return $this->date_proforma ? $this->date_proforma->format('d/m/Y H:i') : null;
     }
 
-    public function rattachement()
+    public function getCreatedAtDateFormattedAttribute()
+    {
+        return $this->created_at ? $this->created_at->format('d/m/Y H:i') : null;
+    }
+
+    public function rattachement_bl()
     {
         return $this->belongsTo(RattachementBl::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

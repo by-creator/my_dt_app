@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rattachement_bls', function (Blueprint $table) {
-            $table->string('time_elapsed')->nullable()->after('updated_at');
+            $table->string('time_elapsed')->nullable();
         });
     }
 

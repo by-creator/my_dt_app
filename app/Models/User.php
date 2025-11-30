@@ -73,4 +73,9 @@ class User extends Authenticatable
         return $this->hasMany(RattachementBl::class);
     }
 
+    public function dossier_facturation()
+    {
+        return $this->hasMany(DossierFacturation::class);
+    }
+
 }

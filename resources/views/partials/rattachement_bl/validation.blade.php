@@ -34,11 +34,11 @@
                         <td>{{ $rattachement_validation->statut }}</td>
                         <td>{{ $rattachement_validation->time_elapsed ?? '—' }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
+                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}" data-bs-toggle="modal" data-bs-target="#valideModal"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
 
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-edit" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}"  data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-square-xmark"></i> Rejeter</button>
+                            <button type="button" class="btn btn-danger btn-edit" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}"  data-bs-toggle="modal" data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i> Rejeter</button>
 
                         </td>
                     </tr>
@@ -47,11 +47,11 @@
             </table>
         </div>
         <!-- Modal Modifier -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal fade" id="rejetModal" tabindex="-1" aria-labelledby="rejetModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Rejet du dossier</h5>
+                        <h5 class="modal-title" id="rejetModalLabel">Rejet du dossier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -93,11 +93,11 @@
             </div>
         </div>
         <!-- Modal Supprimer -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="valideModal" tabindex="-1" aria-labelledby="valideModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Valider le BL</h5>
+                        <h5 class="modal-title" id="valideModalLabel">Valider le BL</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

@@ -10,9 +10,6 @@
                         <th>Date & Heure</th>
                         <th>Agent</th>
                         <th>Numéro BL</th>
-                        <th>Email</th>
-                        <th>BL</th>
-                        <th>Compte</th>
                         <th>Statut</th>
                         <th>Durée</th>
                     </tr>
@@ -27,18 +24,10 @@
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
-                        <td>{{ $dossier->nom }} {{ $dossier->prenom }}</td>
-                        <td>{{ $dossier->email }}</td>
-                        <td>{{ $dossier->bl }}</td>
-                        <td>{{ $dossier->compte }}</td>
-                        <td>{{ $dossier->statut }}</td>
+                        <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
                         <td>{{ $dossier->time_elapsed_for_humans ?? '—' }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
-
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger btn-edit" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}"  data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-square-xmark"></i> Rejeter</button>
+                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s) document(s)</button>
 
                         </td>
                     </tr>
@@ -64,7 +53,7 @@
                                 showConfirmButton: true
                             });
                         </script>
-                         @elseif (session('error'))
+                        @elseif (session('error'))
                         <script>
                             Swal.fire({
                                 icon: 'error',
