@@ -94,6 +94,81 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
+.doc-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: 0.4s ease;
+}
+
+.doc-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.doc-header {
+    background: transparent !important;
+    border-bottom: none;
+    padding: 0;
+}
+
+.doc-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.doc-count {
+    background: linear-gradient(135deg,#0d6efd,#6610f2);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 13px;
+    box-shadow: 0 8px 15px rgba(13,110,253,0.4);
+}
+
+.file-item {
+    background: rgba(255,255,255,0.8);
+    border-radius: 16px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0,0,0,.03);
+}
+
+.file-item span {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.file-btn {
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.generate-btn {
+    background: linear-gradient(135deg,#0d6efd,#6610f2);
+    border: none;
+    color: white;
+    border-radius: 40px;
+    padding: 6px 15px;
+}
+
+.relance-btn {
+    background: linear-gradient(135deg,#ff9f1c,#f76c6c);
+    border: none;
+    color: white;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
 </style>
 
 
