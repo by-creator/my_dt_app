@@ -14,14 +14,10 @@ class DossierFacturation extends Model
     protected $fillable = [
         'rattachement_bl_id',
         'date_proforma',
-        'facture',
-        'bon',
     ];
 
     protected $casts = [
         'date_proforma' => 'datetime',
-        'facture' => 'array',
-        'bon' => 'array',
     ];
 
     public function getDateProformaFormattedAttribute()
@@ -65,5 +61,18 @@ class DossierFacturation extends Model
 
         return $start->diffForHumans($end, true);
         // ex : "2 hours", "5 minutes"
+    }
+
+    public function proformas()
+    {
+        return $this->hasMany(DossierFacturationProforma::class);
+    }
+    public function factures()
+    {
+        return $this->hasMany(DossierFacturationFacture::class);
+    }
+    public function bons()
+    {
+        return $this->hasMany(DossierFacturationBon::class);
     }
 }

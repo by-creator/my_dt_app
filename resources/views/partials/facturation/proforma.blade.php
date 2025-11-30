@@ -63,7 +63,7 @@
                                 <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
                                 <input
                                     type="file"
-                                    name="documents[]"
+                                    name="proforma[]"
                                     class="form-control"
                                     multiple
                                     required>
