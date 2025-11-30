@@ -186,6 +186,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
 
     Route::get('dossier-facturation/index-validation', [DossierFacturationController::class, 'indexValidation'])->name('dossier_facturation.validation-index');
+    Route::get('dossier-facturation/index-paiement', [DossierFacturationController::class, 'indexPaiement'])->name('dossier_facturation.paiement-index');
+    
     Route::post('/dossier-facturation/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('dossier_facturation.send-validation');
     Route::post('/dossier-facturation/validation', [DematController::class, 'validation'])->name('dossier_facturation.validation');
 

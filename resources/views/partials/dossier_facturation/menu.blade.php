@@ -4,6 +4,12 @@
         <span>Validation</span>
     </a>
 </li>
+<li class="sidebar-item">
+    <a href="{{ route('dossier_facturation.paiement-index') }}" class='sidebar-link'>
+        <i class="fa-solid fa-dollar-sign"></i>
+        <span>Paiement</span>
+    </a>
+</li>
 <li class="sidebar-item  has-sub ">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-circle-info"></i>

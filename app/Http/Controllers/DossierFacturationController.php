@@ -22,6 +22,11 @@ class DossierFacturationController extends Controller
         return view('partials.dossier_facturation.validation');
     }
 
+    public function indexPaiement()
+    {
+        return view('partials.dossier_facturation.paiement');
+    }
+
     public function show(DossierFacturation $dossier)
     {
         return view('dossier_facturation.show', compact('dossier'));
