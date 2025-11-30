@@ -26,7 +26,7 @@
                 <div class="card-body text-center">
 
                     <a href="{{ $pdf['link'] }}" target="_blank">
-                        <i class="bi bi-file-earmark-pdf-fill" style="font-size:100px; color:primary"></i>
+                        <i class="bi bi-file-earmark-pdf-fill" style="font-size:80px; color:primary"></i>
 
 
                     </a>
