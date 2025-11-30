@@ -26,7 +26,8 @@
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
-                        <td>{{ $dossier->date ?? '—'}}</td>
+                        <td>{{ $dossier->date_proforma ? $dossier->date_proforma->format('d/m/Y H:i') : '—' }}</td>
+
                         <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
                         <td>{{ '—' }}</td>
                         <td>{{ $dossier->time_elapsed_for_humans ?? '—' }}</td>

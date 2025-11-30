@@ -83,38 +83,35 @@
 <div class="modal fade" id="generateModal" tabindex="-1" aria-labelledby="generateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="generateModalLabel">Générer une facture pro-forma</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-            <div class="modal-body">
-                <form id="generateForm">
+            <form id="generateForm" method="POST" action="{{ route('dossier_facturation.proforma.generate', $dossier->id) }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="generateModalLabel">Générer la facture proforma</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
                     <div class="mb-3">
                         <label for="documentDate" class="form-label">Sélectionnez une date :</label>
-                        <input type="date" class="form-control" id="documentDate" name="document_date">
+                        <input type="date" class="form-control" id="documentDate" name="documentDate" required>
                     </div>
-                </form>
-                <p>Voulez-vous vraiment générer la facture à cette date ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="submitGenerate()"><i class="fa-solid fa-check-to-slot"></i> Confirmer</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
-            </div>
+                    <p>Voulez-vous vraiment générer la facture à cette date?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+@if (session('success'))
 <script>
-    function submitGenerate() {
-        const date = document.getElementById('documentDate').value;
-        if (!date) {
-            alert('Veuillez sélectionner une date');
-            return;
-        }
-        // Ici tu peux envoyer la valeur via fetch/Ajax ou soumettre un formulaire
-        console.log('Date sélectionnée :', date);
-        // Fermer le modal après confirmation
-        const modal = bootstrap.Modal.getInstance(document.getElementById('generateModal'));
-        modal.hide();
-    }
+    Swal.fire({
+        icon: 'success',
+        title: 'Demande de pro-forma',
+        text: "{{ session('success') }}",
+        showConfirmButton: true
+    });
 </script>
+@endif
