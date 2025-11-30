@@ -17,10 +17,10 @@
     </a>
     <ul class="submenu">
         <li class="submenu-item">
-            <a href="#"><i class="fa-solid fa-clipboard-list"></i> Format PDF</a>
+            <a href="{{ route('dossier_facturation.tuto-pdf-index') }}"><i class="fa-solid fa-clipboard-list"></i> Format PDF</a>
         </li>
         <li class="submenu-item ">
-            <a href="#"><i class="fa-solid fa-video"></i> Format vidéo</a>
+            <a href="{{ route('dossier_facturation.tuto-video-index') }}"><i class="fa-solid fa-video"></i> Format vidéo</a>
         </li>
     </ul>
 </li>

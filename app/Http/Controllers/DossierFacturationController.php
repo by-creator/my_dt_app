@@ -19,13 +19,46 @@ class DossierFacturationController extends Controller
 
     public function indexValidation()
     {
-        return view('partials.dossier_facturation.validation');
+        return view('dossier_facturation.validation');
     }
 
     public function indexPaiement()
     {
-        return view('partials.dossier_facturation.paiement');
+        return view('dossier_facturation.paiement');
     }
+
+    public function indexTutoVideo()
+    {
+        $videos = [
+            [
+                'title' => 'Validation',
+                'description' => 'Commment envoyer une demande de validation ?',
+                'image' => null, 
+                'link' => '#'
+            ],
+            [
+                'title' => 'Proforma',
+                'description' => 'Commment avoir sa facture proforma ?',
+                'image' => null, 
+                'link' => '#'
+            ],
+            [
+                'title' => 'Facture définitive',
+                'description' => 'Commment avoir sa facture définitive ?',
+                'image' => null, 
+                'link' => '#'
+            ],
+            [
+                'title' => 'BAD',
+                'description' => 'Commment avoir son  BAD ?',
+                'image' => null, 
+                'link' => '#'
+            ],
+        ];
+
+        return view('dossier_facturation.tuto_video', compact('videos'));
+    }
+
 
     public function show(DossierFacturation $dossier)
     {
@@ -75,8 +108,8 @@ class DossierFacturationController extends Controller
         return back()->with('success', 'Documents enregistrés avec succès !');
     }
 
-    
-    
+
+
 
 
     public function facture()

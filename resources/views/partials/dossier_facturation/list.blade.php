@@ -8,7 +8,7 @@
     @else
     <!-- Barre de recherche -->
     <div class="mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par BL...">
+        <input type="text" id="searchInput" class="form-control" placeholder="🔍 Rechercher par BL...">
     </div>
 
     <div class="table-responsive">

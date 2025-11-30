@@ -1,6 +1,4 @@
-@extends('partials.app')
 
-@section('content')
 
 
 <body>
@@ -59,4 +57,3 @@
   @endif
 </body>
 
-@endsection
