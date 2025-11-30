@@ -32,7 +32,7 @@
                         <td>{{ $dossier->statut ?? '—' }}</td>
                         <td>{{ $dossier->time_elapsed_for_humans ?? '—' }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s) document(s)</button>
+                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#sendModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s) document(s)</button>
 
                         </td>
                     </tr>
@@ -41,71 +41,88 @@
             </table>
         </div>
         <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">
-                    Envoyer des documents
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <form id="deleteForm" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                <div class="modal-body">
-                    <p>Êtes-vous sûr de vouloir envoyer le(s) document(s) pour ce dossier ?</p>
-
-                    <input type="hidden" name="dossier_id" id="deleteId">
-                    <input type="hidden" name="email" id="deleteEmail">
-
-                    <div class="mb-3">
-                        <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
-                        <input 
-                            type="file" 
-                            name="documents[]" 
-                            class="form-control" 
-                            multiple 
-                            required
-                        >
+        <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sendModalLabel">
+                            Envoyer des documents
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    @if (session('valide'))
-                        <script>
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Succès',
-                                text: "{{ session('valide') }}"
-                            });
-                        </script>
-                    @elseif (session('error'))
-                        <script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Erreur',
-                                text: "{{ session('error') }}"
-                            });
-                        </script>
-                    @endif
-                </div>
+                    <form id="sendProformaForm" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-check-to-slot"></i> Oui
-                    </button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-square-xmark"></i> Non
-                    </button>
-                </div>
-            </form>
+                        <div class="modal-body">
+                            <p>Êtes-vous sûr de vouloir envoyer le(s) document(s) pour ce dossier ?</p>
 
+                            <input type="hidden" name="dossier_id" id="proformaId">
+                            <input type="hidden" name="email" id="deleteEmail">
+
+                            <div class="mb-3">
+                                <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
+                                <input
+                                    type="file"
+                                    name="documents[]"
+                                    class="form-control"
+                                    multiple
+                                    required>
+                            </div>
+
+                            @if (session('valide'))
+                            <script>
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Succès',
+                                    text: "{{ session('valide') }}"
+                                });
+                            </script>
+                            @elseif (session('error'))
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Erreur',
+                                    text: "{{ session('error') }}"
+                                });
+                            </script>
+                            @endif
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-check-to-slot"></i> Oui
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-square-xmark"></i> Non
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-        
+
     </div>
 
 </section>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById('table1');
+
+        // Event delegation pour Delete
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-delete');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+            document.getElementById("proformaId").value = id;
+            document.getElementById("sendProformaForm").action = "/dossier-facturation/proforma/send/" + id;
+        });
+
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
+    });
+</script>
