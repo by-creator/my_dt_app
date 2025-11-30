@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProformaDocumentsMail;
 use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
 use App\Models\DossierFacturationProforma;
@@ -65,7 +66,7 @@ class DossierFacturationProformaController extends Controller
 
         // Ici tu peux mettre à jour updated_at si nécessaire
         $dossier->updated_at = now(); // ou la date spécifique
-        
+
 
         // Sauvegarde les changements
         $dossier->save();
@@ -79,14 +80,24 @@ class DossierFacturationProformaController extends Controller
 
         $validated = $request->validate([
             'proforma.*' => 'nullable|mimes:pdf|max:2048',
+            'dossier_id' => 'required|exists:dossier_facturations,id',
         ]);
+
+        $dossier = DossierFacturation::findOrFail($request->dossier_id);
+        $rattachement = $dossier->rattachement_bl;
+
+        if (!$rattachement || !$rattachement->email) {
+            return back()->with('error', 'Aucun rattachement BL trouvé pour ce dossier.');
+        }
+
+        $saveData = [];
 
         foreach ($fields as $field) {
             $saveData[$field] = [];
 
             if ($request->hasFile($field)) {
                 foreach ($request->file($field) as $file) {
-                    $path = $file->store("documents/$field", 'b2'); // B2 disk
+                    $path = $file->store("documents/$field", 'b2');
 
                     if ($path) {
                         $saveData[$field][] = [
@@ -98,9 +109,28 @@ class DossierFacturationProformaController extends Controller
             }
         }
 
-        DossierFacturationProforma::create($saveData);
+        $proforma = new DossierFacturationProforma($saveData);
+        $proforma->dossier_facturation_id = $dossier->id;
+        $proforma->save();
 
-        return back()->with('success', 'Documents envoyés avec succès !');
+        // Mettre à jour time_elapsed
+        $dossier->time_elapsed = Carbon::parse($proforma->created_at)
+            ->diffInSeconds($dossier->updated_at);
+        $dossier->save();
+
+        // Envoyer le mail
+        $data = [
+            'prenom' => $rattachement->prenom,
+            'nom'    => $rattachement->nom,
+            'bl'     => $rattachement->bl,
+            'date'   => $proforma->created_at->format('d/m/Y H:i'),
+            'documents' => $saveData['proforma'],
+        ];
+
+        Mail::to($rattachement->email)
+            ->cc('noreplysitedt@gmail.com')
+            ->send(new ProformaDocumentsMail($data));
+
+        return back()->with('success', 'Documents envoyés et mail transmis avec succès !');
     }
-
 }

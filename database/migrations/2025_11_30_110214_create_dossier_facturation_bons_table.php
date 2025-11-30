@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('dossier_facturation_bons', function (Blueprint $table) {
             $table->id();
             $table->json('bon')->nullable();
-            $table->string('time_elapsed')->nullable();
             $table->timestamps();
         });
     }

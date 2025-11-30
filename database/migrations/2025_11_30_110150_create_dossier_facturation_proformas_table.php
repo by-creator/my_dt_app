@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('dossier_facturation_proformas', function (Blueprint $table) {
             $table->id();
             $table->json('proforma')->nullable();
-            $table->string('time_elapsed')->nullable();
             $table->timestamps();
         });
     }

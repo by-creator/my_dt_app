@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\ConvertsDates;
+use Carbon\Carbon;
 
 class DossierFacturation extends Model
 {
@@ -46,5 +47,16 @@ class DossierFacturation extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function proforma()
+    {
+        return $this->hasOne(DossierFacturationProforma::class);
+    }
+
+    public function getTimeElapsedForHumansAttribute()
+    {
+        if (!$this->proforma) return null;
+        return $this->proforma->created_at->diffForHumans($this->updated_at, true);
     }
 }

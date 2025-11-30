@@ -19,7 +19,7 @@ class DossierFacturationProforma extends Model
         'proforma' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
-        
+
     ];
 
     public function getCreatedAtDateFormattedAttribute()
@@ -48,7 +48,7 @@ class DossierFacturationProforma extends Model
     }
 
     /** Si tu veux un format "humain" style "il y a 5 minutes"*/
-     
+
     public function getTimeElapsedForHumansAttribute()
     {
         if (!$this->created_at || !$this->updated_at) {
@@ -58,4 +58,8 @@ class DossierFacturationProforma extends Model
         return $this->updated_at->diffForHumans($this->created_at, true);
     }
 
+    public function dossier()
+    {
+        return $this->belongsTo(DossierFacturation::class);
+    }
 }
