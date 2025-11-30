@@ -4,13 +4,13 @@
         <span>Validation</span>
     </a>
 </li>
-<li class="sidebar-item  has-sub">
+<li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Facturation</span>
     </a>
     <ul class="submenu">
-         <li class="submenu-item">
+        <li class="submenu-item">
             <a href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Facture pro-forma</a>
         </li>
         <li class="submenu-item ">
@@ -21,7 +21,7 @@
         </li>
     </ul>
 </li>
-<li class="sidebar-item  has-sub active">
+<li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Unify</span>

@@ -60,4 +60,19 @@ class DossierFacturationController extends Controller
 
         return back()->with('success', 'Documents enregistrés avec succès !');
     }
+
+    public function proforma()
+    {
+        return view('dossier_facturation.proforma');
+    }
+
+    public function facture()
+    {
+        return view('dossier_facturation.facture');
+    }
+
+    public function bon()
+    {
+        return view('dossier_facturation.bon');
+    }
 }

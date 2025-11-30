@@ -30,7 +30,7 @@
                         </li>
 
                         @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
-                        @include('partials.facturation.menu_validation')
+                        @include('partials.facturation.menu_facturation')
                         @else
                         @endif
 
@@ -65,7 +65,7 @@
             </div>
             <div class="page-content">
                 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
-                @include('partials.rattachement_bl.validation')
+                @include('partials.facturation.facture')
                 @else
                 @endif
             </div>

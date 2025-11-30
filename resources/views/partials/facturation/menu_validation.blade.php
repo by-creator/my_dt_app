@@ -1,4 +1,4 @@
-<li class="sidebar-item">
+<li class="sidebar-item active">
     <a href="{{ route('rattachement.index') }}" class='sidebar-link'>
         <i class="fa-solid fa-check-to-slot"></i>
         <span>Validation</span>
@@ -21,7 +21,7 @@
         </li>
     </ul>
 </li>
-<li class="sidebar-item  has-sub active">
+<li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Unify</span>
