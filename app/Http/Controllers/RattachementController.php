@@ -28,6 +28,8 @@ class RattachementController extends Controller
             $rattachement->user_id = Auth::user()->id;
             $rattachement->statut = "VALIDÉ";
 
+            $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
+
             $destinataires = [
 
                 //'sn004-proforma@dakar-terminal.com',
@@ -60,6 +62,8 @@ class RattachementController extends Controller
         if ($rattachement->statut == "EN ATTENTE VALIDATION") {
             $rattachement->user_id = Auth::user()->id;
             $rattachement->statut = "REJETÉ";
+            $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
+
 
             $destinataires = [
 

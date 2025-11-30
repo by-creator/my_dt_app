@@ -39,7 +39,7 @@ class RattachementBl extends Model
         return $diff->d . ' jours, ' . $diff->h . ' heures, ' . $diff->i . ' minutes';
     }
 
-    /** Si tu veux un format "humain" style "il y a 5 minutes"
+    /** Si tu veux un format "humain" style "il y a 5 minutes"*/
      
     public function getTimeElapsedForHumansAttribute()
     {
@@ -48,7 +48,7 @@ class RattachementBl extends Model
         }
 
         return $this->updated_at->diffForHumans($this->created_at, true);
-    }*/
+    }
 
     public function getCreatedAtDateFormattedAttribute()
     {
@@ -58,17 +58,6 @@ class RattachementBl extends Model
     public function getUpdatedAtDateFormattedAttribute()
     {
         return $this->updated_at ? $this->updated_at->format('d/m/Y H:i') : null;
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($model) {
-            if ($model->created_at && $model->updated_at) {
-                $model->time_elapsed = $model->updated_at->diffForHumans($model->created_at, true);
-            }
-        });
     }
 
     public function user()

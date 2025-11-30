@@ -13,7 +13,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $dossiers = DossierFacturation::orderBy('id', 'desc')->paginate(2);
+        $dossiers = DossierFacturation::orderBy('id', 'desc')->paginate(3);
 
         $rattachements = RattachementBl::where('email', Auth::user()->email)->get();
 
