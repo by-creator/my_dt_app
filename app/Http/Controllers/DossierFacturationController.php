@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DossierFacturation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DossierFacturationController extends Controller
@@ -63,7 +64,9 @@ class DossierFacturationController extends Controller
 
     public function proforma()
     {
-        return view('dossier_facturation.proforma');
+        $dossiers = DossierFacturation::orderBy('id', 'desc')->get();
+        $users = User::all();
+        return view('dossier_facturation.proforma', compact('dossiers','users'));
     }
 
     public function facture()
@@ -73,6 +76,7 @@ class DossierFacturationController extends Controller
 
     public function bon()
     {
+
         return view('dossier_facturation.bon');
     }
 }

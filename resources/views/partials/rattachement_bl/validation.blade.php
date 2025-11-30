@@ -32,7 +32,7 @@
                         <td>{{ $rattachement_validation->bl }}</td>
                         <td>{{ $rattachement_validation->compte }}</td>
                         <td>{{ $rattachement_validation->statut }}</td>
-                        <td>{{ $rattachement_validation->time_elapsed_for_humans ?? '—' }}</td>
+                        <td>{{ $rattachement_validation->time_elapsed ?? '—' }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-delete" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
 
