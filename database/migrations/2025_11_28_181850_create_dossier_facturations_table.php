@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->foreignId('rattachement_bl_id')->nullable()->constrained()->onDelete('set null');
 
-            $table->string('date_proforma')->nullable();
+            $table->date('date_proforma')->nullable();
 
             $table->json('proforma')->nullable();
             $table->json('facture')->nullable();

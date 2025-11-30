@@ -188,4 +188,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dossier-facturation/proforma', [DossierFacturationController::class, 'proforma'])->name('dossier_facturation.proforma');
     Route::get('/dossier-facturation/facture', [DossierFacturationController::class, 'facture'])->name('dossier_facturation.facture');
     Route::get('/dossier-facturation/bon', [DossierFacturationController::class, 'bon'])->name('dossier_facturation.bon');
+
+    Route::post('/dossier-facturations/{id}/proforma/generate', [DossierFacturationController::class, 'proformaGenerate'])
+    ->name('dossier_facturation.proforma.generate');
+
 });

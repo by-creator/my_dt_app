@@ -1,7 +1,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><u>Liste des rattachements en attente de validation</u></h4>
+            <h4 class="card-title"><u>Liste des factures proforma</u></h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
@@ -9,9 +9,11 @@
                     <tr>
                         <th>Date & Heure</th>
                         <th>Agent</th>
+                        <th>Date d'arrêt</th>
                         <th>Numéro BL</th>
                         <th>Statut</th>
                         <th>Durée</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +26,9 @@
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
+                        <td>{{ $dossier->date ?? '—'}}</td>
                         <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
+                        <td>{{ '—' }}</td>
                         <td>{{ $dossier->time_elapsed_for_humans ?? '—' }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s) document(s)</button>

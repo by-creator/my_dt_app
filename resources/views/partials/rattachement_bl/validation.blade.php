@@ -1,7 +1,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><u>Liste des rattachements en attente de validation</u></h4>
+            <h4 class="card-title"><u>Liste des demandes de validation</u></h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
