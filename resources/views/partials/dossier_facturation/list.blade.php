@@ -34,7 +34,7 @@
                         <tr>
                             <th>
                                 <i class="fa-solid fa-receipt me-1"></i>
-                                NBL
+                                BL
                             </th>
                             <th class="text-end">
                                 Actions
