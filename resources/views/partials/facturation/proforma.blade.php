@@ -19,7 +19,7 @@
                 <tbody>
                     @foreach ($dossiers as $dossier)
                     <tr>
-                        <td>{{ $dossier->created_at_date_formatted ?? '—' }}</td>
+                        <td>{{ $dossier->updated_at_date_formatted ?? '—' }}</td>
                         <td>
                             @php
                             $user = $users->firstWhere('id', $dossier->user_id);
@@ -29,7 +29,7 @@
                         <td>{{ $dossier->date_proforma ? $dossier->date_proforma->format('d/m/Y H:i') : '—' }}</td>
 
                         <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
-                        <td>{{ '—' }}</td>
+                        <td>{{ $dossier->statut ?? '—' }}</td>
                         <td>{{ $dossier->time_elapsed_for_humans ?? '—' }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s) document(s)</button>

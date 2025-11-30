@@ -11,21 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dossier_facturations', function (Blueprint $table) {
-
+        Schema::create('dossier_facturation_proformas', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-
-
-            $table->foreignId('rattachement_bl_id')->nullable()->constrained()->onDelete('set null');
-
-            $table->date('date_proforma')->nullable();
-
-            $table->string('statut')->nullable();
-
+            $table->json('proforma')->nullable();
             $table->string('time_elapsed')->nullable();
-
             $table->timestamps();
         });
     }
@@ -35,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dossier_facturations');
+        Schema::dropIfExists('dossier_facturation_proformas');
     }
 };

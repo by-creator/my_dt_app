@@ -13,9 +13,13 @@
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <span>{{ ucfirst($type) }}</span>
                     @if($type === 'proforma')
-                    <a href="#" class="btn btn-sm btn-light text-dark" data-bs-toggle="modal" data-bs-target="#generateModal">
+                    <a href="#"
+                        class="btn btn-sm btn-light text-dark"
+                        data-bs-toggle="modal"
+                        data-bs-target="#generateModal{{ $dossier->id }}">
                         <i class="fa-solid fa-plus"></i> Générer
                     </a>
+
                     @endif
                     <span class="badge bg-light text-dark">{{ count($files) }}</span>
                 </div>
@@ -80,30 +84,44 @@
 
 
 <!-- Modal Génération -->
-<div class="modal fade" id="generateModal" tabindex="-1" aria-labelledby="generateModalLabel" aria-hidden="true">
+<div class="modal fade" id="generateModal{{ $dossier->id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="generateForm" method="POST" action="{{ route('dossier_facturation.proforma.generate', $dossier->id) }}">
+
+            <form method="POST" action="{{ route('dossier_facturation.proforma.generate', $dossier->id) }}">
                 @csrf
+
                 <div class="modal-header">
-                    <h5 class="modal-title" id="generateModalLabel">Générer la facture proforma</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    <h5 class="modal-title">Générer proforma</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="documentDate" class="form-label">Sélectionnez une date :</label>
-                        <input type="date" class="form-control" id="documentDate" name="documentDate" required>
-                    </div>
-                    <p>Voulez-vous vraiment générer la facture à cette date?</p>
+                    <label>Date du document</label>
+                    <input type="date"
+                           name="documentDate"
+                           class="form-control"
+                           required>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Confirmer</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Annuler
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Générer et envoyer
+                    </button>
                 </div>
+
             </form>
+
         </div>
     </div>
 </div>
+
 
 @if (session('success'))
 <script>

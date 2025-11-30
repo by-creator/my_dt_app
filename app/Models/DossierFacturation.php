@@ -35,6 +35,11 @@ class DossierFacturation extends Model
         return $this->created_at ? $this->created_at->format('d/m/Y H:i') : null;
     }
 
+    public function getUpdatedAtDateFormattedAttribute()
+    {
+        return $this->updated_at ? $this->updated_at->format('d/m/Y H:i') : null;
+    }
+
     public function rattachement_bl()
     {
         return $this->belongsTo(RattachementBl::class);

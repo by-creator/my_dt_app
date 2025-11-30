@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+
 
 class DossierFacturationController extends Controller
 {
@@ -81,6 +83,8 @@ class DossierFacturationController extends Controller
 
         $dossier = DossierFacturation::findOrFail($id);
 
+        // Exemple : générer le document avec la date choisie
+        $date = Carbon::parse($request->input('documentDate'));
 
 
         // On récupère le rattachement BL
@@ -88,6 +92,7 @@ class DossierFacturationController extends Controller
 
         // On prépare les données à envoyer dans le mail
         $data = [
+            'date' => $date,
             'prenom'  => $rattachement->prenom,
             'nom'     => $rattachement->nom,
             'email'   => $rattachement->email,
@@ -97,18 +102,16 @@ class DossierFacturationController extends Controller
 
         // Liste des destinataires
         $destinataires = [
-            $rattachement->email,
             'noreplysitedt@gmail.com'
-        ]; 
+        ];
 
         // Envoi du mail
         Mail::to($destinataires)->send(new ProformaGenerateMail($data));
 
 
-        Log::info('Demande de facture pro-forma envoyée', ['email' => $dossier['email']]);
+        Log::info('Demande de facture pro-forma envoyée');
 
-        // Exemple : générer le document avec la date choisie
-        $date = $request->input('documentDate');
+
 
         $dossier->date_proforma = $date;
 
@@ -116,8 +119,7 @@ class DossierFacturationController extends Controller
 
         // Ici tu peux mettre à jour updated_at si nécessaire
         $dossier->updated_at = now(); // ou la date spécifique
-        // On veut que created_at reçoive la même valeur
-        $dossier->created_at = $dossier->updated_at;
+        
 
         // Sauvegarde les changements
         $dossier->save();
