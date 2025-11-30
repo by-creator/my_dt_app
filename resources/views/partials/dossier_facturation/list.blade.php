@@ -21,7 +21,7 @@
            style="left: 15px; top: 12px; color: #999;"></i>
 
         <input type="text" id="searchInput" class="form-control ps-5 shadow-sm"
-               placeholder="Rechercher par BL...">
+               placeholder="🔍 Rechercher par BL...">
     </div>
 
     <!-- CARD -->
