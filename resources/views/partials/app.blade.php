@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light">
+<html data-bs-theme="light" class="light">
 
 <head>
     @include('partials.dashboard.head')
