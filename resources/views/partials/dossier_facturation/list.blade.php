@@ -15,90 +15,108 @@
         </div>
     @else
 
-    <!-- BARRE DE RECHERCHE -->
+    <!-- RECHERCHE -->
     <div class="mb-4 position-relative">
         <i class="fa fa-search position-absolute" 
            style="left: 15px; top: 12px; color: #999;"></i>
 
         <input type="text" id="searchInput" class="form-control ps-5 shadow-sm"
-               placeholder="🔍 Rechercher par BL...">
+               placeholder="Rechercher par BL...">
     </div>
 
-    <div class="row" id="cardContainer">
+    <!-- CARD -->
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
 
-        @foreach($dossiers as $dossier)
-        @php
-            $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
-        @endphp
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="dossiersTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <i class="fa-solid fa-receipt me-1"></i>
+                                Numéro de BL
+                            </th>
+                            <th class="text-end">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-        <div class="col-md-4 col-lg-3 mb-4 dossier-card"
-     data-bl="{{ $rattachement ? strtolower($rattachement->bl) : '' }}">
+                        @foreach($dossiers as $dossier)
+                        @php
+                            $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
+                        @endphp
 
-    <div class="card h-100 p-4 card-hover d-flex flex-column">
+                        <tr class="hover-row">
 
-        <!-- ICÔNE MODERNE -->
-        <div class="folder-icon mb-4">
-            <i class="fa-solid fa-folder-open"></i>
+                            <!-- BL -->
+                            <td>
+                                @if($rattachement)
+                                    <span class="badge bg-light text-dark fs-6 border">
+                                        {{ $rattachement->bl }}
+                                    </span>
+                                @else
+                                    <span class="text-muted">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                        Rattachement non trouvé
+                                    </span>
+                                @endif
+                            </td>
+
+                            <!-- ACTION -->
+                            <td class="text-end">
+                                @if($rattachement)
+                                    <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
+                                       class="btn btn-primary btn-sm px-3 rounded-pill">
+                                        <i class="fa-solid fa-eye me-1"></i>
+                                        Consulter
+                                    </a>
+                                @else
+                                    <span class="text-muted">
+                                        Aucun rattachement
+                                    </span>
+                                @endif
+                            </td>
+
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="mt-4 d-flex justify-content-center">
+                {{ $dossiers->links('pagination::bootstrap-5') }}
+            </div>
+
         </div>
-
-        <!-- BL -->
-        <div class="text-center mb-4">
-            @if($rattachement)
-                <span class="badge-bl">
-                    {{ $rattachement->bl }}
-                </span>
-            @else
-                <span class="text-muted small">
-                    Rattachement non trouvé
-                </span>
-            @endif
-        </div>
-
-        <!-- BOUTON -->
-        <div class="mt-auto text-center">
-            @if($rattachement)
-                <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
-                   class="btn btn-modern">
-                    <i class="fa-solid fa-eye me-1"></i>
-                    Ouvrir
-                </a>
-            @else
-                <span class="text-muted small">
-                    Aucun rattachement
-                </span>
-            @endif
-        </div>
-
     </div>
-</div>
-
-
-        @endforeach
-
-    </div>
-
-    <!-- Pagination -->
-    <div class="mt-4 d-flex justify-content-center">
-        {{ $dossiers->links('pagination::bootstrap-5') }}
-    </div>
-
     @endif
-
 </div>
 
 <script>
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        const value = this.value.toLowerCase();
-        const cards = document.querySelectorAll('.dossier-card');
+    // Récupère la barre de recherche
+    const searchInput = document.getElementById('searchInput');
 
-        cards.forEach(card => {
-            const bl = card.getAttribute('data-bl');
+    searchInput.addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase().trim();
 
-            if (bl.includes(value)) {
-                card.style.display = "block";
+        // Récupère toutes les lignes du tableau
+        const rows = document.querySelectorAll('#dossiersTable tbody tr');
+
+        rows.forEach(row => {
+            // Récupère le texte du BL dans la première colonne
+            const blCell = row.cells[0].textContent.toLowerCase();
+
+            // Affiche ou cache la ligne selon le filtre
+            if (blCell.includes(filter)) {
+                row.style.display = '';
             } else {
-                card.style.display = "none";
+                row.style.display = 'none';
             }
         });
     });
 </script>
+
