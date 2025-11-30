@@ -40,6 +40,16 @@
 
                 </div>
 
+                 <!-- FOOTER -->
+                <div class="card-footer text-center">
+
+                    <a href="{{ $video['link'] }}" target="_blank"
+                       class="btn btn-primary w-100">
+                        ▶ Regarder la vidéo
+                    </a>
+
+                </div>
+
             </div>
 
         </div>

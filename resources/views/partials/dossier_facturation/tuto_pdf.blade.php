@@ -7,7 +7,7 @@
     <!-- Barre de recherche -->
     <div class="mb-4">
         <input type="text" id="searchInput" class="form-control"
-               placeholder="🔍 Rechercher un document par titre...">
+            placeholder="🔍 Rechercher un document par titre...">
     </div>
 
     <div class="row" id="pdfContainer">
@@ -19,21 +19,16 @@
 
                 <!-- HEADER -->
                 <div class="card-header text-center fw-bold">
-                   <u>{{ $pdf['title'] }}</u> 
+                    <u>{{ $pdf['title'] }}</u>
                 </div>
 
                 <!-- BODY -->
                 <div class="card-body text-center">
 
                     <a href="{{ $pdf['link'] }}" target="_blank">
-                        @if($pdf['image'])
-                            <img src="{{ $pdf['image'] }}"
-                                 class="img-fluid rounded"
-                                 style="height: 170px; object-fit: cover;">
-                        @else
-                            <i class="bi bi-file-earmark-pdf-fill"
-                               style="font-size: 80px; color: primary;"></i>
-                        @endif
+                        <i class="bi bi-file-earmark-pdf-fill" style="font-size:100px; color:primary"></i>
+
+
                     </a>
 
                     <p class="mt-3">{{ $pdf['description'] }}</p>
@@ -44,7 +39,7 @@
                 <div class="card-footer text-center">
 
                     <a href="{{ $pdf['link'] }}" target="_blank"
-                       class="btn btn-primary w-100">
+                        class="btn btn-primary w-100">
                         📄 Ouvrir le PDF
                     </a>
 
