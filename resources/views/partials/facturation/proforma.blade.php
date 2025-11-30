@@ -70,12 +70,12 @@
                                     required>
                             </div>
 
-                            @if (session('valide'))
+                            @if (session('success'))
                             <script>
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Succès',
-                                    text: "{{ session('valide') }}"
+                                    text: "{{ session('success') }}"
                                 });
                             </script>
                             @elseif (session('error'))

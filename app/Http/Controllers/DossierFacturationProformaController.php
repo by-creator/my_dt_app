@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
+use App\Models\DossierFacturationProforma;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -70,6 +71,36 @@ class DossierFacturationProformaController extends Controller
         $dossier->save();
 
         return redirect()->back()->with('success', "Votre facture sera disponible dans 10 minutes ");
+    }
+
+    public function sendDocuments(Request $request)
+    {
+        $fields = ['proforma'];
+
+        $validated = $request->validate([
+            'proforma.*' => 'nullable|mimes:pdf|max:2048',
+        ]);
+
+        foreach ($fields as $field) {
+            $saveData[$field] = [];
+
+            if ($request->hasFile($field)) {
+                foreach ($request->file($field) as $file) {
+                    $path = $file->store("documents/$field", 'b2'); // B2 disk
+
+                    if ($path) {
+                        $saveData[$field][] = [
+                            'original' => $file->getClientOriginalName(),
+                            'path' => $path,
+                        ];
+                    }
+                }
+            }
+        }
+
+        DossierFacturationProforma::create($saveData);
+
+        return back()->with('success', 'Documents envoyés avec succès !');
     }
 
 }
