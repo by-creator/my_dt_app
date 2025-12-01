@@ -80,46 +80,6 @@ class DossierFacturationProformaController extends Controller
     }
 
 
-    public function sendDocuments(Request $request, $id)
-    {
-        Log::info("Début de l'envoi des documents pour le dossier ID : $id");
-
-        $dossier = $this->getDossier($id);
-        Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
-
-        if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA && $dossier->date_proforma != NULL) {
-
-            $rattachement = $this->getRattachement($dossier);
-            Log::info("Rattachement récupéré", [
-                'rattachement_id' => $rattachement->id ?? null,
-                'email' => $rattachement->email
-            ]);
-
-            $filesData = $this->handleUpload($request, ['proforma']);
-            Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
-
-            $proforma = $this->saveProforma($dossier, $filesData);
-            Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
-
-            $this->updateDossier($dossier, $proforma);
-            Log::info("Dossier mis à jour", [
-                'user_id' => $dossier->user_id,
-                'statut' => $dossier->statut,
-                'time_elapsed' => $dossier->time_elapsed
-            ]);
-
-            $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
-            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
-
-            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
-
-            return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
-        } else {
-            return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
-        }
-    }
-
-
     // -----------------------------
     // Étape 1 : Récupérer le dossier
     // -----------------------------
@@ -218,12 +178,56 @@ class DossierFacturationProformaController extends Controller
         ];
 
         // Liste des destinataires
-            $destinataires = [
-                'noreplysitedt@gmail.com'
-            ];
+        $destinataires = [
+            'noreplysitedt@gmail.com'
+        ];
 
         Mail::to($rattachement->email)
             ->cc($destinataires)
             ->send(new ProformaDocumentsMail($data));
+    }
+
+
+    // -----------------------------
+    // Étape 7 : Effectuer le post
+    // -----------------------------
+
+    public function sendDocuments(Request $request, $id)
+    {
+        Log::info("Début de l'envoi des documents pour le dossier ID : $id");
+
+        $dossier = $this->getDossier($id);
+        Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
+
+        if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA && $dossier->date_proforma != NULL) {
+
+            $rattachement = $this->getRattachement($dossier);
+            Log::info("Rattachement récupéré", [
+                'rattachement_id' => $rattachement->id ?? null,
+                'email' => $rattachement->email
+            ]);
+
+            $filesData = $this->handleUpload($request, ['proforma']);
+            Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
+
+            $proforma = $this->saveProforma($dossier, $filesData);
+            Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
+
+            $this->updateDossier($dossier, $proforma);
+            Log::info("Dossier mis à jour", [
+                'user_id' => $dossier->user_id,
+                'statut' => $dossier->statut,
+                'time_elapsed' => $dossier->time_elapsed
+            ]);
+
+            $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
+            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
+
+            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+
+            return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
+        } else {
+            return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+        }
     }
 }

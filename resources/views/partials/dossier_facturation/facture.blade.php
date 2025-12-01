@@ -33,7 +33,7 @@
                         <i class="fa-solid fa-check-to-slot"></i>
                     </a>
                     <a href="#" class="btn btn-sm btn-danger ms-2">
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-plus"></i>
                     </a>
                     @else
                     <span class="text-muted">Pas de fichier</span>

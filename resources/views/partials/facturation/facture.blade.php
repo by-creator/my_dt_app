@@ -63,26 +63,26 @@
                                 <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
                                 <input
                                     type="file"
-                                    name="proforma[]"
+                                    name="facture[]"
                                     class="form-control"
                                     multiple
                                     required>
                             </div>
 
-                            @if (session('success'))
+                            @if (session('successFacture'))
                             <script>
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Succès',
-                                    text: "{{ session('success') }}"
+                                    text: "{{ session('successFacture') }}"
                                 });
                             </script>
-                            @elseif (session('info'))
+                            @elseif (session('infoFacture'))
                             <script>
                                 Swal.fire({
                                     icon: 'info',
                                     title: 'Information',
-                                    text: "{{ session('info') }}"
+                                    text: "{{ session('infoFacture') }}"
                                 });
                             </script>
                             @elseif (session('error'))

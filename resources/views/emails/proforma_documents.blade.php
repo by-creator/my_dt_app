@@ -6,7 +6,7 @@
 </p>
 
 
-# Facture pro-forma disponible
+# Facture proforma disponible
 
 Bonjour {{ $data['prenom'] }} {{ $data['nom'] }}
 

@@ -9,20 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ProformaDocumentsMail extends Mailable
+class FactureDocumentsMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
+        //
     }
-
 
     /**
      * Get the message envelope.
@@ -30,11 +27,7 @@ class ProformaDocumentsMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new \Illuminate\Mail\Mailables\Address(
-            $this->data['email'], // adresse e-mail de l’expéditeur
-            strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
-        ),
-            subject: 'Facture proforma Disponible - ' . $this->data['bl']
+            subject: 'Facture Documents Mail',
         );
     }
 
@@ -44,7 +37,7 @@ class ProformaDocumentsMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.proforma_documents',
+            markdown: 'emails.facture_documents',
         );
     }
 
