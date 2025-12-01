@@ -209,6 +209,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dossier-facturation/proforma/send/{id}', [DossierFacturationProformaController::class, 'sendDocuments'])->name('dossier_facturation.proforma.send');
 
 
+
+    Route::get('/dossier-facturation/facture', [DossierFacturationFactureController::class, 'facture'])->name('dossier_facturation.facture');
+
     Route::post('/dossier-facturations/{id}/facture/validate', [DossierFacturationFactureController::class, 'validate'])
         ->name('dossier_facturation.facture.validate');
+
+    Route::post('/dossier-facturation/facture/send/{id}', [DossierFacturationFactureController::class, 'sendDocuments'])->name('dossier_facturation.facture.send');
 });

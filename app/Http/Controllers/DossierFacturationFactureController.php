@@ -27,6 +27,8 @@ class DossierFacturationFactureController extends Controller
 
             $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
 
+            $dossier->save();
+
             // On récupère le rattachement BL
             $rattachement = $dossier->rattachement_bl;
 
