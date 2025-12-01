@@ -49,6 +49,12 @@ class DossierFacturationController extends Controller
                 'link' => '#'
             ],
             [
+                'title' => 'Facture complémentaire',
+                'description' => 'Commment avoir sa facture complémentaire ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
                 'title' => 'BAD',
                 'description' => 'Commment avoir son  BAD ?',
                 'image' => null,
@@ -77,6 +83,12 @@ class DossierFacturationController extends Controller
             [
                 'title' => 'Facture définitive',
                 'description' => 'Commment avoir sa facture définitive ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Facture complémentaire',
+                'description' => 'Commment avoir sa facture complémentaire ?',
                 'image' => null,
                 'link' => '#'
             ],
