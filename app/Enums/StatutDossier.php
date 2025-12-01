@@ -4,6 +4,8 @@ namespace App\Enums;
 
 enum StatutDossier: string
 {
+
+    
     case EN_ATTENTE_VALIDATION = 'EN ATTENTE VALIDATION';
     case VALIDE = 'VALIDE';
     case EN_ATTENTE_PROFORMA = 'EN ATTENTE PROFORMA';

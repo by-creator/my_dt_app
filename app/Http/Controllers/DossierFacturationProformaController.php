@@ -33,7 +33,7 @@ class DossierFacturationProformaController extends Controller
 
         $dossier = DossierFacturation::findOrFail($id);
 
-        if ($dossier->rattachement_bl->statut ==  "VALIDÉ") {
+        if ($dossier->statut === StatutDossier::VALIDE) {
             // Exemple : générer le document avec la date choisie
             $date = Carbon::parse($request->input('documentDate'));
 
@@ -75,7 +75,7 @@ class DossierFacturationProformaController extends Controller
 
             return redirect()->back()->with('success', "Votre facture sera disponible dans 10 minutes ");
         } else {
-            return redirect()->back()->with('info', "Une proforma est déjà disponible, merci de valider ou supprimer si nécessaire ");
+            return redirect()->back()->with('info', "Votre proforma est soit en cours de traitement ou soit déjà disponible");
         }
     }
 
@@ -87,31 +87,44 @@ class DossierFacturationProformaController extends Controller
         $dossier = $this->getDossier($id);
         Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
 
-        $rattachement = $this->getRattachement($dossier);
-        Log::info("Rattachement récupéré", [
-            'rattachement_id' => $rattachement->id ?? null,
-            'email' => $rattachement->email
-        ]);
-
-        $filesData = $this->handleUpload($request, ['proforma']);
-        Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
-
-        $proforma = $this->saveProforma($dossier, $filesData);
-        Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
-
-        $this->updateDossier($dossier, $proforma);
-        Log::info("Dossier mis à jour", [
-            'user_id' => $dossier->user_id,
+        Log::info("DEBUG CONDITION", [
             'statut' => $dossier->statut,
-            'time_elapsed' => $dossier->time_elapsed
+            'statut_type' => gettype($dossier->statut),
+            'date_proforma' => $dossier->date_proforma,
+            'is_null' => is_null($dossier->date_proforma),
         ]);
 
-        $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
-        Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
 
-        Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+        if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA && $dossier->date_proforma != NULL) {
 
-        return back()->with('success', 'Documents envoyés et mail transmis avec succès !');
+            $rattachement = $this->getRattachement($dossier);
+            Log::info("Rattachement récupéré", [
+                'rattachement_id' => $rattachement->id ?? null,
+                'email' => $rattachement->email
+            ]);
+
+            $filesData = $this->handleUpload($request, ['proforma']);
+            Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
+
+            $proforma = $this->saveProforma($dossier, $filesData);
+            Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
+
+            $this->updateDossier($dossier, $proforma);
+            Log::info("Dossier mis à jour", [
+                'user_id' => $dossier->user_id,
+                'statut' => $dossier->statut,
+                'time_elapsed' => $dossier->time_elapsed
+            ]);
+
+            $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
+            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
+
+            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+
+            return back()->with('success', 'Documents envoyés et mail transmis avec succès !');
+        } else {
+            return back()->with('info', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+        }
     }
 
 
@@ -186,7 +199,7 @@ class DossierFacturationProformaController extends Controller
     private function updateDossier(DossierFacturation $dossier, DossierFacturationProforma $proforma)
     {
         $dossier->user_id = Auth::id();
-        $dossier->statut = "EN ATTENTE FACTURATION";
+        $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
 
         // Mettre à jour time_elapsed
         $dossier->time_elapsed = $dossier->updated_at->greaterThan($proforma->created_at)

@@ -42,11 +42,11 @@ class RattachementController extends Controller
             Mail::to($destinataires)->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
 
             $rattachement->save();
-             
 
             $rattachement->dossierFacturation()->create([
-                $rattachement->statut
+                'statut' => $rattachement->statut
             ]);
+
 
             return redirect()->back()->with('valide', 'Dossier validé avec succès.');
         } else {

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('bl');
             $table->string('compte');
             $table->string('statut')->default(StatutDossier::EN_ATTENTE_VALIDATION->value);
+            $table->string('time_elapsed')->nullable();
             $table->timestamps();
         });
     }
