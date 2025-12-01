@@ -221,4 +221,6 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/dossier-facturation/bon', [DossierFacturationBonController::class, 'bon'])->name('dossier_facturation.bon');
+
+    Route::post('/dossier-facturation/bon/send/{id}', [DossierFacturationBonController::class, 'sendDocuments'])->name('dossier_facturation.bon.send');
 });

@@ -26,15 +26,6 @@
                     <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
                         <i class="fa-solid fa-eye"></i>
                     </a>
-                    <a href="#"
-                        class="btn btn-sm btn-success ms-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#validateModal{{ $dossier->id }}">
-                        <i class="fa-solid fa-check-to-slot"></i>
-                    </a>
-                    <a href="#" class="btn btn-sm btn-danger ms-2">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
                     @else
                     <span class="text-muted">Pas de fichier</span>
                     @endif

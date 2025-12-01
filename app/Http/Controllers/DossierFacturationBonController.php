@@ -92,7 +92,7 @@ class DossierFacturationBonController extends Controller
     private function updateDossier(DossierFacturation $dossier, DossierFacturationBon $bon)
     {
         $dossier->user_id = Auth::id();
-        $dossier->statut = StatutDossier::FACTURE_VALIDE;
+        $dossier->statut = StatutDossier::BAD_VALIDE;
 
         // Mettre à jour time_elapsed
         $dossier->time_elapsed = $dossier->updated_at->greaterThan($bon->created_at)
