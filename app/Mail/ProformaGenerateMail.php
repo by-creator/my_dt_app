@@ -33,7 +33,7 @@ class ProformaGenerateMail extends Mailable
             $this->data['email'], // adresse e-mail de l’expéditeur
             strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
         ),
-            subject: 'Demande de facture pro-forma - ' . $this->data['bl']
+            subject: 'Demande de facture proforma - ' . $this->data['bl']
         );
     }
 

@@ -73,22 +73,9 @@ class DossierFacturationProformaController extends Controller
             // Sauvegarde les changements
             $dossier->save();
 
-            return redirect()->back()->with('success', "Votre facture sera disponible dans 10 minutes ");
+            return redirect()->back()->with('successProforma', "Votre facture sera disponible dans 10 minutes ");
         } else {
-            return redirect()->back()->with('info', "Votre proforma est soit en cours de traitement ou soit déjà disponible");
-        }
-    }
-
-    public function validate($id)
-    {
-        $dossier = DossierFacturation::findOrFail($id);
-
-         if ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE)
-            {
-
-            } 
-            else {
-            return redirect()->back()->with('info', "Votre facture est soit en cours de traitement ou soit déjà disponible");
+            return redirect()->back()->with('infoProforma', "Votre proforma est soit en cours de traitement ou soit déjà disponible");
         }
     }
 
@@ -126,9 +113,9 @@ class DossierFacturationProformaController extends Controller
 
             Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
 
-            return back()->with('success', 'Documents envoyés et mail transmis avec succès !');
+            return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
         } else {
-            return back()->with('info', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+            return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
         }
     }
 
@@ -230,8 +217,13 @@ class DossierFacturationProformaController extends Controller
             'documents' => $documents,
         ];
 
+        // Liste des destinataires
+            $destinataires = [
+                'noreplysitedt@gmail.com'
+            ];
+
         Mail::to($rattachement->email)
-            ->cc('noreplysitedt@gmail.com')
+            ->cc($destinataires)
             ->send(new ProformaDocumentsMail($data));
     }
 }

@@ -1,12 +1,23 @@
-<x-mail::message>
-# Introduction
+@component('mail::message')
 
-The body of your message.
+<p style="text-align: center;">
+    <img src="https://site-dt-production-98050a853413.herokuapp.com/templates/site/images/logo.png" 
+         alt="Logo" width="150" style="margin-bottom: 20px;">
+</p>
 
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
-</x-mail::message>
+# Demande de facturation du dossier
+
+Bonjour,
+
+Je me présente {{ $data['prenom'] }} {{ $data['nom'] }} et je souhaite avoir la facture définitive du dossier ci-dessous : 
+
+**Bil of Lading (BL)** : {{ $data['bl'] }}  
+
+
+
+---
+
+DAKAR-TERMINAL
+
+@endcomponent
