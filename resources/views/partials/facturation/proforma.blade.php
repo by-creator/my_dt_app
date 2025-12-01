@@ -69,20 +69,20 @@
                                     required>
                             </div>
 
-                            @if (session('success'))
+                            @if (session('successProforma'))
                             <script>
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Succès',
-                                    text: "{{ session('success') }}"
+                                    text: "{{ session('successProforma') }}"
                                 });
                             </script>
-                            @elseif (session('info'))
+                            @elseif (session('infoProforma'))
                             <script>
                                 Swal.fire({
                                     icon: 'info',
                                     title: 'Information',
-                                    text: "{{ session('info') }}"
+                                    text: "{{ session('infoProforma') }}"
                                 });
                             </script>
                             @elseif (session('error'))
