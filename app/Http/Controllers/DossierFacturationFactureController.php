@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\StatutDossier;
 use App\Mail\FactureDocumentsMail;
 use App\Mail\FactureValidateMail;
-use App\Mail\ProformaValidateMail;
 use App\Models\DossierFacturation;
 use App\Models\DossierFacturationFacture;
 use App\Models\User;
