@@ -14,6 +14,8 @@ Je me présente {{ $data['prenom'] }} {{ $data['nom'] }} et je souhaite avoir la
 
 **Bil of Lading (BL)** : {{ $data['bl'] }}  
 
+**Compte** : {{ $data['compte'] }}  
+
 
 
 ---

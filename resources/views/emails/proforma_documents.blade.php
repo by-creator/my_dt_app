@@ -8,7 +8,7 @@
 
 # Facture proforma disponible
 
-Bonjour {{ $data['prenom'] }} {{ $data['nom'] }}
+Bonjour {{ $data['prenom'] }} {{ $data['nom'] }},
 
 Votre facture est disponible sur notre plateforme accessible en cliquant sur le lien ci-dessous :
 

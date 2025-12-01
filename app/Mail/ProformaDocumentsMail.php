@@ -34,7 +34,7 @@ class ProformaDocumentsMail extends Mailable
             $this->data['email'], // adresse e-mail de l’expéditeur
             strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
         ),
-            subject: 'Facture proforma Disponible - ' . $this->data['bl']
+            subject: 'Facture Proforma Disponible - ' . $this->data['bl']
         );
     }
 

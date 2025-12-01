@@ -13,12 +13,14 @@ class FactureDocumentsMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -27,7 +29,11 @@ class FactureDocumentsMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Facture Documents Mail',
+            from: new \Illuminate\Mail\Mailables\Address(
+            $this->data['email'], // adresse e-mail de l’expéditeur
+            strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
+        ),
+            subject: 'Facture Définitive Disponible - ' . $this->data['bl']
         );
     }
 

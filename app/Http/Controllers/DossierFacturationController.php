@@ -60,6 +60,12 @@ class DossierFacturationController extends Controller
                 'image' => null,
                 'link' => '#'
             ],
+            [
+                'title' => 'Demande de réduction',
+                'description' => 'Commment faire une demande de réduction ?',
+                'image' => null,
+                'link' => '#'
+            ],
         ];
 
         return view('dossier_facturation.tuto_video', compact('videos'));
@@ -95,6 +101,12 @@ class DossierFacturationController extends Controller
             [
                 'title' => 'BAD',
                 'description' => 'Commment avoir son  BAD ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Demande de réduction',
+                'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
                 'link' => '#'
             ],
