@@ -34,7 +34,8 @@
                     <a href="#"
                         class="btn btn-sm btn-success ms-2"
                         data-bs-toggle="modal"
-                        data-bs-target="#validateModal{{ $dossier->id }}">
+                        data-type="proforma"
+                        data-bs-target="#validateProformaModal{{ $dossier->id }}">
                         <i class="fa-solid fa-check-to-slot"></i>
                     </a>
                     <a href="#" class="btn btn-sm btn-danger ms-2">
@@ -58,3 +59,5 @@
         </div>
     </div>
 </div>
+
+
