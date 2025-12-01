@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatutDossier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\ConvertsDates;
@@ -14,10 +15,12 @@ class DossierFacturation extends Model
     protected $fillable = [
         'rattachement_bl_id',
         'date_proforma',
+        'statut'
     ];
 
     protected $casts = [
         'date_proforma' => 'datetime',
+        'statut' => StatutDossier::class,
     ];
 
     public function getDateProformaFormattedAttribute()

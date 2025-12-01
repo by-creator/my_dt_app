@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatutDossier;
 use App\Mail\ProformaDocumentsMail;
 use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
@@ -32,50 +33,50 @@ class DossierFacturationProformaController extends Controller
 
         $dossier = DossierFacturation::findOrFail($id);
 
-        if($dossier->statut)
-
-        // Exemple : générer le document avec la date choisie
-        $date = Carbon::parse($request->input('documentDate'));
-
-
-        // On récupère le rattachement BL
-        $rattachement = $dossier->rattachement_bl;
-
-        // On prépare les données à envoyer dans le mail
-        $data = [
-            'date' => $date,
-            'prenom'  => $rattachement->prenom,
-            'nom'     => $rattachement->nom,
-            'email'   => $rattachement->email,
-            'bl'      => $rattachement->bl,
-            'compte'  => $rattachement->compte,
-        ];
-
-        // Liste des destinataires
-        $destinataires = [
-            'noreplysitedt@gmail.com'
-        ];
-
-        // Envoi du mail
-        Mail::to($destinataires)->send(new ProformaGenerateMail($data));
+        if ($dossier->rattachement_bl->statut ==  "VALIDÉ") {
+            // Exemple : générer le document avec la date choisie
+            $date = Carbon::parse($request->input('documentDate'));
 
 
-        Log::info('Demande de facture pro-forma envoyée');
+            // On récupère le rattachement BL
+            $rattachement = $dossier->rattachement_bl;
+
+            // On prépare les données à envoyer dans le mail
+            $data = [
+                'date' => $date,
+                'prenom'  => $rattachement->prenom,
+                'nom'     => $rattachement->nom,
+                'email'   => $rattachement->email,
+                'bl'      => $rattachement->bl,
+                'compte'  => $rattachement->compte,
+            ];
+
+            // Liste des destinataires
+            $destinataires = [
+                'noreplysitedt@gmail.com'
+            ];
+
+            // Envoi du mail
+            Mail::to($destinataires)->send(new ProformaGenerateMail($data));
 
 
+            Log::info('Demande de facture proforma envoyée');
 
-        $dossier->date_proforma = $date;
+            $dossier->date_proforma = $date;
 
-        $dossier->statut = "EN ATTENTE PROFORMA";
+            $dossier->statut = "EN ATTENTE PROFORMA";
 
-        // Ici tu peux mettre à jour updated_at si nécessaire
-        $dossier->updated_at = now(); // ou la date spécifique
+            // Ici tu peux mettre à jour updated_at si nécessaire
+            $dossier->updated_at = now(); // ou la date spécifique
 
 
-        // Sauvegarde les changements
-        $dossier->save();
+            // Sauvegarde les changements
+            $dossier->save();
 
-        return redirect()->back()->with('success', "Votre facture sera disponible dans 10 minutes ");
+            return redirect()->back()->with('success', "Votre facture sera disponible dans 10 minutes ");
+        } else {
+            return redirect()->back()->with('info', "Une proforma est déjà disponible, merci de valider ou supprimer si nécessaire ");
+        }
     }
 
 

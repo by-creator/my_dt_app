@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatutDossier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('bl');
             $table->string('compte');
-            $table->string('statut')->default("EN ATTENTE VALIDATION");
+            $table->string('statut')->default(StatutDossier::EN_ATTENTE_VALIDATION->value);
             $table->timestamps();
         });
     }

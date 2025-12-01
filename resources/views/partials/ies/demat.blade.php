@@ -188,19 +188,19 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  @if (session('sendValidation'))
+  @if (session('success'))
   <script>
     Swal.fire({
       icon: 'success',
       title: 'Demande de validation envoyée ✅',
-      text: "{{ session('sendValidation') }}",
+      text: "{{ session('success') }}",
       showConfirmButton: true
     });
   </script>
   @elseif (session('info'))
   <script>
     Swal.fire({
-      icon: 'warning',
+      icon: 'info',
       title: 'Validation en cours  ℹ️',
       text: "{{ session('info') }}",
       showConfirmButton: true

@@ -94,8 +94,17 @@
 <script>
     Swal.fire({
         icon: 'success',
-        title: 'Demande de pro-forma',
+        title: 'Demande de proforma',
         text: "{{ session('success') }}",
+        showConfirmButton: true
+    });
+</script>
+@elseif (session('info'))
+<script>
+    Swal.fire({
+        icon: 'info',
+        title: 'Demande de proforma',
+        text: "{{ session('info') }}",
         showConfirmButton: true
     });
 </script>

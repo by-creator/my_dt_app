@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatutDossier;
 use App\Mail\RattachementBlInvalideMail;
 use App\Mail\RattachementBlValideMail;
 use App\Models\RattachementBl;
@@ -26,7 +27,7 @@ class RattachementController extends Controller
 
         if ($rattachement->statut == "EN ATTENTE VALIDATION") {
             $rattachement->user_id = Auth::user()->id;
-            $rattachement->statut = "VALIDÉ";
+            $rattachement->statut = StatutDossier::VALIDE;
 
             $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
 
@@ -41,9 +42,10 @@ class RattachementController extends Controller
             Mail::to($destinataires)->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
 
             $rattachement->save();
+             
 
             $rattachement->dossierFacturation()->create([
-                'statut' => "EN ATTENTE PROFORMA",
+                $rattachement->statut
             ]);
 
             return redirect()->back()->with('valide', 'Dossier validé avec succès.');
@@ -56,7 +58,7 @@ class RattachementController extends Controller
     {
         $rattachement = RattachementBl::findOrFail($id);
 
-        if ($rattachement->statut == "EN ATTENTE VALIDATION") {
+        if ($rattachement->statut === StatutDossier::EN_ATTENTE_VALIDATION) {
             $rattachement->user_id = Auth::user()->id;
             $rattachement->statut = "REJETÉ";
             $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
