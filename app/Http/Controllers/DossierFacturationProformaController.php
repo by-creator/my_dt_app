@@ -25,7 +25,7 @@ class DossierFacturationProformaController extends Controller
         return view('dossier_facturation.proforma', compact('dossiers', 'users'));
     }
 
-    public function proformaGenerate(Request $request, $id)
+    public function generate(Request $request, $id)
     {
         $request->validate([
             'documentDate' => 'required|date',
@@ -64,7 +64,7 @@ class DossierFacturationProformaController extends Controller
 
             $dossier->date_proforma = $date;
 
-            $dossier->statut = "EN ATTENTE PROFORMA";
+            $dossier->statut = StatutDossier::EN_ATTENTE_PROFORMA;
 
             // Ici tu peux mettre à jour updated_at si nécessaire
             $dossier->updated_at = now(); // ou la date spécifique
@@ -79,6 +79,19 @@ class DossierFacturationProformaController extends Controller
         }
     }
 
+    public function validate($id)
+    {
+        $dossier = DossierFacturation::findOrFail($id);
+
+         if ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE)
+            {
+
+            } 
+            else {
+            return redirect()->back()->with('info', "Votre facture est soit en cours de traitement ou soit déjà disponible");
+        }
+    }
+
 
     public function sendDocuments(Request $request, $id)
     {
@@ -86,14 +99,6 @@ class DossierFacturationProformaController extends Controller
 
         $dossier = $this->getDossier($id);
         Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
-
-        Log::info("DEBUG CONDITION", [
-            'statut' => $dossier->statut,
-            'statut_type' => gettype($dossier->statut),
-            'date_proforma' => $dossier->date_proforma,
-            'is_null' => is_null($dossier->date_proforma),
-        ]);
-
 
         if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA && $dossier->date_proforma != NULL) {
 
@@ -199,7 +204,7 @@ class DossierFacturationProformaController extends Controller
     private function updateDossier(DossierFacturation $dossier, DossierFacturationProforma $proforma)
     {
         $dossier->user_id = Auth::id();
-        $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
+        $dossier->statut = StatutDossier::PROFORMA_VALIDE;
 
         // Mettre à jour time_elapsed
         $dossier->time_elapsed = $dossier->updated_at->greaterThan($proforma->created_at)
