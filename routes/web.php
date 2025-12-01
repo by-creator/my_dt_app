@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClavierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DematController;
+use App\Http\Controllers\DossierFacturationBonController;
 use App\Http\Controllers\DossierFacturationController;
 use App\Http\Controllers\DossierFacturationFactureController;
 use App\Http\Controllers\DossierFacturationProformaController;
@@ -198,7 +199,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dossier-facturation/list', [DossierFacturationController::class, 'list'])->name('dossier_facturation.list');
     Route::get('/dossier-facturations/{dossier}', [DossierFacturationController::class, 'show'])->name('dossier_facturation.show');
     Route::get('/dossier-facturation/facture', [DossierFacturationController::class, 'facture'])->name('dossier_facturation.facture');
-    Route::get('/dossier-facturation/bon', [DossierFacturationController::class, 'bon'])->name('dossier_facturation.bon');
 
 
     Route::get('/dossier-facturation/proforma', [DossierFacturationProformaController::class, 'proforma'])->name('dossier_facturation.proforma');
@@ -218,4 +218,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dossier_facturation.facture.validate');
 
     Route::post('/dossier-facturation/facture/send/{id}', [DossierFacturationFactureController::class, 'sendDocuments'])->name('dossier_facturation.facture.send');
+
+
+    Route::get('/dossier-facturation/bon', [DossierFacturationBonController::class, 'bon'])->name('dossier_facturation.bon');
 });

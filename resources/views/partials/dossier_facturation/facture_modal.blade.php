@@ -1,5 +1,5 @@
 <!-- Modal Validation -->
-<div class="modal fade" id="validateModal{{ $dossier->id }}" tabindex="-1" aria-labelledby="validateModalLabel{{ $dossier->id }}" aria-hidden="true">
+<div class="modal fade" id="validateFactureModal{{ $dossier->id }}" tabindex="-1" aria-labelledby="validateModalLabel{{ $dossier->id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" action="{{ route('dossier_facturation.facture.validate', $dossier->id) }}">

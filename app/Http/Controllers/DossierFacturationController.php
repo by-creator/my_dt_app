@@ -165,10 +165,6 @@ class DossierFacturationController extends Controller
         return back()->with('success', 'Documents enregistrés avec succès !');
     }
 
-
-
-
-
     public function facture()
     {
         return view('dossier_facturation.facture');
