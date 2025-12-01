@@ -11,13 +11,27 @@
     </a>
     <ul class="submenu">
          <li class="submenu-item">
-            <a href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Facture pro-forma</a>
+            <a href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Facture proforma</a>
         </li>
         <li class="submenu-item ">
             <a href="{{ route('dossier_facturation.facture') }}"><i class="fa-solid fa-clipboard-list"></i> Facture définitive</a>
         </li>
         <li class="submenu-item ">
             <a href="{{ route('dossier_facturation.bon') }}"><i class="fa-solid fa-clipboard-list"></i> Bon à délivrer</a>
+        </li>
+    </ul>
+</li>
+<li class="sidebar-item  has-sub ">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Comment ça marche </span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
+            <a href="{{ route('dossier_facturation.tuto-pdf-index') }}"><i class="fa-solid fa-clipboard-list"></i> Format PDF</a>
+        </li>
+        <li class="submenu-item ">
+            <a href="{{ route('dossier_facturation.tuto-video-index') }}"><i class="fa-solid fa-video"></i> Format vidéo</a>
         </li>
     </ul>
 </li>
