@@ -78,4 +78,13 @@ class User extends Authenticatable
         return $this->hasMany(DossierFacturation::class);
     }
 
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            if (is_null($user->role_id)) {
+                $user->role_id = \App\Models\Role::where('name', 'CLIENT_FACTURATION')->first()?->id;
+            }
+        });
+    }
 }

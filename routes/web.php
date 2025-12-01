@@ -45,11 +45,6 @@ Route::get('/demat', function () {
 Route::post('/demat/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
 Route::post('/demat/validation', [DematController::class, 'validation'])->name('demat.validation');
 
-
-Route::get('/register', function () {
-    return view('livewire.auth.login');
-})->name('register');
-
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');

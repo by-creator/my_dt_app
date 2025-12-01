@@ -58,8 +58,8 @@
                                     </span>
                                 @else
                                     <span class="text-muted">
-                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
-                                        Rattachement non trouvé
+                                        <i class="fa-solid fa-info-circle"></i>
+                                        Aucun dossier trouvé
                                     </span>
                                 @endif
                             </td>
@@ -73,9 +73,7 @@
                                         Ouvrir
                                     </a>
                                 @else
-                                    <span class="text-muted">
-                                        Aucun rattachement
-                                    </span>
+                                    
                                 @endif
                             </td>
 
