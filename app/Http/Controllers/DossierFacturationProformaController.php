@@ -32,6 +32,8 @@ class DossierFacturationProformaController extends Controller
 
         $dossier = DossierFacturation::findOrFail($id);
 
+        if($dossier->statut)
+
         // Exemple : générer le document avec la date choisie
         $date = Carbon::parse($request->input('documentDate'));
 

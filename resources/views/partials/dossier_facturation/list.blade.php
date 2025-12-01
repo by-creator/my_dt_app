@@ -9,7 +9,7 @@
     </div>
 
     @if($dossiers->isEmpty())
-        <div class="alert alert-info text-center">
+        <div class="alert alert-primary text-center">
             <i class="fa-solid fa-circle-info me-2"></i>
             Aucun dossier enregistré.
         </div>

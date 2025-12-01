@@ -35,7 +35,7 @@ class DematController extends Controller
 
             if ($blExiste) {
                 return redirect()
-                    ->route('demat.index')
+                    ->back()
                     ->with('info', 'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation');
             }
 
