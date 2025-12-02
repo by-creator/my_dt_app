@@ -74,9 +74,9 @@ class DossierFacturationProformaController extends Controller
             // Sauvegarde les changements
             $dossier->save();
 
-            return redirect()->back()->with('successProforma', "Votre facture sera disponible dans 10 minutes ");
+            return redirect()->back()->with('success', "Votre facture proforma sera disponible dans 10 minutes ");
         } else {
-            return redirect()->back()->with('infoProforma', "Votre proforma est soit en cours de traitement ou soit déjà disponible");
+            return redirect()->back()->with('info', "Votre facture proforma est soit en cours de traitement ou soit déjà disponible");
         }
     }
 
@@ -200,35 +200,37 @@ class DossierFacturationProformaController extends Controller
         $dossier = $this->getDossier($id);
         Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
 
-        if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA && $dossier->date_proforma != NULL) {
+        if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA || $dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
 
-            $rattachement = $this->getRattachement($dossier);
-            Log::info("Rattachement récupéré", [
-                'rattachement_id' => $rattachement->id ?? null,
-                'email' => $rattachement->email
-            ]);
+            if ($dossier->date_proforma != NULL) {
+                $rattachement = $this->getRattachement($dossier);
+                Log::info("Rattachement récupéré", [
+                    'rattachement_id' => $rattachement->id ?? null,
+                    'email' => $rattachement->email
+                ]);
 
-            $filesData = $this->handleUpload($request, ['proforma']);
-            Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
+                $filesData = $this->handleUpload($request, ['proforma']);
+                Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
 
-            $proforma = $this->saveProforma($dossier, $filesData);
-            Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
+                $proforma = $this->saveProforma($dossier, $filesData);
+                Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
 
-            $this->updateDossier($dossier, $proforma);
-            Log::info("Dossier mis à jour", [
-                'user_id' => $dossier->user_id,
-                'statut' => $dossier->statut,
-                'time_elapsed' => $dossier->time_elapsed
-            ]);
+                $this->updateDossier($dossier, $proforma);
+                Log::info("Dossier mis à jour", [
+                    'user_id' => $dossier->user_id,
+                    'statut' => $dossier->statut,
+                    'time_elapsed' => $dossier->time_elapsed
+                ]);
 
-            $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
-            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
+                $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
+                Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
 
-            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+                Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
 
-            return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
-        } else {
-            return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+                return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
+            } else {
+                return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+            }
         }
     }
 
@@ -266,9 +268,9 @@ class DossierFacturationProformaController extends Controller
 
             Log::info('Votre facture sera disponible dans 10 minutes');
 
-            return redirect()->back()->with('successFacture', "Votre facture sera disponible dans 10 minutes ");
+            return redirect()->back()->with('success', "Votre facture définitive sera disponible dans 10 minutes ");
         } else {
-            return redirect()->back()->with('infoFacture', "Votre facture est soit en cours de traitement ou soit déjà disponible");
+            return redirect()->back()->with('info', "Votre facture définitive est soit en cours de traitement ou soit déjà disponible");
         }
     }
 }

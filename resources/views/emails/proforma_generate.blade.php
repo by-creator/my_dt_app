@@ -6,11 +6,11 @@
 </p>
 
 
-# Demande de validation du dossier
+# Demande de facture proforma
 
 Bonjour,
 
-Je me présente {{ $data['prenom'] }} {{ $data['nom'] }} et je souhaite avoir la facture pro-forma du dossier ci-dessous : 
+Je me présente {{ $data['prenom'] }} {{ $data['nom'] }} et je souhaite avoir la facture proforma du dossier ci-dessous : 
 
 **Bil of Lading (BL)** : {{ $data['bl'] }}  
 

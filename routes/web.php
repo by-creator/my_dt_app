@@ -209,6 +209,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dossier-facturation/facture', [DossierFacturationFactureController::class, 'facture'])->name('dossier_facturation.facture');
 
+    Route::post('/dossier-facturations/{id}/facture/complement', [DossierFacturationFactureController::class, 'complement'])
+        ->name('dossier_facturation.facture.complement');
+
     Route::post('/dossier-facturations/{id}/facture/validate', [DossierFacturationFactureController::class, 'validate'])
         ->name('dossier_facturation.facture.validate');
 

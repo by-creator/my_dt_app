@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\StatutDossier;
 use App\Mail\FactureDocumentsMail;
 use App\Mail\FactureValidateMail;
+use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
 use App\Models\DossierFacturationFacture;
 use App\Models\User;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class DossierFacturationFactureController extends Controller
@@ -21,6 +23,60 @@ class DossierFacturationFactureController extends Controller
         $dossiers = DossierFacturation::orderBy('id', 'desc')->get();
         $users = User::all();
         return view('dossier_facturation.facture', compact('dossiers', 'users'));
+    }
+
+    public function complement(Request $request, $id)
+    {
+        $request->validate([
+            'documentDate' => 'required|date',
+        ]);
+
+        $dossier = DossierFacturation::findOrFail($id);
+
+        if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::BAD_VALIDE) {
+            // Exemple : générer le document avec la date choisie
+            $date = Carbon::parse($request->input('documentDate'));
+
+
+            // On récupère le rattachement BL
+            $rattachement = $dossier->rattachement_bl;
+
+            // On prépare les données à envoyer dans le mail
+            $data = [
+                'date' => $date,
+                'prenom'  => $rattachement->prenom,
+                'nom'     => $rattachement->nom,
+                'email'   => $rattachement->email,
+                'bl'      => $rattachement->bl,
+                'compte'  => $rattachement->compte,
+            ];
+
+            // Liste des destinataires
+            $destinataires = [
+                'noreplysitedt@gmail.com'
+            ];
+
+            // Envoi du mail
+            Mail::to($destinataires)->send(new ProformaGenerateMail($data));
+
+
+            Log::info('Demande de facture proforma complémentaire envoyée');
+
+            $dossier->date_proforma = $date;
+
+            $dossier->statut = StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE;
+
+            // Ici tu peux mettre à jour updated_at si nécessaire
+            $dossier->updated_at = now(); // ou la date spécifique
+
+
+            // Sauvegarde les changements
+            $dossier->save();
+
+            return redirect()->back()->with('success', "Votre proforma complémentaire sera disponible dans 10 minutes ");
+        } else {
+            return redirect()->back()->with('info', "Votre proforma complémentaire est soit en cours de traitement ou soit déjà disponible");
+        }
     }
 
 
@@ -208,9 +264,9 @@ class DossierFacturationFactureController extends Controller
 
             Log::info('Votre facture sera disponible dans 10 minutes');
 
-            return redirect()->back()->with('successFacture', "Votre BAD sera disponible dans 10 minutes ");
+            return redirect()->back()->with('success', "Votre BAD sera disponible dans 10 minutes ");
         } else {
-            return redirect()->back()->with('infoFacture', "Votre BAD est soit en cours de traitement ou soit déjà disponible");
+            return redirect()->back()->with('info', "Votre BAD est soit en cours de traitement ou soit déjà disponible");
         }
     }
 

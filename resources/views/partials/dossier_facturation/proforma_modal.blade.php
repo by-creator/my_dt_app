@@ -10,21 +10,21 @@
                 </div>
 
                 <div class="modal-body">
-                    @if (session('successProforma'))
+                    @if (session('success'))
                     <script>
                         Swal.fire({
                             icon: 'success',
-                            title: 'Demande de proforma',
-                            text: "{{ session('successProforma') }}",
+                            title: 'Information',
+                            text: "{{ session('success') }}",
                             showConfirmButton: true
                         });
                     </script>
-                    @elseif (session('infoProforma'))
+                    @elseif (session('info'))
                     <script>
                         Swal.fire({
                             icon: 'info',
-                            title: 'Demande de proforma',
-                            text: "{{ session('infoProforma') }}",
+                            title: 'Information',
+                            text: "{{ session('info') }}",
                             showConfirmButton: true
                         });
                     </script>
@@ -65,21 +65,21 @@
                 </div>
                 <div class="modal-body">
                     <p>Êtes-vous sûr(e) de vouloir valider cette facture ?</p>
-                    @if (session('successFacture'))
+                    @if (session('success'))
                     <script>
                         Swal.fire({
                             icon: 'success',
-                            title: 'Demande de facture définitive',
-                            text: "{{ session('successFacture') }}",
+                            title: 'Information',
+                            text: "{{ session('success') }}",
                             showConfirmButton: true
                         });
                     </script>
-                     @elseif (session('infoFacture'))
+                     @elseif (session('info'))
                     <script>
                         Swal.fire({
                             icon: 'info',
-                            title: 'Demande de facture définitive',
-                            text: "{{ session('infoFacture') }}",
+                            title: 'Information',
+                            text: "{{ session('info') }}",
                             showConfirmButton: true
                         });
                     </script>

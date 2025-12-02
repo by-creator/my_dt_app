@@ -6,7 +6,7 @@
 </p>
 
 
-# Demande de facturation du dossier
+# Demande de facturation définitive du dossier
 
 Bonjour,
 
