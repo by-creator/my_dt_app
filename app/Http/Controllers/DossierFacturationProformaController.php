@@ -164,6 +164,21 @@ class DossierFacturationProformaController extends Controller
         $dossier->save();
     }
 
+    private function updateComplementDossier(DossierFacturation $dossier, DossierFacturationProforma $proforma)
+    {
+        $dossier->user_id = Auth::id();
+        $dossier->statut = StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE;
+
+        // Mettre à jour time_elapsed
+        $dossier->time_elapsed_proforma = $dossier->updated_at->greaterThan($proforma->created_at)
+            ? $proforma->created_at->diffInSeconds($dossier->updated_at)
+            : $dossier->updated_at->diffInSeconds($proforma->created_at);
+
+
+
+        $dossier->save();
+    }
+
     // -----------------------------
     // Étape 6 : Envoyer le mail
     // -----------------------------
@@ -200,37 +215,47 @@ class DossierFacturationProformaController extends Controller
         $dossier = $this->getDossier($id);
         Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
 
-        if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA || $dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
+        if ($dossier->date_proforma != NULL) {
+            $rattachement = $this->getRattachement($dossier);
+            Log::info("Rattachement récupéré", [
+                'rattachement_id' => $rattachement->id ?? null,
+                'email' => $rattachement->email
+            ]);
 
-            if ($dossier->date_proforma != NULL) {
-                $rattachement = $this->getRattachement($dossier);
-                Log::info("Rattachement récupéré", [
-                    'rattachement_id' => $rattachement->id ?? null,
-                    'email' => $rattachement->email
-                ]);
+            $filesData = $this->handleUpload($request, ['proforma']);
+            Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
 
-                $filesData = $this->handleUpload($request, ['proforma']);
-                Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
+            $proforma = $this->saveProforma($dossier, $filesData);
+            Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
 
-                $proforma = $this->saveProforma($dossier, $filesData);
-                Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
-
+            if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
                 $this->updateDossier($dossier, $proforma);
                 Log::info("Dossier mis à jour", [
                     'user_id' => $dossier->user_id,
                     'statut' => $dossier->statut,
                     'time_elapsed' => $dossier->time_elapsed
                 ]);
-
-                $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
-                Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
-
-                Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
-
-                return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
-            } else {
-                return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+            } elseif (
+                $dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE ||
+                $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE
+            ) {
+                $this->updateComplementDossier($dossier, $proforma);
+                Log::info("Dossier mis à jour", [
+                    'user_id' => $dossier->user_id,
+                    'statut' => $dossier->statut,
+                    'time_elapsed' => $dossier->time_elapsed
+                ]);
             }
+
+
+            $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
+            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
+
+            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+
+            return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
+        } else {
+            return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
         }
     }
 
@@ -238,39 +263,47 @@ class DossierFacturationProformaController extends Controller
     {
         $dossier = DossierFacturation::findOrFail($id);
 
+        // On récupère le rattachement BL
+        $rattachement = $dossier->rattachement_bl;
+
+        // On prépare les données à envoyer dans le mail
+        $data = [
+            'prenom'  => $rattachement->prenom,
+            'nom'     => $rattachement->nom,
+            'email'   => $rattachement->email,
+            'bl'      => $rattachement->bl,
+            'compte'  => $rattachement->compte,
+        ];
+
         if ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
 
             $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
 
             $dossier->save();
+        } elseif (
+            $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE ||
+            $dossier->statut === StatutDossier::PROFORMA_VALIDE
+        ) {
 
-            // On récupère le rattachement BL
-            $rattachement = $dossier->rattachement_bl;
+            $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE;
 
-            // On prépare les données à envoyer dans le mail
-            $data = [
-                'prenom'  => $rattachement->prenom,
-                'nom'     => $rattachement->nom,
-                'email'   => $rattachement->email,
-                'bl'      => $rattachement->bl,
-                'compte'  => $rattachement->compte,
-            ];
-
-
-            // Liste des destinataires
-            $destinataires = [
-                'noreplysitedt@gmail.com'
-            ];
-
-            // Envoi du mail
-            Mail::to($destinataires)->send(new ProformaValidateMail($data));
-
-
-            Log::info('Votre facture sera disponible dans 10 minutes');
-
-            return redirect()->back()->with('success', "Votre facture définitive sera disponible dans 10 minutes ");
+            $dossier->save();
         } else {
             return redirect()->back()->with('info', "Votre facture définitive est soit en cours de traitement ou soit déjà disponible");
         }
+
+        // Liste des destinataires
+        $destinataires = [
+            'noreplysitedt@gmail.com'
+        ];
+
+        // Envoi du mail
+        Mail::to($destinataires)->send(new ProformaValidateMail($data));
+
+
+        Log::info('Votre facture sera disponible dans 10 minutes');
+
+
+        return redirect()->back()->with('success', "Votre facture définitive sera disponible dans 10 minutes ");
     }
 }

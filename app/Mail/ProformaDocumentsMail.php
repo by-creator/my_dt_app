@@ -30,11 +30,7 @@ class ProformaDocumentsMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new \Illuminate\Mail\Mailables\Address(
-            $this->data['email'], // adresse e-mail de l’expéditeur
-            strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
-        ),
-            subject: 'Facture Proforma Disponible - ' . $this->data['bl']
+            subject: 'Facture Proforma Disponible - ' . $this->data['bl'],
         );
     }
 

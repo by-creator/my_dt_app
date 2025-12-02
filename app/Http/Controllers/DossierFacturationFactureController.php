@@ -33,7 +33,11 @@ class DossierFacturationFactureController extends Controller
 
         $dossier = DossierFacturation::findOrFail($id);
 
-        if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::BAD_VALIDE) {
+        if (
+            $dossier->statut === StatutDossier::FACTURE_VALIDE ||
+            $dossier->statut === StatutDossier::BAD_VALIDE ||
+            $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE
+        ) {
             // Exemple : générer le document avec la date choisie
             $date = Carbon::parse($request->input('documentDate'));
 
@@ -163,6 +167,21 @@ class DossierFacturationFactureController extends Controller
         $dossier->save();
     }
 
+    private function updateComplementDossier(DossierFacturation $dossier, DossierFacturationFacture $facture)
+    {
+        $dossier->user_id = Auth::id();
+        $dossier->statut = StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE;
+
+        // Mettre à jour time_elapsed
+        $dossier->time_elapsed_facture = $dossier->updated_at->greaterThan($facture->created_at)
+            ? $facture->created_at->diffInSeconds($dossier->updated_at)
+            : $dossier->updated_at->diffInSeconds($facture->created_at);
+
+
+
+        $dossier->save();
+    }
+
     // -----------------------------
     // Étape 6 : Envoyer le mail
     // -----------------------------
@@ -198,19 +217,19 @@ class DossierFacturationFactureController extends Controller
         $dossier = $this->getDossier($id);
         Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
 
+        $rattachement = $this->getRattachement($dossier);
+        Log::info("Rattachement récupéré", [
+            'rattachement_id' => $rattachement->id ?? null,
+            'email' => $rattachement->email
+        ]);
+
+        $filesData = $this->handleUpload($request, ['facture']);
+        Log::info("Fichiers uploadés", ['files' => $filesData['facture'] ?? []]);
+
+        $facture = $this->saveFacture($dossier, $filesData);
+        Log::info("Facture créée", ['facture_id' => $facture->id]);
+
         if ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE) {
-
-            $rattachement = $this->getRattachement($dossier);
-            Log::info("Rattachement récupéré", [
-                'rattachement_id' => $rattachement->id ?? null,
-                'email' => $rattachement->email
-            ]);
-
-            $filesData = $this->handleUpload($request, ['facture']);
-            Log::info("Fichiers uploadés", ['files' => $filesData['facture'] ?? []]);
-
-            $facture = $this->saveFacture($dossier, $filesData);
-            Log::info("Facture créée", ['facture_id' => $facture->id]);
 
             $this->updateDossier($dossier, $facture);
             Log::info("Dossier mis à jour", [
@@ -218,23 +237,34 @@ class DossierFacturationFactureController extends Controller
                 'statut' => $dossier->statut,
                 'time_elapsed' => $dossier->time_elapsed
             ]);
+        } elseif (
+            $dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE ||
+            $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE
+        ) {
 
-            $this->sendMailToRattachement($rattachement, $facture, $filesData['facture']);
-            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
-
-            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
-
-            return back()->with('successFacture', 'Documents envoyés et mail transmis avec succès !');
+            $this->updateComplementDossier($dossier, $facture);
+            Log::info("Dossier mis à jour", [
+                'user_id' => $dossier->user_id,
+                'statut' => $dossier->statut,
+                'time_elapsed' => $dossier->time_elapsed
+            ]);
         } else {
             return back()->with('infoFacture', 'La facture est déjà disponible');
         }
+
+        $this->sendMailToRattachement($rattachement, $facture, $filesData['facture']);
+        Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
+
+        Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
+
+        return back()->with('successFacture', 'Documents envoyés et mail transmis avec succès !');
     }
 
     public function validate($id)
     {
         $dossier = DossierFacturation::findOrFail($id);
 
-        if ($dossier->statut === StatutDossier::FACTURE_VALIDE) {
+        if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
 
             $dossier->statut = StatutDossier::EN_ATTENTE_BAD;
 
@@ -269,5 +299,4 @@ class DossierFacturationFactureController extends Controller
             return redirect()->back()->with('info', "Votre BAD est soit en cours de traitement ou soit déjà disponible");
         }
     }
-
 }
