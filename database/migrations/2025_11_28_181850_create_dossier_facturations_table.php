@@ -24,7 +24,15 @@ return new class extends Migration
 
             $table->string('statut')->nullable();
 
-            $table->string('time_elapsed')->nullable();
+            $table->string('time_elapsed_proforma')->nullable();
+            $table->string('time_elapsed_facture')->nullable();
+            $table->string('time_elapsed_bon')->nullable();
+
+            $table->boolean('relance_proforma')->default(false);
+
+            $table->boolean('relance_facture')->default(false);
+
+            $table->boolean('relance_bad')->default(false);
 
             $table->timestamps();
         });

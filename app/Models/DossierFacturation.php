@@ -21,6 +21,9 @@ class DossierFacturation extends Model
     protected $casts = [
         'date_proforma' => 'datetime',
         'statut' => StatutDossier::class,
+        'relance_proforma' => 'boolean',
+        'relance_facture' => 'boolean',
+        'relance_bad' => 'boolean',
     ];
 
     public function getDateProformaFormattedAttribute()
