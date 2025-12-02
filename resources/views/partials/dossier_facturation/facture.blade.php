@@ -2,7 +2,7 @@
     <div class="card h-100 shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <span>Facture définitive</span>
-            
+
             @php
             // On compte tous les fichiers facture de ce dossier
             $factureFiles = collect();
@@ -33,7 +33,11 @@
                         data-bs-target="#validateFactureModal{{ $dossier->id }}">
                         <i class="fa-solid fa-check-to-slot"></i>
                     </a>
-                    <a href="#" class="btn btn-sm btn-danger ms-2">
+                    <a href="#"
+                        class="btn btn-sm btn-danger ms-2"
+                        data-bs-toggle="modal"
+                        data-type="facture"
+                        data-bs-target="#complementFactureModal{{ $dossier->id }}">
                         <i class="fa-solid fa-plus"></i>
                     </a>
                     @else
