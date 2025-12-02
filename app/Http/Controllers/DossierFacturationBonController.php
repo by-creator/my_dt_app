@@ -95,7 +95,7 @@ class DossierFacturationBonController extends Controller
         $dossier->statut = StatutDossier::BAD_VALIDE;
 
         // Mettre à jour time_elapsed
-        $dossier->time_elapsed = $dossier->updated_at->greaterThan($bon->created_at)
+        $dossier->time_elapsed_bon = $dossier->updated_at->greaterThan($bon->created_at)
             ? $bon->created_at->diffInSeconds($dossier->updated_at)
             : $dossier->updated_at->diffInSeconds($bon->created_at);
 

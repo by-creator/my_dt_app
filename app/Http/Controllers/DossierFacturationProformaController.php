@@ -155,7 +155,7 @@ class DossierFacturationProformaController extends Controller
         $dossier->statut = StatutDossier::PROFORMA_VALIDE;
 
         // Mettre à jour time_elapsed
-        $dossier->time_elapsed = $dossier->updated_at->greaterThan($proforma->created_at)
+        $dossier->time_elapsed_proforma = $dossier->updated_at->greaterThan($proforma->created_at)
             ? $proforma->created_at->diffInSeconds($dossier->updated_at)
             : $dossier->updated_at->diffInSeconds($proforma->created_at);
 

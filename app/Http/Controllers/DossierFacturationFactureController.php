@@ -98,7 +98,7 @@ class DossierFacturationFactureController extends Controller
         $dossier->statut = StatutDossier::FACTURE_VALIDE;
 
         // Mettre à jour time_elapsed
-        $dossier->time_elapsed = $dossier->updated_at->greaterThan($facture->created_at)
+        $dossier->time_elapsed_facture = $dossier->updated_at->greaterThan($facture->created_at)
             ? $facture->created_at->diffInSeconds($dossier->updated_at)
             : $dossier->updated_at->diffInSeconds($facture->created_at);
 
