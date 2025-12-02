@@ -35,11 +35,14 @@
                         id="documentDate{{ $dossier->id }}"
                         class="form-control"
                         required>
+
+                        <br>
+                        <p>Êtes-vous sûr(e) de vouloir valider à cette date  ?</p>
                 </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-check-to-slot"></i> Générer
+                        <i class="fa-solid fa-check-to-slot"></i> Valider
                     </button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         <i class="fa-solid fa-square-xmark"></i> Annuler
