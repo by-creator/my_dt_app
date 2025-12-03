@@ -5,3 +5,7 @@ heroku apps
 heroku git:remote -a mon-app-prod
 
 git remote -v
+
+heroku run bash -a application-name
+
+php artisan tinker
