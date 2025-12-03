@@ -13,34 +13,43 @@
             <span class="badge bg-light text-dark">{{ $factureFiles->count() }}</span>
         </div>
 
-        <div class="card-body flex-grow-1 d-flex flex-column">
+        <div class="card-body d-flex flex-column">
+             <div class="mb-2">
+                <br>
+                <a href="#"
+                    class="btn btn-sm btn-info text-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#complementFactureModal{{ $dossier->id }}">
+                    <i class="fa-solid fa-plus"></i>
+                    Prolonger votre facture
+                </a>
+            </div>
             @if($factureFiles->isNotEmpty())
-            <div class="flex-grow-1 overflow-auto">
+            <div class="overflow-auto">
                 <ul class="list-group">
                     @foreach($factureFiles as $file)
                     @php
                     $url = Storage::disk('b2')->url($file['path'] ?? '');
                     @endphp
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>{{ $file['original'] }}</span>
+                    <li class="list-group-item d-flex flex-column">
+                        <div class="mb-2">
+                            <span>{{ $file['original'] }}</span>
+                        </div>
                         @if(!empty($file['path']))
-                        <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
-                            <i class="fa-solid fa-eye"></i>
-                        </a>
-                        <a href="#"
-                            class="btn btn-sm btn-success ms-2"
-                            data-bs-toggle="modal"
-                            data-type="facture"
-                            data-bs-target="#validateFactureModal{{ $dossier->id }}">
-                            <i class="fa-solid fa-check-to-slot"></i>
-                        </a>
-                        <a href="#"
-                            class="btn btn-sm btn-danger ms-2"
-                            data-bs-toggle="modal"
-                            data-type="facture"
-                            data-bs-target="#complementFactureModal{{ $dossier->id }}">
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
+                        <div class="mb-2 d-grid gap-2 d-md-flex">
+                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary ms-2">
+                                <i class="fa-solid fa-eye"></i> 
+                                Ouvrir
+                            </a>
+                            <a href="#"
+                                class="btn btn-sm btn-success ms-2"
+                                data-bs-toggle="modal"
+                                data-type="facture"
+                                data-bs-target="#validateFactureModal{{ $dossier->id }}">
+                                <i class="fa-solid fa-check-to-slot"></i>
+                                Valider
+                            </a>
+                        </div>
                         @else
                         <span class="text-muted">Pas de fichier</span>
                         @endif

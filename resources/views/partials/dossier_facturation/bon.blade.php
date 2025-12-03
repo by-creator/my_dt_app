@@ -13,20 +13,29 @@
             <span class="badge bg-light text-dark">{{ $bonFiles->count() }}</span>
         </div>
 
-        <div class="card-body flex-grow-1 d-flex flex-column">
+        <div class="card-body  d-flex flex-column">
+            <div class="mb-2">
+                <br>
+                <br>
+            </div>
             @if($bonFiles->isNotEmpty())
-            <div class="flex-grow-1 overflow-auto">
+            <div class="overflow-auto">
                 <ul class="list-group">
                     @foreach($bonFiles as $file)
                     @php
                     $url = Storage::disk('b2')->url($file['path'] ?? '');
                     @endphp
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>{{ $file['original'] }}</span>
+                    <li class="list-group-item d-flex flex-column">
+                        <div class="mb-2">
+                            <span>{{ $file['original'] }}</span>
+                        </div>
                         @if(!empty($file['path']))
-                        <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
-                            <i class="fa-solid fa-eye"></i>
-                        </a>
+                        <div class="mb-2 d-grid gap-2 d-md-flex">
+                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye"></i>
+                                Ouvrir
+                            </a>
+                        </div>
                         @else
                         <span class="text-muted">Pas de fichier</span>
                         @endif

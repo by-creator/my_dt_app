@@ -78,7 +78,7 @@
                         class="form-control"
                         required>
                         <br>
-                        <p>Êtes-vous sûr(e) de vouloir valider à cette date  ?</p>
+                        <p>Êtes-vous sûr(e) de vouloir générer cette proforma complémentaire à cette date  ?</p>
                 </div>
 
                 <div class="modal-footer">

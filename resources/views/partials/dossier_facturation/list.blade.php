@@ -70,7 +70,7 @@
                                     <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
                                        class="btn btn-primary btn-sm px-3 rounded-pill">
                                         <i class="fa-solid fa-eye me-1"></i>
-                                        Ouvrir
+                                        Voir
                                     </a>
                                 @else
                                     

@@ -37,7 +37,7 @@
                         required>
 
                         <br>
-                        <p>Êtes-vous sûr(e) de vouloir valider à cette date  ?</p>
+                        <p>Êtes-vous sûr(e) de vouloir générer cette proforma à cette date  ?</p>
                 </div>
 
                 <div class="modal-footer">
@@ -64,7 +64,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Êtes-vous sûr(e) de vouloir valider cette facture ?</p>
+                    <p>Êtes-vous sûr(e) de vouloir valider cette proforma ?</p>
                     @if (session('success'))
                     <script>
                         Swal.fire({
