@@ -35,6 +35,7 @@ class DossierFacturationFactureController extends Controller
 
         if (
             $dossier->statut === StatutDossier::FACTURE_VALIDE ||
+            $dossier->statut === StatutDossier::EN_ATTENTE_BAD ||
             $dossier->statut === StatutDossier::BAD_VALIDE ||
             $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE
         ) {

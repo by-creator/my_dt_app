@@ -306,4 +306,32 @@ class DossierFacturationProformaController extends Controller
 
         return redirect()->back()->with('success', "Votre facture définitive sera disponible dans 10 minutes ");
     }
+
+    public function delete($id)
+    {
+        $dossier = DossierFacturation::findOrFail($id);
+        $proforma = DossierFacturationProforma::firstWhere('dossier_facturation_id', $dossier->id);
+
+        if ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
+
+            $proforma->delete();
+            $dossier->statut = StatutDossier::VALIDE;
+            $dossier->date_proforma = NULL;
+
+        } elseif ($dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
+
+            $proforma->delete();
+            $dossier->statut = StatutDossier::FACTURE_VALIDE;
+
+        } else {
+            return redirect()->back()->with('info', "Votre facture proforma est soit en cours de traitement ou soit déjà disponible");
+        }
+
+        $dossier->save();
+
+        Log::info('Facture proforma supprimée');
+
+
+        return redirect()->back()->with('success', "Votre facture a bien été supprimée ");
+    }
 }

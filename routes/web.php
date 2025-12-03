@@ -204,6 +204,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dossier-facturations/{id}/proforma/validate', [DossierFacturationProformaController::class, 'validate'])
         ->name('dossier_facturation.proforma.validate');
 
+    Route::post('/dossier-facturations/{id}/proforma/delete', [DossierFacturationProformaController::class, 'delete'])
+        ->name('dossier_facturation.proforma.delete');
+
     Route::post('/dossier-facturation/proforma/send/{id}', [DossierFacturationProformaController::class, 'sendDocuments'])->name('dossier_facturation.proforma.send');
 
 

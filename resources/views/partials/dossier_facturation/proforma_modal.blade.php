@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<!-- Modal Validation -->
+<!-- Modal Validate -->
 <div class="modal fade" id="validateProformaModal{{ $dossier->id }}" tabindex="-1" aria-labelledby="validateModalLabel{{ $dossier->id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -65,6 +65,48 @@
                 </div>
                 <div class="modal-body">
                     <p>Êtes-vous sûr(e) de vouloir valider cette facture ?</p>
+                    @if (session('success'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Information',
+                            text: "{{ session('success') }}",
+                            showConfirmButton: true
+                        });
+                    </script>
+                     @elseif (session('info'))
+                    <script>
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Information',
+                            text: "{{ session('info') }}",
+                            showConfirmButton: true
+                        });
+                    </script>
+                    @endif
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteProformaModal{{ $dossier->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $dossier->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('dossier_facturation.proforma.delete', $dossier->id) }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel{{ $dossier->id }}">Supprimer Proforma</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr(e) de vouloir supprimer cette facture ?</p>
                     @if (session('success'))
                     <script>
                         Swal.fire({

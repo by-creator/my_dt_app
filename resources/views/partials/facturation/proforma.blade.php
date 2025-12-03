@@ -9,7 +9,6 @@
                     <tr>
                         <th>Date & Heure</th>
                         <th>Agent</th>
-                        <th>Date d'arrêt</th>
                         <th>Numéro BL</th>
                         <th>Statut</th>
                         <th>Durée</th>
@@ -26,7 +25,6 @@
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
-                        <td>{{ $dossier->date_proforma ? $dossier->date_proforma->format('d/m/Y H:i') : '—' }}</td>
 
                         <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
                         <td>{{ $dossier->statut ?? '—' }}</td>

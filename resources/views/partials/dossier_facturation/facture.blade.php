@@ -26,7 +26,6 @@
                         @if(!empty($file['path']))
                         <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-eye"></i>
-                            Voir
                         </a>
                         <a href="#"
                             class="btn btn-sm btn-success ms-2"
@@ -34,7 +33,6 @@
                             data-type="facture"
                             data-bs-target="#validateFactureModal{{ $dossier->id }}">
                             <i class="fa-solid fa-check-to-slot"></i>
-                            Valider
                         </a>
                         <a href="#"
                             class="btn btn-sm btn-danger ms-2"
@@ -42,7 +40,6 @@
                             data-type="facture"
                             data-bs-target="#complementFactureModal{{ $dossier->id }}">
                             <i class="fa-solid fa-plus"></i>
-                            Ajouter
                         </a>
                         @else
                         <span class="text-muted">Pas de fichier</span>

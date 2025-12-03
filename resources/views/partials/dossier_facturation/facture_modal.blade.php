@@ -1,4 +1,4 @@
-<!-- Modal Validation -->
+<!-- Modal Validate -->
 <div class="modal fade" id="validateFactureModal{{ $dossier->id }}" tabindex="-1" aria-labelledby="validateModalLabel{{ $dossier->id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

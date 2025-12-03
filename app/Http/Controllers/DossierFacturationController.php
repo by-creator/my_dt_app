@@ -31,37 +31,37 @@ class DossierFacturationController extends Controller
     {
         $videos = [
             [
-                'title' => 'Validation',
+                'title' => 'Étape 1 : Validation',
                 'description' => 'Commment envoyer une demande de validation ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Proforma',
+                'title' => 'Étape 2 : Proforma',
                 'description' => 'Commment avoir sa facture proforma ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Facture définitive',
+                'title' => 'Étape 3 : Facture définitive',
                 'description' => 'Commment avoir sa facture définitive ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Facture complémentaire',
-                'description' => 'Commment avoir sa facture complémentaire ?',
-                'image' => null,
-                'link' => '#'
-            ],
-            [
-                'title' => 'BAD',
+                'title' => 'Étape 4 : BAD',
                 'description' => 'Commment avoir son  BAD ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Demande de réduction',
+                'title' => 'Étape 5 : Facture complémentaire',
+                'description' => 'Commment avoir sa facture complémentaire ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Étape 6 : Demande de réduction',
                 'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
                 'link' => '#'
@@ -75,37 +75,37 @@ class DossierFacturationController extends Controller
     {
         $pdfs = [
             [
-                'title' => 'Validation',
+                'title' => 'Étape 1 : Validation',
                 'description' => 'Commment envoyer une demande de validation ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Proforma',
+                'title' => 'Étape 2 : Proforma',
                 'description' => 'Commment avoir sa facture proforma ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Facture définitive',
+                'title' => 'Étape 3 : Facture définitive',
                 'description' => 'Commment avoir sa facture définitive ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Facture complémentaire',
-                'description' => 'Commment avoir sa facture complémentaire ?',
-                'image' => null,
-                'link' => '#'
-            ],
-            [
-                'title' => 'BAD',
+                'title' => 'Étape 4 : BAD',
                 'description' => 'Commment avoir son  BAD ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Demande de réduction',
+                'title' => 'Étape 5 : Facture complémentaire',
+                'description' => 'Commment avoir sa facture complémentaire ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Étape 6 : Demande de réduction',
                 'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
                 'link' => '#'

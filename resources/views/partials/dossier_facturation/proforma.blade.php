@@ -31,7 +31,6 @@
                         @if(!empty($file['path']))
                         <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-eye"></i>
-                            Voir
                         </a>
                         <a href="#"
                             class="btn btn-sm btn-success ms-2"
@@ -39,11 +38,12 @@
                             data-type="proforma"
                             data-bs-target="#validateProformaModal{{ $dossier->id }}">
                             <i class="fa-solid fa-check-to-slot"></i>
-                            Valider
                         </a>
-                        <a href="#" class="btn btn-sm btn-danger ms-2">
+                        <a href="#" class="btn btn-sm btn-danger ms-2"
+                            data-bs-toggle="modal"
+                            data-type="proforma"
+                            data-bs-target="#deleteProformaModal{{ $dossier->id }}">
                             <i class="fa-solid fa-trash"></i>
-                            Supprimer
                         </a>
                         @else
                         <span class="text-muted">Pas de fichier</span>
