@@ -49,19 +49,25 @@ class DossierFacturationController extends Controller
                 'link' => '#'
             ],
             [
-                'title' => 'Étape 4 : BAD',
+                'title' => 'Étape 4 : Paiement',
+                'description' => 'Commment payer sa facture définitive ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Étape 5 : BAD',
                 'description' => 'Commment avoir son  BAD ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Étape 5 : Facture complémentaire',
+                'title' => 'Étape 6 : Facture complémentaire',
                 'description' => 'Commment avoir sa facture complémentaire ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Étape 6 : Demande de réduction',
+                'title' => 'Étape 7 : Demande de réduction',
                 'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
                 'link' => '#'
@@ -93,19 +99,25 @@ class DossierFacturationController extends Controller
                 'link' => '#'
             ],
             [
-                'title' => 'Étape 4 : BAD',
+                'title' => 'Étape 4 : Paiement',
+                'description' => 'Commment payer sa facture définitive ?',
+                'image' => null,
+                'link' => '#'
+            ],
+            [
+                'title' => 'Étape 5 : BAD',
                 'description' => 'Commment avoir son  BAD ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Étape 5 : Facture complémentaire',
+                'title' => 'Étape 6 : Facture complémentaire',
                 'description' => 'Commment avoir sa facture complémentaire ?',
                 'image' => null,
                 'link' => '#'
             ],
             [
-                'title' => 'Étape 6 : Demande de réduction',
+                'title' => 'Étape 7 : Demande de réduction',
                 'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
                 'link' => '#'

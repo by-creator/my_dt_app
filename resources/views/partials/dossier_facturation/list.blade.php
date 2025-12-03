@@ -15,7 +15,7 @@
         </div>
     @else
 
-    <!-- RECHERCHE -->
+    <!-- BARRE DE RECHERCHE -->
     <div class="mb-4 position-relative">
         <i class="fa fa-search position-absolute" 
            style="left: 15px; top: 12px; color: #999;"></i>
@@ -24,97 +24,71 @@
                placeholder="🔍 Rechercher par BL...">
     </div>
 
-    <!-- CARD -->
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-body p-4">
+    <!-- LISTE DES DOSSIERS EN CARDS -->
+    <div class="row" id="cardsContainer">
+        @foreach($dossiers as $dossier)
 
-            <div class="table-responsive">
-                <table class="table table-hover align-middle" id="dossiersTable">
-                    <thead class="table-light">
-                        <tr>
-                            <th>
-                                <i class="fa-solid fa-receipt me-1"></i>
-                                BL
-                            </th>
-                            <th class="text-end">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        @php
+            $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
+            $bl = $rattachement ? $rattachement->bl : null;
+        @endphp
 
-                        @foreach($dossiers as $dossier)
-                        @php
-                            $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
-                        @endphp
+        <div class="col-md-4 mb-4 dossier-card" data-bl="{{ strtolower($bl) }}">
+            <div class="card h-100 shadow-sm d-flex flex-column">
 
-                        <tr class="hover-row">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <span>Numéro de BL</span>
+                    <span class="badge bg-light text-dark">
+                        {{ $bl ?? 'N/A' }}
+                    </span>
+                </div>
 
-                            <!-- BL -->
-                            <td>
-                                @if($rattachement)
-                                    <span class="badge bg-light text-dark fs-6 border">
-                                        {{ $rattachement->bl }}
-                                    </span>
-                                @else
-                                    <span class="text-muted">
-                                        <i class="fa-solid fa-info-circle"></i>
-                                        Aucun dossier trouvé
-                                    </span>
-                                @endif
-                            </td>
+                <div class="card-body d-flex flex-column">
 
-                            <!-- ACTION -->
-                            <td class="text-end">
-                                @if($rattachement)
-                                    <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
-                                       class="btn btn-primary btn-sm px-3 rounded-pill">
-                                        <i class="fa-solid fa-eye me-1"></i>
-                                        Voir
-                                    </a>
-                                @else
-                                    
-                                @endif
-                            </td>
+                    @if(!$bl)
+                        <p class="text-muted mb-3">
+                            Aucun dossier trouvé
+                        </p>
+                    @endif
 
-                        </tr>
-                        @endforeach
+                    <div class="mt-auto">
+                        @if($bl)
+                            <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
+                               class="btn btn-primary w-100">
+                               <i class="fa-solid fa-eye me-1"></i> Ouvrir
+                            </a>
+                        @endif
+                    </div>
+                </div>
 
-                    </tbody>
-                </table>
             </div>
-
-            <!-- PAGINATION -->
-            <div class="mt-4 d-flex justify-content-center">
-                {{ $dossiers->links('pagination::bootstrap-5') }}
-            </div>
-
         </div>
+
+        @endforeach
     </div>
+
+    <!-- PAGINATION -->
+    <div class="mt-4 d-flex justify-content-center">
+        {{ $dossiers->links('pagination::bootstrap-5') }}
+    </div>
+
     @endif
+
 </div>
 
 <script>
-    // Récupère la barre de recherche
-    const searchInput = document.getElementById('searchInput');
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const filter = this.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.dossier-card');
 
-    searchInput.addEventListener('keyup', function() {
-        const filter = this.value.toLowerCase().trim();
+    cards.forEach(card => {
+        const bl = card.getAttribute('data-bl');
 
-        // Récupère toutes les lignes du tableau
-        const rows = document.querySelectorAll('#dossiersTable tbody tr');
-
-        rows.forEach(row => {
-            // Récupère le texte du BL dans la première colonne
-            const blCell = row.cells[0].textContent.toLowerCase();
-
-            // Affiche ou cache la ligne selon le filtre
-            if (blCell.includes(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
+        if (bl && bl.includes(filter)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
     });
+});
 </script>
-

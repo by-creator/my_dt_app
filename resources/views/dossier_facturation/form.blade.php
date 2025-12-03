@@ -1,1 +1,0 @@
-@include('partials.dossier_facturation.form')
