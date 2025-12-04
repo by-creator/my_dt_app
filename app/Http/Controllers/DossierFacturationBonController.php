@@ -16,7 +16,15 @@ class DossierFacturationBonController extends Controller
 {
     public function bon()
     {
-        $dossiers = DossierFacturation::orderBy('id', 'desc')->get();
+        $dossiers = DossierFacturation::whereIn(
+            'statut',
+            [
+                StatutDossier::EN_ATTENTE_FACTURE,
+                StatutDossier::FACTURE_VALIDE,
+            ]
+        )
+            ->orderBy('id', 'desc')
+            ->get();
         $users = User::all();
         return view('dossier_facturation.bon', compact('dossiers', 'users'));
     }

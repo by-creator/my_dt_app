@@ -15,7 +15,13 @@ class RattachementController extends Controller
 {
     public function index()
     {
-        $rattachement_validations = RattachementBl::orderBy('id', 'desc')->get();
+        $rattachement_validations = RattachementBl::whereIn(
+            'statut',
+            [
+                StatutDossier::EN_ATTENTE_VALIDATION,
+            ]
+        )
+            ->orderBy('id', 'desc')->get();
         $rattachements = RattachementBl::orderBy('id', 'desc')->get();
         $users = User::all();
         return view('rattachement_bl.index', compact('rattachements', 'rattachement_validations', 'users'));

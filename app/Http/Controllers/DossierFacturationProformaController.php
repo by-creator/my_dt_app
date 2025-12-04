@@ -21,7 +21,17 @@ class DossierFacturationProformaController extends Controller
 {
     public function proforma()
     {
-        $dossiers = DossierFacturation::orderBy('id', 'desc')->get();
+        $dossiers = DossierFacturation::whereIn(
+            'statut',
+            [
+                StatutDossier::EN_ATTENTE_PROFORMA,
+                StatutDossier::PROFORMA_VALIDE,
+                StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE,
+                StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE,
+            ]
+        )
+            ->orderBy('id', 'desc')
+            ->get();
         $users = User::all();
         return view('dossier_facturation.proforma', compact('dossiers', 'users'));
     }

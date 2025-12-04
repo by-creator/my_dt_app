@@ -20,7 +20,17 @@ class DossierFacturationFactureController extends Controller
 {
     public function facture()
     {
-        $dossiers = DossierFacturation::orderBy('id', 'desc')->get();
+        $dossiers = DossierFacturation::whereIn(
+            'statut',
+            [
+                StatutDossier::EN_ATTENTE_FACTURE,
+                StatutDossier::FACTURE_VALIDE,
+                StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE,
+                StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE,
+            ]
+        )
+            ->orderBy('id', 'desc')
+            ->get();
         $users = User::all();
         return view('dossier_facturation.facture', compact('dossiers', 'users'));
     }
@@ -81,14 +91,11 @@ class DossierFacturationFactureController extends Controller
             return redirect()->back()->with('success', "Votre proforma complémentaire sera disponible dans 10 minutes ");
         } elseif ($dossier->statut === StatutDossier::VALIDE) {
             return redirect()->back()->with('info', "Votre dossier ne contient pas encore de facture à prolonger");
-        }
-        elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
             return redirect()->back()->with('info', "Votre proforma complémentaire est en cours de traitement");
-        }
-        elseif ($dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
+        } elseif ($dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
             return redirect()->back()->with('info', "Votre proforma complémentaire est déjà disponible");
-        }
-        else {
+        } else {
             return redirect()->back()->with('info', "Tout est ok !");;
         }
     }
@@ -305,14 +312,11 @@ class DossierFacturationFactureController extends Controller
             Log::info('Votre facture sera disponible dans 10 minutes');
 
             return redirect()->back()->with('success', "Votre BAD sera disponible dans 10 minutes ");
-        } 
-        elseif ($dossier->statut === StatutDossier::EN_ATTENTE_BAD) {
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_BAD) {
             return redirect()->back()->with('info', "Votre BAD est en cours de traitement");
-        }
-        elseif ($dossier->statut === StatutDossier::BAD_VALIDE) {
+        } elseif ($dossier->statut === StatutDossier::BAD_VALIDE) {
             return redirect()->back()->with('info', "Votre BAD est déjà disponible");
-        }
-        else {
+        } else {
             return redirect()->back()->with('info', "Tout est ok");
         }
     }

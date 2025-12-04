@@ -24,6 +24,11 @@ return new class extends Migration
 
             $table->string('statut')->nullable();
 
+            $table->timestamp('date_en_attente_proforma')->nullable();
+            $table->timestamp('date_en_attente_facture')->nullable();
+            $table->timestamp('date_en_attente_bon')->nullable();
+
+
             $table->string('time_elapsed_proforma')->nullable();
             $table->string('time_elapsed_facture')->nullable();
             $table->string('time_elapsed_bon')->nullable();
