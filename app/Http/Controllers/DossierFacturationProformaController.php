@@ -77,9 +77,7 @@ class DossierFacturationProformaController extends Controller
 
             $dossier->statut = StatutDossier::EN_ATTENTE_PROFORMA;
 
-            // Ici tu peux mettre à jour updated_at si nécessaire
-            $dossier->updated_at = now(); // ou la date spécifique
-
+            $dossier->date_en_attente_proforma = now();
 
             // Sauvegarde les changements
             $dossier->save();
@@ -87,11 +85,9 @@ class DossierFacturationProformaController extends Controller
             return redirect()->back()->with('success', "Votre facture proforma sera disponible dans 10 minutes ");
         } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
             return redirect()->back()->with('info', "Votre facture proforma est en cours de traitement");
-        }
-        elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
+        } elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
             return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
-        }
-        else {
+        } else {
             return redirect()->back()->with('info', "Tout est ok !");
         }
     }
@@ -170,13 +166,10 @@ class DossierFacturationProformaController extends Controller
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::PROFORMA_VALIDE;
 
-        // Mettre à jour time_elapsed
-        $dossier->time_elapsed_proforma = $dossier->updated_at->greaterThan($proforma->created_at)
-            ? $proforma->created_at->diffInSeconds($dossier->updated_at)
-            : $dossier->updated_at->diffInSeconds($proforma->created_at);
-
-
-
+        if ($dossier->date_en_attente_proforma) {
+        $dossier->time_elapsed_proforma = 
+            Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
+    }
         $dossier->save();
     }
 
@@ -294,7 +287,7 @@ class DossierFacturationProformaController extends Controller
         if ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
 
             $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
-
+            $dossier->date_en_attente_facture = now();
             $dossier->save();
         } elseif (
             $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE ||
@@ -302,21 +295,17 @@ class DossierFacturationProformaController extends Controller
         ) {
 
             $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE;
-
+            $dossier->date_en_attente_facture = now();
             $dossier->save();
         } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE) {
             return redirect()->back()->with('info', "Votre facture définitive est en cours de traitement");
-        }
-        elseif ($dossier->statut === StatutDossier::FACTURE_VALIDE) {
+        } elseif ($dossier->statut === StatutDossier::FACTURE_VALIDE) {
             return redirect()->back()->with('info', "Votre facture définitive est déjà disponible");
-        }
-        elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
             return redirect()->back()->with('info', "Votre facture complémentaire est en cours de traitement");
-        }
-        elseif ($dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
+        } elseif ($dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
             return redirect()->back()->with('info', "Votre facture complémentaire est déjà disponible");
-        }
-        else {
+        } else {
             return redirect()->back()->with('info', "Tout est ok !");
         }
 
@@ -345,12 +334,10 @@ class DossierFacturationProformaController extends Controller
             $proforma->delete();
             $dossier->statut = StatutDossier::VALIDE;
             $dossier->date_proforma = NULL;
-
         } elseif ($dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
 
             $proforma->delete();
             $dossier->statut = StatutDossier::FACTURE_VALIDE;
-
         } else {
             return redirect()->back()->with('info', "Votre facture proforma est soit en cours de traitement ou soit déjà disponible");
         }

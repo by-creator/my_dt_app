@@ -81,8 +81,7 @@ class DossierFacturationFactureController extends Controller
 
             $dossier->statut = StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE;
 
-            // Ici tu peux mettre à jour updated_at si nécessaire
-            $dossier->updated_at = now(); // ou la date spécifique
+            $dossier->date_en_attente_proforma = now();
 
 
             // Sauvegarde les changements
@@ -174,12 +173,10 @@ class DossierFacturationFactureController extends Controller
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::FACTURE_VALIDE;
 
-        // Mettre à jour time_elapsed
-        $dossier->time_elapsed_facture = $dossier->updated_at->greaterThan($facture->created_at)
-            ? $facture->created_at->diffInSeconds($dossier->updated_at)
-            : $dossier->updated_at->diffInSeconds($facture->created_at);
-
-
+        if ($dossier->date_en_attente_facture) {
+        $dossier->time_elapsed_facture = 
+            Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
+    }
 
         $dossier->save();
     }
@@ -284,7 +281,7 @@ class DossierFacturationFactureController extends Controller
         if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
 
             $dossier->statut = StatutDossier::EN_ATTENTE_BAD;
-
+            $dossier->date_en_attente_bon = now();
             $dossier->save();
 
             // On récupère le rattachement BL

@@ -56,32 +56,101 @@ class DossierFacturation extends Model
         return $this->hasOne(DossierFacturationProforma::class);
     }
 
-    public function getTimeElapsedAttribute()
+    public function getTimeElapsedProformaForHumansAttribute()
     {
-        if (!$this->proforma || !$this->updated_at) {
+        if (!$this->time_elapsed_proforma) {
             return null;
         }
 
-        $start = Carbon::parse($this->proforma->created_at);
-        $end   = Carbon::parse($this->updated_at);
-
-        return $start->diffForHumans($end, true);
-        // ex : "2 hours", "5 minutes"
-    }
-
-    public function getTimeElapsedForHumansAttribute()
-    {
-        $seconds = (int) $this->time_elapsed; // force en entier
+        $seconds = (int) $this->time_elapsed_proforma;
 
         if ($seconds <= 0) {
-            return null; // ou '—' si tu veux afficher quelque chose
+            return null;
         }
 
-        $hours = floor($seconds / 3600);
+        // Calcul jours, heures, minutes, secondes
+        $days = floor($seconds / 86400); // 24 * 3600
+        $hours = floor(($seconds % 86400) / 3600);
         $minutes = floor(($seconds % 3600) / 60);
         $seconds = $seconds % 60;
 
-        return sprintf('%02dh %02dm %02ds', $hours, $minutes, $seconds);
+        // Construction dynamique du format
+        $parts = [];
+
+        if ($days > 0) {
+            $parts[] = sprintf('%02dj', $days);
+        }
+
+        $parts[] = sprintf('%02dh', $hours);
+        $parts[] = sprintf('%02dm', $minutes);
+        $parts[] = sprintf('%02ds', $seconds);
+
+        return implode(' ', $parts);
+    }
+
+    public function getTimeElapsedFactureForHumansAttribute()
+    {
+        if (!$this->time_elapsed_facture) {
+            return null;
+        }
+
+        $seconds = (int) $this->time_elapsed_facture;
+
+        if ($seconds <= 0) {
+            return null;
+        }
+
+        // Calcul jours, heures, minutes, secondes
+        $days = floor($seconds / 86400); // 24 * 3600
+        $hours = floor(($seconds % 86400) / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        // Construction dynamique du format
+        $parts = [];
+
+        if ($days > 0) {
+            $parts[] = sprintf('%02dj', $days);
+        }
+
+        $parts[] = sprintf('%02dh', $hours);
+        $parts[] = sprintf('%02dm', $minutes);
+        $parts[] = sprintf('%02ds', $seconds);
+
+        return implode(' ', $parts);
+    }
+
+
+    public function getTimeElapsedBonForHumansAttribute()
+    {
+        if (!$this->time_elapsed_bon) {
+            return null;
+        }
+
+        $seconds = (int) $this->time_elapsed_bon;
+
+        if ($seconds <= 0) {
+            return null;
+        }
+
+        // Calcul jours, heures, minutes, secondes
+        $days = floor($seconds / 86400); // 24 * 3600
+        $hours = floor(($seconds % 86400) / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        // Construction dynamique du format
+        $parts = [];
+
+        if ($days > 0) {
+            $parts[] = sprintf('%02dj', $days);
+        }
+
+        $parts[] = sprintf('%02dh', $hours);
+        $parts[] = sprintf('%02dm', $minutes);
+        $parts[] = sprintf('%02ds', $seconds);
+
+        return implode(' ', $parts);
     }
 
 

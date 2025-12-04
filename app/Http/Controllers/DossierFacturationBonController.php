@@ -7,6 +7,7 @@ use App\Mail\BonDocumentsMail;
 use App\Models\DossierFacturation;
 use App\Models\DossierFacturationBon;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -102,11 +103,10 @@ class DossierFacturationBonController extends Controller
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::BAD_VALIDE;
 
-        // Mettre à jour time_elapsed
-        $dossier->time_elapsed_bon = $dossier->updated_at->greaterThan($bon->created_at)
-            ? $bon->created_at->diffInSeconds($dossier->updated_at)
-            : $dossier->updated_at->diffInSeconds($bon->created_at);
-
+       if ($dossier->date_en_attente_bon) {
+        $dossier->time_elapsed_bon = 
+            Carbon::parse($dossier->date_en_attente_bon)->diffInSeconds(now());
+    }
 
 
         $dossier->save();
