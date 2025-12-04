@@ -197,6 +197,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/dossier-facturation/proforma', [DossierFacturationProformaController::class, 'proforma'])->name('dossier_facturation.proforma');
+    Route::get('/dossier-facturation/proforma/list', [DossierFacturationProformaController::class, 'list'])->name('dossier_facturation.proforma.list');
 
     Route::post('/dossier-facturations/{id}/proforma/generate', [DossierFacturationProformaController::class, 'generate'])
         ->name('dossier_facturation.proforma.generate');
@@ -211,6 +212,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/dossier-facturation/facture', [DossierFacturationFactureController::class, 'facture'])->name('dossier_facturation.facture');
+    Route::get('/dossier-facturation/facture/list', [DossierFacturationFactureController::class, 'list'])->name('dossier_facturation.facture.list');
+
 
     Route::post('/dossier-facturations/{id}/facture/complement', [DossierFacturationFactureController::class, 'complement'])
         ->name('dossier_facturation.facture.complement');
@@ -222,6 +225,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/dossier-facturation/bon', [DossierFacturationBonController::class, 'bon'])->name('dossier_facturation.bon');
+    Route::get('/dossier-facturation/bon/list', [DossierFacturationBonController::class, 'list'])->name('dossier_facturation.bon.list');
 
     Route::post('/dossier-facturation/bon/send/{id}', [DossierFacturationBonController::class, 'sendDocuments'])->name('dossier_facturation.bon.send');
 });

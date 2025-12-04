@@ -29,6 +29,12 @@ class DossierFacturationBonController extends Controller
         return view('dossier_facturation.bon', compact('dossiers', 'users'));
     }
 
+    public function list()
+    {
+        $bons = DossierFacturationBon::orderBy('id', 'desc')->get();
+        return view('dossier_facturation.list_bon', compact('bons'));
+    }
+
     // -----------------------------
     // Étape 1 : Récupérer le dossier
     // -----------------------------

@@ -34,6 +34,13 @@ class DossierFacturationProformaController extends Controller
         return view('dossier_facturation.proforma', compact('dossiers', 'users'));
     }
 
+    public function list()
+    {
+        $proformas = DossierFacturationProforma::orderBy('id', 'desc')->get();
+        $dossier = DossierFacturation::orderBy('id', 'desc')->get();
+        return view('dossier_facturation.list_proforma', compact('proformas','dossier'));
+    }
+
     public function generate(Request $request, $id)
     {
         $request->validate([
@@ -176,8 +183,6 @@ class DossierFacturationProformaController extends Controller
             $proforma->bl = $dossier->rattachement_bl->bl;
             $proforma->statut = $dossier->statut;
             $proforma->time_elapsed = $dossier->time_elapsed_proforma;
-
-            
         }
         $dossier->save();
         $proforma->save();
@@ -203,9 +208,6 @@ class DossierFacturationProformaController extends Controller
         }
         $dossier->save();
         $proforma->save();
-
-
-
     }
 
     // -----------------------------

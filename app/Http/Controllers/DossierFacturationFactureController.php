@@ -33,6 +33,12 @@ class DossierFacturationFactureController extends Controller
         return view('dossier_facturation.facture', compact('dossiers', 'users'));
     }
 
+    public function list()
+    {
+        $factures = DossierFacturationFacture::orderBy('id', 'desc')->get();
+        return view('dossier_facturation.list_facture', compact('factures'));
+    }
+
     public function complement(Request $request, $id)
     {
         $request->validate([

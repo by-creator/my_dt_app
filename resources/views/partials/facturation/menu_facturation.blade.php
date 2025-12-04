@@ -23,19 +23,19 @@
             <a class='sidebar-link' href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des proformas</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="#"><i class="fa-solid fa-clipboard-list"></i> Liste des proformas</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.proforma.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste des proformas</a>
         </li>
         <li class="submenu-item ">
             <a class='sidebar-link' href="{{ route('dossier_facturation.facture') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des factures</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="#"><i class="fa-solid fa-clipboard-list"></i> Liste des factures</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.facture.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste des factures</a>
         </li>
         <li class="submenu-item ">
             <a class='sidebar-link' href="{{ route('dossier_facturation.bon') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des BAD</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="#"><i class="fa-solid fa-clipboard-list"></i> Liste des BAD</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.bon.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste des BAD</a>
         </li>
     </ul>
 </li>
