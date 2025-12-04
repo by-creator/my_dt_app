@@ -17,26 +17,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rattachement_validations as $rattachement_validation)
+                    @foreach ($rattachements as $rattachement)
                     <tr>
-                        <td>{{ $rattachement_validation->created_at_date_formatted ?? '—' }}</td>
+                        <td>{{ $rattachement->created_at_date_formatted ?? '—' }}</td>
                         <td>
                             @php
-                            $user = $users->firstWhere('id', $rattachement_validation->user_id);
+                            $user = $users->firstWhere('id', $rattachement->user_id);
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
-                        <td>{{ $rattachement_validation->nom }} {{ $rattachement_validation->prenom }}</td>
-                        <td>{{ $rattachement_validation->bl }}</td>
-                        <td>{{ $rattachement_validation->compte }}</td>
-                        <td>{{ $rattachement_validation->statut }}</td>
-                        <td>{{ $rattachement_validation->time_elapsed ?? '—' }}</td>
+                        <td>{{ $rattachement->nom }} {{ $rattachement->prenom }}</td>
+                        <td>{{ $rattachement->bl }}</td>
+                        <td>{{ $rattachement->compte }}</td>
+                        <td>{{ $rattachement->statut }}</td>
+                        <td>{{ $rattachement->time_elapsed ?? '—' }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}" data-bs-toggle="modal" data-bs-target="#valideModal"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
+                            <button type="button" class="btn btn-primary btn-delete" data-id="{{ $rattachement->id }}" data-email="{{ $rattachement->email }}" data-bs-toggle="modal" data-bs-target="#valideModal"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
 
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-edit" data-id="{{ $rattachement_validation->id }}" data-email="{{ $rattachement_validation->email }}"  data-bs-toggle="modal" data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i> Rejeter</button>
+                            <button type="button" class="btn btn-danger btn-edit" data-id="{{ $rattachement->id }}" data-email="{{ $rattachement->email }}"  data-bs-toggle="modal" data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i> Rejeter</button>
 
                         </td>
                     </tr>

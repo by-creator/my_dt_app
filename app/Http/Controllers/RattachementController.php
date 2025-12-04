@@ -29,8 +29,10 @@ class RattachementController extends Controller
 
     public function list()
     {
-        $rattachement_validations = RattachementBl::orderBy('id', 'desc')->get();
-        return view('rattachement_bl.list', compact('rattachements', 'rattachement_validations', 'users'));
+        $rattachements = RattachementBl::orderBy('id', 'desc')->get();
+        $users = User::all();
+
+        return view('rattachement_bl.list', compact('rattachements', 'rattachements', 'users'));
     }
 
     public function create($id)
