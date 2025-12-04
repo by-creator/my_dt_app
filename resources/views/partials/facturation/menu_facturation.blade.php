@@ -1,15 +1,14 @@
-<li class="sidebar-item  has-sub">
+<li class="sidebar-item  has-sub ">
     <a href="#" class='sidebar-link'>
-        <i class="fa-solid fa-rectangle-list"></i>
-        <span>Validation</span>
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Validation </span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
-            <a href="{{ route('rattachement.index') }}" class='sidebar-link'>
-                <i class="fa-solid fa-check-to-slot"></i> Gestion des validations</a>
+            <a class='sidebar-link' href="{{ route('rattachement.index') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des validations</a>
         </li>
-        <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('rattachement.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste des validations</a>
+        <li class="submenu-item ">
+            <a class='sidebar-link' href="{{ route('rattachement.list') }}"><i class="fa-solid fa-video"></i> Liste des validations</a>
         </li>
     </ul>
 </li>

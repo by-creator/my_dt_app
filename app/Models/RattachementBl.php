@@ -33,32 +33,12 @@ class RattachementBl extends Model
             return null;
         }
 
-        // Différence brute en secondes
-        $seconds = $this->updated_at->diffInSeconds($this->created_at);
+        $diff = $this->updated_at->diff($this->created_at);
 
-        if ($seconds <= 0) {
-            return null;
-        }
-
-        // Calcul détaillé
-        $days = floor($seconds / 86400); // 24 * 60 * 60
-        $hours = floor(($seconds % 86400) / 3600);
-        $minutes = floor(($seconds % 3600) / 60);
-        $seconds = $seconds % 60;
-
-        // Construction dynamique du résultat
-        $parts = [];
-
-        if ($days > 0) {
-            $parts[] = sprintf('%02dj', $days);
-        }
-
-        $parts[] = sprintf('%02dh', $hours);
-        $parts[] = sprintf('%02dm', $minutes);
-        $parts[] = sprintf('%02ds', $seconds);
-
-        return implode(' ', $parts);
+        // Exemple : "2 jours, 3 heures, 15 minutes"
+        return $diff->d . ' jours, ' . $diff->h . ' heures, ' . $diff->i . ' minutes';
     }
+
 
 
     public function getCreatedAtDateFormattedAttribute()
