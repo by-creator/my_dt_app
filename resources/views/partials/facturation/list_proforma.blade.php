@@ -1,78 +1,44 @@
-<div class="col-md-4 mb-3">
-    <div class="card h-100 shadow-sm d-flex flex-column">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <span>Facture proforma</span>
-
-            @php
-            // On compte tous les fichiers proforma de ce dossier
-            $proformaFiles = collect();
-            foreach ($dossier->proformas as $proforma) {
-            $proformaFiles = $proformaFiles->merge($proforma->proforma ?? []);
-            }
-            @endphp
-            <span class="badge bg-light text-dark">{{ $proformaFiles->count() }}</span>
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><u>Liste des proformas</u></h4>
         </div>
-
-        <div class="card-body d-flex flex-column">
-            <div class="mb-2">
-                <br>
-                <a href="#"
-                    class="btn btn-sm btn-info text-dark"
-                    data-bs-toggle="modal"
-                    data-bs-target="#generateModal{{ $dossier->id }}">
-                    <i class="fa-solid fa-plus"></i>
-                    Générer votre facture proforma
-                </a>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Dossier ID</th>
+                            <th>Fichier Proforma</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($dossiersProformas as $item)
+                            @foreach($item['proformas'] as $index => $proforma)
+                                @php
+                                    $url = !empty($proforma->path) ? Storage::disk('b2')->url($proforma->path) : null;
+                                @endphp
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item['dossier']->id }}</td>
+                                    <td>{{ $proforma->original }}</td>
+                                    <td>
+                                        @if($url)
+                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">Ouvrir</a>
+                                            <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#validateProformaModal{{ $item['dossier']->id }}">Valider</a>
+                                            <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProformaModal{{ $item['dossier']->id }}">Supprimer</a>
+                                        @else
+                                            <span class="text-muted">Pas de fichier</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-            @if($proformaFiles->isNotEmpty())
-            <div class="overflow-auto">
-                <ul class="list-group">
-                    @foreach($proformaFiles as $file)
-                    @php
-                    $url = Storage::disk('b2')->url($file['path'] ?? '');
-                    @endphp
-                    <li class="list-group-item d-flex flex-column">
-                        <div class="mb-2">
-                            <span>{{ $file['original'] }}</span>
-                        </div>
-                        @if(!empty($file['path']))
-                        <div class="mb-2 d-grid gap-2 d-md-flex">
-                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary ms-2">
-                                <i class="fa-solid fa-eye"></i>
-                                Ouvrir
-                            </a>
-                            <a href="#"
-                                class="btn btn-sm btn-success ms-2"
-                                data-bs-toggle="modal"
-                                data-type="proforma"
-                                data-bs-target="#validateProformaModal{{ $dossier->id }}">
-                                <i class="fa-solid fa-check-to-slot"></i>
-                                Valider
-                            </a>
-                            <a href="#" class="btn btn-sm btn-danger ms-2"
-                                data-bs-toggle="modal"
-                                data-type="proforma"
-                                data-bs-target="#deleteProformaModal{{ $dossier->id }}">
-                                <i class="fa-solid fa-trash"></i>
-                                Supprimer
-                            </a>
-                        </div>
-                        @else
-                        <span class="text-muted">Pas de fichier</span>
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-            @else
-            <p class="text-muted mb-0">Aucun fichier disponible pour Proforma.</p>
-            @endif
-        </div>
-
-        <div class="card-footer bg-white border-top-0">
-            <a href="#" class="btn btn-primary w-100">
-                <i class="fa-solid fa-bell"></i> Effectuer une relance
-            </a>
         </div>
     </div>
-</div>
+</section>

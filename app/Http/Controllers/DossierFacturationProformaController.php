@@ -36,10 +36,18 @@ class DossierFacturationProformaController extends Controller
 
     public function list()
     {
-        $proformas = DossierFacturationProforma::orderBy('id', 'desc')->get();
-        $dossier = DossierFacturation::orderBy('id', 'desc')->get();
-        return view('dossier_facturation.list_proforma', compact('proformas','dossier'));
+        $dossiers = DossierFacturation::orderBy('id', 'desc')->get();
+
+        $dossiersProformas = $dossiers->map(function ($dossier) {
+            return [
+                'dossier' => $dossier,
+                'proformas' => $dossier->proformas // relation définie dans le modèle
+            ];
+        });
+
+        return view('dossier_facturation.list_proforma', compact('dossiersProformas'));
     }
+
 
     public function generate(Request $request, $id)
     {
