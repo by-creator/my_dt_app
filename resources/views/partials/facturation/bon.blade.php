@@ -28,7 +28,7 @@
 
                         <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
                         <td>{{ $dossier->statut ?? '—' }}</td>
-                        <td>{{ $dossier->time_elapsed_for_humans ?? 'NULL' }}</td>
+                        <td>{{ $dossier->time_elapsed_bon ?? '-' }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-delete" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#sendModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s) document(s)</button>
                         </td>

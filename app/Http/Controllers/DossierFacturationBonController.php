@@ -20,8 +20,8 @@ class DossierFacturationBonController extends Controller
         $dossiers = DossierFacturation::whereIn(
             'statut',
             [
-                StatutDossier::EN_ATTENTE_FACTURE,
-                StatutDossier::FACTURE_VALIDE,
+                StatutDossier::EN_ATTENTE_BAD,
+                StatutDossier::BAD_VALIDE,
             ]
         )
             ->orderBy('id', 'desc')
@@ -104,8 +104,10 @@ class DossierFacturationBonController extends Controller
         $dossier->statut = StatutDossier::BAD_VALIDE;
 
        if ($dossier->date_en_attente_bon) {
-        $dossier->time_elapsed_bon = 
+        $seconds = 
             Carbon::parse($dossier->date_en_attente_bon)->diffInSeconds(now());
+
+            $dossier->time_elapsed_bon = DossierFacturation::secondsToHms($seconds);
     }
 
 

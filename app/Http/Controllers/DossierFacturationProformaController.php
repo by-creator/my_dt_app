@@ -167,22 +167,26 @@ class DossierFacturationProformaController extends Controller
         $dossier->statut = StatutDossier::PROFORMA_VALIDE;
 
         if ($dossier->date_en_attente_proforma) {
-        $dossier->time_elapsed_proforma = 
+        $seconds = 
             Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
+
+            $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
     }
         $dossier->save();
     }
 
-    private function updateComplementDossier(DossierFacturation $dossier, DossierFacturationProforma $proforma)
+    private function updateComplementDossier(DossierFacturation $dossier)
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE;
 
-        // Mettre à jour time_elapsed
-        $dossier->time_elapsed_proforma = $dossier->updated_at->greaterThan($proforma->created_at)
-            ? $proforma->created_at->diffInSeconds($dossier->updated_at)
-            : $dossier->updated_at->diffInSeconds($proforma->created_at);
+         if ($dossier->date_en_attente_proforma) {
+        $seconds = 
+            Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
 
+            $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
+    }
+        $dossier->save();
 
 
         $dossier->save();

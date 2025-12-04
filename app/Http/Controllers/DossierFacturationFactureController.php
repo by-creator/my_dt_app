@@ -168,29 +168,32 @@ class DossierFacturationFactureController extends Controller
     // -----------------------------
     // Étape 5 : Mettre à jour le dossier
     // -----------------------------
-    private function updateDossier(DossierFacturation $dossier, DossierFacturationFacture $facture)
+    private function updateDossier(DossierFacturation $dossier)
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::FACTURE_VALIDE;
 
         if ($dossier->date_en_attente_facture) {
-        $dossier->time_elapsed_facture = 
+        $seconds = 
             Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
+
+            $dossier->time_elapsed_facture = DossierFacturation::secondsToHms($seconds);
     }
 
         $dossier->save();
     }
 
-    private function updateComplementDossier(DossierFacturation $dossier, DossierFacturationFacture $facture)
+    private function updateComplementDossier(DossierFacturation $dossier)
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE;
+        
+        if ($dossier->date_en_attente_facture) {
+        $seconds = 
+            Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
 
-        // Mettre à jour time_elapsed
-        $dossier->time_elapsed_facture = $dossier->updated_at->greaterThan($facture->created_at)
-            ? $facture->created_at->diffInSeconds($dossier->updated_at)
-            : $dossier->updated_at->diffInSeconds($facture->created_at);
-
+            $dossier->time_elapsed_facture = DossierFacturation::secondsToHms($seconds);
+    }
 
 
         $dossier->save();

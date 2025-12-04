@@ -153,6 +153,17 @@ class DossierFacturation extends Model
         return implode(' ', $parts);
     }
 
+    public static function secondsToHms($seconds)
+    {
+        $seconds = (int) $seconds;
+
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        return sprintf('%02dh %02dm %02ds', $hours, $minutes, $seconds);
+    }
+
 
 
     public function proformas()
