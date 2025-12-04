@@ -9,7 +9,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Dossier ID</th>
+                            <th>Dossier (ID ou Autre info)</th>
                             <th>Fichier Proforma</th>
                             <th>Actions</th>
                         </tr>
@@ -18,15 +18,25 @@
                         @foreach($dossiersProformas as $item)
                             @foreach($item['proformas'] as $index => $proforma)
                                 @php
-                                    $url = !empty($proforma->path) ? Storage::disk('b2')->url($proforma->path) : null;
+                                    // Génère l'URL du fichier en utilisant le chemin stocké
+                                    $url = !empty($proforma['path']) ? Storage::disk('b2')->url($proforma['path']) : null;
                                 @endphp
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $item['dossier']->id }}</td>
-                                    <td>{{ $proforma->original }}</td>
+                                    <td>
+                                        <!-- Afficher le nom du dossier ou une autre propriété -->
+                                        {{ $item['dossier']->name ?? $item['dossier']->id }}  <!-- Changer selon la propriété -->
+                                    </td>
+                                    <td>
+                                        <!-- Affiche le nom du fichier (original) -->
+                                        {{ $proforma['original'] }}
+                                    </td>
                                     <td>
                                         @if($url)
-                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i> Ouvrir</a>
+                                            <!-- Lien pour ouvrir le fichier -->
+                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
+                                                <i class="fa-solid fa-eye"></i> Ouvrir
+                                            </a>
                                         @else
                                             <span class="text-muted">Pas de fichier</span>
                                         @endif
