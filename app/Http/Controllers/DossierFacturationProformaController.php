@@ -25,9 +25,7 @@ class DossierFacturationProformaController extends Controller
             'statut',
             [
                 StatutDossier::EN_ATTENTE_PROFORMA,
-                StatutDossier::PROFORMA_VALIDE,
                 StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE,
-                StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE,
             ]
         )
             ->orderBy('id', 'desc')

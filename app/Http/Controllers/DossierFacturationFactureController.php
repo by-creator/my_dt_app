@@ -24,9 +24,7 @@ class DossierFacturationFactureController extends Controller
             'statut',
             [
                 StatutDossier::EN_ATTENTE_FACTURE,
-                StatutDossier::FACTURE_VALIDE,
                 StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE,
-                StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE,
             ]
         )
             ->orderBy('id', 'desc')
@@ -187,7 +185,7 @@ class DossierFacturationFactureController extends Controller
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE;
-        
+
         if ($dossier->date_en_attente_facture) {
         $seconds = 
             Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());

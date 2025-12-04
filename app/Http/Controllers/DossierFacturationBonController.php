@@ -21,7 +21,6 @@ class DossierFacturationBonController extends Controller
             'statut',
             [
                 StatutDossier::EN_ATTENTE_BAD,
-                StatutDossier::BAD_VALIDE,
             ]
         )
             ->orderBy('id', 'desc')
