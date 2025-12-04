@@ -62,15 +62,16 @@
                         });
                     </script>
                     @elseif (session('info'))
-                    <script>
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Information',
-                            text: "{{ session('info') }}",
-                            showConfirmButton: true
-                        });
-                    </script>
-                    @endif
+<script>
+    Swal.fire({
+        icon: 'info',
+        title: 'Information',
+        html: `{!! session('info') !!}`,
+        showConfirmButton: true
+    });
+</script>
+@endif
+
                     <label for="documentDate{{ $dossier->id }}" class="form-label">Date du document</label>
                     <input type="date"
                         name="documentDate"

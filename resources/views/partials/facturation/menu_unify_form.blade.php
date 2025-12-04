@@ -10,14 +10,14 @@
         <span>Facturation</span>
     </a>
     <ul class="submenu">
-         <li class="submenu-item">
-            <a href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Facture pro-forma</a>
+        <li class="submenu-item">
+            <a href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des proformas</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('dossier_facturation.facture') }}"><i class="fa-solid fa-clipboard-list"></i> Facture définitive</a>
+            <a href="{{ route('dossier_facturation.facture') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des factures</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('dossier_facturation.bon') }}"><i class="fa-solid fa-clipboard-list"></i> Bon à délivrer</a>
+            <a href="{{ route('dossier_facturation.bon') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des BAD</a>
         </li>
     </ul>
 </li>

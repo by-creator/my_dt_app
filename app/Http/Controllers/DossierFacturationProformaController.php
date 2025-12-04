@@ -75,8 +75,14 @@ class DossierFacturationProformaController extends Controller
             $dossier->save();
 
             return redirect()->back()->with('success', "Votre facture proforma sera disponible dans 10 minutes ");
-        } else {
-            return redirect()->back()->with('info', "Votre facture proforma est soit en cours de traitement ou soit déjà disponible");
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
+            return redirect()->back()->with('info', "Votre facture proforma est en cours de traitement");
+        }
+        elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
+            return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
+        }
+        else {
+            return redirect()->back()->with('info', "Tout est ok !");
         }
     }
 
@@ -288,8 +294,20 @@ class DossierFacturationProformaController extends Controller
             $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE;
 
             $dossier->save();
-        } else {
-            return redirect()->back()->with('info', "Votre facture définitive est soit en cours de traitement ou soit déjà disponible");
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE) {
+            return redirect()->back()->with('info', "Votre facture définitive est en cours de traitement");
+        }
+        elseif ($dossier->statut === StatutDossier::FACTURE_VALIDE) {
+            return redirect()->back()->with('info', "Votre facture définitive est déjà disponible");
+        }
+        elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
+            return redirect()->back()->with('info', "Votre facture complémentaire est en cours de traitement");
+        }
+        elseif ($dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
+            return redirect()->back()->with('info', "Votre facture complémentaire est déjà disponible");
+        }
+        else {
+            return redirect()->back()->with('info', "Tout est ok !");
         }
 
         // Liste des destinataires
