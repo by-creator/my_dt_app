@@ -26,9 +26,7 @@
                                     <td>{{ $proforma->original }}</td>
                                     <td>
                                         @if($url)
-                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">Ouvrir</a>
-                                            <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#validateProformaModal{{ $item['dossier']->id }}">Valider</a>
-                                            <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProformaModal{{ $item['dossier']->id }}">Supprimer</a>
+                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i> Ouvrir</a>
                                         @else
                                             <span class="text-muted">Pas de fichier</span>
                                         @endif
