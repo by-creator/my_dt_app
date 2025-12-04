@@ -168,6 +168,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/rattachement', [RattachementController::class, 'index'])->name('rattachement.index');
+    Route::get('/rattachement/list', [RattachementController::class, 'list'])->name('rattachement.list');
 
     Route::put('/rattachement/create/{id}', [RattachementController::class, 'create'])->name('rattachement.create');
     Route::put('/rattachement/update/{id}', [RattachementController::class, 'update'])->name('rattachement.update');

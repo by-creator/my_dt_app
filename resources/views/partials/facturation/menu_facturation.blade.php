@@ -9,7 +9,7 @@
                 <i class="fa-solid fa-check-to-slot"></i> Gestion des validations</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="#"><i class="fa-solid fa-clipboard-list"></i> Liste des validations</a>
+            <a class='sidebar-link' href="{{ route('rattachement.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste des validations</a>
         </li>
     </ul>
 </li>
