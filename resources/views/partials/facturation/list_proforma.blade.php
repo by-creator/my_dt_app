@@ -9,31 +9,23 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Dossier (ID ou Autre info)</th>
+                            <th>Dossier ID</th>
                             <th>Fichier Proforma</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($dossiersProformas as $item)
-                            @foreach($item['proformas'] as $index => $proforma)
+                        @foreach($dossier as $d) <!-- Boucle sur chaque dossier -->
+                            @foreach($d->proformas as $index => $proforma) <!-- Boucle sur les proformas associés au dossier -->
                                 @php
-                                    // Génère l'URL du fichier en utilisant le chemin stocké
-                                    $url = !empty($proforma['path']) ? Storage::disk('b2')->url($proforma['path']) : null;
+                                    $url = !empty($proforma->path) ? Storage::disk('b2')->url($proforma->path) : null;
                                 @endphp
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>
-                                        <!-- Afficher le nom du dossier ou une autre propriété -->
-                                        {{ $item['dossier']->name ?? $item['dossier']->id }}  <!-- Changer selon la propriété -->
-                                    </td>
-                                    <td>
-                                        <!-- Affiche le nom du fichier (original) -->
-                                        {{ $proforma['original'] }}
-                                    </td>
+                                    <td>{{ $d->id }}</td> <!-- ID du dossier -->
+                                    <td>{{ $proforma->original }}</td> <!-- Nom du fichier -->
                                     <td>
                                         @if($url)
-                                            <!-- Lien pour ouvrir le fichier -->
                                             <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
                                                 <i class="fa-solid fa-eye"></i> Ouvrir
                                             </a>
