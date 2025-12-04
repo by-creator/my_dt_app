@@ -171,14 +171,24 @@ class DossierFacturationFactureController extends Controller
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::FACTURE_VALIDE;
 
+        $facture = DossierFacturationFacture::firstWhere('dossier_facturation_id', $dossier->id);
+
+
         if ($dossier->date_en_attente_facture) {
-        $seconds = 
-            Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
+            $seconds =
+                Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
 
             $dossier->time_elapsed_facture = DossierFacturation::secondsToHms($seconds);
-    }
+
+
+            $facture->user = $dossier->user->name;
+            $facture->bl = $dossier->rattachement_bl->bl;
+            $facture->statut = $dossier->statut;
+            $facture->time_elapsed = $dossier->time_elapsed_facture;
+        }
 
         $dossier->save();
+        $facture->save();
     }
 
     private function updateComplementDossier(DossierFacturation $dossier)
@@ -186,15 +196,24 @@ class DossierFacturationFactureController extends Controller
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE;
 
+        $facture = DossierFacturationFacture::firstWhere('dossier_facturation_id', $dossier->id);
+
+
         if ($dossier->date_en_attente_facture) {
-        $seconds = 
-            Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
+            $seconds =
+                Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
 
             $dossier->time_elapsed_facture = DossierFacturation::secondsToHms($seconds);
-    }
+
+            $facture->user = $dossier->user->name;
+            $facture->bl = $dossier->rattachement_bl->bl;
+            $facture->statut = $dossier->statut;
+            $facture->time_elapsed = $dossier->time_elapsed_facture;
+        }
 
 
         $dossier->save();
+        $facture->save();
     }
 
     // -----------------------------

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('dossier_facturation_id')->nullable()->constrained()->onDelete('set null');
             $table->json('bon')->nullable();
+            $table->string('user')->nullable();
+            $table->string('bl')->nullable();
+            $table->string('statut')->nullable();
+            $table->string('time_elapsed')->nullable();
             $table->timestamps();
         });
     }

@@ -163,31 +163,49 @@ class DossierFacturationProformaController extends Controller
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::PROFORMA_VALIDE;
+        $proforma = DossierFacturationProforma::firstWhere('dossier_facturation_id', $dossier->id);
+
 
         if ($dossier->date_en_attente_proforma) {
-        $seconds = 
-            Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
+            $seconds =
+                Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
 
             $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
-    }
+
+            $proforma->user = $dossier->user->name;
+            $proforma->bl = $dossier->rattachement_bl->bl;
+            $proforma->statut = $dossier->statut;
+            $proforma->time_elapsed = $dossier->time_elapsed_proforma;
+
+            
+        }
         $dossier->save();
+        $proforma->save();
     }
 
     private function updateComplementDossier(DossierFacturation $dossier)
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE;
+        $proforma = DossierFacturationProforma::firstWhere('dossier_facturation_id', $dossier->id);
 
-         if ($dossier->date_en_attente_proforma) {
-        $seconds = 
-            Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
+
+        if ($dossier->date_en_attente_proforma) {
+            $seconds =
+                Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
 
             $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
-    }
+
+            $proforma->user = $dossier->user->name;
+            $proforma->bl = $dossier->rattachement_bl->bl;
+            $proforma->statut = $dossier->statut;
+            $proforma->time_elapsed = $dossier->time_elapsed_proforma;
+        }
         $dossier->save();
+        $proforma->save();
 
 
-        $dossier->save();
+
     }
 
     // -----------------------------

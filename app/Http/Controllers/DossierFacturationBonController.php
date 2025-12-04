@@ -82,7 +82,7 @@ class DossierFacturationBonController extends Controller
         return $saveData;
     }
 
-     // -----------------------------
+    // -----------------------------
     // Étape 4 : Sauvegarder le bon
     // -----------------------------
     private function saveBon(DossierFacturation $dossier, array $filesData)
@@ -101,16 +101,24 @@ class DossierFacturationBonController extends Controller
     {
         $dossier->user_id = Auth::id();
         $dossier->statut = StatutDossier::BAD_VALIDE;
+        $bon = DossierFacturationBon::firstWhere('dossier_facturation_id', $dossier->id);
 
-       if ($dossier->date_en_attente_bon) {
-        $seconds = 
-            Carbon::parse($dossier->date_en_attente_bon)->diffInSeconds(now());
+
+        if ($dossier->date_en_attente_bon) {
+            $seconds =
+                Carbon::parse($dossier->date_en_attente_bon)->diffInSeconds(now());
 
             $dossier->time_elapsed_bon = DossierFacturation::secondsToHms($seconds);
-    }
+
+            $bon->user = $dossier->user->name;
+            $bon->bl = $dossier->rattachement_bl->bl;
+            $bon->statut = $dossier->statut;
+            $bon->time_elapsed = $dossier->time_elapsed_facture;
+        }
 
 
         $dossier->save();
+        $bon->save();
     }
 
     // -----------------------------
@@ -179,5 +187,4 @@ class DossierFacturationBonController extends Controller
             return back()->with('infoBon', 'Le bon est déjà disponible');
         }
     }
-
 }
