@@ -33,11 +33,44 @@ class RattachementBl extends Model
             return null;
         }
 
-        $diff = $this->updated_at->diff($this->created_at);
+        // Calcul de la différence en secondes
+        $seconds = $this->updated_at->getTimestamp() - $this->created_at->getTimestamp();
 
-        // Exemple : "2 jours, 3 heures, 15 minutes"
-        return $diff->d . ' jours, ' . $diff->h . ' heures, ' . $diff->i . ' minutes';
+        if ($seconds <= 0) {
+            return null;
+        }
+
+        // Calcul jours, heures, minutes, secondes
+        $days = floor($seconds / 86400); // 24 * 3600
+        $hours = floor(($seconds % 86400) / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        // Construction dynamique du format
+        $parts = [];
+
+        if ($days > 0) {
+            $parts[] = sprintf('%02dj', $days);
+        }
+
+        $parts[] = sprintf('%02dh', $hours);
+        $parts[] = sprintf('%02dm', $minutes);
+        $parts[] = sprintf('%02ds', $seconds);
+
+        return implode(' ', $parts);
     }
+
+    public static function secondsToHms($seconds)
+    {
+        $seconds = (int) $seconds;
+
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        return sprintf('%02dh %02dm %02ds', $hours, $minutes, $seconds);
+    }
+
 
 
 
