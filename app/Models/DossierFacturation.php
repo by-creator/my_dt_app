@@ -15,7 +15,10 @@ class DossierFacturation extends Model
     protected $fillable = [
         'rattachement_bl_id',
         'date_proforma',
-        'statut'
+        'statut',
+        'time_elapsed_proforma',
+        'time_elapsed_facture',
+        'time_elapsed_bon',
     ];
 
     protected $casts = [
@@ -55,7 +58,7 @@ class DossierFacturation extends Model
     {
         return $this->hasOne(DossierFacturationProforma::class);
     }
-
+/*
     public function getTimeElapsedProformaAttribute()
     {
         if (!$this->time_elapsed_proforma) {
@@ -152,6 +155,7 @@ class DossierFacturation extends Model
 
         return implode(' ', $parts);
     }
+*/
 
     public static function secondsToHms($seconds)
     {
@@ -163,7 +167,6 @@ class DossierFacturation extends Model
 
         return sprintf('%02dh %02dm %02ds', $hours, $minutes, $seconds);
     }
-
 
 
     public function proformas()
