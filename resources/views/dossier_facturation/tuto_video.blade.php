@@ -10,7 +10,7 @@
             </a>
         </header>
 
-        
+       
         <div class="page-content">
             @if(Auth::user()->role->name == "CLIENT_FACTURATION" || Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
             @include('partials.dossier_facturation.tuto_video')
