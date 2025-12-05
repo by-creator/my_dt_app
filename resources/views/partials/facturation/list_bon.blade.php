@@ -36,7 +36,7 @@
                             <td>{{ $bon->bl }}</td>
                             <td>{{ $bon->user }}</td>
                             <td>{{ $bon->statut }}</td>
-                            <td>{{ $bon->time_elapsed_bon }}</td>
+                            <td>{{ $bon->time_elapsed }}</td>
                             <td>{{ $b['original'] }}</td>
 
                             <td>
