@@ -56,7 +56,7 @@ class DossierFacturation extends Model
         return $this->hasOne(DossierFacturationProforma::class);
     }
 
-    public function getTimeElapsedProformaForHumansAttribute()
+    public function getTimeElapsedProformaAttribute()
     {
         if (!$this->time_elapsed_proforma) {
             return null;
@@ -88,7 +88,7 @@ class DossierFacturation extends Model
         return implode(' ', $parts);
     }
 
-    public function getTimeElapsedFactureForHumansAttribute()
+    public function getTimeElapsedFactureAttribute()
     {
         if (!$this->time_elapsed_facture) {
             return null;
@@ -121,7 +121,7 @@ class DossierFacturation extends Model
     }
 
 
-    public function getTimeElapsedBonForHumansAttribute()
+    public function getTimeElapsedBonAttribute()
     {
         if (!$this->time_elapsed_bon) {
             return null;

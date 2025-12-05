@@ -36,7 +36,7 @@
                             <td>{{ $facture->bl }}</td>
                             <td>{{ $facture->user }}</td>
                             <td>{{ $facture->statut }}</td>
-                            <td>{{ $facture->time_elapsed }}</td>
+                            <td>{{ $facture->time_elapsed_facture }}</td>
                             <td>{{ $f['original'] }}</td>
 
                             <td>
