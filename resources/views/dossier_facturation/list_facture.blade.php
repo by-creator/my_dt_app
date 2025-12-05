@@ -73,6 +73,39 @@
         </div>
     </div>
     @include('partials.dashboard.script')
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById('table1');
+
+        // Event delegation pour Edit
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-edit');
+            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
+
+            const id = btn.dataset.id;
+            const email = btn.dataset.email;
+            document.getElementById("editId").value = id;
+            document.getElementById("editEmail").value = btn.dataset.email || '';
+            document.getElementById("editForm").action = "/rattachement/update/" + id;
+        });
+
+        // Event delegation pour Delete
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-delete');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+            const email = btn.dataset.email;
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteEmail").value = email;
+            document.getElementById("deleteForm").action = "/rattachement/create/" + id;
+        });
+
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
+    });
+</script>
 </body>
 
 </html>
