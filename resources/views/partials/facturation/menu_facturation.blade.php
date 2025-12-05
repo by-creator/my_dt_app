@@ -15,7 +15,7 @@
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
-        <span>Facturation</span>
+        <span>Proformas</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
@@ -24,12 +24,28 @@
         <li class="submenu-item">
             <a class='sidebar-link' href="{{ route('dossier_facturation.proforma.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste proformas</a>
         </li>
+    </ul>
+</li>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Factures</span>
+    </a>
+    <ul class="submenu">
         <li class="submenu-item ">
             <a class='sidebar-link' href="{{ route('dossier_facturation.facture') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion factures</a>
         </li>
         <li class="submenu-item">
             <a class='sidebar-link' href="{{ route('dossier_facturation.facture.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste factures</a>
         </li>
+    </ul>
+</li>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-rectangle-list"></i>
+        <span>Bons à délivrer </span>
+    </a>
+    <ul class="submenu">
         <li class="submenu-item ">
             <a class='sidebar-link' href="{{ route('dossier_facturation.bon') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion BAD</a>
         </li>
