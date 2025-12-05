@@ -1,7 +1,7 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><u>Liste des proformas</u></h4>
+            <h4 class="card-title"><u>Liste des bons</u></h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -12,32 +12,32 @@
                             <th>Agent</th>
                             <th>Statut</th>
                             <th>Durée de traitement</th>
-                            <th>Fichier Proforma</th>
+                            <th>Fichier bon</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($dossiers as $d)
-                        @foreach($d->proformas as $proforma)
+                        @foreach($d->bons as $bon)
 
                         @php
                         // Sécurisation : convertir selon ce qui arrive
-                        $proformasJson = is_string($proforma->proforma)
-                        ? json_decode($proforma->proforma, true)
-                        : $proforma->proforma;
+                        $bonsJson = is_string($bon->bon)
+                        ? json_decode($bon->bon, true)
+                        : $bon->bon;
                         @endphp
 
-                        @foreach($proformasJson as $index => $p)
+                        @foreach($bonsJson as $index => $b)
                         @php
-                        $url = !empty($p['path']) ? Storage::disk('b2')->url($p['path']) : null;
+                        $url = !empty($b['path']) ? Storage::disk('b2')->url($b['path']) : null;
                         @endphp
 
                         <tr>
-                            <td>{{ $proforma->bl }}</td>
-                            <td>{{ $proforma->user }}</td>
-                            <td>{{ $proforma->statut }}</td>
-                            <td>{{ $proforma->time_elapsed }}</td>
-                            <td>{{ $p['original'] }}</td>
+                            <td>{{ $bon->bl }}</td>
+                            <td>{{ $bon->user }}</td>
+                            <td>{{ $bon->statut }}</td>
+                            <td>{{ $bon->time_elapsed }}</td>
+                            <td>{{ $b['original'] }}</td>
 
                             <td>
                                 @if($url)

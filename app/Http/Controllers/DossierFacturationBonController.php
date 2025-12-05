@@ -31,8 +31,11 @@ class DossierFacturationBonController extends Controller
 
     public function list()
     {
-        $bons = DossierFacturationBon::orderBy('id', 'desc')->get();
-        return view('dossier_facturation.list_bon', compact('bons'));
+        // Charger les dossiers et leurs bons associés
+        $dossiers = DossierFacturation::with('bons')->orderBy('id', 'desc')->get();
+
+        // Passer la collection de dossiers à la vue
+        return view('dossier_facturation.list_bon', compact('dossiers'));
     }
 
     // -----------------------------

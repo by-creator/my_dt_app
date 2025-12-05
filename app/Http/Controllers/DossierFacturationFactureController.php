@@ -35,8 +35,11 @@ class DossierFacturationFactureController extends Controller
 
     public function list()
     {
-        $factures = DossierFacturationFacture::orderBy('id', 'desc')->get();
-        return view('dossier_facturation.list_facture', compact('factures'));
+        // Charger les dossiers et leurs factures associés
+        $dossiers = DossierFacturation::with('factures')->orderBy('id', 'desc')->get();
+
+        // Passer la collection de dossiers à la vue
+        return view('dossier_facturation.list_facture', compact('dossiers'));
     }
 
     public function complement(Request $request, $id)
