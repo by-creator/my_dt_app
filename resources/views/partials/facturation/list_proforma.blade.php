@@ -15,28 +15,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($dossier as $d) <!-- Boucle sur chaque dossier -->
-                            @foreach($d->proformas as $index => $proforma) <!-- Boucle sur les proformas associés au dossier -->
-                                @php
-                                    $url = !empty($proforma->path) ? Storage::disk('b2')->url($proforma->path) : null;
-                                @endphp
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $d->id }}</td> <!-- ID du dossier -->
-                                    <td>{{ $proforma->original }}</td> <!-- Nom du fichier -->
-                                    <td>
-                                        @if($url)
-                                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
-                                                <i class="fa-solid fa-eye"></i> Ouvrir
-                                            </a>
-                                        @else
-                                            <span class="text-muted">Pas de fichier</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach($dossiers as $d)
+                        @foreach($d->proformas as $proforma)
+
+                        @php
+                        // Sécurisation : convertir selon ce qui arrive
+                        $proformasJson = is_string($proforma->proforma)
+                        ? json_decode($proforma->proforma, true)
+                        : $proforma->proforma;
+                        @endphp
+
+                        @foreach($proformasJson as $index => $p)
+                        @php
+                        $url = !empty($p['path']) ? Storage::disk('b2')->url($p['path']) : null;
+                        @endphp
+
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $d->id }}</td>
+                            <td>{{ $p['original'] }}</td>
+
+                            <td>
+                                @if($url)
+                                <a href="{{ $url }}" class="btn btn-sm btn-primary" target="_blank">
+                                    <i class="fa-solid fa-eye"></i> Ouvrir
+                                </a>
+                                @else
+                                <span class="text-muted">Pas de fichier</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+
+                        @endforeach
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
         </div>
