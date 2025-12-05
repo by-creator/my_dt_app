@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\StatutDossier;
 use App\Mail\RattachementBlRappelMail;
 use Illuminate\Console\Command;
 use App\Models\RattachementBl;
@@ -21,7 +22,7 @@ class SendRappelRattachementBl extends Command
      *
      * @var string
      */
-    protected $description = 'Envoie un rappel si des dossiers sont toujours EN ATTENTE';
+    protected $description = 'Envoie un rappel si des dossiers sont toujours EN ATTENTE DE VALIDATION';
 
     /**
      * Execute the console command.
@@ -29,7 +30,7 @@ class SendRappelRattachementBl extends Command
     public function handle()
     {
          // On récupère les dossiers en attente
-        $dossiersEnAttente = RattachementBl::where('statut', 'EN ATTENTE')->get();
+        $dossiersEnAttente = RattachementBl::where('statut', StatutDossier::EN_ATTENTE_VALIDATION)->get();
 
         if ($dossiersEnAttente->isEmpty()) {
             $this->info('Aucun dossier en attente.');
