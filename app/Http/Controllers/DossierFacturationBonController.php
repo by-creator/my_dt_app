@@ -122,7 +122,7 @@ class DossierFacturationBonController extends Controller
             $bon->user = $dossier->user->name;
             $bon->bl = $dossier->rattachement_bl->bl;
             $bon->statut = $dossier->statut;
-            $bon->time_elapsed = $dossier->time_elapsed_facture;
+            $bon->time_elapsed = $dossier->time_elapsed_bon;
         }
 
 
