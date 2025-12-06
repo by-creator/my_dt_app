@@ -17,17 +17,9 @@
         <span>Demande de réduction</span>
     </a>
 </li>
-<li class="sidebar-item  has-sub ">
-    <a class='sidebar-link' href="#" class='sidebar-link'>
+<li class="sidebar-item">
+    <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-video-index') }}"class='sidebar-link'>
         <i class="fa-solid fa-circle-info"></i>
-        <span>Comment ça marche </span>
+        <span>Comment ça marche ?</span>
     </a>
-    <ul class="submenu">
-        <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-pdf-index') }}"><i class="fa-solid fa-clipboard-list"></i> Format PDF</a>
-        </li>
-        <li class="submenu-item ">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-video-index') }}"><i class="fa-solid fa-video"></i> Format VIDEO</a>
-        </li>
-    </ul>
 </li>
