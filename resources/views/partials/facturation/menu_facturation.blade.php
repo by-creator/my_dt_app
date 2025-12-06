@@ -12,6 +12,7 @@
         </li>
     </ul>
 </li>
+<!--
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
@@ -68,6 +69,7 @@
         </li>
     </ul>
 </li>
+-->
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
