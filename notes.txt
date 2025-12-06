@@ -10,3 +10,6 @@ RattachementBl::chunk(100, function ($rows) {
 });
 
 
+Android presentation
+
+port : 10.0.2.2:8000

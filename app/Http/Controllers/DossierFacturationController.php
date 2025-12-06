@@ -52,7 +52,8 @@ class DossierFacturationController extends Controller
                 'title' => 'Étape 4 : Paiement',
                 'description' => 'Commment payer sa facture définitive ?',
                 'image' => null,
-                'link' => '#'
+                'link' => '#',
+                'id'=> 'videoPaiement'
             ],
             [
                 'title' => 'Étape 5 : BAD',
@@ -70,7 +71,8 @@ class DossierFacturationController extends Controller
                 'title' => 'Étape 7 : Demande de réduction',
                 'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
-                'link' => '#'
+                'link' => '#',
+                'id'=> 'videoReduction'
             ],
         ];
 

@@ -29,10 +29,13 @@
                 <!-- BODY -->
                 <div class="card-body text-center">
 
-                    <a href="{{ $video['link'] }}" target="_blank">
+                    <a href="{{ $video['link'] }}"
+                        target="_blank"
+                        @if(isset($video['id'])) id="{{ $video['id'] }}" @endif>
                         <i class="bi bi-play-circle-fill"
                             style="font-size: 80px; color: primary;"></i>
                     </a>
+
 
                     <p class="mt-3">{{ $video['description'] }}</p>
 
@@ -41,10 +44,13 @@
                 <!-- FOOTER -->
                 <div class="card-footer text-center">
 
-                    <a href="{{ $video['link'] }}" target="_blank"
-                        class="btn btn-primary w-100">
+                    <a href="{{ $video['link'] }}"
+                        target="_blank"
+                        class="btn btn-primary w-100"
+                        @if(isset($video['id'])) id="{{ $video['id'] }}Btn" @endif>
                         ▶ Regarder la vidéo
                     </a>
+
 
                 </div>
 
@@ -75,6 +81,34 @@
             } else {
                 video.style.display = "none";
             }
+        });
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // Liste des IDs de vidéos non disponibles
+        const disabledVideos = ["videoPaiement", "videoReduction"];
+
+        disabledVideos.forEach(id => {
+            let el = document.getElementById(id);
+            let btn = document.getElementById(id + "Btn");
+
+            [el, btn].forEach(item => {
+                if (item) {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Information',
+                            text: 'Cette vidéo n\'est pas encore disponible.',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                }
+            });
         });
 
     });

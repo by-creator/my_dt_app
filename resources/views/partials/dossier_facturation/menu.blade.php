@@ -12,7 +12,7 @@
     </a>
 </li>
 <li class="sidebar-item">
-    <a class='sidebar-link' href="#" class='sidebar-link'>
+    <a class='sidebar-link' href="#" class='sidebar-link' id="reductionLink">
         <i class="fa-solid fa-clipboard-list"></i>
         <span>Demande de réduction</span>
     </a>
@@ -23,3 +23,16 @@
         <span>Comment ça marche ?</span>
     </a>
 </li>
+
+<script>
+document.getElementById('reductionLink').addEventListener('click', function (e) {
+    e.preventDefault(); // empêche le lien de changer de page
+
+    Swal.fire({
+        icon: 'info',
+        title: 'Information',
+        text: 'Ce menu n\'est pas encore disponible.',
+        confirmButtonText: 'OK'
+    });
+});
+</script>
