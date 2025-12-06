@@ -70,7 +70,7 @@ class DematController extends Controller
             RattachementBl::create($data_create);
 
             return redirect()->back()
-                ->with('success', 'Votre demande a été envoyée avec succès.');
+                ->with('success', 'Votre dossier sera disponible dans 10 minutes.');
         } catch (\Exception $e) {
             Log::error('Erreur mail validation : ' . $e->getMessage(), [
                 'data' => $request->all()
