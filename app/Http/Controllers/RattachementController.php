@@ -49,7 +49,7 @@ class RattachementController extends Controller
 
                 //'sn004-proforma@dakar-terminal.com',
                 //'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com'
+                'noreplysitedt@gmail.com'
             ];
 
             Mail::to($rattachement->email)
