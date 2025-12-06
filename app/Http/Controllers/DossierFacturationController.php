@@ -34,19 +34,19 @@ class DossierFacturationController extends Controller
                 'title' => 'Étape 1 : Validation',
                 'description' => 'Commment envoyer une demande de validation ?',
                 'image' => null,
-                'link' => '#'
+                'link' => asset('templates/site/video/validation.mp4'),
             ],
             [
                 'title' => 'Étape 2 : Proforma',
                 'description' => 'Commment avoir sa facture proforma ?',
                 'image' => null,
-                'link' => '#'
+                'link' => asset('templates/site/video/proforma.mp4'),
             ],
             [
                 'title' => 'Étape 3 : Facture définitive',
                 'description' => 'Commment avoir sa facture définitive ?',
                 'image' => null,
-                'link' => '#'
+                'link' => asset('templates/site/video/facture.mp4'),
             ],
             [
                 'title' => 'Étape 4 : Paiement',
@@ -58,13 +58,13 @@ class DossierFacturationController extends Controller
                 'title' => 'Étape 5 : BAD',
                 'description' => 'Commment avoir son  BAD ?',
                 'image' => null,
-                'link' => '#'
+                'link' => asset('templates/site/video/bad.mp4'),
             ],
             [
                 'title' => 'Étape 6 : Facture complémentaire',
                 'description' => 'Commment avoir sa facture complémentaire ?',
                 'image' => null,
-                'link' => '#'
+                'link' => asset('templates/site/video/complement.mp4'),
             ],
             [
                 'title' => 'Étape 7 : Demande de réduction',
