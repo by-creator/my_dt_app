@@ -29,7 +29,7 @@
                     required
                     autocomplete="current-password"
                     :placeholder="__('Mot de passe')"
-                    />
+                    viewable />
 
                 @if (Route::has('password.request'))
                 <flux:link class="absolute top-0 text-sm end-0" :href="route('password.request')" wire:navigate>
