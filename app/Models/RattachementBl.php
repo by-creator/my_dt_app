@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatutDossier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\ConvertsDates;
@@ -22,7 +23,7 @@ class RattachementBl extends Model
     ];
 
 
-    protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime'];
+    protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime', 'statut' => StatutDossier::class,];
 
     /**
      * Accessor : retourne la durée écoulée entre created_at et updated_at

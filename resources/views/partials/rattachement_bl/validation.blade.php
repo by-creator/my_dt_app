@@ -44,7 +44,53 @@
                 </tbody>
             </table>
         </div>
-        <!-- Modal Modifier -->
+       
+        <!-- Modal Valider -->
+        <div class="modal fade" id="valideModal" tabindex="-1" aria-labelledby="valideModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="valideModalLabel">Valider le BL</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Êtes-vous sûr d'avoir valider ce dossier ?</p>
+                        @if (session('valide'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Succès',
+                                text: "{{ session('valide') }}",
+                                showConfirmButton: true
+                            });
+                        </script>
+                        @elseif (session('error'))
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur',
+                                text: "{{ session('error') }}",
+                                showConfirmButton: true
+                            });
+                        </script>
+                        @endif
+                        <form id="deleteForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="deleteId" name="id">
+                            <input type="hidden" id="deleteEmail" name="email">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal Rejeter -->
         <div class="modal fade" id="rejetModal" tabindex="-1" aria-labelledby="rejetModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -90,50 +136,6 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Supprimer -->
-        <div class="modal fade" id="valideModal" tabindex="-1" aria-labelledby="valideModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="valideModalLabel">Valider le BL</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Êtes-vous sûr d'avoir valider ce dossier ?</p>
-                        @if (session('valide'))
-                        <script>
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Succès',
-                                text: "{{ session('valide') }}",
-                                showConfirmButton: true
-                            });
-                        </script>
-                        @elseif (session('error'))
-                        <script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Erreur',
-                                text: "{{ session('error') }}",
-                                showConfirmButton: true
-                            });
-                        </script>
-                        @endif
-                        <form id="deleteForm" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" id="deleteId" name="id">
-                            <input type="hidden" id="deleteEmail" name="email">
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </section>
 
@@ -141,19 +143,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const table = document.getElementById('table1');
 
-        // Event delegation pour Edit
-        table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-edit');
-            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
-
-            const id = btn.dataset.id;
-            const email = btn.dataset.email;
-            document.getElementById("editId").value = id;
-            document.getElementById("editEmail").value = btn.dataset.email || '';
-            document.getElementById("editForm").action = "/rattachement/update/" + id;
-        });
-
-        // Event delegation pour Delete
+        // Event delegation pour valider
         table.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-delete');
             if (!btn) return;
@@ -163,6 +153,18 @@
             document.getElementById("deleteId").value = id;
             document.getElementById("deleteEmail").value = email;
             document.getElementById("deleteForm").action = "/rattachement/create/" + id;
+        });
+
+        // Event delegation pour rejeter
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-edit');
+            if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
+
+            const id = btn.dataset.id;
+            const email = btn.dataset.email;
+            document.getElementById("editId").value = id;
+            document.getElementById("editEmail").value = btn.dataset.email || '';
+            document.getElementById("editForm").action = "/rattachement/update/" + id;
         });
 
         // Initialiser la datatable

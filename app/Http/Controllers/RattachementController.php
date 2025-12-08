@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 class RattachementController extends Controller
 {
@@ -39,7 +41,7 @@ class RattachementController extends Controller
     {
         $rattachement = RattachementBl::findOrFail($id);
 
-        if ($rattachement->statut == "EN ATTENTE VALIDATION") {
+        if ($rattachement->statut === "EN ATTENTE VALIDATION") {
             $rattachement->user_id = Auth::user()->id;
             $rattachement->statut = StatutDossier::VALIDE;
 
@@ -47,14 +49,14 @@ class RattachementController extends Controller
 
             $destinataires = [
 
-                //'sn004-proforma@dakar-terminal.com',
-                //'sn004-facturation@dakar-terminal.com',
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
 
             Mail::to($rattachement->email)
-            ->cc($destinataires)
-            ->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
+                ->cc($destinataires)
+                ->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
 
             $rattachement->save();
 
@@ -71,30 +73,74 @@ class RattachementController extends Controller
 
     public function update($id, Request $request)
     {
+        Log::info("Début update rattachement", ['id' => $id]);
+
         $rattachement = RattachementBl::findOrFail($id);
 
+        Log::info("Comparaison debug", [
+            'statut_bdd' => $rattachement->statut,
+            'statut_constante' => StatutDossier::EN_ATTENTE_VALIDATION,
+            'equal' => $rattachement->statut == StatutDossier::EN_ATTENTE_VALIDATION,
+            'identical' => $rattachement->statut === StatutDossier::EN_ATTENTE_VALIDATION,
+        ]);
+
         if ($rattachement->statut === StatutDossier::EN_ATTENTE_VALIDATION) {
-            $rattachement->user_id = Auth::user()->id;
-            $rattachement->statut = "REJETÉ";
-            $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
+
+            Log::info("Rattachement en attente, mise à jour en cours", [
+                'id' => $rattachement->id,
+                'statut' => $rattachement->statut,
+                'email' => $rattachement->email
+            ]);
 
 
-            $destinataires = [
+            try {
+                $rattachement->user_id = Auth::id();
+                $rattachement->statut = StatutDossier::REJETE;
+                $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
 
-                //'sn004-proforma@dakar-terminal.com',
-                //'sn004-facturation@dakar-terminal.com',
-                $rattachement->email,
-                'noreplysitedt@gmail.com'
-            ];
+                $destinataires = [
+                    'sn004-proforma@dakar-terminal.com',
+                    'sn004-facturation@dakar-terminal.com',
+                    //'noreplysitedt@gmail.com'
+                ];
 
-            $motif = $request->motif;
+                $motif = $request->motif;
 
-            Mail::to($destinataires)->send(new RattachementBlInvalideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom, $motif));
+                Log::info("Envoi email rejet", [
+                    'destinataires' => $destinataires,
+                    'motif' => $motif
+                ]);
 
-            $rattachement->save();
+                Mail::to($rattachement->email)->cc($destinataires)->send(
+                    new RattachementBlInvalideMail(
+                        $rattachement->bl,
+                        $rattachement->nom,
+                        $rattachement->prenom,
+                        $motif
+                    )
+                );
 
-            return redirect()->back()->with('valide', 'Dossier rejeté avec succès.');
+                $rattachement->save();
+
+                Log::info("Rattachement rejeté avec succès", ['id' => $rattachement->id]);
+
+                return redirect()->back()->with('invalide', 'Dossier rejeté avec succès.');
+            } catch (\Exception $e) {
+
+                Log::error("Erreur lors du rejet du rattachement", [
+                    'id' => $rattachement->id,
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+
+                return redirect()->back()->with('error', 'Une erreur est survenue lors du rejet.');
+            }
         } else {
+            Log::warning("Tentative de rejet d’un dossier déjà traité", [
+                'id' => $rattachement->id,
+                'statut' => $rattachement->statut
+            ]);
+
             return redirect()->back()->with('error', 'Dossier déjà traité.');
         }
     }
