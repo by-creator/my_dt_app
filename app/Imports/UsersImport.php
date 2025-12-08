@@ -16,11 +16,26 @@ class UsersImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new User([
-            'role' => $row['role'],
             'name' => $row['name'],
             'email' => $row['email'],
-            'username' => $row['username'],
+            'telephone' => $row['telephone'],
             'password' => bcrypt('defaultpassword'), // Vous pouvez définir un mot de passe par défaut ou gérer cela autrement
         ]);
+    }
+
+    /**
+     * Taille des lots d'insertion en base
+     */
+    public function batchSize(): int
+    {
+        return 100;
+    }
+
+    /**
+     * Taille des morceaux lus en mémoire
+     */
+    public function chunkSize(): int
+    {
+        return 100;
     }
 }
