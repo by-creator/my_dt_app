@@ -65,14 +65,18 @@
                 </ul>
             </div>
             @else
-            <p class="text-muted mb-0">Aucun fichier disponible pour Proforma.</p>
+            <p class="text-muted mb-0">Aucun fichier disponible pour facture proforma.</p>
             @endif
         </div>
 
         <div class="card-footer bg-white border-top-0">
-            <a href="#" class="btn btn-primary w-100">
-                <i class="fa-solid fa-bell"></i> Effectuer une relance
-            </a>
+            <form action="{{ route('dossier_facturation.proforma.relance', $dossier->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-bell"></i> Effectuer une relance
+                </button>
+            </form>
         </div>
+
     </div>
 </div>

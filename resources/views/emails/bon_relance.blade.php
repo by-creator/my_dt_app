@@ -6,17 +6,15 @@
 </p>
 
 
-# Demande de bon à délivrer (BAD)
+# Relance sur bon à délivrer (BAD)
 
 Bonjour,
 
-Je me présente {{ $data['prenom'] }} {{ $data['nom'] }} et je souhaite avoir le BAD du dossier ci-dessous : 
+Ceci est un message de relance.
 
-**Bil of Lading (BL)** : {{ $data['bl'] }}  
+Je me présente {{ $data['prenom'] }} {{ $data['nom'] }} et je vous relance par rapport au bon à délivrer (BAD) concernant le numéro de Bl ci-dessous :
 
-**Compte** : {{ $data['compte'] }}  
-
-
+**Numéro de BL** : {{ $data['bl'] }}
 
 ---
 

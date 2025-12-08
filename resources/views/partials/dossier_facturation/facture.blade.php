@@ -14,7 +14,7 @@
         </div>
 
         <div class="card-body d-flex flex-column">
-             <div class="mb-2">
+            <div class="mb-2">
                 <br>
                 <a href="#"
                     class="btn btn-sm btn-info text-dark"
@@ -38,7 +38,7 @@
                         @if(!empty($file['path']))
                         <div class="mb-2 d-grid gap-2 d-md-flex">
                             <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary ms-2">
-                                <i class="fa-solid fa-eye"></i> 
+                                <i class="fa-solid fa-eye"></i>
                                 Ouvrir
                             </a>
                             <a href="#"
@@ -58,14 +58,37 @@
                 </ul>
             </div>
             @else
-            <p class="text-muted mb-0">Aucun fichier disponible pour facture.</p>
+            <p class="text-muted mb-0">Aucun fichier disponible pour facture définitive.</p>
             @endif
         </div>
 
         <div class="card-footer bg-white border-top-0">
-            <a href="#" class="btn btn-primary w-100">
-                <i class="fa-solid fa-bell"></i> Effectuer une relance
-            </a>
+            <form action="{{ route('dossier_facturation.facture.relance', $dossier->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-bell"></i> Effectuer une relance
+                </button>
+            </form>
         </div>
     </div>
 </div>
+
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Information',
+        text: "{{ session('success') }}",
+        showConfirmButton: true
+    });
+</script>
+@elseif (session('info'))
+<script>
+    Swal.fire({
+        icon: 'info',
+        title: 'Information',
+        text: "{{ session('info') }}",
+        showConfirmButton: true
+    });
+</script>
+@endif

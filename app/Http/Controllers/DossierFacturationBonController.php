@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatutDossier;
 use App\Mail\BonDocumentsMail;
+use App\Mail\BonRelanceMail;
 use App\Models\DossierFacturation;
 use App\Models\DossierFacturationBon;
 use App\Models\User;
@@ -118,6 +119,7 @@ class DossierFacturationBonController extends Controller
                 Carbon::parse($dossier->date_en_attente_bon)->diffInSeconds(now());
 
             $dossier->time_elapsed_bon = DossierFacturation::secondsToHms($seconds);
+            $dossier->relance_bad = false;
 
             $bon->user = $dossier->user->name;
             $bon->bl = $dossier->rattachement_bl->bl;
@@ -194,6 +196,59 @@ class DossierFacturationBonController extends Controller
             return back()->with('successBon', 'Documents envoyés et mail transmis avec succès !');
         } else {
             return back()->with('infoBon', 'Le bon est déjà disponible');
+        }
+    }
+
+    public function relanceDocuments($id)
+    {
+        $dossier = DossierFacturation::findOrFail($id);
+
+        // On récupère le rattachement BL
+        $rattachement = $dossier->rattachement_bl;
+
+
+
+        // On prépare les données à envoyer dans le mail
+        $data = [
+            'prenom'  => $rattachement->prenom,
+            'nom'     => $rattachement->nom,
+            'email'   => $rattachement->email,
+            'bl'      => $rattachement->bl,
+            'compte'  => $rattachement->compte,
+        ];
+
+        if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
+
+            return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Valider' au niveau de la facture définitive avant de vouloir effectuer une relance");
+        
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_BAD) {
+
+            if ($dossier->relance_bad == false) {
+
+                $dossier->relance_bad = true;
+                $dossier->save();
+
+                // Liste des destinataires
+                $destinataires = [
+                    'noreplysitedt@gmail.com'
+                ];
+
+                // Envoi du mail
+                Mail::to($destinataires)->send(new BonRelanceMail($data));
+
+
+                Log::info('Votre relance a été effectuée avec succès');
+
+
+                return redirect()->back()->with('success', "Votre relance a été effectuée avec succès ");
+            } else {
+                return redirect()->back()->with('info', "Vous avez déjà effectué une relance, votre BAD est en cours de traitement");
+            }
+        } elseif ($dossier->statut === StatutDossier::BAD_VALIDE) {
+            return redirect()->back()->with('info', "Votre BAD est déjà disponible");
+        }
+        else{
+            return redirect()->back()->with('info', "Votre BAD est déjà disponible");
         }
     }
 }

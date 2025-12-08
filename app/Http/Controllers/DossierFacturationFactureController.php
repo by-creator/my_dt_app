@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatutDossier;
 use App\Mail\FactureDocumentsMail;
+use App\Mail\FactureRelanceMail;
 use App\Mail\FactureValidateMail;
 use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
@@ -188,7 +189,7 @@ class DossierFacturationFactureController extends Controller
                 Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
 
             $dossier->time_elapsed_facture = DossierFacturation::secondsToHms($seconds);
-
+            $dossier->relance_facture = false;
 
             $facture->user = $dossier->user->name;
             $facture->bl = $dossier->rattachement_bl->bl;
@@ -213,6 +214,7 @@ class DossierFacturationFactureController extends Controller
                 Carbon::parse($dossier->date_en_attente_facture)->diffInSeconds(now());
 
             $dossier->time_elapsed_facture = DossierFacturation::secondsToHms($seconds);
+            $dossier->relance_facture = false;
 
             $facture->user = $dossier->user->name;
             $facture->bl = $dossier->rattachement_bl->bl;
@@ -345,5 +347,56 @@ class DossierFacturationFactureController extends Controller
         } else {
             return redirect()->back()->with('info', "Tout est ok");
         }
+    }
+
+    public function relanceDocuments($id)
+    {
+        $dossier = DossierFacturation::findOrFail($id);
+
+        // On récupère le rattachement BL
+        $rattachement = $dossier->rattachement_bl;
+
+
+
+        // On prépare les données à envoyer dans le mail
+        $data = [
+            'prenom'  => $rattachement->prenom,
+            'nom'     => $rattachement->nom,
+            'email'   => $rattachement->email,
+            'bl'      => $rattachement->bl,
+            'compte'  => $rattachement->compte,
+        ];
+
+        if ($dossier->statut === StatutDossier::PROFORMA_VALIDE || $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
+
+            return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Valider' au niveau de la proforma avant de vouloir effectuer une relance");
+        
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE || $dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
+
+            if ($dossier->relance_facture == false) {
+
+                $dossier->relance_facture = true;
+                $dossier->save();
+
+                // Liste des destinataires
+                $destinataires = [
+                    'noreplysitedt@gmail.com'
+                ];
+
+                // Envoi du mail
+                Mail::to($destinataires)->send(new FactureRelanceMail($data));
+
+
+                Log::info('Votre relance a été effectuée avec succès');
+
+
+                return redirect()->back()->with('success', "Votre relance a été effectuée avec succès ");
+            } else {
+                return redirect()->back()->with('info', "Vous avez déjà effectué une relance, votre facture est en cours de traitement");
+            }
+        } elseif ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
+            return redirect()->back()->with('info', "Votre facture définitive est déjà disponible");
+        }
+        
     }
 }

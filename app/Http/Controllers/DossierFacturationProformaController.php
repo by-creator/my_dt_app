@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\StatutDossier;
 use App\Mail\ProformaDocumentsMail;
 use App\Mail\ProformaGenerateMail;
+use App\Mail\ProformaRelanceMail;
 use App\Mail\ProformaValidateMail;
 use App\Models\DossierFacturation;
 use App\Models\DossierFacturationProforma;
@@ -181,6 +182,7 @@ class DossierFacturationProformaController extends Controller
                 Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
 
             $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
+            $dossier->relance_proforma = false;
 
             $proforma->user = $dossier->user->name;
             $proforma->bl = $dossier->rattachement_bl->bl;
@@ -203,6 +205,7 @@ class DossierFacturationProformaController extends Controller
                 Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
 
             $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
+            $dossier->relance_proforma = false;
 
             $proforma->user = $dossier->user->name;
             $proforma->bl = $dossier->rattachement_bl->bl;
@@ -373,5 +376,57 @@ class DossierFacturationProformaController extends Controller
 
 
         return redirect()->back()->with('success', "Votre facture a bien été supprimée ");
+    }
+
+    public function relanceDocuments($id)
+    {
+        $dossier = DossierFacturation::findOrFail($id);
+
+        // On récupère le rattachement BL
+        $rattachement = $dossier->rattachement_bl;
+
+
+
+        // On prépare les données à envoyer dans le mail
+        $data = [
+            'prenom'  => $rattachement->prenom,
+            'nom'     => $rattachement->nom,
+            'email'   => $rattachement->email,
+            'bl'      => $rattachement->bl,
+            'compte'  => $rattachement->compte,
+        ];
+
+        if ($dossier->statut === StatutDossier::VALIDE) {
+
+            return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Générer votre facture proforma' avant de vouloir effectuer une relance");
+        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA || $dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
+
+            if ($dossier->relance_proforma == false) {
+
+                $dossier->relance_proforma = true;
+                $dossier->save();
+
+                // Liste des destinataires
+                $destinataires = [
+                    'noreplysitedt@gmail.com'
+                ];
+
+                // Envoi du mail
+                Mail::to($destinataires)->send(new ProformaRelanceMail($data));
+
+
+                Log::info('Votre relance a été effectuée avec succès');
+
+
+                return redirect()->back()->with('success', "Votre relance a été effectuée avec succès ");
+            } else {
+                return redirect()->back()->with('info', "Vous avez déjà effectué une relance, votre facture est en cours de traitement");
+            }
+        } elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE || $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
+            return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
+        }
+        else{
+            return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
+        }
     }
 }
