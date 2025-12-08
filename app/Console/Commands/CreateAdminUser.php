@@ -45,6 +45,7 @@ class CreateAdminUser extends Command
                 'role_id' => $role_admin->id,
                 'name' => 'BONGO-YEBA Marc',
                 'email' => 'marc.bongoyeba@dakar-terminal.com',
+                'telephone' => '778348952',
                 'email_verified_at' => now(),
                 'password' => Hash::make('passer1234'),
                 'two_factor_secret' => null,
