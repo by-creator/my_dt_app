@@ -18,6 +18,7 @@
                         <th>Role</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Téléphone</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,8 +32,9 @@
                         </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->telephone }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
+                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-telephone="{{ $user->telephone }}"  data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
@@ -81,6 +83,10 @@
                             <div class="mb-3">
                                 <label for="editEmail" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="editEmail" required name="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editTelephone" class="form-label">Téléphone</label>
+                                <input type="number" class="form-control" id="editTelephone" required name="telephone">
                             </div>
                             <div class="mb-3">
                                 <label for="editPassword" class="form-label">Mot de passe</label>
@@ -146,6 +152,7 @@
             document.getElementById("editRole").value = btn.dataset.role || '';
             document.getElementById("editName").value = btn.dataset.name || '';
             document.getElementById("editEmail").value = btn.dataset.email || '';
+            document.getElementById("editTelephone").value = btn.dataset.telephone || '';
             document.getElementById("editPassword").value = btn.dataset.password || '';
             document.getElementById("editForm").action = "/user/update/" + id;
         });

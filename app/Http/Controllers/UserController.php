@@ -35,6 +35,7 @@ class UserController extends Controller
         $request->validate([
             'role_id' => 'required|exists:roles,id',
             'name' => 'required|string|max:255',
+            'telephone' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -43,6 +44,7 @@ class UserController extends Controller
                 'role_id' =>  $request->role_id,
                 'name' => $request->name,
                 'email' => $request->email,
+                'telephone' => $request->telephone,
                 'email_verified_at' => now(),
                 'password' => Hash::make($request->password),
                 'two_factor_secret' => null,
@@ -68,6 +70,7 @@ class UserController extends Controller
 
         $user->role_id = $request->role_id;
         $user->name = $request->name;
+        $user->telephone = $request->telephone;
         $user->email = $request->email;
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);

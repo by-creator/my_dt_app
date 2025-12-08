@@ -66,6 +66,20 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
+                                <label>Numéro de téléphone)</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                    <div class="position-relative">
+                                        <input name="telephone" id="telephone" type="number" class="form-control"
+                                            placeholder="Saisissez votre numéro de téléphone" required>
+                                        <div class="form-control-icon">
+                                            <i class="fa-solid fa-phone"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <label>Mot de passe</label>
                             </div>
                             <div class="col-md-8">
