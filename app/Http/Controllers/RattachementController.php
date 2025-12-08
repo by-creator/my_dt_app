@@ -49,9 +49,9 @@ class RattachementController extends Controller
 
             $destinataires = [
 
-                //'sn004-proforma@dakar-terminal.com',
-                //'sn004-facturation@dakar-terminal.com',
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
 
             Mail::to($rattachement->email)
@@ -99,9 +99,9 @@ class RattachementController extends Controller
                 $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
 
                 $destinataires = [
-                    //'sn004-proforma@dakar-terminal.com',
-                    //'sn004-facturation@dakar-terminal.com',
-                    'noreplysitedt@gmail.com'
+                    'sn004-proforma@dakar-terminal.com',
+                    'sn004-facturation@dakar-terminal.com',
+                    //'noreplysitedt@gmail.com'
                 ];
 
                 $motif = $request->motif;
