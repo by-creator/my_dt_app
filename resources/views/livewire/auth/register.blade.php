@@ -27,7 +27,17 @@
                 type="email"
                 required
                 autocomplete="email"
-                placeholder="email@exemple.com" />
+                :placeholder="__('Entrez l\'adresse mail')" />
+
+
+                <!-- Telephone -->
+            <flux:input
+                name="telephone"
+                :label="__('Numéro de téléphone')"
+                type="number"
+                required
+                autocomplete="telephone"
+                :placeholder="__('Entrez le numéro de téléphone')" />
 
             <!-- Password -->
             <flux:input

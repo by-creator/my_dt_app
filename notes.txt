@@ -13,3 +13,12 @@ RattachementBl::chunk(100, function ($rows) {
 Android presentation
 
 port : 10.0.2.2:8000
+
+use Illuminate\Support\Facades\DB;
+use App\Enums\StatutDossier;
+
+
+// Mettre à jour les rattachements
+DB::table('rattachement_bls')
+    ->where('statut', 'Amsa transit 300422')
+    ->update(['statut' => StatutDossier::REJETE]);

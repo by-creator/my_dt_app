@@ -47,9 +47,9 @@ class DematController extends Controller
 
             // Destinataires
             $destinataires = [
-                'sn004-proforma@dakar-terminal.com',
-                'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com',
+                //'sn004-proforma@dakar-terminal.com',
+                //'sn004-facturation@dakar-terminal.com',
+                'noreplysitedt@gmail.com',
             ];
 
             // Envoi du mail
