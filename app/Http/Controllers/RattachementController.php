@@ -38,38 +38,86 @@ class RattachementController extends Controller
     }
 
     public function create($id)
-    {
-        $rattachement = RattachementBl::findOrFail($id);
+{
+    Log::info("Début création du rattachement", ['id' => $id]);
 
-        if ($rattachement->statut === "EN ATTENTE VALIDATION") {
-            $rattachement->user_id = Auth::user()->id;
-            $rattachement->statut = StatutDossier::VALIDE;
+    $rattachement = RattachementBl::findOrFail($id);
 
+    // Ajout d'un log pour vérifier le statut du rattachement
+    Log::info("Statut actuel du rattachement", [
+        'statut_bdd' => $rattachement->statut,
+        'statut_constante' => StatutDossier::EN_ATTENTE_VALIDATION,
+        'equal' => $rattachement->statut == StatutDossier::EN_ATTENTE_VALIDATION,
+        'identical' => $rattachement->statut === StatutDossier::EN_ATTENTE_VALIDATION,
+    ]);
+
+    // Comparaison avec la constante
+    if ($rattachement->statut === StatutDossier::EN_ATTENTE_VALIDATION) {
+        Log::info("Rattachement en attente de validation, traitement en cours", [
+            'id' => $rattachement->id,
+            'email' => $rattachement->email,
+            'statut' => $rattachement->statut
+        ]);
+
+        try {
+            // Mise à jour du rattachement
+            $rattachement->user_id = Auth::id();
+            $rattachement->statut = StatutDossier::VALIDE;  // Ici on met à jour le statut à "VALIDE"
             $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
 
-            $destinataires = [
+            Log::info("Rattachement mis à jour", [
+                'user_id' => $rattachement->user_id,
+                'statut' => $rattachement->statut,
+                'time_elapsed' => $rattachement->time_elapsed
+            ]);
 
+            // Destinataires pour l'email
+            $destinataires = [
                 'sn004-proforma@dakar-terminal.com',
                 'sn004-facturation@dakar-terminal.com',
                 //'noreplysitedt@gmail.com'
             ];
 
+            // Envoi de l'email de validation
+            Log::info("Envoi email de validation", [
+                'destinataires' => $destinataires,
+                'rattachement_email' => $rattachement->email,
+                'bl' => $rattachement->bl,
+                'nom' => $rattachement->nom,
+                'prenom' => $rattachement->prenom
+            ]);
+
             Mail::to($rattachement->email)
                 ->cc($destinataires)
                 ->send(new RattachementBlValideMail($rattachement->bl, $rattachement->nom, $rattachement->prenom));
 
+            // Sauvegarde du rattachement
             $rattachement->save();
+            Log::info("Rattachement validé et sauvegardé", ['id' => $rattachement->id]);
 
+            // Création du dossier de facturation
             $rattachement->dossierFacturation()->create([
                 'statut' => $rattachement->statut
             ]);
-
+            Log::info("Dossier de facturation créé pour le rattachement", ['id' => $rattachement->id]);
 
             return redirect()->back()->with('valide', 'Dossier validé avec succès.');
-        } else {
-            return redirect()->back()->with('error', 'Dossier déjà traité.');
+        } catch (\Exception $e) {
+            Log::error("Erreur lors de la validation du rattachement", [
+                'id' => $rattachement->id,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de la validation.');
         }
+    } else {
+        Log::warning("Tentative de validation d'un dossier déjà traité", [
+            'id' => $rattachement->id,
+            'statut' => $rattachement->statut
+        ]);
+        return redirect()->back()->with('error', 'Dossier déjà traité.');
     }
+}
 
     public function update($id, Request $request)
     {
