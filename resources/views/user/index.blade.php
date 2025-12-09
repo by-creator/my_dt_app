@@ -1,6 +1,11 @@
-@extends('partials.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
+<head>
+    @include('partials.dashboard.head')
+</head>
+
+<body>
     <div id="app">
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
@@ -16,13 +21,13 @@
                 <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        
+
                         <li class="sidebar-title">
-                        <a href="{{ route('dashboard') }}">
-                            <i class="fa-solid fa-home"></i>
-                            <span>Accueil</span>
-                        </a>
-                    </li>
+                            <a href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-home"></i>
+                                <span>Accueil</span>
+                            </a>
+                        </li>
 
                         @if(Auth::user()->role->name == "ADMIN")
                         @include('partials.dashboard.admin.user.menu_user')
@@ -34,6 +39,7 @@
                                 <span>Paramètres</span>
                             </a>
                         </li>
+
                         <li class="sidebar-item  ">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -62,6 +68,10 @@
                 @include('partials.dashboard.admin.user.list_user')
                 @endif
             </div>
+
         </div>
     </div>
-@endsection
+    @include('partials.dashboard.script')
+</body>
+
+</html>
