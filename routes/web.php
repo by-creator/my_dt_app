@@ -233,4 +233,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/dossier-facturation/list/client', [DossierFacturationController::class, 'listClient'])->name('dossier_facturation.list_client');
+
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
+    Route::get('/user/export', [UserController::class, 'export'])->name('user.export');
 });

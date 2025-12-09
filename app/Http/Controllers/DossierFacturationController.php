@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
 use App\Models\RattachementBl;
@@ -9,6 +11,8 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 
@@ -226,7 +230,7 @@ class DossierFacturationController extends Controller
         }
         $user->save();
 
-        return redirect()->route('user.index')->with('update', 'Utilisateur mis à jour avec succès.');
+        return redirect()->route('dossier_facturation.list_client')->with('update', 'Utilisateur mis à jour avec succès.');
     }
 
     /**
@@ -240,6 +244,35 @@ class DossierFacturationController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('user.index')->with('delete', 'Utilisateur supprimé avec succès.');
+        return redirect()->route('dossier_facturation.list_client')->with('delete', 'Utilisateur supprimé avec succès.');
+    }
+
+    /**
+     * Export users to an Excel file.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    /**
+     * Import users from an Excel file.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return redirect()->route('dossier_facturation.list_client')->with('success', 'Utilisateurs importés avec succès.');
     }
 }
