@@ -234,8 +234,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dossier-facturation/list/client', [DossierFacturationController::class, 'listClient'])->name('dossier_facturation.list_client');
 
-    Route::put('/dossier-facturation/update/{id}', [UserController::class, 'update'])->name('dossier_facturation.update');
-    Route::delete('/dossier-facturation/delete/{id}', [UserController::class, 'delete'])->name('dossier_facturation.delete');
-    Route::post('/dossier-facturation/import', [UserController::class, 'import'])->name('dossier_facturation.import');
-    Route::get('/dossier-facturation/export', [UserController::class, 'export'])->name('dossier_facturation.export');
+    Route::put('/dossier-facturation/update/{id}', [DossierFacturationController::class, 'update'])->name('dossier_facturation.update');
+    Route::delete('/dossier-facturation/delete/{id}', [DossierFacturationController::class, 'delete'])->name('dossier_facturation.delete');
+    Route::post('/dossier-facturation/import', [DossierFacturationController::class, 'import'])->name('dossier_facturation.import');
+    Route::get('/dossier-facturation/export', [DossierFacturationController::class, 'export'])->name('dossier_facturation.export');
 });
