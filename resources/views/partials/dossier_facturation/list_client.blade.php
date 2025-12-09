@@ -154,7 +154,7 @@
             document.getElementById("editEmail").value = btn.dataset.email || '';
             document.getElementById("editTelephone").value = btn.dataset.telephone || '';
             document.getElementById("editPassword").value = btn.dataset.password || '';
-            document.getElementById("editForm").action = "/user/update/" + id;
+            document.getElementById("editForm").action = "/dossier-facturation/update/" + id;
         });
 
         // Event delegation pour Delete
@@ -164,7 +164,7 @@
 
             const id = btn.dataset.id;
             document.getElementById("deleteId").value = id;
-            document.getElementById("deleteForm").action = "/user/delete/" + id;
+            document.getElementById("deleteForm").action = "/dossier-facturation/delete/" + id;
         });
 
         // Initialiser la datatable
