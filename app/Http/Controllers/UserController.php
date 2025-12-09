@@ -17,11 +17,17 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->get();
+        $clientRoleId = Role::where('name', 'client_facturation')->value('id');
+
+        $users = User::where('role_id', '!=', $clientRoleId)
+            ->orderBy('id', 'desc')
+            ->get();
+
         $roles = Role::all();
 
         return view('user.index', compact('users', 'roles'));
     }
+
 
     /**
      * Create a newly created user in storage.
@@ -31,7 +37,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        
+
         $request->validate([
             'role_id' => 'required|exists:roles,id',
             'name' => 'required|string|max:255',
@@ -41,18 +47,18 @@ class UserController extends Controller
         ]);
 
         User::create([
-                'role_id' =>  $request->role_id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'telephone' => $request->telephone,
-                'email_verified_at' => now(),
-                'password' => Hash::make($request->password),
-                'two_factor_secret' => null,
-                'two_factor_recovery_codes' => null,
-                'remember_token' => Str::random(10),
-                'profile_photo_path' => null,
-                'current_team_id' => null,
-            ]);
+            'role_id' =>  $request->role_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'telephone' => $request->telephone,
+            'email_verified_at' => now(),
+            'password' => Hash::make($request->password),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+        ]);
 
         return redirect()->route('user.index')->with('create', 'Utilisateur créé avec succès.');
     }
