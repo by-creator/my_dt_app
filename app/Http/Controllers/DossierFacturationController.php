@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ProformaGenerateMail;
 use App\Models\DossierFacturation;
 use App\Models\RattachementBl;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -53,7 +54,7 @@ class DossierFacturationController extends Controller
                 'description' => 'Commment payer sa facture définitive ?',
                 'image' => null,
                 'link' => '#',
-                'id'=> 'videoPaiement'
+                'id' => 'videoPaiement'
             ],
             [
                 'title' => 'Étape 5 : BAD',
@@ -72,7 +73,7 @@ class DossierFacturationController extends Controller
                 'description' => 'Commment faire une demande de réduction ?',
                 'image' => null,
                 'link' => '#',
-                'id'=> 'videoReduction'
+                'id' => 'videoReduction'
             ],
         ];
 
@@ -188,5 +189,18 @@ class DossierFacturationController extends Controller
     {
 
         return view('dossier_facturation.bon');
+    }
+
+    public function listClient()
+    {
+        $roleId = Role::where('name', 'client_facturation')->value('id');
+
+        $users = User::where('role_id', $roleId)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $roles = Role::all();
+
+        return view('dossier_facturation.list_client', compact('users', 'roles'));
     }
 }

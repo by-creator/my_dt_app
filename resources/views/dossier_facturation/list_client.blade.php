@@ -64,8 +64,8 @@
                 <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
-                @include('partials.dossier_facturation.tuto_video')
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
+                @include('partials.dossier_facturation.list_client')
                 @else
                 @endif
             </div>

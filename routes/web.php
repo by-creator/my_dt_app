@@ -230,4 +230,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/dossier-facturation/bon/send/{id}', [DossierFacturationBonController::class, 'sendDocuments'])->name('dossier_facturation.bon.send');
     Route::post('/dossier-facturation/bon/relance/{id}', [DossierFacturationBonController::class, 'relanceDocuments'])->name('dossier_facturation.bon.relance');
+
+
+    Route::get('/dossier-facturation/list/client', [DossierFacturationController::class, 'listClient'])->name('dossier_facturation.list_client');
 });
