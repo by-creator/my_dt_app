@@ -8,6 +8,8 @@ use App\Models\RattachementBl;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class DossierFacturationController extends Controller
@@ -202,5 +204,42 @@ class DossierFacturationController extends Controller
         $roles = Role::all();
 
         return view('dossier_facturation.list_client', compact('users', 'roles'));
+    }
+
+    /**
+     * Update the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->role_id = $request->role_id;
+        $user->name = $request->name;
+        $user->telephone = $request->telephone;
+        $user->email = $request->email;
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+
+        return redirect()->route('user.index')->with('update', 'Utilisateur mis à jour avec succès.');
+    }
+
+    /**
+     * Remove the specified user from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('user.index')->with('delete', 'Utilisateur supprimé avec succès.');
     }
 }
