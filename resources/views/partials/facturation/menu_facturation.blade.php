@@ -61,6 +61,8 @@
         <span>Comment ça marche ?</span>
     </a>
 </li>
+
+-->
 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('dossier_facturation.list_client') }}"class='sidebar-link'>
@@ -69,8 +71,6 @@
     </a>
 </li>
 @endif
-
--->
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
