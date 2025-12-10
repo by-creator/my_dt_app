@@ -37,7 +37,6 @@
             <div class="card h-100 shadow-sm d-flex flex-column">
 
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <span>Numéro de BL</span>
                     <span class="badge bg-light text-dark">
                         {{ $bl ?? 'N/A' }}
                     </span>
