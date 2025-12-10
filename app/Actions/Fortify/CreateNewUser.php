@@ -43,13 +43,6 @@ class CreateNewUser implements CreatesNewUsers
 
         Mail::to($user->email)->send(new LinkIesMail($user));
 
-
-
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'telephone' => $input['telephone'],
-            'password' => $input['password'],
-        ]);
+        return $user;
     }
 }
