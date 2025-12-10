@@ -13,6 +13,7 @@ class DossierFacturation extends Model
     use HasFactory, ConvertsDates;
 
     protected $fillable = [
+        'user_id',
         'rattachement_bl_id',
         'date_proforma',
         'statut',
