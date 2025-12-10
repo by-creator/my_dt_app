@@ -33,18 +33,18 @@
             </div>
 
             <div class="mb-3">
-              <label>AJOUTER VOTRE BL</label>
-              <input type="file" name="documents[]" class="form-control" multiple>
+              <label>BL</label>
+              <input type="file" required name="documents[]" class="form-control" multiple>
             </div>
 
             <div class="mb-3">
-              <label>AJOUTER VOTRE BAD SHIPPING</label>
-              <input type="file" name="documents[]" class="form-control">
+              <label>BAD SHIPPING</label>
+              <input type="file" required name="documents[]" class="form-control" multiple>
             </div>
 
             <div class="mb-3">
-              <label>AJOUTER VOTRE DECLARATION</label>
-              <input type="file" name="documents[]" class="form-control">
+              <label>DECLARATION</label>
+              <input type="file" required name="documents[]" class="form-control" multiple>
             </div>
 
 
