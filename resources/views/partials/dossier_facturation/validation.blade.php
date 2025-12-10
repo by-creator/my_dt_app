@@ -1,6 +1,3 @@
-
-
-
 <body>
 
 
@@ -36,17 +33,28 @@
             </div>
 
             <div class="mb-3">
-              <input type="file" name="documents[]" class="text-center form-control" multiple required>
-              <small class="text-muted">Vous pouvez sélectionner plusieurs fichiers (optionnel sur mobile pour test)</small>
+              <label>AJOUTER VOTRE BL</label>
+              <input type="file" name="documents[]" class="form-control" multiple>
             </div>
+
+            <div class="mb-3">
+              <label>AJOUTER VOTRE BAD SHIPPING</label>
+              <input type="file" name="documents[]" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label>AJOUTER VOTRE DECLARATION</label>
+              <input type="file" name="documents[]" class="form-control">
+            </div>
+
 
             <button type="submit" class="btn btn-gradient w-100">VALIDATION</button>
           </form>
 
         </div>
 
-      
-        
+
+
       </div>
     </div>
   </div>
