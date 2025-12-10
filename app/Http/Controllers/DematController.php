@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Storage;
 class DematController extends Controller
 {
 
+    public function index()
+    {
+        return redirect()->route('login');
+    }
 
     public function validation(Request $request)
     {
