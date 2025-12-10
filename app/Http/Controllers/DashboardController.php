@@ -30,7 +30,7 @@ class DashboardController extends Controller
     }
 
     // 3️⃣ Pagination
-    $dossiers = $query->orderBy('id', 'desc')->paginate(10)->withQueryString();
+    $dossiers = $query->orderBy('id', 'desc')->paginate(3)->withQueryString();
 
     // 4️⃣ Récupérer les rattachements pour l'affichage
     $rattachements = RattachementBl::where('email', $email)->get();
