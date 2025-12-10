@@ -73,7 +73,9 @@ class DossierFacturationProformaController extends Controller
 
             // Liste des destinataires
             $destinataires = [
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
 
             // Envoi du mail
@@ -232,7 +234,9 @@ class DossierFacturationProformaController extends Controller
 
         // Liste des destinataires
         $destinataires = [
-            'noreplysitedt@gmail.com'
+            'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',
+            //'noreplysitedt@gmail.com'
         ];
 
         Mail::to($rattachement->email)
@@ -339,7 +343,9 @@ class DossierFacturationProformaController extends Controller
 
         // Liste des destinataires
         $destinataires = [
-            'noreplysitedt@gmail.com'
+            'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',
+            //'noreplysitedt@gmail.com'
         ];
 
         // Envoi du mail
@@ -408,7 +414,9 @@ class DossierFacturationProformaController extends Controller
 
                 // Liste des destinataires
                 $destinataires = [
-                    'noreplysitedt@gmail.com'
+                    'sn004-proforma@dakar-terminal.com',
+                    'sn004-facturation@dakar-terminal.com',
+                    //'noreplysitedt@gmail.com'
                 ];
 
                 // Envoi du mail
@@ -424,8 +432,7 @@ class DossierFacturationProformaController extends Controller
             }
         } elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE || $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
             return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
-        }
-        else{
+        } else {
             return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
         }
     }

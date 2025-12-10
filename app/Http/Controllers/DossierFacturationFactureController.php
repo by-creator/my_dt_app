@@ -76,7 +76,9 @@ class DossierFacturationFactureController extends Controller
 
             // Liste des destinataires
             $destinataires = [
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
 
             // Envoi du mail
@@ -243,7 +245,9 @@ class DossierFacturationFactureController extends Controller
 
         // Liste des destinataires
         $destinataires = [
-            'noreplysitedt@gmail.com'
+            'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',
+            //'noreplysitedt@gmail.com'
         ];
 
         Mail::to($rattachement->email)
@@ -330,7 +334,9 @@ class DossierFacturationFactureController extends Controller
 
             // Liste des destinataires
             $destinataires = [
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
 
             // Envoi du mail
@@ -370,7 +376,6 @@ class DossierFacturationFactureController extends Controller
         if ($dossier->statut === StatutDossier::PROFORMA_VALIDE || $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
 
             return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Valider' au niveau de la proforma avant de vouloir effectuer une relance");
-        
         } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE || $dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
 
             if ($dossier->relance_facture == false) {
@@ -380,7 +385,9 @@ class DossierFacturationFactureController extends Controller
 
                 // Liste des destinataires
                 $destinataires = [
-                    'noreplysitedt@gmail.com'
+                    'sn004-proforma@dakar-terminal.com',
+                    'sn004-facturation@dakar-terminal.com',
+                    //'noreplysitedt@gmail.com'
                 ];
 
                 // Envoi du mail
@@ -397,6 +404,5 @@ class DossierFacturationFactureController extends Controller
         } elseif ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
             return redirect()->back()->with('info', "Votre facture définitive est déjà disponible");
         }
-        
     }
 }

@@ -148,7 +148,9 @@ class DossierFacturationBonController extends Controller
 
         // Liste des destinataires
         $destinataires = [
-            'noreplysitedt@gmail.com'
+            'sn004-proforma@dakar-terminal.com',
+            'sn004-facturation@dakar-terminal.com',
+            //'noreplysitedt@gmail.com'
         ];
 
         Mail::to($rattachement->email)
@@ -220,7 +222,6 @@ class DossierFacturationBonController extends Controller
         if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
 
             return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Valider' au niveau de la facture définitive avant de vouloir effectuer une relance");
-        
         } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_BAD) {
 
             if ($dossier->relance_bad == false) {
@@ -230,7 +231,9 @@ class DossierFacturationBonController extends Controller
 
                 // Liste des destinataires
                 $destinataires = [
-                    'noreplysitedt@gmail.com'
+                    'sn004-proforma@dakar-terminal.com',
+                    'sn004-facturation@dakar-terminal.com',
+                    //'noreplysitedt@gmail.com'
                 ];
 
                 // Envoi du mail
@@ -246,8 +249,7 @@ class DossierFacturationBonController extends Controller
             }
         } elseif ($dossier->statut === StatutDossier::BAD_VALIDE) {
             return redirect()->back()->with('info', "Votre BAD est déjà disponible");
-        }
-        else{
+        } else {
             return redirect()->back()->with('info', "Votre BAD est déjà disponible");
         }
     }
