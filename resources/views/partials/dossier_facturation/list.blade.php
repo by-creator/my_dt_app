@@ -9,19 +9,27 @@
     </div>
 
     @if($dossiers->isEmpty())
-        <div class="alert alert-primary text-center">
-            <i class="fa-solid fa-circle-info me-2"></i>
-            Aucun dossier enregistré.
-        </div>
+    <div class="alert alert-primary text-center">
+        <i class="fa-solid fa-circle-info me-2"></i>
+        Aucun dossier enregistré.
+    </div>
     @else
 
     <!-- BARRE DE RECHERCHE -->
     <div class="mb-4 position-relative">
-        <i class="fa fa-search position-absolute" 
-           style="left: 15px; top: 12px; color: #999;"></i>
+        <i class="fa fa-search position-absolute"
+            style="left: 15px; top: 12px; color: #999;"></i>
 
-        <input type="text" id="searchInput" class="form-control ps-5 shadow-sm"
-               placeholder="🔍 Rechercher par BL...">
+        <form method="GET" action="{{ route('dossier_facturation.index') }}">
+            <div class="mb-4 position-relative">
+                <i class="fa fa-search position-absolute"
+                    style="left: 15px; top: 12px; color: #999;"></i>
+
+                <input type="text" name="search" class="form-control ps-5 shadow-sm"
+                    placeholder="🔍 Rechercher par BL..." value="{{ request('search') }}">
+            </div>
+        </form>
+
     </div>
 
     <!-- LISTE DES DOSSIERS EN CARDS -->
@@ -29,8 +37,8 @@
         @foreach($dossiers as $dossier)
 
         @php
-            $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
-            $bl = $rattachement ? $rattachement->bl : null;
+        $rattachement = $rattachements->firstWhere('id', $dossier->rattachement_bl_id);
+        $bl = $rattachement ? $rattachement->bl : null;
         @endphp
 
         <div class="col-md-4 mb-4 dossier-card" data-bl="{{ strtolower($bl) }}">
@@ -45,17 +53,17 @@
                 <div class="card-body d-flex flex-column">
 
                     @if(!$bl)
-                        <p class="text-muted mb-3">
-                            Aucun dossier trouvé
-                        </p>
+                    <p class="text-muted mb-3">
+                        Aucun dossier trouvé
+                    </p>
                     @endif
 
                     <div class="mt-auto">
                         @if($bl)
-                            <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
-                               class="btn btn-primary w-100">
-                               <i class="fa-solid fa-eye me-1"></i> Ouvrir
-                            </a>
+                        <a href="{{ route('dossier_facturation.show', $dossier->id) }}"
+                            class="btn btn-primary w-100">
+                            <i class="fa-solid fa-eye me-1"></i> Ouvrir
+                        </a>
                         @endif
                     </div>
                 </div>
@@ -76,18 +84,18 @@
 </div>
 
 <script>
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    const filter = this.value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.dossier-card');
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.dossier-card');
 
-    cards.forEach(card => {
-        const bl = card.getAttribute('data-bl');
+        cards.forEach(card => {
+            const bl = card.getAttribute('data-bl');
 
-        if (bl && bl.includes(filter)) {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
-        }
+            if (bl && bl.includes(filter)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     });
-});
 </script>

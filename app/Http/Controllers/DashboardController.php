@@ -11,20 +11,29 @@ use Illuminate\Support\Facades\Session;
 class DashboardController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $email = Auth::user()->email;
+    $search = $request->get('search'); // 🔍 recherche
 
-        // 1️⃣ Récupérer uniquement les dossiers liés au rattachement de l'utilisateur
-        $dossiers = DossierFacturation::whereHas('rattachement_bl', function ($query) use ($email) {
-            $query->where('email', $email);
-        })
-            ->orderBy('id', 'desc')
-            ->paginate(3);
+    // 1️⃣ Construire la requête dossiers
+    $query = DossierFacturation::with('rattachement_bl')
+        ->whereHas('rattachement_bl', function ($q) use ($email) {
+            $q->where('email', $email);
+        });
 
-        // 2️⃣ Récupérer les rattachements liés à l'utilisateur
-        $rattachements = RattachementBl::where('email', $email)->get();
+    // 2️⃣ Ajouter le filtre de recherche si nécessaire
+    if (!empty($search)) {
+        $query->whereHas('rattachement_bl', function ($q) use ($search) {
+            $q->where('bl', 'LIKE', "%{$search}%");
+        });
+    }
 
+    // 3️⃣ Pagination
+    $dossiers = $query->orderBy('id', 'desc')->paginate(10)->withQueryString();
+
+    // 4️⃣ Récupérer les rattachements pour l'affichage
+    $rattachements = RattachementBl::where('email', $email)->get();
         $user = Auth::user();
 
         $cards = [];
