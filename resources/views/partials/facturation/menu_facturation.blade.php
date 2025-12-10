@@ -70,6 +70,7 @@
         <span>Liste des clients</span>
     </a>
 </li>
+@include('partials.ies.menu_ies')
 @endif
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>

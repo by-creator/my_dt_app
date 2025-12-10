@@ -1,7 +1,7 @@
-<li class="sidebar-item  has-sub active">
+<li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-rectangle-list"></i>
-        <span>Ipaki Extranet</span>
+        <span>Espace client</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
