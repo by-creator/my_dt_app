@@ -21,14 +21,30 @@
             style="left: 15px; top: 12px; color: #999;"></i>
 
         <form method="GET" action="{{ route('dashboard') }}">
-            <div class="mb-4 position-relative">
-                <i class="fa fa-search position-absolute"
-                    style="left: 15px; top: 12px; color: #999;"></i>
+            <div class="input-group mb-4">
 
-                <input type="text" name="search" class="form-control ps-5 shadow-sm"
-                    placeholder="🔍 Rechercher par BL..." value="{{ request('search') }}">
+                <!-- Icône -->
+                <span class="input-group-text bg-white">
+                    <i class="fa fa-search text-muted"></i>
+                </span>
+
+                <!-- Champ de recherche réduit -->
+                <input type="text"
+                    name="search"
+                    class="form-control shadow-sm"
+                    style="height: 38px;"
+                    placeholder="Rechercher par BL…"
+                    value="{{ request('search') }}">
+
+                <!-- Bouton -->
+                <button class="btn btn-primary" type="submit">
+                    Rechercher
+                </button>
             </div>
         </form>
+
+
+
 
     </div>
 
