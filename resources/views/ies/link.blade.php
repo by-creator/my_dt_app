@@ -30,7 +30,7 @@
                         </li>
 
                         @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
-                        @include('partials.ies.menu_ies')
+                        @include('partials.facturation.menu_facturation')
                         @else
                         @endif
 
