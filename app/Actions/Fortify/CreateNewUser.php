@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LinkIesMail;
+
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -30,6 +33,17 @@ class CreateNewUser implements CreatesNewUsers
             'telephone' => ['required', 'string', 'max:255'],
             'password' => $this->passwordRules(),
         ])->validate();
+
+        $user = User::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'telephone' => $input['telephone'],
+            'password' => $input['password'],
+        ]);
+
+        Mail::to($user->email)->send(new LinkIesMail($user));
+
+
 
         return User::create([
             'name' => $input['name'],
