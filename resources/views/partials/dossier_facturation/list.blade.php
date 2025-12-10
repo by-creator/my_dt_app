@@ -20,7 +20,7 @@
         <i class="fa fa-search position-absolute"
             style="left: 15px; top: 12px; color: #999;"></i>
 
-        <form method="GET" action="{{ route('dossier_facturation.index') }}">
+        <form method="GET" action="{{ route('dashboard') }}">
             <div class="mb-4 position-relative">
                 <i class="fa fa-search position-absolute"
                     style="left: 15px; top: 12px; color: #999;"></i>
