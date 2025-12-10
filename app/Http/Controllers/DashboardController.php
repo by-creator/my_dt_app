@@ -13,9 +13,17 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $dossiers = DossierFacturation::orderBy('id', 'desc')->paginate(3);
+        $email = Auth::user()->email;
 
-        $rattachements = RattachementBl::where('email', Auth::user()->email)->get();
+        // 1️⃣ Récupérer uniquement les dossiers liés au rattachement de l'utilisateur
+        $dossiers = DossierFacturation::whereHas('rattachement_bl', function ($query) use ($email) {
+            $query->where('email', $email);
+        })
+            ->orderBy('id', 'desc')
+            ->paginate(3);
+
+        // 2️⃣ Récupérer les rattachements liés à l'utilisateur
+        $rattachements = RattachementBl::where('email', $email)->get();
 
         $user = Auth::user();
 
