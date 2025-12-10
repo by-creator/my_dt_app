@@ -14,26 +14,34 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $email = Auth::user()->email;
-    $search = $request->get('search'); // 🔍 recherche
+        $search = $request->get('search'); // 🔍 recherche
 
-    // 1️⃣ Construire la requête dossiers
-    $query = DossierFacturation::with('rattachement_bl')
-        ->whereHas('rattachement_bl', function ($q) use ($email) {
-            $q->where('email', $email);
-        });
+        // 1️⃣ Construire la requête dossiers
+        $query = DossierFacturation::with('rattachement_bl')
+            ->whereHas('rattachement_bl', function ($q) use ($email) {
+                $q->where('email', $email);
+            })
+            ->select('dossier_facturations.*')
+            ->join('rattachement_bls', 'rattachement_bls.dossier_id', '=', 'dossier_facturations.id')
+            ->where('rattachement_bls.email', $email)
+            ->groupBy('rattachement_bls.bl'); // 🆕 groupe par BL
 
-    // 2️⃣ Ajouter le filtre de recherche si nécessaire
-    if (!empty($search)) {
-        $query->whereHas('rattachement_bl', function ($q) use ($search) {
-            $q->where('bl', 'LIKE', "%{$search}%");
-        });
-    }
 
-    // 3️⃣ Pagination
-    $dossiers = $query->orderBy('id', 'desc')->paginate(3)->withQueryString();
+        // 2️⃣ Ajouter le filtre de recherche si nécessaire
+        if (!empty($search)) {
+            $query->whereHas('rattachement_bl', function ($q) use ($search) {
+                $q->where('bl', 'LIKE', "%{$search}%");
+            });
+        }
 
-    // 4️⃣ Récupérer les rattachements pour l'affichage
-    $rattachements = RattachementBl::where('email', $email)->get();
+        // 3️⃣ Pagination
+        $dossiers = $query->orderBy('dossier_facturations.id', 'desc') // 🆕 le plus ancien = première occurrence
+                  ->paginate(3)
+                  ->withQueryString();
+
+
+        // 4️⃣ Récupérer les rattachements pour l'affichage
+        $rattachements = RattachementBl::where('email', $email)->get();
         $user = Auth::user();
 
         $cards = [];
