@@ -33,7 +33,7 @@
                     name="search"
                     class="form-control shadow-sm"
                     style="height: 38px;"
-                    placeholder="Entrez le BL…"
+                    placeholder="Entrez le BL"
                     value="{{ request('search') }}">
 
                 <!-- Bouton -->
