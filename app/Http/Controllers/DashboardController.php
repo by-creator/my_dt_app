@@ -6,6 +6,7 @@ use App\Models\DossierFacturation;
 use App\Models\RattachementBl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
@@ -14,34 +15,34 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $email = Auth::user()->email;
-        $search = $request->get('search'); // 🔍 recherche
+        $search = $request->get('search');
 
-        // 1️⃣ Construire la requête dossiers
+        // --- Sous-requête : derniers rattachements par BL ---
+        $subQuery = DB::table('rattachement_bls')
+            ->selectRaw('MAX(id) as last_id')
+            ->where('email', $email)
+            ->groupBy('bl');
+
+        // --- Requête principale ---
         $query = DossierFacturation::with('rattachement_bl')
-            ->whereHas('rattachement_bl', function ($q) use ($email) {
-                $q->where('email', $email);
-            })
-            ->select('dossier_facturations.*')
-            ->join('rattachement_bls', 'rattachement_bls.dossier_id', '=', 'dossier_facturations.id')
-            ->where('rattachement_bls.email', $email)
-            ->groupBy('rattachement_bls.bl'); // 🆕 groupe par BL
+            ->whereIn('rattachement_bl_id', $subQuery);
 
-
-        // 2️⃣ Ajouter le filtre de recherche si nécessaire
+        // --- Filtre recherche ---
         if (!empty($search)) {
             $query->whereHas('rattachement_bl', function ($q) use ($search) {
                 $q->where('bl', 'LIKE', "%{$search}%");
             });
         }
 
-        // 3️⃣ Pagination
-        $dossiers = $query->orderBy('dossier_facturations.id', 'desc') // 🆕 le plus ancien = première occurrence
-                  ->paginate(3)
-                  ->withQueryString();
+        // --- Pagination ---
+        $dossiers = $query->orderBy('id', 'desc')
+            ->paginate(3)
+            ->withQueryString();
 
-
-        // 4️⃣ Récupérer les rattachements pour l'affichage
+        // --- Rattachements pour affichage ---
         $rattachements = RattachementBl::where('email', $email)->get();
+
+
         $user = Auth::user();
 
         $cards = [];
