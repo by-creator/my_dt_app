@@ -8,9 +8,9 @@
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
-                        <!--
+                        
                         <th>Agent</th>
-                        -->
+                        
                         <th>Nom & Prénom</th>
                         <th>BL</th>
                         <th>Compte</th>
@@ -22,14 +22,14 @@
                     @foreach ($rattachements as $rattachement)
                     <tr>
                         <td>{{ $rattachement->created_at_date_formatted ?? '—' }}</td>
-                         <!--
+                         
                         <td>
                             @php
                             $user = $users->firstWhere('id', $rattachement->user_id);
                             @endphp
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
-                        -->
+                        
                         <td>{{ $rattachement->nom }} {{ $rattachement->prenom }}</td>
                         <td>{{ $rattachement->bl }}</td>
                         <td>{{ $rattachement->compte }}</td>
