@@ -35,7 +35,7 @@ class DashboardController extends Controller
         }
 
         // --- Pagination ---
-        $dossiers = $query->orderBy('id', 'asc')
+        $dossiers = $query->orderBy('id', 'desc')
             ->paginate(3)
             ->withQueryString();
 
