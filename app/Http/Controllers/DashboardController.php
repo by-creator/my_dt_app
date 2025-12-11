@@ -74,20 +74,13 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Ipaki Extranet (IES)',
-                        'header' => 'Ipaki Extranet (IES)',
-                        'description' => 'Gestion Ipaki Extranet (IES)',
-                        'route' => route('ies.validation')
-                    ],
-                    [
-                        'id' => 4,
                         'name' => 'Opérations',
                         'header' => 'Opérations',
                         'description' => 'Gestion des Opérations',
                         'route' => route('ordre_approche.index')
                     ],
                     [
-                        'id' => 5,
+                        'id' => 4,
                         'name' => 'Ressources Humanines',
                         'header' => 'Ressources Humaines',
                         'description' => 'Gestion des Ressources Humaines',
@@ -123,20 +116,13 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Ipaki Extranet (IES)',
-                        'header' => 'Ipaki Extranet (IES)',
-                        'description' => 'Gestion Ipaki Extranet (IES)',
-                        'route' => route('ies.validation')
-                    ],
-                    [
-                        'id' => 4,
                         'name' => 'Opérations',
                         'header' => 'Opérations',
                         'description' => 'Gestion des Opérations',
                         'route' => route('ordre_approche.index')
                     ],
                     [
-                        'id' => 5,
+                        'id' => 4,
                         'name' => 'Ressources Humanines',
                         'header' => 'Ressources Humaines',
                         'description' => 'Gestion des Ressources Humaines',
