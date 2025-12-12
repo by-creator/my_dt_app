@@ -27,7 +27,7 @@
                             {{ $user ? $user->name : 'Agent non défini' }}
                         </td>
 
-                        <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->compte : '—' }}</td>
+                        <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
                         <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->compte : '—' }}</td>
                         <td>{{ $dossier->statut ?? '—' }}</td>
                         <td>{{ $dossier->time_elapsed_proforma ?? '-' }}</td>
