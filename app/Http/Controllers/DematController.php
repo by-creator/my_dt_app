@@ -35,13 +35,19 @@ class DematController extends Controller
             ]);
 
             // Vérifier si le BL existe déjà
-            $blExiste = RattachementBl::where('bl', $data['bl'])->exists();
+           $blEnAttenteValidation = RattachementBl::where('bl', $data['bl'])
+            ->where('statut', 'EN ATTENTE VALIDATION')
+            ->exists();
 
-            if ($blExiste) {
+            if ($blEnAttenteValidation) {
                 return redirect()
                     ->back()
-                    ->with('info', 'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation');
+                    ->with(
+                        'info',
+                        'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation'
+                    );
             }
+
 
             // Récupération des fichiers
             $files = $request->file('documents');
