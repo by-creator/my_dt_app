@@ -207,6 +207,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dossier_facturation.proforma.delete');
 
     Route::post('/dossier-facturation/proforma/send/{id}', [DossierFacturationProformaController::class, 'sendDocuments'])->name('dossier_facturation.proforma.send');
+    Route::put('/dossier-facturation/proforma/reject/{id}', [DossierFacturationProformaController::class, 'rejectDocuments'])->name('dossier_facturation.proforma.reject');
     Route::post('/dossier-facturation/proforma/relance/{id}', [DossierFacturationProformaController::class, 'relanceDocuments'])->name('dossier_facturation.proforma.relance');
 
 
@@ -221,6 +222,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dossier_facturation.facture.validate');
 
     Route::post('/dossier-facturation/facture/send/{id}', [DossierFacturationFactureController::class, 'sendDocuments'])->name('dossier_facturation.facture.send');
+    Route::put('/dossier-facturation/facture/reject/{id}', [DossierFacturationFactureController::class, 'rejectDocuments'])->name('dossier_facturation.facture.reject');
     Route::post('/dossier-facturation/facture/relance/{id}', [DossierFacturationFactureController::class, 'relanceDocuments'])->name('dossier_facturation.facture.relance');
 
 
@@ -228,6 +230,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dossier-facturation/bon/list', [DossierFacturationBonController::class, 'list'])->name('dossier_facturation.bon.list');
 
     Route::post('/dossier-facturation/bon/send/{id}', [DossierFacturationBonController::class, 'sendDocuments'])->name('dossier_facturation.bon.send');
+    Route::put('/dossier-facturation/bon/reject/{id}', [DossierFacturationBonController::class, 'rejectDocuments'])->name('dossier_facturation.bon.reject');
     Route::post('/dossier-facturation/bon/relance/{id}', [DossierFacturationBonController::class, 'relanceDocuments'])->name('dossier_facturation.bon.relance');
 
 

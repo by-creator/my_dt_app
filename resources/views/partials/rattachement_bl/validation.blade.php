@@ -124,8 +124,17 @@
                             <input type="hidden" id="editId" name="id">
                             <input type="hidden" id="editEmail" name="email">
                             <div class="mb-3">
-                                <label for="editNom" class="form-label">Êtes-vous sûr de vouloir rejeter ce dossier ?</label>
-                                <textarea class="form-control" name="motif" rows="3" required placeholder="Merci de saisir le motif du refus de validation"></textarea>
+                                <label for="motif" class="form-label">
+                                    Êtes-vous sûr de vouloir rejeter ce dossier ?
+                                </label>
+
+                                <select class="form-select" name="motif" id="motif" required>
+                                    <option value="" disabled selected>
+                                        -- Sélectionnez le motif du refus --
+                                    </option>
+                                    <option value="Le débarquement n'est pas encore effectif">Le débarquement n'est pas encore effectif</option>
+                                    <option value="autre">Autre motif</option>
+                                </select>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>

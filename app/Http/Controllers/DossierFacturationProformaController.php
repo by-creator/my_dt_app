@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatutDossier;
 use App\Mail\ProformaDocumentsMail;
+use App\Mail\ProformaExistMail;
 use App\Mail\ProformaGenerateMail;
 use App\Mail\ProformaRelanceMail;
 use App\Mail\ProformaValidateMail;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 
 
@@ -382,6 +384,72 @@ class DossierFacturationProformaController extends Controller
 
 
         return redirect()->back()->with('success', "Votre facture a bien été supprimée ");
+    }
+
+    public function rejectDocuments($id, Request $request)
+    {
+        try {
+            Log::info('Début du traitement de rejection du dossier', ['dossier_id' => $id]);
+
+            $dossier = DossierFacturation::findOrFail($id);
+            Log::info('Dossier trouvé', ['dossier_id' => $dossier->id, 'statut' => $dossier->statut]);
+
+            $rattachement = $dossier->rattachement_bl;
+            Log::info('Rattachement BL récupéré', [
+                'prenom' => $rattachement->prenom ?? null,
+                'nom' => $rattachement->nom ?? null,
+                'email' => $rattachement->email ?? null,
+                'bl' => $rattachement->bl ?? null
+            ]);
+
+            // Mise à jour du statut
+            if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
+                $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
+            } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
+                $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE;
+            }
+            $dossier->save();
+            Log::info('Statut du dossier mis à jour', ['dossier_id' => $dossier->id, 'nouveau_statut' => $dossier->statut]);
+
+            $destinataires = [
+                //'sn004-proforma@dakar-terminal.com',
+                //'sn004-facturation@dakar-terminal.com',
+                'noreplysitedt@gmail.com'
+            ];
+            $motif = $request->motif;
+            Log::info('Préparation de l’envoi du mail', ['motif' => $motif, 'destinataires_cc' => $destinataires]);
+
+            Mail::to($rattachement->email)
+                ->cc($destinataires)
+                ->send(new ProformaExistMail(
+                    $rattachement->bl,
+                    $rattachement->nom,
+                    $rattachement->prenom,
+                    $motif
+                ));
+
+            Log::info('Mail envoyé avec succès', ['to' => $rattachement->email]);
+
+            return redirect()
+                ->back()
+                ->with('success', "Votre demande de facture proforma a été rejetée avec succès.");
+        } catch (Throwable $e) {
+
+            // Log détaillé de l'erreur
+            Log::error('Erreur lors du rejet du dossier proforma', [
+                'dossier_id' => $id,
+                'email'      => $rattachement->email ?? null,
+                'motif'      => $request->motif ?? null,
+                'message'    => $e->getMessage(),
+                'file'       => $e->getFile(),
+                'line'       => $e->getLine(),
+                'trace'      => $e->getTraceAsString(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', "Une erreur est survenue lors de l’envoi du mail. Veuillez réessayer.");
+        }
     }
 
     public function relanceDocuments($id)

@@ -32,6 +32,24 @@
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
 
+<script>
+    const motifSelect = document.getElementById('motif');
+    const autreMotifContainer = document.getElementById('autreMotifContainer');
+    const autreMotifTextarea = document.getElementById('autreMotif');
+
+    motifSelect.addEventListener('change', function () {
+        if (this.value === 'autre') {
+            autreMotifContainer.classList.remove('d-none');
+            autreMotifTextarea.setAttribute('required', 'required');
+        } else {
+            autreMotifContainer.classList.add('d-none');
+            autreMotifTextarea.removeAttribute('required');
+            autreMotifTextarea.value = '';
+        }
+    });
+</script>
+
+
 <!-- toastify -->
 <script src="{{asset('templates/mazer/dist/assets/vendors/toastify/toastify.js')}}"></script>
 
