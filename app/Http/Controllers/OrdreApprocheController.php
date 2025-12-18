@@ -50,7 +50,7 @@ class OrdreApprocheController extends Controller
 
         ];
 
-        //OrdreApproche::create($data);
+        OrdreApproche::create($data);
 
         return view('ordre_approche.fiche', compact('data'))->with('create', 'Ordre créé avec succès.');
             
