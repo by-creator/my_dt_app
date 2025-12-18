@@ -67,7 +67,7 @@
 
                                             </td>
                                             <td class="tm_width_2">
-                                                Vessel arrival Date :
+                                                Vessel Arrival Date :
                                                 {{ $data['vessel_arrival_date']->format('d-m-Y : H:i') }}
                                                 <br>
                                                 Shipping Line : {{ $data['shipping_line'] }}
