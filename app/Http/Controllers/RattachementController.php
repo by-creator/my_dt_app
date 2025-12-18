@@ -73,9 +73,9 @@ class RattachementController extends Controller
 
             // Destinataires pour l'email
             $destinataires = [
-                //'sn004-proforma@dakar-terminal.com',
-                //'sn004-facturation@dakar-terminal.com',
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
 
             // Envoi de l'email de validation
@@ -147,9 +147,9 @@ class RattachementController extends Controller
                 $rattachement->time_elapsed = $rattachement->created_at->diffForHumans(now(), true);
 
                 $destinataires = [
-                    //'sn004-proforma@dakar-terminal.com',
-                    //'sn004-facturation@dakar-terminal.com',
-                    'noreplysitedt@gmail.com'
+                    'sn004-proforma@dakar-terminal.com',
+                    'sn004-facturation@dakar-terminal.com',
+                    //'noreplysitedt@gmail.com'
                 ];
 
                 $motif = $request->motif;

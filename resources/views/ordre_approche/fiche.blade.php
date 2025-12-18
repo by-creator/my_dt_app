@@ -24,8 +24,8 @@
                 <div class="tm_invoice_info_right">
                   <div class="tm_grid_row tm_col_3 tm_col_2_sm tm_invoice_info_in tm_gray_bg tm_round_border">
                     <div>
-                      <h6>DATE DU JOUR</h6> <br>
-                      <b class="tm_primary_color">{{ $data['date']->format('d-m-Y : H:i')}}</b>
+                      <h6>TYPE</h6> <br>
+                      <b class="tm_primary_color">{{ $data['type']}}</b>
                     </div>
                   </div>
                 </div>
@@ -88,18 +88,53 @@
                         
                       </tbody>
                     </table>
-                    <div class="tm_right_footer">
-                      <div class="tm_sign tm_text_center">
-                        <br>
-                        <p class="tm_m0 tm_f16 tm_primary_color"><u>Signature</u></p>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                      </div>
-                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="tm_table tm_style1">
+                <div class="tm_round_border">
+                  <div class="tm_table_responsive">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th class="tm_width_2 tm_semi_bold tm_primary_color">Réserves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="tm_width_2">
+                              {{ $data['reserve']}}
+                              <br>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="tm_table tm_style1">
+                <div class="tm_round_border">
+                  <div class="tm_table_responsive">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th class="tm_width_2 tm_semi_bold tm_primary_color">Nom Pointeur Livreur</th>
+                          <th class="tm_width_2 tm_semi_bold tm_primary_color">Responsable Livraison</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="tm_width_2">
+                              {{ $data['pointeur']}}
+                          </td>
+                          <td class="tm_width_2">
+                              {{ $data['responsable']}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
