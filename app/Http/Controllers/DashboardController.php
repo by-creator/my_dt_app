@@ -74,9 +74,9 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Opérations',
-                        'header' => 'Opérations',
-                        'description' => 'Gestion des Opérations',
+                        'name' => 'Guérite',
+                        'header' => 'Guérite',
+                        'description' => 'Gestion des Guérite',
                         'route' => route('ordre_approche.index')
                     ],
                     [
@@ -116,9 +116,9 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Opérations',
-                        'header' => 'Opérations',
-                        'description' => 'Gestion des Opérations',
+                        'name' => 'Guérite',
+                        'header' => 'Guérite',
+                        'description' => 'Gestion des Guérite',
                         'route' => route('ordre_approche.index')
                     ],
                     [
@@ -157,9 +157,9 @@ class DashboardController extends Controller
 
                     [
                         'id' => 1,
-                        'name' => 'Opérations',
-                        'header' => 'Opérations',
-                        'description' => 'Gestion des Opérations',
+                        'name' => 'Guérite',
+                        'header' => 'Guérite',
+                        'description' => 'Gestion des Guérite',
                         'route' => route('ordre_approche.index')
                     ],
 

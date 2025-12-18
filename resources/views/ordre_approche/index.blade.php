@@ -65,7 +65,6 @@
             <div class="page-content">
                 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
                 @include('partials.ordre_approche.form')
-                @include('partials.ordre_approche.list')
                 @endif
             </div>
         </div>

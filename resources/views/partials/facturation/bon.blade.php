@@ -35,8 +35,7 @@
                             <td>
                                 <button type="button" class="btn btn-primary btn-send" data-id="{{ $dossier->id }}"
                                     data-email="{{ $dossier->email }}" data-bs-toggle="modal"
-                                    data-bs-target="#sendModal"><i class="fa-solid fa-envelope"></i> Envoyer le(s)
-                                    document(s)</button>
+                                    data-bs-target="#sendModal"><i class="fa-solid fa-envelope"></i> Envoyer</button>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-reject" data-id="{{ $dossier->id }}"

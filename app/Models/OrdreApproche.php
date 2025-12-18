@@ -13,6 +13,22 @@ class OrdreApproche extends Model
 
     protected $fillable = [
         'date',
-        'numero',
+        'chassis',
+        'poids',
+        'lane',
+        'lane_number',
+        'bae',
+        'booking',
+        'port',
+        'vessel',
+        'call_number',
+        'vessel_arrival_date',
+        'shipping_line',
+        'category',
+        'type',
+        'model',
+        'client',
+        'chauffeur',
+        'permis',
     ];
 }
