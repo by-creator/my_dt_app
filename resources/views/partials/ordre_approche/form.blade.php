@@ -5,7 +5,7 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{ route('ordre_approche.create') }}" method="post" class="form form-horizontal">
+                <form action="{{ route('ordre_approche.create') }}" method="post" target="_blank" class="form form-horizontal">
                     @csrf
                     @if (session('create'))
                         <script>
@@ -50,7 +50,7 @@
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="lane-number">Lane number</label>
-                                    <input type="email" id="lane-number" class="form-control"
+                                    <input type="text" id="lane-number" class="form-control"
                                         placeholder="Entrez une valeur pour lane number" required name="lane_number">
                                 </div>
                             </div>
@@ -144,6 +144,26 @@
                                     <label for="permis">N° Permis</label>
                                     <input type="text" id="permis" class="form-control"
                                         placeholder="Entrez une valeur pour permis" required name="permis">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="pointeur">Nom Pointeur Livreur</label>
+                                    <input type="text" id="pointeur" class="form-control"
+                                        placeholder="Entrez une valeur pour pointeur"  name="pointeur">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="responsable">Responsable Livraison</label>
+                                    <input type="text" id="responsable" class="form-control"
+                                        placeholder="Entrez une valeur pour responsable" name="responsable">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="reserve">Réserves</label>
+                                    <textarea name="reserve" id="reserve" class="form-control" cols="30" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>

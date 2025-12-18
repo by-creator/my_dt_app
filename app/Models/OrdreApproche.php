@@ -30,5 +30,8 @@ class OrdreApproche extends Model
         'client',
         'chauffeur',
         'permis',
+        'reserve',
+        'pointeur',
+        'responsable',
     ];
 }

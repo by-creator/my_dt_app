@@ -18,16 +18,42 @@ class OrdreApprocheController extends Controller
    
     public function create(Request $request)
     {
-        $data = $request->validate([
-            'numero' => 'required|string|max:255',
-            'date' => 'nullable||string',
+        $dateString = $request->date;
+        $date = Carbon::parse($dateString);
 
-        ]);
+        $vesselArrivalDateString = $request->date;
+        $vesselArrivalDate = Carbon::parse($vesselArrivalDateString);
 
-        OrdreApproche::create($data);
 
-        return redirect()->route('ordre_approche.index')
-            ->with('create', 'Ordre créé avec succès.');
+        $data = [
+            'date' => $date,
+            'chassis' => $request->chassis,
+            'poids' => $request->poids,
+            'lane' => $request->lane,
+            'lane_number' => $request->lane_number,
+            'bae' => $request->bae,
+            'booking' => $request->booking,
+            'port' => $request->port,
+            'vessel' => $request->vessel,
+            'call_number' => $request->call_number,
+            'vessel_arrival_date' => $vesselArrivalDate,
+            'shipping_line' => $request->shipping_line,
+            'category' => $request->category,
+            'type' => $request->type,
+            'model' => $request->model,
+            'client' => $request->client,
+            'chauffeur' => $request->chauffeur,
+            'permis' => $request->permis,
+            'reserve' => $request->reserve,
+            'pointeur' => $request->pointeur,
+            'responsable' => $request->responsable,
+
+        ];
+
+        //OrdreApproche::create($data);
+
+        return view('ordre_approche.fiche', compact('data'))->with('create', 'Ordre créé avec succès.');
+            
     }
 
     public function update(Request $request, $id)

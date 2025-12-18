@@ -31,6 +31,9 @@ return new class extends Migration
             $table->string('client')->nullable();
             $table->string('chauffeur')->nullable();
             $table->string('permis')->nullable();
+            $table->string('reserve')->nullable();
+            $table->string('pointeur')->nullable();
+            $table->string('responsable')->nullable();
             $table->timestamps();
         });
     }

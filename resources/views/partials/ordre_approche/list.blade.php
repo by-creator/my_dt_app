@@ -1,15 +1,18 @@
  <div class="col-md-12 col-12">
      <div class="card">
          <div class="card-header">
-             <h4 class="card-title"><u>Liste des vehicules</u></h4>
+             <h4 class="card-title"><u>Liste des ordres</u></h4>
          </div>
          <div class="card-body">
              <table class="table table-striped" id="table1">
                  <thead>
                      <tr>
-                         <th>Date entrée</th>
-                         <th>Date sortie</th>
-                         <th>Numéro de BL</th>
+                         <th>Date</th>
+                         <th>Chassis</th>
+                         <th>N° BAE</th>
+                         <th>N° BL</th>
+                         <th>Client</th>
+                         <th>Chauffeur</th>
                          
                      </tr>
                  </thead>
@@ -17,9 +20,13 @@
                      @foreach ($ordres as $ordre)
                      <tr>
                          <td>{{ $ordre->date}}</td>
-                         <td></td>
-                         <td>{{ $ordre->numero }}</td>
+                         <td>{{ $ordre->chassis}}</td>
+                         <td>{{ $ordre->bae}}</td>
+                         <td>{{ $ordre->booking}}</td>
+                         <td>{{ $ordre->client}}</td>
+                         <td>{{ $ordre->chauffeur}}</td>
                          
+                         <!--
                          <td>
                              <button type="button" class="btn btn-primary btn-edit"
                                  data-id="{{ $ordre->id }}"
@@ -34,6 +41,7 @@
                          <td>
                              <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordre->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
                          </td>
+                        -->
                      </tr>
                      @endforeach
                  </tbody>
