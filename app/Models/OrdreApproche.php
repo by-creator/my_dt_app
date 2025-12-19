@@ -13,6 +13,7 @@ class OrdreApproche extends Model
 
     protected $fillable = [
         'date',
+        'time',
         'chassis',
         'poids',
         'lane',
@@ -23,6 +24,7 @@ class OrdreApproche extends Model
         'vessel',
         'call_number',
         'vessel_arrival_date',
+        'vessel_arrival_time',
         'shipping_line',
         'category',
         'type',
