@@ -99,6 +99,28 @@
                                 <table>
                                     <thead>
                                         <tr>
+                                            <th class="tm_width_2 tm_semi_bold tm_primary_color">Sum lane number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tm_width_2">
+                                                {{ $data['sum_lane_number'] }}
+                                                <br>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="tm_table tm_style1">
+                        <div class="tm_round_border">
+                            <div class="tm_table_responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
                                             <th class="tm_width_2 tm_semi_bold tm_primary_color">Réserves</th>
                                         </tr>
                                     </thead>
