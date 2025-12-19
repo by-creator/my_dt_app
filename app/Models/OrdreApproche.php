@@ -32,8 +32,22 @@ class OrdreApproche extends Model
         'client',
         'chauffeur',
         'permis',
+        'sum_lane_number',
         'reserve',
         'pointeur',
         'responsable',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if ($model->date && empty($model->time)) {
+                $model->time = $model->date;
+            }
+
+            if ($model->vessel_arrival_date && empty($model->vessel_arrival_time)) {
+                $model->vessel_arrival_time = $model->vessel_arrival_date;
+            }
+        });
+    }
 }

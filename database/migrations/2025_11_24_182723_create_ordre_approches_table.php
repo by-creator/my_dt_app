@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ordre_approches', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date')->nullable();
-            $table->time('time')->storedAs('TIME(`date`)')->nullable();
+            $table->dateTime('time')->nullable();
             $table->string('chassis')->nullable();
             $table->string('poids')->nullable();
             $table->string('lane')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('vessel')->nullable();
             $table->string('call_number')->nullable();
             $table->dateTime('vessel_arrival_date')->nullable();
-            $table->time('vessel_arrival_time')->storedAs('TIME(`vessel_arrival_date`)')->nullable();
+            $table->dateTime('vessel_arrival_time')->nullable();
             $table->string('shipping_line')->nullable();
             $table->string('category')->nullable();
             $table->string('type')->nullable();
