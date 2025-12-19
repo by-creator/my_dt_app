@@ -382,9 +382,9 @@ class DossierFacturationFactureController extends Controller
             Log::info('Statut du dossier mis à jour', ['dossier_id' => $dossier->id, 'nouveau_statut' => $dossier->statut]);
 
             $destinataires = [
-                //'sn004-proforma@dakar-terminal.com',
-                //'sn004-facturation@dakar-terminal.com',
-                'noreplysitedt@gmail.com'
+                'sn004-proforma@dakar-terminal.com',
+                'sn004-facturation@dakar-terminal.com',
+                //'noreplysitedt@gmail.com'
             ];
             $motif = $request->motif;
             Log::info('Préparation de l’envoi du mail', ['motif' => $motif, 'destinataires_cc' => $destinataires]);

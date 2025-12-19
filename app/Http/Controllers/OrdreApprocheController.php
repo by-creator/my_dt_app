@@ -44,6 +44,7 @@ class OrdreApprocheController extends Controller
             'client' => $request->client,
             'chauffeur' => $request->chauffeur,
             'permis' => $request->permis,
+            'sum_lan_number' => $request->permis,
             'reserve' => $request->reserve,
             'pointeur' => $request->pointeur,
             'responsable' => $request->responsable,

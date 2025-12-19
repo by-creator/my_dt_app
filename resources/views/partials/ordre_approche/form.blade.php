@@ -162,6 +162,12 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
+                                    <label for="sum_lan_number">Sum(Lan Number)</label>
+                                    <textarea name="sum_lan_number" id="sum_lan_number" class="form-control" cols="30" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
                                     <label for="reserve">Réserves</label>
                                     <textarea name="reserve" id="reserve" class="form-control" cols="30" rows="5"></textarea>
                                 </div>
