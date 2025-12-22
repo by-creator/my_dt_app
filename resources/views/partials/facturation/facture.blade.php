@@ -151,7 +151,7 @@
                                         -- Sélectionnez le motif du refus --
                                     </option>
                                     <option value="La facture de ce dossier à déjà été traitée">La facture de ce dossier à déjà été traitée</option>
-                                    <option value="autre">Autre motif</option>
+                                    <option>Autre motif</option>
                                 </select>
                             </div>
 

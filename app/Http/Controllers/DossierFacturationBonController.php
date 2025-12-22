@@ -233,6 +233,7 @@ class DossierFacturationBonController extends Controller
                 //'noreplysitedt@gmail.com'
             ];
             $motif = $request->motif;
+            $autre_motif = $request->autre_motif;
             Log::info('Préparation de l’envoi du mail', ['motif' => $motif, 'destinataires_cc' => $destinataires]);
 
             Mail::to($rattachement->email)
@@ -241,7 +242,8 @@ class DossierFacturationBonController extends Controller
                     $rattachement->bl,
                     $rattachement->nom,
                     $rattachement->prenom,
-                    $motif
+                    $motif,
+                    $autre_motif
                 ));
 
             Log::info('Mail envoyé avec succès', ['to' => $rattachement->email]);

@@ -12,7 +12,7 @@ Bonjour {{ $prenom }} {{ $nom }},
 
 Votre dossier dont voici le numéro de BL **{{ $bl }}** ne peut avoir bon à délivrer (BAD) pour le motif ci-dessous : 
 
-**Motif :** {{ $motif }}
+**Motif :** {{ $motif }} {{ $autre_motif }}
 <br>
 <br>
 

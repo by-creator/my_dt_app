@@ -147,7 +147,7 @@
                                         -- Sélectionnez le motif du refus --
                                     </option>
                                     <option value="La proforma de ce dossier à déjà été traitée">La proforma de ce dossier à déjà été traitée</option>
-                                    <option value="autre">Autre motif</option>
+                                    <option>Autre motif</option>
                                 </select>
                             </div>
 

@@ -148,7 +148,7 @@
                                         -- Sélectionnez le motif du refus --
                                     </option>
                                     <option value="Le BAD de ce dossier à déjà été traité">Le BAD de ce dossier à déjà été traité</option>
-                                    <option value="autre">Autre motif</option>
+                                    <option>Autre motif</option>
                                 </select>
                             </div>
 
