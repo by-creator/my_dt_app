@@ -10,7 +10,7 @@ class PowerBiController extends Controller
 {
     public function fetch(Request $request)
     {
-        $response = Http::post('https://site-dt-production-98050a853413.herokuapp.com/api/powerbi/fetch', [
+        $response = Http::post('https://site-dt-staging-4682ed3f9fbf.herokuapp.com/api/powerbi/fetch', [
             'item_number' => $request->item_number
         ]);
 
