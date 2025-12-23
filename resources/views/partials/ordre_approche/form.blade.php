@@ -5,7 +5,31 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{ route('ordre_approche.create') }}" method="post" target="_blank" class="form form-horizontal">
+                <form method="POST" action="{{ route('powerbi.fetch') }}">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="date">Item number</label>
+                                <div class="d-flex gap-2">
+                                    <input type="text" name="item_number" class="form-control"
+                                        placeholder="Entrez une valeur pour item">
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa-solid fa-check-to-slot"></i>
+                                    </button>
+
+                                    <button type="reset" class="btn btn-danger">
+                                        <i class="fa-solid fa-square-xmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <form action="{{ route('ordre_approche.create') }}" method="post" target="_blank"
+                    class="form form-horizontal">
                     @csrf
                     @if (session('create'))
                         <script>
@@ -21,13 +45,6 @@
                         <div class="row">
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="date">Date</label>
-                                    <input type="datetime-local" id="date" class="form-control" required
-                                        name="date">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
                                     <label for="chassis">Chassis</label>
                                     <input type="text" id="chassis" class="form-control"
                                         placeholder="Entrez une valeur pour chassis" required name="chassis">
@@ -35,23 +52,17 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
+                                    <label for="zone">Zone</label>
+                                    <input type="text" id="zone" class="form-control"
+                                        placeholder="Entrez une valeur pour zone" required name="zone"
+                                        value="{{ $zone ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
                                     <label for="poids">Tranche de poids</label>
                                     <input type="text" id="poids" class="form-control"
                                         placeholder="Entrez une valeur pour poids" required name="poids">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="lane">Lane</label>
-                                    <input type="text" id="lane" class="form-control"
-                                        placeholder="Entrez une valeur pour lane" required name="lane">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="lane-number">Lane number</label>
-                                    <input type="text" id="lane-number" class="form-control"
-                                        placeholder="Entrez une valeur pour lane number" required name="lane_number">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -66,34 +77,6 @@
                                     <label for="bae">BL / Booking</label>
                                     <input type="tex" id="bae" class="form-control" required
                                         placeholder="Entrez une valeur pour BL" name="booking">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="port">Port of loading</label>
-                                    <input type="text" id="port" class="form-control" required
-                                        placeholder="Entrez une valeur pour port" name="port">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="vessel">Vessel</label>
-                                    <input type="text" id="vessel" class="form-control"
-                                        placeholder="Entrez une valeur pour vessel" required name="vessel">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="call-number">Call Number</label>
-                                    <input type="text" id="call-number" class="form-control"
-                                        placeholder="Entrez une valeur pour call number" required name="call_number">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="vessel-arrival-date">Vessel arrival Date</label>
-                                    <input type="datetime-local" id="vessel-arrival-date" class="form-control" required
-                                        name="vessel_arrival_date">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -150,7 +133,7 @@
                                 <div class="form-group">
                                     <label for="pointeur">Nom Pointeur Livreur</label>
                                     <input type="text" id="pointeur" class="form-control"
-                                        placeholder="Entrez une valeur pour pointeur"  name="pointeur">
+                                        placeholder="Entrez une valeur pour pointeur" name="pointeur">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -158,18 +141,6 @@
                                     <label for="responsable">Responsable Livraison</label>
                                     <input type="text" id="responsable" class="form-control"
                                         placeholder="Entrez une valeur pour responsable" name="responsable">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="sum_lan_number">Sum(Lan Number)</label>
-                                    <textarea name="sum_lan_number" id="sum_lan_number" class="form-control" cols="30" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="reserve">Réserves</label>
-                                    <textarea name="reserve" id="reserve" class="form-control" cols="30" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>

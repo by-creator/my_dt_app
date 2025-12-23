@@ -18,25 +18,12 @@ class OrdreApprocheController extends Controller
    
     public function create(Request $request)
     {
-        $dateString = $request->date;
-        $date = Carbon::parse($dateString);
-
-        $vesselArrivalDateString = $request->date;
-        $vesselArrivalDate = Carbon::parse($vesselArrivalDateString);
-
 
         $data = [
-            'date' => $date,
             'chassis' => $request->chassis,
             'poids' => $request->poids,
-            'lane' => $request->lane,
-            'lane_number' => $request->lane_number,
             'bae' => $request->bae,
             'booking' => $request->booking,
-            'port' => $request->port,
-            'vessel' => $request->vessel,
-            'call_number' => $request->call_number,
-            'vessel_arrival_date' => $vesselArrivalDate,
             'shipping_line' => $request->shipping_line,
             'category' => $request->category,
             'type' => $request->type,
@@ -44,8 +31,6 @@ class OrdreApprocheController extends Controller
             'client' => $request->client,
             'chauffeur' => $request->chauffeur,
             'permis' => $request->permis,
-            'sum_lan_number' => $request->permis,
-            'reserve' => $request->reserve,
             'pointeur' => $request->pointeur,
             'responsable' => $request->responsable,
 

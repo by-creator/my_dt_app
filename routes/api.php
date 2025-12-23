@@ -4,6 +4,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PowerBiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,5 @@ Route::get('/ping', function () {
 });
 
 //ordre-approche-vehicule
-Route::get('/ask-powerbi/ordre-approche-vehicule', function(Request $request) {
-    return response()->json(['message' => 'API is working ✅']);
-});
+Route::post('/powerbi/fetch', [PowerBiController::class, 'fetch'])->name('powerbi.fetch');
 

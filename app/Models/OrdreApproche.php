@@ -12,19 +12,13 @@ class OrdreApproche extends Model
     use HasFactory, ConvertsDates;
 
     protected $fillable = [
+        'zone',
         'date',
         'time',
         'chassis',
         'poids',
-        'lane',
-        'lane_number',
         'bae',
         'booking',
-        'port',
-        'vessel',
-        'call_number',
-        'vessel_arrival_date',
-        'vessel_arrival_time',
         'shipping_line',
         'category',
         'type',
@@ -32,8 +26,6 @@ class OrdreApproche extends Model
         'client',
         'chauffeur',
         'permis',
-        'sum_lane_number',
-        'reserve',
         'pointeur',
         'responsable',
     ];
@@ -41,8 +33,11 @@ class OrdreApproche extends Model
     protected static function booted()
     {
         static::creating(function ($model) {
-            if ($model->date && empty($model->time)) {
-                $model->time = $model->date;
+            if ($model->created_at && empty($model->date)) {
+                $model->date = $model->created_at;
+            }
+            if ($model->created_at && empty($model->time)) {
+                $model->time = $model->created_at;
             }
 
             if ($model->vessel_arrival_date && empty($model->vessel_arrival_time)) {

@@ -16,9 +16,8 @@ return new class extends Migration
             $table->dateTime('date')->nullable();
             $table->dateTime('time')->nullable();
             $table->string('chassis')->nullable();
+            $table->string('zone')->nullable();
             $table->string('poids')->nullable();
-            $table->string('lane')->nullable();
-            $table->string('lane_number')->nullable();
             $table->string('bae')->nullable();
             $table->string('booking')->nullable();
             $table->string('port')->nullable();
@@ -33,8 +32,6 @@ return new class extends Migration
             $table->string('client')->nullable();
             $table->string('chauffeur')->nullable();
             $table->string('permis')->nullable();
-            $table->string('sum_lan_number')->nullable();
-            $table->string('reserve')->nullable();
             $table->string('pointeur')->nullable();
             $table->string('responsable')->nullable();
             $table->timestamps();

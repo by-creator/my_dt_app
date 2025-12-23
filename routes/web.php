@@ -240,4 +240,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dossier-facturation/delete/{id}', [DossierFacturationController::class, 'delete'])->name('dossier_facturation.delete');
     Route::post('/dossier-facturation/import', [DossierFacturationController::class, 'import'])->name('dossier_facturation.import');
     Route::get('/dossier-facturation/export', [DossierFacturationController::class, 'export'])->name('dossier_facturation.export');
+
+    
+
 });
