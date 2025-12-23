@@ -15,16 +15,11 @@ return new class extends Migration
             $table->id();
             $table->dateTime('date')->nullable();
             $table->dateTime('time')->nullable();
-            $table->string('chassis')->nullable();
             $table->string('zone')->nullable();
+            $table->string('chassis')->nullable();
             $table->string('poids')->nullable();
             $table->string('bae')->nullable();
             $table->string('booking')->nullable();
-            $table->string('port')->nullable();
-            $table->string('vessel')->nullable();
-            $table->string('call_number')->nullable();
-            $table->dateTime('vessel_arrival_date')->nullable();
-            $table->dateTime('vessel_arrival_time')->nullable();
             $table->string('shipping_line')->nullable();
             $table->string('category')->nullable();
             $table->string('type')->nullable();

@@ -12,9 +12,9 @@ class OrdreApproche extends Model
     use HasFactory, ConvertsDates;
 
     protected $fillable = [
-        'zone',
         'date',
         'time',
+        'zone',
         'chassis',
         'poids',
         'bae',
