@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Models\OrdreApproche;
 
 
 class PowerBiController extends Controller
 {
+    /*
     public function fetch(Request $request)
     {
         $response = Http::post('https://site-dt-staging-4682ed3f9fbf.herokuapp.com/api/powerbi/fetch', [
@@ -26,5 +27,53 @@ class PowerBiController extends Controller
             'type' => $data['Item_Type'] ?? '',
             'model'        => $data['Description_'] ?? ''
         ]);
+    }*/
+
+    public function fetch(Request $request)
+    {
+        $request->validate([
+            'chassis' => 'required|string',
+            'zone' => 'nullable|string',
+            'poids' => 'nullable|string',
+            'booking' => 'nullable|string',
+            'shipping_line' => 'nullable|string',
+            'category' => 'nullable|string',
+            'type' => 'nullable|string',
+            'model' => 'nullable|string',
+        ]);
+
+        OrdreApproche::updateOrCreate(
+            ['chassis' => $request->chassis],
+            [
+                'zone' => $request->zone,
+                'poids' => $request->poids,
+                'booking' => $request->booking,
+                'shipping_line' => $request->shipping_line,
+                'category' => $request->category,
+                'type' => $request->type,
+                'model' => $request->model,
+            ]
+        );
+
+        return response()->json([
+            'status' => 'ok'
+        ]);
     }
 }
+
+/**
+ * 
+ * curl -X POST http://localhost:8000/api/powerbi/fetch \
+-H "Content-Type: application/json" \
+-d '{
+  "chassis": "12345",
+  "zone" : "zone",
+                "poids" : "poids",
+                "booking" : "booking",
+                "shipping_line" : "shipping_line",
+                "category" : "category",
+                "type" : "type",
+                "model" : "model",
+}'
+
+ */
