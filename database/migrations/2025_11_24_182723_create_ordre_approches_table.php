@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('poids')->nullable();
             $table->string('bae')->nullable();
             $table->string('booking')->nullable();
+            $table->string('vessel')->nullable();
+            $table->string('call_number')->nullable();
+            $table->string('vessel_arrival_date')->nullable();
             $table->string('shipping_line')->nullable();
             $table->string('category')->nullable();
             $table->string('type')->nullable();

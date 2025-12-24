@@ -22,6 +22,9 @@ class PowerBiController extends Controller
             'chassis' => $data['ItemNumber'] ?? '',
             'poids' => $data['TypeDeMarchandise'] ?? '',
             'booking' => $data['BlNumber'] ?? '',
+            'vessel' => $data['Vessel'] ?? '',
+            'call_number' => $data['callNumber'] ?? '',
+            'vessel_arrival_date' => $data['vesselarrivaldate'] ?? '',
             'shipping_line' => $data['Shipowner'] ?? '',
             'category' => $data['Item_Code'] ?? '',
             'type' => $data['Item_Type'] ?? '',
@@ -36,6 +39,9 @@ class PowerBiController extends Controller
             'zone' => 'nullable|string',
             'poids' => 'nullable|string',
             'booking' => 'nullable|string',
+            'vessel' => 'nullable|string',
+            'call_number' => 'nullable|string',
+            'vessel_arrival_date' => 'nullable|string',
             'shipping_line' => 'nullable|string',
             'category' => 'nullable|string',
             'type' => 'nullable|string',
@@ -48,12 +54,16 @@ class PowerBiController extends Controller
                 'zone' => $request->zone,
                 'poids' => $request->poids,
                 'booking' => $request->booking,
+                'vessel' => $request->vessel,
+                'call_number' => $request->call_number,
+                'vessel_arrival_date' => $request->vessel_arrival_date,
                 'shipping_line' => $request->shipping_line,
                 'category' => $request->category,
                 'type' => $request->type,
                 'model' => $request->model,
             ]
         );
+
 
         return response()->json([
             'status' => 'ok'

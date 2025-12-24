@@ -28,5 +28,5 @@ Route::get('/ping', function () {
 });
 
 //ordre-approche-vehicule
-Route::post('/powerbi/fetch', [PowerBiController::class, 'fetch'])->name('powerbi.fetch');
+Route::post('/powerbi/fetch', [PowerBiController::class, 'fetch'])->middleware('powerbi.token')->name('powerbi.fetch');
 

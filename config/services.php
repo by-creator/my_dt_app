@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'powerbi' => [
+        'token' => env('POWERBI_API_TOKEN'),
+    ],
+
+
 ];
