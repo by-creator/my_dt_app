@@ -1,156 +1,136 @@
- <div class="col-md-12 col-12">
-     <div class="card">
-         <div class="card-header">
-             <h4 class="card-title"><u>Liste des ordres</u></h4>
-         </div>
-         <div class="card-body">
-             <table class="table table-striped" id="table1">
-                 <thead>
-                     <tr>
-                         <th>Date</th>
-                         <th>Chassis</th>
-                         <th>N° BAE</th>
-                         <th>N° BL</th>
-                         <th>Client</th>
-                         <th>Chauffeur</th>
-                         
-                     </tr>
-                 </thead>
-                 <tbody>
-                     @foreach ($ordres as $ordre)
-                     <tr>
-                         <td>{{ $ordre->date}}</td>
-                         <td>{{ $ordre->chassis}}</td>
-                         <td>{{ $ordre->bae}}</td>
-                         <td>{{ $ordre->booking}}</td>
-                         <td>{{ $ordre->client}}</td>
-                         <td>{{ $ordre->chauffeur}}</td>
-                         
-                         <!--
-                         <td>
-                             <button type="button" class="btn btn-primary btn-edit"
-                                 data-id="{{ $ordre->id }}"
-                                 data-date="{{ $ordre->date}}"
-                                 data-numero="{{ $ordre->numero }}"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#editModal">
-                                 <i class="fa-solid fa-pen-to-square"></i>
-                                  Modifier
-                             </button>
-                         </td>
-                         <td>
-                             <button type="button" class="btn btn-danger btn-delete" data-id="{{ $ordre->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
-                         </td>
-                        -->
-                     </tr>
-                     @endforeach
-                 </tbody>
-             </table>
-         </div>
-         <!-- Modal Modifier -->
-         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-             <div class="modal-dialog">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="editModalLabel">Modifier cet ordre</h5>
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-body">
-                         @if (session('update'))
-                         <script>
-                             Swal.fire({
-                                 icon: 'success',
-                                 title: 'Modification',
-                                 text: "{{ session('update') }}",
-                                 showConfirmButton: true
-                             });
-                         </script>
-                         @endif
-                         <form id="editForm" method="POST">
-                             @csrf
-                             @method('PUT')
-                             <input type="hidden" id="editId" name="id">
-                             <div class="mb-3">
-                                 <label for="editDate" class="form-label">Date</label>
-                                 <input type="text" class="form-control" id="editDate" name="date">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="editNumero" class="form-label">Numéro de BL</label>
-                                 <input type="text" class="form-control" id="editNumero" name="numero">
-                             </div>
-
-                             <div class="modal-footer">
-                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
-                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Fermer</button>
-                             </div>
-                         </form>
-                     </div>
-                 </div>
-             </div>
-         </div>
-         <!-- Modal Supprimer -->
-         @if (session('delete'))
-         <script>
-             Swal.fire({
-                 icon: 'success',
-                 title: 'Suppression',
-                 text: "{{ session('delete') }}",
-                 showConfirmButton: true
-             });
-         </script>
-         @endif
-         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-             <div class="modal-dialog">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                         <h5 class="modal-title" id="deleteModalLabel">Supprimer cet ordre</h5>
-                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-body">
-                         <p>Êtes-vous sûr de vouloir supprimer cet ordre ?</p>
-                         <form id="deleteForm" method="POST">
-                             @csrf
-                             @method('DELETE')
-                             <input type="hidden" id="deleteId" name="id">
-                             <div class="modal-footer">
-                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
-                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
-                             </div>
-                         </form>
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div>
- </div>
-
- <script>
-     document.addEventListener("DOMContentLoaded", function() {
-         const table = document.getElementById('table1');
-
-         // Event delegation pour Edit
-         table.addEventListener('click', function(e) {
-             const btn = e.target.closest('.btn-edit');
-             if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
-
-             const id = btn.dataset.id;
-             document.getElementById("editId").value = id;
-             document.getElementById("editDate").value = btn.dataset.date || '';
-             document.getElementById("editNumero").value = btn.dataset.numero || '';
-             document.getElementById("editForm").action = "/ordre-approche/update/" + id;
-         });
-
-         // Event delegation pour Delete
-         table.addEventListener('click', function(e) {
-             const btn = e.target.closest('.btn-delete');
-             if (!btn) return;
-
-             const id = btn.dataset.id;
-             document.getElementById("deleteId").value = id;
-             document.getElementById("deleteForm").action = "/ordre-approche/delete/" + id;
-         });
-
-         // Initialiser la datatable
-         new simpleDatatables.DataTable("#table1");
-     });
- </script>
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><u>Formulaire ordre approche</u></h4>
+        </div>
+        <div class="card-content">
+            <div class="card-body">
+                <form action="{{ route('ordre_approche.create') }}" method="post" target="_blank"
+                    class="form form-horizontal">
+                    @csrf
+                    @if (session('create'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Ajout',
+                                text: "{{ session('create') }}",
+                                showConfirmButton: true
+                            });
+                        </script>
+                    @endif
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="chassis">Chassis</label>
+                                    <input type="text" id="chassis" class="form-control"
+                                        placeholder="Entrez une valeur pour chassis" required name="chassis"
+                                        value="{{ $ordre->ItemNumber ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="zone">Zone</label>
+                                    <input type="text" id="zone" class="form-control"
+                                        placeholder="Entrez une valeur pour zone" required name="zone"
+                                        value="{{ $ordre->Zone ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="poids">Tranche de poids</label>
+                                    <input type="text" id="poids" class="form-control"
+                                        placeholder="Entrez une valeur pour poids" required name="poids">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="bae">N° BAE DOUANE</label>
+                                    <input type="text" id="bae" class="form-control"
+                                        placeholder="Entrez une valeur pour BAE" required name="bae">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="bae">BL / Booking</label>
+                                    <input type="tex" id="bae" class="form-control" required
+                                        placeholder="Entrez une valeur pour BL" name="booking">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="shipping-line">Shipping Line</label>
+                                    <input type="text" id="shipping-line" class="form-control"
+                                        placeholder="Entrez une valeur pour shipping line" required
+                                        name="shipping_line">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <input type="text" id="category" class="form-control"
+                                        placeholder="Entrez une valeur pour category" required name="category">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <input type="text" id="type" class="form-control"
+                                        placeholder="Entrez une valeur pour type" required name="type">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="model">Model</label>
+                                    <input type="text" id="model" class="form-control"
+                                        placeholder="Entrez une valeur pour model" required name="model">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="client">Client Facturé</label>
+                                    <input type="text" id="client" class="form-control"
+                                        placeholder="Entrez une valeur pour client" required name="client">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="chauffeur">Nom Chauffeur</label>
+                                    <input type="text" id="chauffeur" class="form-control"
+                                        placeholder="Entrez une valeur pour chauffeur" required name="chauffeur">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="permis">N° Permis</label>
+                                    <input type="text" id="permis" class="form-control"
+                                        placeholder="Entrez une valeur pour permis" required name="permis">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="pointeur">Nom Pointeur Livreur</label>
+                                    <input type="text" id="pointeur" class="form-control"
+                                        placeholder="Entrez une valeur pour pointeur" name="pointeur">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="responsable">Responsable Livraison</label>
+                                    <input type="text" id="responsable" class="form-control"
+                                        placeholder="Entrez une valeur pour responsable" name="responsable">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary me-1 mb-1"><i
+                                    class="fa-solid fa-check-to-slot"></i> Valider</button>
+                            <button type="reset" class="btn btn-danger me-1 mb-1"><i
+                                    class="fa-solid fa-square-xmark"></i> Annuler</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

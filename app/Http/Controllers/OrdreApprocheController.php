@@ -9,13 +9,26 @@ use Illuminate\Http\Request;
 class OrdreApprocheController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $ordres = OrdreApproche::orderBy('id', 'desc')->get();
         return view('ordre_approche.index', compact('ordres'));
     }
 
-   
+    public function list(Request $request)
+    {
+        $request->validate([
+            'ordre_id' => 'required|string'
+        ]);
+
+        // 🔍 Récupération de l'ordre
+        $ordre = OrdreApproche::where('ItemNumber', $request->ordre_id)->first();
+
+        return view('ordre_approche.list', compact('ordre'));
+    }
+
+
+
     public function create(Request $request)
     {
 
@@ -42,7 +55,6 @@ class OrdreApprocheController extends Controller
         OrdreApproche::create($data);
 
         return view('ordre_approche.fiche', compact('data'))->with('create', 'Ordre créé avec succès.');
-            
     }
 
     public function update(Request $request, $id)

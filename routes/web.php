@@ -172,6 +172,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/rattachement/delete/{id}', [RattachementController::class, 'delete'])->name('rattachement.delete');
 
     Route::get('/ordre-approche/index', [OrdreApprocheController::class, 'index'])->name('ordre_approche.index');
+    Route::post('/ordre-approche/list', [OrdreApprocheController::class, 'list'])->name('ordre_approche.list');
 
     Route::post('/ordre-approche/create', [OrdreApprocheController::class, 'create'])->name('ordre_approche.create');
     Route::put('/ordre-approche/update/{id}', [OrdreApprocheController::class, 'update'])->name('ordre_approche.update');

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('Terminal')->nullable();
             $table->string('Shipowner')->nullable();
-            $table->string('ItemNumber')->unique()->nullable();
+            $table->string('ItemNumber')->nullable();
             $table->string('Item_Type')->nullable();
             $table->string('Item_Code')->nullable();
             $table->string('BlNumber')->nullable();
