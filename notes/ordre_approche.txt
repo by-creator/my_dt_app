@@ -8,3 +8,7 @@ WHERE NOT EXISTS (SELECT 1 FROM ordre_approches b WHERE b.ItemNumber = a.ItemNum
 truncate table ordre_approches_staging
 
 link : https://www.freeconvert.com/csv-converter
+
+Actualisation : 
+
+07h - 09h - 11h - 13h - 15h - 16h - 17h - 18h
