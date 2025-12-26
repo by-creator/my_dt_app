@@ -5,15 +5,16 @@
         </div>
         <div class="card-content">
             <div class="card-body">
-                <form action="{{ route('ordre_approche.create') }}" method="post" target="_blank"
+                <form action="{{ route('ordre_approche.update', ['id' => $ordre->id]) }}" method="POST" target="_blank"
                     class="form form-horizontal">
                     @csrf
-                    @if (session('create'))
+                   
+                    @if (session('update'))
                         <script>
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Ajout',
-                                text: "{{ session('create') }}",
+                                title: 'Modification',
+                                text: "{{ session('update') }}",
                                 showConfirmButton: true
                             });
                         </script>
@@ -22,9 +23,9 @@
                         <div class="row">
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="chassis">Chassis</label>
-                                    <input type="text" id="chassis" class="form-control"
-                                        placeholder="Entrez une valeur pour chassis" required name="chassis"
+                                    <label for="ItemNumber">ItemNumber</label>
+                                    <input type="text" id="ItemNumber" class="form-control"
+                                        placeholder="Entrez une valeur pour ItemNumber" required name="ItemNumber"
                                         value="{{ $ordre->ItemNumber ?? '' }}">
                                 </div>
                             </div>
@@ -32,111 +33,111 @@
                                 <div class="form-group">
                                     <label for="zone">Zone</label>
                                     <input type="text" id="zone" class="form-control"
-                                        placeholder="Entrez une valeur pour zone" required name="zone"
+                                        placeholder="Entrez une valeur pour zone" required name="Zone"
                                         value="{{ $ordre->Zone ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="poids">Tranche de poids</label>
-                                    <input type="text" id="poids" class="form-control"
-                                        placeholder="Entrez une valeur pour poids" required name="poids"
+                                    <label for="TypeDeMarchandise">Type De Marchandise</label>
+                                    <input type="text" id="TypeDeMarchandise" class="form-control"
+                                        placeholder="Entrez une valeur pour TypeDeMarchandise" required name="TypeDeMarchandise"
                                         value="{{ $ordre->TypeDeMarchandise ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="booking">BL / Booking</label>
-                                    <input type="tex" id="booking" class="form-control" required
-                                        placeholder="Entrez une valeur pour BL" name="booking"
+                                    <label for="BlNumber">BlNumber</label>
+                                    <input type="tex" id="BlNumber" class="form-control" required
+                                        placeholder="Entrez une valeur pour BL" name="BlNumber"
                                         value="{{ $ordre->BlNumber ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="vessel">Vessel</label>
-                                    <input type="tex" id="vessel" class="form-control" required
-                                        placeholder="Entrez une valeur pour vessel" name="booking"
+                                    <label for="Vessel">Vessel</label>
+                                    <input type="tex" id="Vessel" class="form-control" required
+                                        placeholder="Entrez une valeur pour Vessel" name="Vessel"
                                         value="{{ $ordre->Vessel ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="call_number">Call Number</label>
-                                    <input type="tex" id="call_number" class="form-control" required
-                                        placeholder="Entrez une valeur pour call number" name="booking"
+                                    <label for="callNumber">callNumber</label>
+                                    <input type="tex" id="callNumber" class="form-control" required
+                                        placeholder="Entrez une valeur pour call number" name="callNumber"
                                         value="{{ $ordre->callNumber ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="vessel_arrival_date">Vessel Arrival Date</label>
-                                    <input type="tex" id="vessel_arrival_date" class="form-control" required
-                                        placeholder="Entrez une valeur pour vessel arrival date" name="booking"
+                                    <label for="vesselarrivaldate">Vessel Arrival Date</label>
+                                    <input type="tex" id="vesselarrivaldate" class="form-control" required
+                                        placeholder="Entrez une valeur pour vessel arrival date" name="vesselarrivaldate"
                                         value="{{ $ordre->vesselarrivaldate ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="shipping-line">Shipping Line</label>
-                                    <input type="text" id="shipping-line" class="form-control"
-                                        placeholder="Entrez une valeur pour shipping line" required name="shipping_line"
+                                    <label for="Shipowner">Shipowner</label>
+                                    <input type="text" id="Shipowner" class="form-control"
+                                        placeholder="Entrez une valeur pour shipping line" required name="Shipowner"
                                         value="{{ $ordre->Shipowner ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="category">Category</label>
-                                    <input type="text" id="category" class="form-control"
-                                        placeholder="Entrez une valeur pour category" required name="category"
+                                    <label for="Item_Code">Item_Code</label>
+                                    <input type="text" id="Item_Code" class="form-control"
+                                        placeholder="Entrez une valeur pour Item_Code" required name="Item_Code"
                                         value="{{ $ordre->Item_Code ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="type">Type</label>
-                                    <input type="text" id="type" class="form-control"
-                                        placeholder="Entrez une valeur pour type" required name="type"
+                                    <label for="Item_Type">Item_Type</label>
+                                    <input type="text" id="Item_Type" class="form-control"
+                                        placeholder="Entrez une valeur pour Item_Type" required name="Item_Type"
                                         value="{{ $ordre->Item_Type ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="model">Model</label>
-                                    <input type="text" id="model" class="form-control"
-                                        placeholder="Entrez une valeur pour model" required name="model"
+                                    <label for="Description_">Description_</label>
+                                    <input type="text" id="Description_" class="form-control"
+                                        placeholder="Entrez une valeur pour Description_" required name="Description_"
                                         value="{{ $ordre->Description_ ?? '' }}">
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-md-3 col-12">
+                           <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="bae">N° BAE DOUANE</label>
+                                    <label for="bae">BAE DOUANE</label>
                                     <input type="text" id="bae" class="form-control"
-                                        placeholder="Entrez une valeur pour BAE" required name="bae">
+                                        placeholder="Entrez une valeur pour bae" name="bae">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="client">Client Facturé</label>
                                     <input type="text" id="client" class="form-control"
-                                        placeholder="Entrez une valeur pour client" required name="client">
+                                        placeholder="Entrez une valeur pour client" name="client">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="chauffeur">Nom Chauffeur</label>
                                     <input type="text" id="chauffeur" class="form-control"
-                                        placeholder="Entrez une valeur pour chauffeur" required name="chauffeur">
+                                        placeholder="Entrez une valeur pour chauffeur" name="chauffeur">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="permis">N° Permis</label>
                                     <input type="text" id="permis" class="form-control"
-                                        placeholder="Entrez une valeur pour permis" required name="permis">
+                                        placeholder="Entrez une valeur pour permis" name="permis">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -151,6 +152,13 @@
                                     <label for="responsable">Responsable Livraison</label>
                                     <input type="text" id="responsable" class="form-control"
                                         placeholder="Entrez une valeur pour responsable" name="responsable">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <div class="form-group">
+                                    <label for="reserve">Reserve</label>
+                                    <input type="text" id="reserve" class="form-control"
+                                        placeholder="Entrez une valeur pour reserve" name="reserve">
                                 </div>
                             </div>
                         </div>

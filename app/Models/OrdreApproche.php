@@ -41,18 +41,12 @@ class OrdreApproche extends Model
 
         'date',
         'time',
+        'bae',
+        'client',
+        'chauffeur',
+        'permis',
+        'pointeur',
+        'responsable',
+        'reserve',
     ];
-
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            if ($model->updated_at && empty($model->date)) {
-                $model->date = $model->updated_at;
-            }
-            if ($model->updated_at && empty($model->time)) {
-                $model->time = $model->updated_at;
-            }
-
-        });
-    }
 }

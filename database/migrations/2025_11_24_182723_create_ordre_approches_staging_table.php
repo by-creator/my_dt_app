@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ordre_approches', function (Blueprint $table) {
+        Schema::create('ordre_approches_staging', function (Blueprint $table) {
             $table->id();
             $table->string('Terminal')->nullable();
             $table->string('Shipowner')->nullable();
@@ -42,6 +42,14 @@ return new class extends Migration
 
             $table->datetime('date')->nullable();
             $table->datetime('time')->nullable();
+            
+            $table->string('bae')->nullable();
+            $table->string('client')->nullable();
+            $table->string('chauffeur')->nullable();
+            $table->string('permis')->nullable();
+            $table->string('pointeur')->nullable();
+            $table->string('responsable')->nullable();
+            $table->string('reserve')->nullable();
             $table->timestamps();
         });
     }

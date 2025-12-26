@@ -31,28 +31,33 @@ class OrdreApprocheController extends Controller
 
     public function create(Request $request)
     {
+        $date = Carbon::now();
+        $time = Carbon::now();
 
         $data = [
-            'chassis' => $request->chassis,
-            'poids' => $request->poids,
+            'date' => $date,
+            'ItemNumber' => $request->ItemNumber,
+            'Zone' => $request->Zone,
+            'TypeDeMarchandise' => $request->TypeDeMarchandise,
             'bae' => $request->bae,
-            'booking' => $request->booking,
-            'vessel' => $request->vessel,
-            'call_number' => $request->call_number,
-            'vessel_arrival_date' => $request->vessel_arrival_date,
-            'shipping_line' => $request->shipping_line,
-            'category' => $request->category,
-            'type' => $request->type,
-            'model' => $request->model,
+            'BlNumber' => $request->BlNumber,
+            'Vessel' => $request->Vessel,
+            'callNumber' => $request->callNumber,
+            'vesselarrivaldate' => $request->vesselarrivaldate,
+            'Shipowner' => $request->Shipowner,
+            'Item_Code' => $request->Item_Code,
+            'Item_Type' => $request->Item_Type,
+            'Description_' => $request->Description_,
             'client' => $request->client,
             'chauffeur' => $request->chauffeur,
             'permis' => $request->permis,
             'pointeur' => $request->pointeur,
             'responsable' => $request->responsable,
+            'reserve' => $request->reserve,
 
         ];
 
-        OrdreApproche::create($data);
+        //OrdreApproche::create($data);
 
         return view('ordre_approche.fiche', compact('data'))->with('create', 'Ordre créé avec succès.');
     }
@@ -61,12 +66,44 @@ class OrdreApprocheController extends Controller
     {
         $ordre = OrdreApproche::findOrFail($id);
 
-        $ordre->numero = $request->numero;
-        $ordre->date = $request->date;
+        $ordre->date = Carbon::now();
+        $ordre->time = Carbon::now();
+        $ordre->bae = $request->bae;
+        $ordre->reserve = $request->reserve;
+        $ordre->client = $request->client;
+        $ordre->chauffeur = $request->chauffeur;
+        $ordre->permis = $request->permis;
+        $ordre->pointeur = $request->pointeur;
+        $ordre->responsable = $request->responsable;
+
+        $data = [
+            'date' => Carbon::now(),
+            'time' => Carbon::now(),
+            'ItemNumber' => $request->ItemNumber,
+            'Zone' => $request->Zone,
+            'TypeDeMarchandise' => $request->TypeDeMarchandise,
+            'bae' => $request->bae,
+            'BlNumber' => $request->BlNumber,
+            'Vessel' => $request->Vessel,
+            'callNumber' => $request->callNumber,
+            'vesselarrivaldate' => $request->vesselarrivaldate,
+            'Shipowner' => $request->Shipowner,
+            'Item_Code' => $request->Item_Code,
+            'Item_Type' => $request->Item_Type,
+            'Description_' => $request->Description_,
+            'bae' => $request->bae,
+            'client' => $request->client,
+            'chauffeur' => $request->chauffeur,
+            'permis' => $request->permis,
+            'pointeur' => $request->pointeur,
+            'responsable' => $request->responsable,
+            'reserve' => $request->reserve,
+
+        ];
 
         $ordre->save();
 
-        return redirect()->route('ordre_approche.index')->with('update', 'Ordre mis à jour avec succès.');
+        return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
     }
 
     public function delete($id)
