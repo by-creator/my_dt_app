@@ -74,11 +74,12 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Guérite',
-                        'header' => 'Guérite',
-                        'description' => 'Gestion des Guérite',
+                        'name' => 'Orde d\'approches',
+                        'header' => 'Orde d\'approches',
+                        'description' => 'Gestion des ordre d\'approches',
                         'route' => route('ordre_approche.index')
                     ],
+
                     [
                         'id' => 4,
                         'name' => 'Ressources Humanines',
@@ -116,11 +117,12 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Guérite',
-                        'header' => 'Guérite',
-                        'description' => 'Gestion des Guérite',
+                        'name' => 'Orde d\'approches',
+                        'header' => 'Orde d\'approches',
+                        'description' => 'Gestion des ordre d\'approches',
                         'route' => route('ordre_approche.index')
                     ],
+
                     [
                         'id' => 4,
                         'name' => 'Ressources Humanines',
