@@ -157,9 +157,9 @@ class DashboardController extends Controller
 
                     [
                         'id' => 1,
-                        'name' => 'Guérite',
-                        'header' => 'Guérite',
-                        'description' => 'Gestion des Guérite',
+                        'name' => 'Orde d\'approches',
+                        'header' => 'Orde d\'approches',
+                        'description' => 'Gestion des ordre d\'approches',
                         'route' => route('ordre_approche.index')
                     ],
 
