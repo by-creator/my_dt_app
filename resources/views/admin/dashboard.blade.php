@@ -1,62 +1,74 @@
-@extends('partials.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <h2 class="mb-4">📊 Dashboard – Aujourd’hui</h2>
+<head>
+    @include('partials.dashboard.head')
+</head>
 
-    {{-- KPIs --}}
-    <div class="row text-center mb-4">
-        <div class="col">🎟️ Total<br><strong>{{ $totalTickets }}</strong></div>
-        <div class="col">⏳ En attente<br><strong>{{ $enAttente }}</strong></div>
-        <div class="col">📢 En cours<br><strong>{{ $enCours }}</strong></div>
-        <div class="col">✔ Terminés<br><strong>{{ $termines }}</strong></div>
-        <div class="col">❌ Absents<br><strong>{{ $absents }}</strong></div>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('dashboard') }}"><img
+                        src="{{ asset('templates/mazer/dist/assets/images/logo/logo.png') }}" alt="Logo"
+                        srcset=""></a>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+
+                        <li class="sidebar-title">
+                            <a href="{{ route('dashboard') }}">
+                                <i class="fa-solid fa-home"></i>
+                                <span>Accueil</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a href="{{ route('settings') }}" class='sidebar-link'>
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Paramètres</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item  ">
+                            <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span>Déconnexion</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
+            </div>
+            <div class="page-content">
+                @if (Auth::user()->role->name == 'ADMIN' || Auth::user()->name == 'SUPER_U')
+                    @include('partials.gfa.admin.index')
+                @else
+                @endif
+            </div>
+
+        </div>
     </div>
+    @include('partials.dashboard.script')
+</body>
 
-    <div class="alert alert-info">
-        ⏱️ Temps moyen d’attente : <strong>{{ $tempsMoyen }} min</strong>
-    </div>
-
-    {{-- Stats par service --}}
-    <h4 class="mt-4">📌 Par service</h4>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Service</th>
-                <th>Total</th>
-                <th>En attente</th>
-                <th>Terminés</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($statsServices as $service)
-            <tr>
-                <td>{{ $service->nom }}</td>
-                <td>{{ $service->total }}</td>
-                <td>{{ $service->en_attente }}</td>
-                <td>{{ $service->termines }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    {{-- Performance guichets --}}
-    <h4 class="mt-4">👨‍💼 Performance des guichets</h4>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Guichet</th>
-                <th>Tickets traités</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($statsGuichets as $g)
-            <tr>
-                <td>{{ $g->nom }}</td>
-                <td>{{ $g->traites }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endsection
+</html>

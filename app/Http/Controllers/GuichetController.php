@@ -109,6 +109,13 @@ class GuichetController extends Controller
                         'description' => 'Gestion du guichet 13',
                         'route' => route('agent.guichet', ['guichet' => 13]),
                     ],
+                    [
+                        'id' => 14,
+                        'name' => 'Administration',
+                        'header' => 'Administration',
+                        'description' => 'Gestion administrative',
+                        'route' => route('admin.dashboard'),
+                    ],
                 ];
                 break;
             case "FACTURATION":
