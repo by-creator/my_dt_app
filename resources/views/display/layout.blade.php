@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    @include('partials.dashboard.head')
     <meta charset="UTF-8">
     <title>Affichage – Dakar Terminal</title>
 
