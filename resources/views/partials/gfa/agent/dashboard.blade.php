@@ -119,7 +119,7 @@
             </ul>
 
             <div class="mt-3">
-                <p>Pour les clients qui ne peuvent pas scanner :</p>
+                <p>Pour les clients qui ne peuvent pas scanner cliquez sur le bouton ci-dessous :</p>
                 <a href=" {{ route('ticket.create') }}" target="_blank" rel="noopener noreferrer">
                     <button class="btn btn-primary">TICKET</button>
                 </a>
