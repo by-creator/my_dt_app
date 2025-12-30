@@ -32,6 +32,10 @@
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
 
+<script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+
 <script>
     const motifSelect = document.getElementById('motif');
     const autreMotifContainer = document.getElementById('autreMotifContainer');

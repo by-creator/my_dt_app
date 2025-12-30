@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Models\Ticket;
+use App\Models\Service;
+use App\Models\Guichet;
 
 class DashboardController extends Controller
 {
@@ -94,6 +97,15 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Stock',
                         'route' => route('ordinateur.index')
                     ],
+                    [
+                        'id' => 6,
+                        'name' => 'Ticket',
+                        'header' => 'Ticket',
+                        'description' => 'Gestion de Ticket',
+                        'route' => route('agent.guichet.me')
+                    ],
+
+                    
                 ];
 
                 break;
@@ -137,6 +149,7 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Stock',
                         'route' => route('ordinateur.index')
                     ],
+
                 ];
 
                 break;
@@ -149,6 +162,25 @@ class DashboardController extends Controller
                         'header' => 'Facturation',
                         'description' => 'Gestion Facturation',
                         'route' => route('rattachement.index')
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'Ticket',
+                        'header' => 'Ticket',
+                        'description' => 'Gestion de Ticket',
+                        'route' => route('agent.guichet.me')
+                    ],
+
+                ];
+                break;
+                case "CAISSE":
+                $cards = [
+                    [
+                        'id' => 1,
+                        'name' => 'Ticket',
+                        'header' => 'Ticket',
+                        'description' => 'Gestion de Ticket',
+                        'route' => route('agent.guichet.me')
                     ],
 
                 ];
@@ -181,5 +213,56 @@ class DashboardController extends Controller
         Session::regenerateToken();
 
         return redirect('/login');
+    }
+
+    public function dashboard()
+    {
+        $today = today();
+
+        // KPIs globaux
+        $totalTickets = Ticket::whereDate('created_at', $today)->count();
+
+        $enAttente = Ticket::where('statut', 'en_attente')->count();
+        $enCours   = Ticket::where('statut', 'en_cours')->count();
+        $termines  = Ticket::whereDate('fin_at', $today)
+            ->where('statut', 'termine')->count();
+        $absents   = Ticket::whereDate('fin_at', $today)
+            ->where('statut', 'absent')->count();
+
+        // Temps moyen d’attente (en minutes)
+        $tempsMoyen = Ticket::whereNotNull('appel_at')
+            ->whereDate('created_at', $today)
+            ->avg(DB::raw('TIMESTAMPDIFF(SECOND, created_at, appel_at)'));
+
+        $tempsMoyen = round(($tempsMoyen ?? 0) / 60, 2);
+
+        // Stats par service
+        $statsServices = Service::withCount([
+            'tickets as total',
+            'tickets as en_attente' => function ($q) {
+                $q->where('statut', 'en_attente');
+            },
+            'tickets as termines' => function ($q) {
+                $q->where('statut', 'termine');
+            }
+        ])->get();
+
+        // Performance guichets
+        $statsGuichets = Guichet::withCount([
+            'tickets as traites' => function ($q) {
+                $q->where('statut', 'termine');
+            }
+        ])->get();
+
+        return view('admin.dashboard', compact(
+            'totalTickets',
+            'enAttente',
+            'enCours',
+            'termines',
+            'absents',
+            'tempsMoyen',
+            'statsServices',
+            'statsGuichets'
+        ));
     }
 }

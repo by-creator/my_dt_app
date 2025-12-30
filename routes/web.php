@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClavierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DematController;
+use App\Http\Controllers\DisplayController;
 use App\Http\Controllers\DossierFacturationBonController;
 use App\Http\Controllers\DossierFacturationController;
 use App\Http\Controllers\DossierFacturationFactureController;
@@ -18,15 +19,17 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SourisControlller;
 use App\Http\Controllers\StationController;
 use App\Http\Controllers\TelephoneFixeController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UnifyController;
 use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserImportController;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
-
-
+use App\Events\TicketAppeled;
+use App\Http\Controllers\GuichetController;
 
 Route::get('/', function () {
     return view('index');
@@ -41,6 +44,20 @@ Route::get('/demat', [DematController::class, 'index'])->name('demat.index');
 
 Route::post('/demat/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
 Route::post('/demat/validation', [DematController::class, 'validation'])->name('demat.validation');
+
+Route::get('/ticket', [TicketController::class, 'create'])->name('ticket.create');
+Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
+
+Route::get('/display', [DisplayController::class, 'index'])
+    ->name('display.index');
+
+Route::get('/test-ably', function () {
+    $ticket = Ticket::latest()->first();
+    event(new TicketAppeled($ticket));
+    return 'EVENT SENT';
+});
+
+/*********************************************************************************************************** */
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
@@ -242,6 +259,37 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dossier-facturation/import', [DossierFacturationController::class, 'import'])->name('dossier_facturation.import');
     Route::get('/dossier-facturation/export', [DossierFacturationController::class, 'export'])->name('dossier_facturation.export');
 
-    
 
+
+
+
+    Route::get('/agent/guichet', [GuichetController::class, 'guichet'])
+    ->name('agent.guichet.me');
+
+    Route::get('/agent/guichet/{guichet}', [GuichetController::class, 'index'])
+        ->name('agent.guichet');
+
+    Route::post('/agent/guichet/{guichet}/appeler', [GuichetController::class, 'appeler'])
+        ->name('agent.guichet.appeler');
+
+    Route::post('/agent/ticket/{ticket}/rappel', [GuichetController::class, 'rappel'])
+        ->name('agent.ticket.rappel');
+
+    Route::post('/agent/ticket/{ticket}/terminer', [GuichetController::class, 'terminer'])
+        ->name('agent.ticket.terminer');
+
+    Route::post('/agent/ticket/{ticket}/incomplet', [GuichetController::class, 'incomplet'])
+        ->name('agent.ticket.incomplet');
+
+    Route::post('/agent/ticket/{ticket}/absent', [GuichetController::class, 'absent'])
+        ->name('agent.ticket.absent');
+
+    Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])
+        ->name('admin.dashboard');
+
+    Route::get('/admin/historique', function () {
+        return \App\Models\TicketLog::with('ticket')
+            ->latest()
+            ->paginate(20);
+    });
 });

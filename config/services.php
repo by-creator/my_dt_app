@@ -39,5 +39,9 @@ return [
         'token' => env('POWERBI_API_TOKEN'),
     ],
 
+    'ably' => [
+        'key' => env('ABLY_KEY'),
+    ],
+
 
 ];

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'database'),
+    'default' => env('QUEUE_CONNECTION', 'ably'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,6 +33,11 @@ return [
 
         'sync' => [
             'driver' => 'sync',
+        ],
+
+        'ably' => [
+            'driver' => 'ably',
+            'key' => env('ABLY_KEY'),
         ],
 
         'database' => [
