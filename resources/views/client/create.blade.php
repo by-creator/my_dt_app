@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-     @include('partials.dashboard.head')
+    @include('partials.dashboard.head')
     <meta charset="UTF-8">
     <title>Choisissez un ticket</title>
 

@@ -19,7 +19,7 @@ class DisplayController extends Controller
         //$ticketUrl = "https://www.google.com/";
 
         // 🔑 Infos Wi-Fi
-        $wifiSsid = 'SNDTL_EXT';
+        $wifiSsid = 'DTLBOX23';
         $wifiPassword = 'P@sser=123';
         $wifiType = 'WPA';
 
