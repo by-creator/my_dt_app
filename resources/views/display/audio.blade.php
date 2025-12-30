@@ -23,7 +23,7 @@ function jouerAnnonce(numero, guichet) {
     audio.onended = () => {
         setTimeout(() => {
             const speech = new SpeechSynthesisUtterance(
-                `Le ticket ${numero} est attendu au guichet numéro ${guichet}`
+                `Le ticket numéro ${numero} est attendu au guichet numéro ${guichet}`
             );
             speech.lang = 'fr-FR';
             speech.rate = 0.8;
