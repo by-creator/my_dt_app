@@ -19,6 +19,7 @@ class DashboardController extends Controller
     {
         $email = Auth::user()->email;
         $search = $request->get('search');
+        $user = Auth::user();
 
         // --- Sous-requête : derniers rattachements par BL ---
         $subQuery = DB::table('rattachement_bls')
@@ -105,7 +106,7 @@ class DashboardController extends Controller
                         'route' => route('agent.guichet.me')
                     ],
 
-                    
+
                 ];
 
                 break;
@@ -173,7 +174,7 @@ class DashboardController extends Controller
 
                 ];
                 break;
-                case "CAISSE":
+            case "CAISSE":
                 $cards = [
                     [
                         'id' => 1,
@@ -202,7 +203,7 @@ class DashboardController extends Controller
                 break;
         }
 
-        return view('dashboard', compact('cards', 'dossiers', 'rattachements'));
+        return view('dashboard', compact('cards', 'dossiers', 'rattachements','user'));
     }
 
     public function logout()

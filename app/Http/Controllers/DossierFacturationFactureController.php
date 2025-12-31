@@ -33,16 +33,18 @@ class DossierFacturationFactureController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         $users = User::all();
-        return view('dossier_facturation.facture', compact('dossiers', 'users'));
+        $user = Auth::user();
+        return view('dossier_facturation.facture', compact('dossiers', 'users', 'user'));
     }
 
     public function list()
     {
         // Charger les dossiers et leurs factures associés
         $dossiers = DossierFacturation::with('factures')->orderBy('id', 'desc')->get();
+        $user = Auth::user();
 
         // Passer la collection de dossiers à la vue
-        return view('dossier_facturation.list_facture', compact('dossiers'));
+        return view('dossier_facturation.list_facture', compact('dossiers', 'user'));
     }
 
     public function complement(Request $request, $id)
@@ -375,7 +377,7 @@ class DossierFacturationFactureController extends Controller
 
             // Mise à jour du statut
             if ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE || $dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
-                
+
                 $dossier->statut = StatutDossier::EN_ATTENTE_BAD;
             }
             $dossier->save();

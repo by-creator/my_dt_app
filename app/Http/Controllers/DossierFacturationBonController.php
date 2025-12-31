@@ -29,16 +29,18 @@ class DossierFacturationBonController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         $users = User::all();
-        return view('dossier_facturation.bon', compact('dossiers', 'users'));
+         $user = Auth::user();
+        return view('dossier_facturation.bon', compact('dossiers', 'users','user'));
     }
 
     public function list()
     {
         // Charger les dossiers et leurs bons associés
         $dossiers = DossierFacturation::with('bons')->orderBy('id', 'desc')->get();
+         $user = Auth::user();
 
         // Passer la collection de dossiers à la vue
-        return view('dossier_facturation.list_bon', compact('dossiers'));
+        return view('dossier_facturation.list_bon', compact('dossiers','user'));
     }
 
     // -----------------------------

@@ -29,7 +29,7 @@
                             </a>
                         </li>
 
-                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
+                        @if($user->role->name == "ADMIN" || $user->role->name == "FACTURATION" || $user->role->name == "SUPER_U")
                         @include('partials.facturation.menu_validation')
                         @else
                         @endif
@@ -61,10 +61,10 @@
             </header>
 
             <div class="page-heading">
-                <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
+                <h3>Bienvenu(e) {{ $user->name }}</h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "FACTURATION" || Auth::user()->role->name == "SUPER_U")
+                @if($user->role->name == "ADMIN" || $user->role->name == "FACTURATION" || $user->role->name == "SUPER_U")
                 @include('partials.rattachement_bl.validation')
                 @else
                 @endif

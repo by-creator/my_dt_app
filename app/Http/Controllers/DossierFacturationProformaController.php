@@ -34,16 +34,18 @@ class DossierFacturationProformaController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         $users = User::all();
-        return view('dossier_facturation.proforma', compact('dossiers', 'users'));
+        $user = Auth::user();
+        return view('dossier_facturation.proforma', compact('dossiers', 'users', 'user'));
     }
 
     public function list()
     {
         // Charger les dossiers et leurs proformas associés
         $dossiers = DossierFacturation::with('proformas')->orderBy('id', 'desc')->get();
+        $user = Auth::user();
 
         // Passer la collection de dossiers à la vue
-        return view('dossier_facturation.list_proforma', compact('dossiers'));
+        return view('dossier_facturation.list_proforma', compact('dossiers','user'));
     }
 
 

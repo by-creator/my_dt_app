@@ -10,6 +10,7 @@ use App\Models\RattachementBl;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -83,7 +84,9 @@ class DossierFacturationController extends Controller
             ],
         ];
 
-        return view('dossier_facturation.tuto_video', compact('videos'));
+        $user = Auth::user();
+
+        return view('dossier_facturation.tuto_video', compact('videos', 'user'));
     }
 
     public function indexTutoPdf()
@@ -206,8 +209,9 @@ class DossierFacturationController extends Controller
             ->get();
 
         $roles = Role::all();
+        $user = Auth::user();
 
-        return view('dossier_facturation.list_client', compact('users', 'roles'));
+        return view('dossier_facturation.list_client', compact('users', 'roles', 'user'));
     }
 
     /**
