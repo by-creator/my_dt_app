@@ -48,11 +48,9 @@ Route::post('/demat/validation', [DematController::class, 'validation'])->name('
 Route::get('/ticket', [TicketController::class, 'create'])->name('ticket.create');
 Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
 
-Route::get('/display', [DisplayController::class, 'index'])
-    ->withoutMiddleware([
-        \Illuminate\Auth\Middleware\Authenticate::class,
-        \Illuminate\Session\Middleware\StartSession::class,
-    ]);
+Route::get('/display', [DisplayController::class, 'index']);
+
+
 
 Route::get('/test-ably', function () {
     $ticket = Ticket::latest()->first();

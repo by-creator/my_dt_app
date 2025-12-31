@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 
 
 
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -38,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('authUser', $user);
         }
     });
-
+    
         Route::middleware('api')
         ->prefix('api')
         ->group(base_path('routes/api.php'));
