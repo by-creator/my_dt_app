@@ -48,7 +48,9 @@ Route::post('/demat/validation', [DematController::class, 'validation'])->name('
 Route::get('/ticket', [TicketController::class, 'create'])->name('ticket.create');
 Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
 
-Route::get('/display', [DisplayController::class, 'index']);
+Route::get('/display', [DisplayController::class, 'index'])
+    ->middleware('nosession');
+
 
 
 
