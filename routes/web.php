@@ -49,7 +49,10 @@ Route::get('/ticket', [TicketController::class, 'create'])->name('ticket.create'
 Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
 
 Route::get('/display', [DisplayController::class, 'index'])
-    ->name('display.index');
+    ->withoutMiddleware([
+        \Illuminate\Auth\Middleware\Authenticate::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+    ]);
 
 Route::get('/test-ably', function () {
     $ticket = Ticket::latest()->first();
