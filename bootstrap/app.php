@@ -21,10 +21,11 @@ $app = Application::configure(basePath: dirname(__DIR__))
 
 /*
 |--------------------------------------------------------------------------
-| Routes sans session (DISPLAY)
+| Routes DISPLAY (hors middleware web)
 |--------------------------------------------------------------------------
 */
 require base_path('routes/display.php');
 
 return $app;
+
 
