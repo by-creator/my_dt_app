@@ -19,7 +19,7 @@
             <div id="main-content">
                 <section id="basic-input-groups">
                     <div class="row">
-                        @if(Auth::user()->role->name == "CLIENT_FACTURATION" )
+                        @if($user->role->name == "CLIENT_FACTURATION" )
                         @include('dossier_facturation.index')
                         @else
                         <!-- BARRE DE RECHERCHE -->
