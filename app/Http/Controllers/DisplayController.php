@@ -4,32 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 
 class DisplayController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::with('guichet')
-            ->where('statut', 'en_cours')
-            ->orderByDesc('appel_at')
-            ->take(1)
-            ->get();
+        $ticket = Cache::remember(
+            'display_current_ticket',
+            now()->addSeconds(10), // ⏱ cache 10 secondes
+            function () {
+                return Ticket::with('guichet')
+                    ->where('statut', 'en_cours')
+                    ->orderByDesc('appel_at')
+                    ->first(); // 🔑 PAS get()
+            }
+        );
 
         $ticketUrl = route('ticket.create');
-        //$ticketUrl = "https://www.google.com/";
 
-        // 🔑 Infos Wi-Fi
-        $wifiSsid = 'DTLBOX23';
-        $wifiPassword = 'P@sser=123';
-        $wifiType = 'WPA';
+        // Wi-Fi
+        $wifiQr = "WIFI:T:WPA;S:DTLBOX23;P:P@sser=123;;";
 
-        // 🔹 Texte QR Wi-Fi standard
-        $wifiQr = "WIFI:T:$wifiType;S:$wifiSsid;P:$wifiPassword;;";
-
-        return view('display.index', compact(
-            'tickets',
-            'ticketUrl',
-            'wifiQr'
-        ));
+        return view('display.index', [
+            'tickets'   => $ticket ? collect([$ticket]) : collect(),
+            'ticketUrl' => $ticketUrl,
+            'wifiQr'    => $wifiQr,
+        ]);
     }
 }
