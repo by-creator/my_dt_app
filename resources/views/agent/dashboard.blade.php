@@ -12,7 +12,7 @@
         </header>
 
         <div class="page-heading">
-            <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
+            <h3>Bienvenu(e) {{ $user->name }} </h3>
         </div>
 
         <div class="page-content">

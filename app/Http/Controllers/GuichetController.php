@@ -220,11 +220,12 @@ class GuichetController extends Controller
                 break;
         }
 
-        return view('agent.dashboard', compact('cards', 'guichet'));
+        return view('agent.dashboard', compact('cards', 'guichet','user'));
     }
 
     public function index(Guichet $guichet)
     {
+         $user = Auth::user();
         // Ticket en cours pour CE guichet
         $ticketEnCours = Ticket::where('guichet_id', $guichet->id)
             ->where('statut', 'en_cours')
@@ -243,6 +244,7 @@ class GuichetController extends Controller
             'ticketEnCours' => $ticketEnCours,
             'ticketsEnAttente' => $ticketsEnAttente,
             'enAttenteCount' => $ticketsEnAttente->count(),
+            'user' => $user
         ]);
     }
 

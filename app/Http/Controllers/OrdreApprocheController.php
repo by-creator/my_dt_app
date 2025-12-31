@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrdreApproche;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrdreApprocheController extends Controller
 {
@@ -12,7 +13,8 @@ class OrdreApprocheController extends Controller
     public function index(Request $request)
     {
         $ordres = OrdreApproche::orderBy('id', 'desc')->get();
-        return view('ordre_approche.index', compact('ordres'));
+        $user = Auth::user();
+        return view('ordre_approche.index', compact('ordres','user'));
     }
 
     public function list(Request $request)
@@ -23,8 +25,9 @@ class OrdreApprocheController extends Controller
 
         // 🔍 Récupération de l'ordre
         $ordre = OrdreApproche::where('ItemNumber', $request->ordre_id)->first();
+        $user = Auth::user();
 
-        return view('ordre_approche.list', compact('ordre'));
+        return view('ordre_approche.list', compact('ordre','user'));
     }
 
 

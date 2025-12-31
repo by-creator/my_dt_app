@@ -59,7 +59,7 @@
             </header>
 
             <div class="page-heading">
-                <h3>Bienvenu(e) {{ Auth::user()->name }}</h3>
+                <h3>Bienvenu(e) {{ $user->name }} </h3>
                 @include('partials.gfa.agent.dashboard')
             </div>
         </div>

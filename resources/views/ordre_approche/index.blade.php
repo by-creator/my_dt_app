@@ -29,7 +29,7 @@
                             </a>
                         </li>
 
-                        @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
+                        @if($user->role->name == "ADMIN" || $user->role->name == "SUPER_U" || $user->role->name == "OPERATIONS" || $user->role->name == "QHSE")
                         @include('partials.ordre_approche.menu')
                         @endif
 
@@ -60,10 +60,10 @@
             </header>
 
             <div class="page-heading">
-                
+                <h3>Bienvenu(e) {{ $user->name }} </h3>
             </div>
             <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "OPERATIONS" || Auth::user()->role->name == "QHSE")
+                @if($user->role->name == "ADMIN" || $user->role->name == "SUPER_U" || $user->role->name == "OPERATIONS" || $user->role->name == "QHSE")
                 @include('partials.ordre_approche.form')
                 @endif
             </div>
