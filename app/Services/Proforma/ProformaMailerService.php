@@ -13,10 +13,10 @@ use App\Mail\{
 
 class ProformaMailerService
 {
-    private array $cc = [/*
+    private array $cc = [
         'sn004-proforma@dakar-terminal.com',
-        'sn004-facturation@dakar-terminal.com',*/
-        'noreplysitedt@gmail.com'
+        'sn004-facturation@dakar-terminal.com',
+        //'noreplysitedt@gmail.com'
     ];
 
     public function sendDocuments($rattachement, $proforma, array $documents): void

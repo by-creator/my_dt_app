@@ -12,9 +12,9 @@ use App\Mail\{
 class BonMailerService
 {
     private array $cc = [
-        /*'sn004-proforma@dakar-terminal.com',
-        'sn004-facturation@dakar-terminal.com',*/
-        'noreplysitedt@gmail.com'
+        'sn004-proforma@dakar-terminal.com',
+        'sn004-facturation@dakar-terminal.com',
+        //'noreplysitedt@gmail.com'
     ];
 
     public function sendDocuments($rattachement, $bon, array $documents): void
