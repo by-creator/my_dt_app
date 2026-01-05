@@ -7,25 +7,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-@media print {
-    .no-print {
-        display: none !important;
-    }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
 
-    body {
-        background: white !important;
-    }
+            body {
+                background: white !important;
+            }
 
-    .card {
-        border: none !important;
-        box-shadow: none !important;
-    }
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+            }
 
-    h1 {
-        margin-top: 20px;
-    }
-}
-</style>
+            h1 {
+                margin-top: 20px;
+            }
+        }
+    </style>
 
 </head>
 
@@ -40,8 +40,13 @@
         </div>
 
         <div class="mt-4 d-flex justify-content-center gap-3 no-print">
+            
             <a href="{{ route('ticket.create') }}" class="btn btn-outline-secondary btn-lg">
                 ➕ Nouveau ticket
+            </a>
+
+            <a href="{{ route('ticket.download', $ticket->id) }}" class="btn btn-outline-primary btn-lg">
+                ⬇️ Télécharger
             </a>
 
             <button onclick="window.print()" class="btn btn-outline-secondary btn-lg">

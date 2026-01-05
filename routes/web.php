@@ -47,6 +47,8 @@ Route::post('/demat/validation', [DematController::class, 'validation'])->name('
 
 Route::get('/ticket', [TicketController::class, 'create'])->name('ticket.create');
 Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
+Route::get('/ticket/{ticket}/download', [TicketController::class, 'download'])->name('ticket.download');
+
 
 Route::get('/display', [DisplayController::class, 'index']);
 

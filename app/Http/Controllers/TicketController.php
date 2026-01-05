@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Ticket;
 use App\Models\TicketLog;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
 
 class TicketController extends Controller
 {
@@ -37,5 +40,13 @@ class TicketController extends Controller
         ]);
 
         return view('client.ticket', compact('ticket'));
+    }
+
+    public function download(Ticket $ticket)
+    {
+        $pdf = Pdf::loadView('ticket.pdf', compact('ticket'))
+            ->setPaper('A4');
+
+        return $pdf->download('ticket-' . $ticket->numero . '.pdf');
     }
 }
