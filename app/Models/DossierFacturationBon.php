@@ -11,7 +11,12 @@ class DossierFacturationBon extends Model
     use HasFactory, ConvertsDates;
 
     protected $fillable = [
+        'dossier_facturation_id',
         'bon',
+        'user',
+        'bl',
+        'statut',
+        'time_elapsed',
 
     ];
 
@@ -30,5 +35,10 @@ class DossierFacturationBon extends Model
     public function getUpdatedAtDateFormattedAttribute()
     {
         return $this->updated_at ? $this->updated_at->format('d/m/Y H:i') : null;
+    }
+
+    public function dossier()
+    {
+        return $this->belongsTo(DossierFacturation::class, 'dossier_facturation_id');
     }
 }

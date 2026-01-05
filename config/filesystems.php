@@ -52,6 +52,12 @@ return [
             'options' => [
                 'ACL' => 'public-read', // Backblaze accepte celui-ci
             ],
+
+            'http' => [
+                'verify' => false, // ❌ désactive SSL
+            ],
+            
+            'throw' => true, // IMPORTANT → voir la vraie erreur
         ],
 
 
@@ -94,5 +100,12 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Backblaze Public URL
+    |--------------------------------------------------------------------------
+    */
+    'b2_public_url' => env('B2_PUBLIC_URL'),
 
 ];

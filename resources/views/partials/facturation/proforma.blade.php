@@ -60,19 +60,7 @@
 
                     <form id="sendProformaForm" method="POST" enctype="multipart/form-data">
                         @csrf
-
-                        <div class="modal-body">
-                            <p>Êtes-vous sûr de vouloir envoyer le(s) document(s) pour ce dossier ?</p>
-
-                            <input type="hidden" name="dossier_id" id="proformaId">
-                            <input type="hidden" name="email" id="sendEmail">
-
-                            <div class="mb-3">
-                                <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
-                                <input type="file" name="proforma[]" class="form-control" multiple required>
-                            </div>
-
-                            @if (session('successProforma'))
+                        @if (session('successProforma'))
                                 <script>
                                     Swal.fire({
                                         icon: 'success',
@@ -97,6 +85,13 @@
                                     });
                                 </script>
                             @endif
+                        <div class="modal-body">
+                            <input type="hidden" name="dossier_id" id="proformaId">
+
+                            <div class="mb-3">
+                                <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
+                                <input type="file" name="proforma[]" class="form-control" multiple required>
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -108,6 +103,8 @@
                             </button>
                         </div>
                     </form>
+
+
 
                 </div>
             </div>
@@ -123,15 +120,15 @@
                     </div>
                     <div class="modal-body">
                         <form id="rejectForm" method="POST">
-                             @if (session('success'))
-                            <script>
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Succès',
-                                    text: "{{ session('success') }}",
-                                    showConfirmButton: true
-                                });
-                            </script>
+                            @if (session('success'))
+                                <script>
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Succès',
+                                        text: "{{ session('success') }}",
+                                        showConfirmButton: true
+                                    });
+                                </script>
                             @endif
                             @csrf
                             @method('PUT')
@@ -143,11 +140,11 @@
                                 </label>
 
                                 <select class="form-select" name="motif" id="motif" required>
-                                    <option value="" disabled selected>
-                                        -- Sélectionnez le motif du refus --
+                                    <option value="" disabled selected>-- Sélectionnez le motif du refus --
                                     </option>
-                                    <option value="La proforma de ce dossier à déjà été traitée">La proforma de ce dossier à déjà été traitée</option>
-                                    <option>Autre motif</option>
+                                    <option value="La proforma de ce dossier à déjà été traitée">La proforma de ce
+                                        dossier à déjà été traitée</option>
+                                    <option value="autre">Autre motif</option>
                                 </select>
                             </div>
 
@@ -155,13 +152,12 @@
                                 <label for="autreMotif" class="form-label">
                                     Merci de préciser le motif
                                 </label>
-                                <textarea class="form-control" name="autre_motif" id="autreMotif" rows="3"
+                                <textarea class="form-control" name="autreMotif" id="autreMotif" rows="3"
                                     placeholder="Saisissez le motif du refus"></textarea>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i
-                                        class="fa-solid fa-check-to-slot"></i>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i>
                                     Oui</button>
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
                                         class="fa-solid fa-square-xmark"></i> Non</button>
@@ -180,7 +176,28 @@
     document.addEventListener("DOMContentLoaded", function() {
         const table = document.getElementById('table1');
 
-        // Event delegation pour send
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-send');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+
+            const form = document.getElementById("sendProformaForm");
+            form.action = `/dossier-facturation/proforma/send/${id}`;
+
+            document.getElementById("proformaId").value = id;
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById('table1');
+        const motifSelect = document.getElementById("motif");
+        const autreMotifContainer = document.getElementById("autreMotifContainer");
+
+        // Event delegation pour envoyer des documents
         table.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-send');
             if (!btn) return;
@@ -191,15 +208,28 @@
                 id;
         });
 
-        // Event delegation pour rejeter
+        // Event delegation pour rejeter un dossier
         table.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-reject');
             if (!btn) return; // Si ce n'est pas un bouton reject, on ignore
 
             const id = btn.dataset.id;
             const email = btn.dataset.email;
+
             document.getElementById("rejectId").value = id;
+            document.getElementById("rejectEmail").value = email;
             document.getElementById("rejectForm").action = "/dossier-facturation/proforma/reject/" + id;
+        });
+
+        // Affichage du champ 'Autre motif' selon la sélection
+        motifSelect.addEventListener("change", function() {
+            if (motifSelect.value === "autre") {
+                // Afficher le champ texte si "Autre motif" est sélectionné
+                autreMotifContainer.classList.remove("d-none");
+            } else {
+                // Cacher le champ texte si une autre option est sélectionnée
+                autreMotifContainer.classList.add("d-none");
+            }
         });
 
         // Initialiser la datatable

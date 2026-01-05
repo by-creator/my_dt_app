@@ -2,326 +2,150 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendBonDocumentsRequest;
+use App\Services\Bon\{
+    BonDossierService,
+    BonUploadService,
+    BonWorkflowService,
+    BonMailerService
+};
+use App\Models\{
+    DossierFacturation,
+    DossierFacturationBon,
+    User
+};
 use App\Enums\StatutDossier;
-use App\Mail\BadExistMail;
-use App\Mail\BonDocumentsMail;
-use App\Mail\BonRelanceMail;
-use App\Models\DossierFacturation;
-use App\Models\DossierFacturationBon;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Throwable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class DossierFacturationBonController extends Controller
 {
+    public function __construct(
+        private BonDossierService $dossierService,
+        private BonUploadService $uploadService,
+        private BonWorkflowService $workflow,
+        private BonMailerService $mailer
+    ) {}
+
     public function bon()
     {
-        $dossiers = DossierFacturation::whereIn(
-            'statut',
-            [
-                StatutDossier::EN_ATTENTE_BAD,
-            ]
-        )
-            ->orderBy('id', 'desc')
-            ->get();
-        $users = User::all();
-         $user = Auth::user();
-        return view('dossier_facturation.bon', compact('dossiers', 'users','user'));
+        return view('dossier_facturation.bon', [
+            'dossiers' => DossierFacturation::where(
+                'statut',
+                StatutDossier::EN_ATTENTE_BAD
+            )->latest()->get(),
+            'users' => User::all(),
+            'user' => Auth::user()
+        ]);
     }
 
     public function list()
     {
-        // Charger les dossiers et leurs bons associés
-        $dossiers = DossierFacturation::with('bons')->orderBy('id', 'desc')->get();
-         $user = Auth::user();
-
-        // Passer la collection de dossiers à la vue
-        return view('dossier_facturation.list_bon', compact('dossiers','user'));
+        return view('dossier_facturation.list_bon', [
+            'dossiers' => DossierFacturation::with('bons')->latest()->get(),
+            'user' => Auth::user()
+        ]);
     }
 
-    // -----------------------------
-    // Étape 1 : Récupérer le dossier
-    // -----------------------------
-    private function getDossier($id)
+    public function sendDocuments(SendBonDocumentsRequest $request, $id)
     {
-        return DossierFacturation::findOrFail($id);
-    }
+        $dossier = $this->dossierService->getDossier($id);
 
-    // -----------------------------
-    // Étape 2 : Récupérer le rattachement
-    // -----------------------------
-    private function getRattachement(DossierFacturation $dossier)
-    {
-        $rattachement = $dossier->rattachement_bl;
-
-        if (!$rattachement || !$rattachement->email) {
-            abort(400, 'Aucun rattachement BL trouvé pour ce dossier.');
+        if ($dossier->statut !== StatutDossier::EN_ATTENTE_BAD) {
+            return back()->with('infoBon', 'Le bon est déjà disponible.');
         }
 
-        return $rattachement;
-    }
+        $rattachement = $this->dossierService->getRattachement($dossier);
 
-    // -----------------------------
-    // Étape 3 : Gestion de l’upload
-    // -----------------------------
-    private function handleUpload(Request $request, array $fields)
-    {
-        $request->validate([
-            'bon.*' => 'nullable|mimes:pdf|max:2048',
+        $files = $this->uploadService->upload($request, ['bon']);
+
+        if (empty($files['bon'][0]['path'])) {
+            return back()->with('errorBon', 'Erreur lors de l’upload du bon.');
+        }
+
+        $bon = DossierFacturationBon::create([
+            'dossier_facturation_id' => $dossier->id,
+            'bon' => $files, // JSON COMPLET
         ]);
 
-        $saveData = [];
 
-        foreach ($fields as $field) {
-            $saveData[$field] = [];
 
-            if ($request->hasFile($field)) {
-                foreach ($request->file($field) as $file) {
-                    $path = $file->store("documents/$field", 'b2');
-
-                    if ($path) {
-                        $saveData[$field][] = [
-                            'original' => $file->getClientOriginalName(),
-                            'path' => $path,
-                        ];
-                    }
-                }
-            }
-        }
-
-        return $saveData;
-    }
-
-    // -----------------------------
-    // Étape 4 : Sauvegarder le bon
-    // -----------------------------
-    private function saveBon(DossierFacturation $dossier, array $filesData)
-    {
-        $bon = new DossierFacturationBon($filesData);
-        $bon->dossier_facturation_id = $dossier->id;
+        $bon->bon = $files;
         $bon->save();
 
-        return $bon;
+        $this->workflow->validate($dossier, $bon);
+
+        $this->mailer->sendDocuments(
+            $rattachement,
+            $bon,
+            $files['bon']
+        );
+
+        return back()->with('successBon', 'Documents envoyés avec succès');
     }
 
-    // -----------------------------
-    // Étape 5 : Mettre à jour le dossier
-    // -----------------------------
-    private function updateDossier(DossierFacturation $dossier, DossierFacturationBon $bon)
+
+
+    public function rejectDocuments(Request $request, $id)
     {
-        $dossier->user_id = Auth::id();
-        $dossier->statut = StatutDossier::BAD_VALIDE;
-        $bon = DossierFacturationBon::firstWhere('dossier_facturation_id', $dossier->id);
+        Log::info('[BON_REJECT]', ['id' => $id]);
 
+        $dossier = $this->dossierService->getDossier($id);
 
-        if ($dossier->date_en_attente_bon) {
-            $seconds =
-                Carbon::parse($dossier->date_en_attente_bon)->diffInSeconds(now());
-
-            $dossier->time_elapsed_bon = DossierFacturation::secondsToHms($seconds);
-            $dossier->relance_bad = false;
-
-            $bon->user = $dossier->user->name;
-            $bon->bl = $dossier->rattachement_bl->bl;
-            $bon->statut = $dossier->statut;
-            $bon->time_elapsed = $dossier->time_elapsed_bon;
+        if ($dossier->statut !== StatutDossier::EN_ATTENTE_BAD) {
+            return back()->with('error', 'Le bon ne peut pas être rejeté dans cet état.');
         }
 
+        $motif = $request->input('motif');
 
-        $dossier->save();
-        $bon->save();
-    }
-
-    // -----------------------------
-    // Étape 6 : Envoyer le mail
-    // -----------------------------
-    private function sendMailToRattachement($rattachement, DossierFacturationBon $bon, $documents)
-    {
-        $data = [
-            'email'  => $rattachement->email, // ajouter cette ligne
-            'prenom' => $rattachement->prenom,
-            'nom'    => $rattachement->nom,
-            'bl'     => $rattachement->bl,
-            'date'   => $bon->created_at->format('d/m/Y H:i'),
-            'documents' => $documents,
-        ];
-
-        // Liste des destinataires
-        $destinataires = [
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            //'noreplysitedt@gmail.com'
-        ];
-
-        Mail::to($rattachement->email)
-            ->cc($destinataires)
-            ->send(new BonDocumentsMail($data));
-    }
-
-    // -----------------------------
-    // Étape 7 : Effectuer le post
-    // -----------------------------
-
-    public function sendDocuments(Request $request, $id)
-    {
-        Log::info("Début de l'envoi des documents pour le dossier ID : $id");
-
-        $dossier = $this->getDossier($id);
-        Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
-
-        if ($dossier->statut === StatutDossier::EN_ATTENTE_BAD) {
-
-            $rattachement = $this->getRattachement($dossier);
-            Log::info("Rattachement récupéré", [
-                'rattachement_id' => $rattachement->id ?? null,
-                'email' => $rattachement->email
-            ]);
-
-            $filesData = $this->handleUpload($request, ['bon']);
-            Log::info("Fichiers uploadés", ['files' => $filesData['bon'] ?? []]);
-
-            $bon = $this->saveBon($dossier, $filesData);
-            Log::info("Bon créée", ['bon_id' => $bon->id]);
-
-            $this->updateDossier($dossier, $bon);
-            Log::info("Dossier mis à jour", [
-                'user_id' => $dossier->user_id,
-                'statut' => $dossier->statut,
-                'time_elapsed' => $dossier->time_elapsed
-            ]);
-
-            $this->sendMailToRattachement($rattachement, $bon, $filesData['bon']);
-            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
-
-            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
-
-            return back()->with('successBon', 'Documents envoyés et mail transmis avec succès !');
-        } else {
-            return back()->with('infoBon', 'Le bon est déjà disponible');
+        if ($motif === 'autre') {
+            $motif = $request->input('autre_motif');
         }
-    }
 
-    public function rejectDocuments($id, Request $request)
-    {
-        try {
-            Log::info('Début du traitement de rejection du dossier', ['dossier_id' => $id]);
-
-            $dossier = DossierFacturation::findOrFail($id);
-            Log::info('Dossier trouvé', ['dossier_id' => $dossier->id, 'statut' => $dossier->statut]);
-
-            $rattachement = $dossier->rattachement_bl;
-            Log::info('Rattachement BL récupéré', [
-                'prenom' => $rattachement->prenom ?? null,
-                'nom' => $rattachement->nom ?? null,
-                'email' => $rattachement->email ?? null,
-                'bl' => $rattachement->bl ?? null
-            ]);
-
-            // Mise à jour du statut
-            if ($dossier->statut === StatutDossier::EN_ATTENTE_BAD ) {
-                
-                $dossier->statut = StatutDossier::BAD_VALIDE;
-            }
-            $dossier->save();
-            Log::info('Statut du dossier mis à jour', ['dossier_id' => $dossier->id, 'nouveau_statut' => $dossier->statut]);
-
-            $destinataires = [
-                'sn004-proforma@dakar-terminal.com',
-                'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com'
-            ];
-            $motif = $request->motif;
-            $autre_motif = $request->autre_motif;
-            Log::info('Préparation de l’envoi du mail', ['motif' => $motif, 'destinataires_cc' => $destinataires]);
-
-            Mail::to($rattachement->email)
-                ->cc($destinataires)
-                ->send(new BadExistMail(
-                    $rattachement->bl,
-                    $rattachement->nom,
-                    $rattachement->prenom,
-                    $motif,
-                    $autre_motif
-                ));
-
-            Log::info('Mail envoyé avec succès', ['to' => $rattachement->email]);
-
-            return redirect()
-                ->back()
-                ->with('success', "Votre demande de bon à délivrer (BAD) a été rejetée avec succès.");
-        } catch (Throwable $e) {
-
-            // Log détaillé de l'erreur
-            Log::error('Erreur lors du rejet du dossier proforma', [
-                'dossier_id' => $id,
-                'email'      => $rattachement->email ?? null,
-                'motif'      => $request->motif ?? null,
-                'message'    => $e->getMessage(),
-                'file'       => $e->getFile(),
-                'line'       => $e->getLine(),
-                'trace'      => $e->getTraceAsString(),
-            ]);
-
-            return redirect()
-                ->back()
-                ->with('error', "Une erreur est survenue lors de l’envoi du mail. Veuillez réessayer.");
+        // Sécurité
+        if (!$motif) {
+            return back()->with('error', 'Le motif de rejet est obligatoire.');
         }
+
+        // 👉 Service métier
+        $this->dossierService->rejectBon($dossier);
+
+        // 👉 Mail
+        $rattachement = $dossier->rattachement_bl;
+        $this->mailer->sendReject($rattachement, $motif);
+
+        return back()->with('success', 'Bon rejeté avec succès');
     }
+
 
     public function relanceDocuments($id)
     {
         $dossier = DossierFacturation::findOrFail($id);
 
-        // On récupère le rattachement BL
+        if ($dossier->statut !== StatutDossier::EN_ATTENTE_BAD) {
+            return back()->with('info', 'Votre BAD est déjà disponible');
+        }
+
+        if ($dossier->relance_bad) {
+            return back()->with(
+                'info',
+                'Vous avez déjà effectué une relance, votre BAD est en cours de traitement'
+            );
+        }
+
+        $dossier->update(['relance_bad' => true]);
+
         $rattachement = $dossier->rattachement_bl;
 
+        $this->mailer->sendRelance([
+            'prenom' => $rattachement->prenom,
+            'nom' => $rattachement->nom,
+            'email' => $rattachement->email,
+            'bl' => $rattachement->bl,
+            'compte' => $rattachement->compte,
+        ]);
 
-
-        // On prépare les données à envoyer dans le mail
-        $data = [
-            'prenom'  => $rattachement->prenom,
-            'nom'     => $rattachement->nom,
-            'email'   => $rattachement->email,
-            'bl'      => $rattachement->bl,
-            'compte'  => $rattachement->compte,
-        ];
-
-        if ($dossier->statut === StatutDossier::FACTURE_VALIDE || $dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
-
-            return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Valider' au niveau de la facture définitive avant de vouloir effectuer une relance");
-        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_BAD) {
-
-            if ($dossier->relance_bad == false) {
-
-                $dossier->relance_bad = true;
-                $dossier->save();
-
-                // Liste des destinataires
-                $destinataires = [
-                    'sn004-proforma@dakar-terminal.com',
-                    'sn004-facturation@dakar-terminal.com',
-                    //'noreplysitedt@gmail.com'
-                ];
-
-                // Envoi du mail
-                Mail::to($destinataires)->send(new BonRelanceMail($data));
-
-
-                Log::info('Votre relance a été effectuée avec succès');
-
-
-                return redirect()->back()->with('success', "Votre relance a été effectuée avec succès ");
-            } else {
-                return redirect()->back()->with('info', "Vous avez déjà effectué une relance, votre BAD est en cours de traitement");
-            }
-        } elseif ($dossier->statut === StatutDossier::BAD_VALIDE) {
-            return redirect()->back()->with('info', "Votre BAD est déjà disponible");
-        } else {
-            return redirect()->back()->with('info', "Votre BAD est déjà disponible");
-        }
+        return back()->with('success', 'Votre relance a été effectuée avec succès');
     }
 }

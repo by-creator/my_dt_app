@@ -13,17 +13,18 @@ class ProformaExistMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $bl, $nom, $prenom, $motif;
+    public $bl, $nom, $prenom, $motif, $autreMotif;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($bl, $nom, $prenom, $motif)
+    public function __construct($bl, $nom, $prenom, $motif, $autreMotif)
     {
         $this->bl = $bl;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->motif = $motif;
+        $this->autreMotif = $autreMotif;
     }
 
     /**

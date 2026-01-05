@@ -4,12 +4,15 @@
             <span>Bon à délivrer</span>
 
             @php
-            // On compte tous les fichiers bon de ce dossier
-            $bonFiles = collect();
-            foreach ($dossier->bons as $bon) {
-            $bonFiles = $bonFiles->merge($bon->bon ?? []);
-            }
+                $bonFiles = collect();
+
+                foreach ($dossier->bons as $bon) {
+                    if (isset($bon->bon['bon'])) {
+                        $bonFiles = $bonFiles->merge($bon->bon['bon']);
+                    }
+                }
             @endphp
+
             <span class="badge bg-light text-dark">{{ $bonFiles->count() }}</span>
         </div>
 
@@ -18,34 +21,39 @@
                 <br>
                 <br>
             </div>
-            @if($bonFiles->isNotEmpty())
-            <div class="overflow-auto">
-                <ul class="list-group">
-                    @foreach($bonFiles as $file)
-                    @php
-                    $url = Storage::disk('b2')->url($file['path'] ?? '');
-                    @endphp
-                    <li class="list-group-item d-flex flex-column">
-                        <div class="mb-2">
-                            <span>{{ $file['original'] }}</span>
-                        </div>
-                        @if(!empty($file['path']))
-                        <div class="mb-2 d-grid gap-2 d-md-flex">
-                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                                Ouvrir
-                            </a>
-                        </div>
-                        @else
-                        <span class="text-muted">Pas de fichier</span>
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
+            @if ($bonFiles->isNotEmpty())
+                <div class="overflow-auto">
+                    <ul class="list-group">
+                        @foreach ($bonFiles as $file)
+                            @php
+                                $url = $file['url'] ?? null;
+                            @endphp
+
+                            <li class="list-group-item d-flex flex-column">
+                                <div class="mb-2">
+                                    <span>{{ $file['original'] ?? 'Nom fichier inconnu' }}</span>
+                                </div>
+
+                                @if ($url)
+                                    <div class="mb-2 d-grid gap-2 d-md-flex">
+                                        <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary">
+                                            <i class="fa-solid fa-eye"></i>
+                                            Ouvrir
+                                        </a>
+                                    </div>
+                                @else
+                                    <span class="text-muted">Fichier non disponible</span>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             @else
-            <p class="text-muted mb-0">Aucun fichier disponible pour bon à délivrer.</p>
+                <p class="text-muted mb-0">
+                    Aucun fichier disponible pour bon à délivrer.
+                </p>
             @endif
+
         </div>
 
         <div class="card-footer bg-white border-top-0">
@@ -60,21 +68,21 @@
 </div>
 
 @if (session('success'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Information',
-        text: "{{ session('success') }}",
-        showConfirmButton: true
-    });
-</script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Information',
+            text: "{{ session('success') }}",
+            showConfirmButton: true
+        });
+    </script>
 @elseif (session('info'))
-<script>
-    Swal.fire({
-        icon: 'info',
-        title: 'Information',
-        text: "{{ session('info') }}",
-        showConfirmButton: true
-    });
-</script>
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Information',
+            text: "{{ session('info') }}",
+            showConfirmButton: true
+        });
+    </script>
 @endif

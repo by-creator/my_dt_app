@@ -17,44 +17,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($dossiers as $d)
-                        @foreach($d->proformas as $proforma)
+                        @foreach ($dossiers as $d)
+                            @foreach ($d->proformas as $proforma)
+                               @foreach(($proforma->proforma['proforma'] ?? []) as $p)
+                                    <tr>
+                                        <td>{{ $proforma->bl }}</td>
+                                        <td>{{ $proforma->user }}</td>
+                                        <td>{{ $proforma->statut }}</td>
+                                        <td>{{ $proforma->time_elapsed }}</td>
 
-                        @php
-                        // Sécurisation : convertir selon ce qui arrive
-                        $proformasJson = is_string($proforma->proforma)
-                        ? json_decode($proforma->proforma, true)
-                        : $proforma->proforma;
-                        @endphp
+                                        {{-- Nom original --}}
+                                        <td>{{ $p['original'] ?? '-' }}</td>
 
-                        @foreach($proformasJson as $index => $p)
-                        @php
-                        $url = !empty($p['path']) ? Storage::disk('b2')->url($p['path']) : null;
-                        @endphp
-
-                        <tr>
-                            <td>{{ $proforma->bl }}</td>
-                            <td>{{ $proforma->user }}</td>
-                            <td>{{ $proforma->statut }}</td>
-                            <td>{{ $proforma->time_elapsed }}</td>
-                            <td>{{ $p['original'] }}</td>
-
-                            <td>
-                                @if($url)
-                                <a href="{{ $url }}" class="btn btn-sm btn-primary" target="_blank">
-                                    <i class="fa-solid fa-eye"></i> Ouvrir
-                                </a>
-                                @else
-                                <span class="text-muted">Pas de fichier</span>
-                                @endif
-                            </td>
-                        </tr>
+                                        {{-- Lien --}}
+                                        <td>
+                                            @if (!empty($p['url']))
+                                                <a href="{{ $p['url'] }}" class="btn btn-sm btn-primary"
+                                                    target="_blank">
+                                                    <i class="fa-solid fa-eye"></i> Ouvrir
+                                                </a>
+                                            @else
+                                                <span class="text-muted">Pas de fichier</span>
+                                            @endif
+                                           
+                                        </td>
+                                    </tr>
+                                    
+                                @endforeach
+                            @endforeach
                         @endforeach
 
-                        @endforeach
-                        @endforeach
                     </tbody>
-
                 </table>
             </div>
         </div>

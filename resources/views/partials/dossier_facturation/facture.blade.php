@@ -4,62 +4,68 @@
             <span>Facture définitive</span>
 
             @php
-            // On compte tous les fichiers facture de ce dossier
-            $factureFiles = collect();
-            foreach ($dossier->factures as $facture) {
-            $factureFiles = $factureFiles->merge($facture->facture ?? []);
-            }
+                $factureFiles = collect();
+
+                foreach ($dossier->factures as $facture) {
+                    if (isset($facture->facture['facture'])) {
+                        $factureFiles = $factureFiles->merge($facture->facture['facture']);
+                    }
+                }
             @endphp
+
             <span class="badge bg-light text-dark">{{ $factureFiles->count() }}</span>
         </div>
 
         <div class="card-body d-flex flex-column">
             <div class="mb-2">
                 <br>
-                <a href="#"
-                    class="btn btn-sm btn-info text-dark"
-                    data-bs-toggle="modal"
+                <a href="#" class="btn btn-sm btn-info text-dark" data-bs-toggle="modal"
                     data-bs-target="#complementFactureModal{{ $dossier->id }}">
                     <i class="fa-solid fa-plus"></i>
                     Prolonger votre facture
                 </a>
             </div>
-            @if($factureFiles->isNotEmpty())
-            <div class="overflow-auto">
-                <ul class="list-group">
-                    @foreach($factureFiles as $file)
-                    @php
-                    $url = Storage::disk('b2')->url($file['path'] ?? '');
-                    @endphp
-                    <li class="list-group-item d-flex flex-column">
-                        <div class="mb-2">
-                            <span>{{ $file['original'] }}</span>
-                        </div>
-                        @if(!empty($file['path']))
-                        <div class="mb-2 d-grid gap-2 d-md-flex">
-                            <a href="{{ $url }}" target="_blank" class="btn btn-sm btn-primary ms-2">
-                                <i class="fa-solid fa-eye"></i>
-                                Ouvrir
-                            </a>
-                            <a href="#"
-                                class="btn btn-sm btn-success ms-2"
-                                data-bs-toggle="modal"
-                                data-type="facture"
-                                data-bs-target="#validateFactureModal{{ $dossier->id }}">
-                                <i class="fa-solid fa-check-to-slot"></i>
-                                Valider
-                            </a>
-                        </div>
-                        @else
-                        <span class="text-muted">Pas de fichier</span>
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
+            @if ($factureFiles->isNotEmpty())
+                <div class="overflow-auto">
+                    <ul class="list-group">
+                        @foreach ($factureFiles as $file)
+                            @php
+                                $url = $file['url'] ?? null;
+                            @endphp
+
+                            <li class="list-group-item d-flex flex-column">
+                                <div class="mb-2">
+                                    <span>{{ $file['original'] ?? 'Nom fichier inconnu' }}</span>
+                                </div>
+
+                                @if ($url)
+                                    <div class="mb-2 d-grid gap-2 d-md-flex">
+                                        <a href="{{ $url }}" target="_blank"
+                                            class="btn btn-sm btn-primary ms-2">
+                                            <i class="fa-solid fa-eye"></i>
+                                            Ouvrir
+                                        </a>
+
+                                        <a href="#" class="btn btn-sm btn-success ms-2" data-bs-toggle="modal"
+                                            data-type="facture"
+                                            data-bs-target="#validateFactureModal{{ $dossier->id }}">
+                                            <i class="fa-solid fa-check-to-slot"></i>
+                                            Valider
+                                        </a>
+                                    </div>
+                                @else
+                                    <span class="text-muted">Fichier non disponible</span>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             @else
-            <p class="text-muted mb-0">Aucun fichier disponible pour facture définitive.</p>
+                <p class="text-muted mb-0">
+                    Aucun fichier disponible pour facture définitive.
+                </p>
             @endif
+
         </div>
 
         <div class="card-footer bg-white border-top-0">
@@ -74,21 +80,21 @@
 </div>
 
 @if (session('success'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Information',
-        text: "{{ session('success') }}",
-        showConfirmButton: true
-    });
-</script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Information',
+            text: "{{ session('success') }}",
+            showConfirmButton: true
+        });
+    </script>
 @elseif (session('info'))
-<script>
-    Swal.fire({
-        icon: 'info',
-        title: 'Information',
-        text: "{{ session('info') }}",
-        showConfirmButton: true
-    });
-</script>
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Information',
+            text: "{{ session('info') }}",
+            showConfirmButton: true
+        });
+    </script>
 @endif

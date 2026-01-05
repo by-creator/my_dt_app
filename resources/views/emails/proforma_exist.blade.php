@@ -12,7 +12,7 @@ Bonjour {{ $prenom }} {{ $nom }},
 
 Votre dossier dont voici le numéro de BL **{{ $bl }}** ne peut avoir de facture proforma pour le motif ci-dessous : 
 
-**Motif :** {{ $motif }} {{ $autre_motif }}
+**Motif :** {{ $motif }} 
 <br>
 <br>
 

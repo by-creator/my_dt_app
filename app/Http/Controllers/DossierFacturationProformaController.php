@@ -2,28 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\StatutDossier;
-use App\Mail\ProformaDocumentsMail;
-use App\Mail\ProformaExistMail;
-use App\Mail\ProformaGenerateMail;
-use App\Mail\ProformaRelanceMail;
-use App\Mail\ProformaValidateMail;
-use App\Models\DossierFacturation;
-use App\Models\DossierFacturationProforma;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
+
+use App\Http\Requests\{
+    GenerateProformaRequest,
+    SendProformaDocumentsRequest
+};
+use App\Services\Proforma\{
+    ProformaDossierService,
+    ProformaUploadService,
+    ProformaMailerService,
+    ProformaGeneratorService
+};
+use App\Models\{
+    DossierFacturation,
+    DossierFacturationProforma,
+    User
+};
+use App\Enums\StatutDossier;
 use Illuminate\Support\Facades\Auth;
-use Throwable;
-
-
+use Illuminate\Support\FacadesLog;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DossierFacturationProformaController extends Controller
 {
+    public function __construct(
+        private ProformaDossierService $dossierService,
+        private ProformaUploadService $uploadService,
+        private ProformaMailerService $mailer,
+        private ProformaGeneratorService $generator
+    ) {}
+
     public function proforma()
     {
+        // Récupérer les dossiers de facturation dans les statuts spécifiés
         $dossiers = DossierFacturation::whereIn(
             'statut',
             [
@@ -33,334 +46,169 @@ class DossierFacturationProformaController extends Controller
         )
             ->orderBy('id', 'desc')
             ->get();
+
+        // Récupérer tous les utilisateurs et l'utilisateur connecté
         $users = User::all();
         $user = Auth::user();
+
+        // Renvoyer la vue avec les données nécessaires
         return view('dossier_facturation.proforma', compact('dossiers', 'users', 'user'));
     }
 
     public function list()
     {
         // Charger les dossiers et leurs proformas associés
-        $dossiers = DossierFacturation::with('proformas')->orderBy('id', 'desc')->get();
+        // En utilisant la méthode 'with' pour charger la relation 'proformas'
+        $dossiers = DossierFacturation::with('proformas') // Assurez-vous que la relation 'proformas' existe
+            ->orderBy('id', 'desc')
+            ->get();
+
+        // Récupérer l'utilisateur connecté
         $user = Auth::user();
 
         // Passer la collection de dossiers à la vue
-        return view('dossier_facturation.list_proforma', compact('dossiers','user'));
+        return view('dossier_facturation.list_proforma', compact('dossiers', 'user'));
     }
 
 
-    public function generate(Request $request, $id)
+
+    public function generate(GenerateProformaRequest $request, $id)
     {
-        $request->validate([
-            'documentDate' => 'required|date',
+        $dossier = $this->dossierService->getDossier($id);
+
+        if ($dossier->statut !== StatutDossier::VALIDE) {
+            return back()->with('info', 'Votre facture proforma est déjà en cours ou disponible');
+        }
+
+        $date = Carbon::parse($request->documentDate);
+        $rattachement = $this->dossierService->getRattachement($dossier);
+
+        $this->generator->generate($dossier, $date);
+
+        $this->mailer->sendGenerate([
+            'date' => $date,
+            'prenom' => $rattachement->prenom,
+            'nom' => $rattachement->nom,
+            'email' => $rattachement->email,
+            'bl' => $rattachement->bl,
+            'compte' => $rattachement->compte,
         ]);
 
-        $dossier = DossierFacturation::findOrFail($id);
-
-        if ($dossier->statut === StatutDossier::VALIDE) {
-            // Exemple : générer le document avec la date choisie
-            $date = Carbon::parse($request->input('documentDate'));
+        return back()->with('success', 'Votre facture proforma sera disponible dans 10 minutes');
+    }
 
 
-            // On récupère le rattachement BL
+    public function sendDocuments(SendProformaDocumentsRequest $request, $id)
+    {
+        $dossier = $this->dossierService->getDossier($id);
+        $rattachement = $this->dossierService->getRattachement($dossier);
+
+        $files = $this->uploadService->upload($request, ['proforma']);
+
+        if (empty($files['proforma'][0]['path'])) {
+            return back()->with('error', 'Erreur lors de l’upload du fichier proforma.');
+        }
+
+        //$path = $files['proforma'][0]['path'];
+
+        $proforma = DossierFacturationProforma::create([
+            'dossier_facturation_id' => $dossier->id,
+            'proforma' => $files, // JSON COMPLET
+        ]);
+
+
+        $proforma->proforma = $files;
+
+        $proforma->save();
+
+        $this->dossierService->updateDossier($dossier, $proforma);
+
+        $documents = $files['proforma']; // tableau complet
+
+        $this->mailer->sendDocuments($rattachement, $proforma, $documents);
+
+
+        return back()->with('successProforma', 'Documents envoyés avec succès');
+    }
+
+
+    public function rejectDocuments(Request $request, $id)
+    {
+        Log::info('Rejet de la proforma', ['id' => $id]);
+
+        // Récupérer le dossier de facturation
+        $dossier = $this->dossierService->getDossier($id);
+
+        // Vérifier que le dossier est dans un statut valide pour le rejet
+        if (!in_array($dossier->statut, [StatutDossier::EN_ATTENTE_PROFORMA, StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE])) {
+            return back()->with('error', 'Le dossier ne peut pas être rejeté dans cet état.');
+        }
+
+        try {
+            // Récupérer le motif de rejet depuis la requête
+            $motif = $request->input('motif');
+
+            // Si "Autre motif" est sélectionné, on prend la valeur du champ texte
+            if ($motif === 'autre') {
+                $motif = $request->input('autreMotif'); // Récupère le motif personnalisé
+            }
+
+            // Rejeter le dossier avec le motif
+            $this->dossierService->reject($dossier, $motif, $request->input('autreMotif'));
+
+            // Récupérer le rattachement BL du dossier pour l'email
             $rattachement = $dossier->rattachement_bl;
 
-            // On prépare les données à envoyer dans le mail
-            $data = [
-                'date' => $date,
-                'prenom'  => $rattachement->prenom,
-                'nom'     => $rattachement->nom,
-                'email'   => $rattachement->email,
-                'bl'      => $rattachement->bl,
-                'compte'  => $rattachement->compte,
-            ];
+            // Envoi du mail avec le motif de rejet
+            $this->mailer->sendReject($rattachement, $motif, $request->input('autreMotif'));  // Assurez-vous de bien envoyer 'autre_motif'
 
-            // Liste des destinataires
-            $destinataires = [
-                'sn004-proforma@dakar-terminal.com',
-                'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com'
-            ];
-
-            // Envoi du mail
-            Mail::to($destinataires)->send(new ProformaGenerateMail($data));
-
-
-            Log::info('Demande de facture proforma envoyée');
-
-            $dossier->date_proforma = $date;
-
-            $dossier->statut = StatutDossier::EN_ATTENTE_PROFORMA;
-
-            $dossier->date_en_attente_proforma = now();
-
-            // Sauvegarde les changements
-            $dossier->save();
-
-            return redirect()->back()->with('success', "Votre facture proforma sera disponible dans 10 minutes ");
-        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
-            return redirect()->back()->with('info', "Votre facture proforma est en cours de traitement");
-        } elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
-            return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
-        } else {
-            return redirect()->back()->with('info', "Tout est ok !");
-        }
-    }
-
-
-    // -----------------------------
-    // Étape 1 : Récupérer le dossier
-    // -----------------------------
-    private function getDossier($id)
-    {
-        return DossierFacturation::findOrFail($id);
-    }
-
-    // -----------------------------
-    // Étape 2 : Récupérer le rattachement
-    // -----------------------------
-    private function getRattachement(DossierFacturation $dossier)
-    {
-        $rattachement = $dossier->rattachement_bl;
-
-        if (!$rattachement || !$rattachement->email) {
-            abort(400, 'Aucun rattachement BL trouvé pour ce dossier.');
-        }
-
-        return $rattachement;
-    }
-
-    // -----------------------------
-    // Étape 3 : Gestion de l’upload
-    // -----------------------------
-    private function handleUpload(Request $request, array $fields)
-    {
-        $request->validate([
-            'proforma.*' => 'nullable|mimes:pdf|max:2048',
-        ]);
-
-        $saveData = [];
-
-        foreach ($fields as $field) {
-            $saveData[$field] = [];
-
-            if ($request->hasFile($field)) {
-                foreach ($request->file($field) as $file) {
-                    $path = $file->store("documents/$field", 'b2');
-
-                    if ($path) {
-                        $saveData[$field][] = [
-                            'original' => $file->getClientOriginalName(),
-                            'path' => $path,
-                        ];
-                    }
-                }
-            }
-        }
-
-        return $saveData;
-    }
-
-    // -----------------------------
-    // Étape 4 : Sauvegarder la proforma
-    // -----------------------------
-    private function saveProforma(DossierFacturation $dossier, array $filesData)
-    {
-        $proforma = new DossierFacturationProforma($filesData);
-        $proforma->dossier_facturation_id = $dossier->id;
-        $proforma->save();
-
-        return $proforma;
-    }
-
-    // -----------------------------
-    // Étape 5 : Mettre à jour le dossier
-    // -----------------------------
-    private function updateDossier(DossierFacturation $dossier, DossierFacturationProforma $proforma)
-    {
-        $dossier->user_id = Auth::id();
-        $dossier->statut = StatutDossier::PROFORMA_VALIDE;
-        $proforma = DossierFacturationProforma::firstWhere('dossier_facturation_id', $dossier->id);
-
-
-        if ($dossier->date_en_attente_proforma) {
-            $seconds =
-                Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
-
-            $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
-            $dossier->relance_proforma = false;
-
-            $proforma->user = $dossier->user->name;
-            $proforma->bl = $dossier->rattachement_bl->bl;
-            $proforma->statut = $dossier->statut;
-            $proforma->time_elapsed = $dossier->time_elapsed_proforma;
-        }
-        $dossier->save();
-        $proforma->save();
-    }
-
-    private function updateComplementDossier(DossierFacturation $dossier)
-    {
-        $dossier->user_id = Auth::id();
-        $dossier->statut = StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE;
-        $proforma = DossierFacturationProforma::firstWhere('dossier_facturation_id', $dossier->id);
-
-
-        if ($dossier->date_en_attente_proforma) {
-            $seconds =
-                Carbon::parse($dossier->date_en_attente_proforma)->diffInSeconds(now());
-
-            $dossier->time_elapsed_proforma = DossierFacturation::secondsToHms($seconds);
-            $dossier->relance_proforma = false;
-
-            $proforma->user = $dossier->user->name;
-            $proforma->bl = $dossier->rattachement_bl->bl;
-            $proforma->statut = $dossier->statut;
-            $proforma->time_elapsed = $dossier->time_elapsed_proforma;
-        }
-        $dossier->save();
-        $proforma->save();
-    }
-
-    // -----------------------------
-    // Étape 6 : Envoyer le mail
-    // -----------------------------
-    private function sendMailToRattachement($rattachement, DossierFacturationProforma $proforma, $documents)
-    {
-        $data = [
-            'email'  => $rattachement->email, // ajouter cette ligne
-            'prenom' => $rattachement->prenom,
-            'nom'    => $rattachement->nom,
-            'bl'     => $rattachement->bl,
-            'date'   => $proforma->created_at->format('d/m/Y H:i'),
-            'documents' => $documents,
-        ];
-
-        // Liste des destinataires
-        $destinataires = [
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            //'noreplysitedt@gmail.com'
-        ];
-
-        Mail::to($rattachement->email)
-            ->cc($destinataires)
-            ->send(new ProformaDocumentsMail($data));
-    }
-
-
-    // -----------------------------
-    // Étape 7 : Effectuer le post
-    // -----------------------------
-
-    public function sendDocuments(Request $request, $id)
-    {
-        Log::info("Début de l'envoi des documents pour le dossier ID : $id");
-
-        $dossier = $this->getDossier($id);
-        Log::info("Dossier récupéré", ['dossier_id' => $dossier->id]);
-
-        if ($dossier->date_proforma != NULL) {
-            $rattachement = $this->getRattachement($dossier);
-            Log::info("Rattachement récupéré", [
-                'rattachement_id' => $rattachement->id ?? null,
-                'email' => $rattachement->email
+            // Retour avec un message de succès
+            return back()->with('success', 'Proforma rejetée avec succès');
+        } catch (\Throwable $e) {
+            Log::error('Erreur rejet proforma', [
+                'id' => $id,
+                'message' => $e->getMessage(),
             ]);
 
-            $filesData = $this->handleUpload($request, ['proforma']);
-            Log::info("Fichiers uploadés", ['files' => $filesData['proforma'] ?? []]);
-
-            $proforma = $this->saveProforma($dossier, $filesData);
-            Log::info("Proforma créée", ['proforma_id' => $proforma->id]);
-
-            if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
-                $this->updateDossier($dossier, $proforma);
-                Log::info("Dossier mis à jour", [
-                    'user_id' => $dossier->user_id,
-                    'statut' => $dossier->statut,
-                    'time_elapsed' => $dossier->time_elapsed
-                ]);
-            } elseif (
-                $dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE ||
-                $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE
-            ) {
-                $this->updateComplementDossier($dossier, $proforma);
-                Log::info("Dossier mis à jour", [
-                    'user_id' => $dossier->user_id,
-                    'statut' => $dossier->statut,
-                    'time_elapsed' => $dossier->time_elapsed
-                ]);
-            }
-
-
-            $this->sendMailToRattachement($rattachement, $proforma, $filesData['proforma']);
-            Log::info("Mail envoyé au rattachement", ['email' => $rattachement->email]);
-
-            Log::info("Fin de l'envoi des documents pour le dossier ID : $id");
-
-            return back()->with('successProforma', 'Documents envoyés et mail transmis avec succès !');
-        } else {
-            return back()->with('infoProforma', 'Le client doit soit au préalable saisir une date ou soit la proforma est déjà disponible');
+            return back()->with('error', 'Une erreur est survenue lors du rejet de la proforma.');
         }
     }
 
     public function validate($id)
     {
-        $dossier = DossierFacturation::findOrFail($id);
+        $dossier = $this->dossierService->getDossier($id);
 
-        // On récupère le rattachement BL
-        $rattachement = $dossier->rattachement_bl;
+        // 👉 logique métier déplacée dans le service
+        $message = $this->dossierService->validate($dossier);
 
-        // On prépare les données à envoyer dans le mail
-        $data = [
-            'prenom'  => $rattachement->prenom,
-            'nom'     => $rattachement->nom,
-            'email'   => $rattachement->email,
-            'bl'      => $rattachement->bl,
-            'compte'  => $rattachement->compte,
-        ];
-
-        if ($dossier->statut === StatutDossier::PROFORMA_VALIDE) {
-
-            $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
-            $dossier->date_en_attente_facture = now();
-            $dossier->save();
-        } elseif (
-            $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE ||
-            $dossier->statut === StatutDossier::PROFORMA_VALIDE
-        ) {
-
-            $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE;
-            $dossier->date_en_attente_facture = now();
-            $dossier->save();
-        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE) {
-            return redirect()->back()->with('info', "Votre facture définitive est en cours de traitement");
-        } elseif ($dossier->statut === StatutDossier::FACTURE_VALIDE) {
-            return redirect()->back()->with('info', "Votre facture définitive est déjà disponible");
-        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE) {
-            return redirect()->back()->with('info', "Votre facture complémentaire est en cours de traitement");
-        } elseif ($dossier->statut === StatutDossier::FACTURE_COMPLEMENTAIRE_VALIDE) {
-            return redirect()->back()->with('info', "Votre facture complémentaire est déjà disponible");
-        } else {
-            return redirect()->back()->with('info', "Tout est ok !");
+        // 👉 cas où on ne doit PAS envoyer de mail
+        if ($message !== null) {
+            return back()->with('info', $message);
         }
 
-        // Liste des destinataires
-        $destinataires = [
-            'sn004-proforma@dakar-terminal.com',
-            'sn004-facturation@dakar-terminal.com',
-            //'noreplysitedt@gmail.com'
-        ];
+        // 👉 récupération du rattachement
+        $rattachement = $this->dossierService->getRattachement($dossier);
 
-        // Envoi du mail
-        Mail::to($destinataires)->send(new ProformaValidateMail($data));
+        // 👉 envoi du mail via le mailer existant
+        $this->mailer->sendValidate([
+            'prenom' => $rattachement->prenom,
+            'nom' => $rattachement->nom,
+            'email' => $rattachement->email,
+            'bl' => $rattachement->bl,
+            'compte' => $rattachement->compte,
+        ]);
 
+        Log::info('[PROFORMA_VALIDATE]', [
+            'dossier_id' => $dossier->id,
+            'statut' => $dossier->statut,
+        ]);
 
-        Log::info('Votre facture sera disponible dans 10 minutes');
-
-
-        return redirect()->back()->with('success', "Votre facture définitive sera disponible dans 10 minutes ");
+        return back()->with(
+            'success',
+            "Votre facture définitive sera disponible dans 10 minutes"
+        );
     }
+
 
     public function delete($id)
     {
@@ -376,6 +224,7 @@ class DossierFacturationProformaController extends Controller
 
             $proforma->delete();
             $dossier->statut = StatutDossier::FACTURE_VALIDE;
+            $dossier->date_proforma = NULL;
         } else {
             return redirect()->back()->with('info', "Votre facture proforma est soit en cours de traitement ou soit déjà disponible");
         }
@@ -388,124 +237,38 @@ class DossierFacturationProformaController extends Controller
         return redirect()->back()->with('success', "Votre facture a bien été supprimée ");
     }
 
-    public function rejectDocuments($id, Request $request)
-    {
-        try {
-            Log::info('Début du traitement de rejection du dossier', ['dossier_id' => $id]);
-
-            $dossier = DossierFacturation::findOrFail($id);
-            Log::info('Dossier trouvé', ['dossier_id' => $dossier->id, 'statut' => $dossier->statut]);
-
-            $rattachement = $dossier->rattachement_bl;
-            Log::info('Rattachement BL récupéré', [
-                'prenom' => $rattachement->prenom ?? null,
-                'nom' => $rattachement->nom ?? null,
-                'email' => $rattachement->email ?? null,
-                'bl' => $rattachement->bl ?? null
-            ]);
-
-            // Mise à jour du statut
-            if ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA) {
-                $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE;
-            } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
-                $dossier->statut = StatutDossier::EN_ATTENTE_FACTURE_COMPLEMENTAIRE;
-            }
-            $dossier->save();
-            Log::info('Statut du dossier mis à jour', ['dossier_id' => $dossier->id, 'nouveau_statut' => $dossier->statut]);
-
-            $destinataires = [
-                'sn004-proforma@dakar-terminal.com',
-                'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com'
-            ];
-            $motif = $request->motif;
-            $autre_motif = $request->autre_motif;
-            Log::info('Préparation de l’envoi du mail', ['motif' => $motif, 'destinataires_cc' => $destinataires]);
-
-            Mail::to($rattachement->email)
-                ->cc($destinataires)
-                ->send(new ProformaExistMail(
-                    $rattachement->bl,
-                    $rattachement->nom,
-                    $rattachement->prenom,
-                    $motif,
-                    $autre_motif
-                ));
-
-            Log::info('Mail envoyé avec succès', ['to' => $rattachement->email]);
-
-            return redirect()
-                ->back()
-                ->with('success', "Votre demande de facture proforma a été rejetée avec succès.");
-        } catch (Throwable $e) {
-
-            // Log détaillé de l'erreur
-            Log::error('Erreur lors du rejet du dossier proforma', [
-                'dossier_id' => $id,
-                'email'      => $rattachement->email ?? null,
-                'motif'      => $request->motif ?? null,
-                'message'    => $e->getMessage(),
-                'file'       => $e->getFile(),
-                'line'       => $e->getLine(),
-                'trace'      => $e->getTraceAsString(),
-            ]);
-
-            return redirect()
-                ->back()
-                ->with('error', "Une erreur est survenue lors de l’envoi du mail. Veuillez réessayer.");
-        }
-    }
-
     public function relanceDocuments($id)
     {
-        $dossier = DossierFacturation::findOrFail($id);
+        $dossier = $this->dossierService->getDossier($id);
 
-        // On récupère le rattachement BL
-        $rattachement = $dossier->rattachement_bl;
+        // 👉 Logique métier déplacée dans le service
+        $message = $this->dossierService->relanceProforma($dossier);
 
-
-
-        // On prépare les données à envoyer dans le mail
-        $data = [
-            'prenom'  => $rattachement->prenom,
-            'nom'     => $rattachement->nom,
-            'email'   => $rattachement->email,
-            'bl'      => $rattachement->bl,
-            'compte'  => $rattachement->compte,
-        ];
-
-        if ($dossier->statut === StatutDossier::VALIDE) {
-
-            return redirect()->back()->with('info', "Merci de cliquer sur le bouton 'Générer votre facture proforma' avant de vouloir effectuer une relance");
-        } elseif ($dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA || $dossier->statut === StatutDossier::EN_ATTENTE_PROFORMA_COMPLEMENTAIRE) {
-
-            if ($dossier->relance_proforma == false) {
-
-                $dossier->relance_proforma = true;
-                $dossier->save();
-
-                // Liste des destinataires
-                $destinataires = [
-                    'sn004-proforma@dakar-terminal.com',
-                    'sn004-facturation@dakar-terminal.com',
-                    //'noreplysitedt@gmail.com'
-                ];
-
-                // Envoi du mail
-                Mail::to($destinataires)->send(new ProformaRelanceMail($data));
-
-
-                Log::info('Votre relance a été effectuée avec succès');
-
-
-                return redirect()->back()->with('success', "Votre relance a été effectuée avec succès ");
-            } else {
-                return redirect()->back()->with('info', "Vous avez déjà effectué une relance, votre facture est en cours de traitement");
-            }
-        } elseif ($dossier->statut === StatutDossier::PROFORMA_VALIDE || $dossier->statut === StatutDossier::PROFORMA_COMPLEMENTAIRE_VALIDE) {
-            return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
-        } else {
-            return redirect()->back()->with('info', "Votre facture proforma est déjà disponible");
+        // 👉 Cas où la relance n’est pas autorisée
+        if ($message !== null) {
+            return back()->with('info', $message);
         }
+
+        // 👉 Récupération du rattachement BL
+        $rattachement = $this->dossierService->getRattachement($dossier);
+
+        // 👉 Envoi du mail via le mailer
+        $this->mailer->sendRelance([
+            'prenom' => $rattachement->prenom,
+            'nom' => $rattachement->nom,
+            'email' => $rattachement->email,
+            'bl' => $rattachement->bl,
+            'compte' => $rattachement->compte,
+        ]);
+
+        Log::info('[PROFORMA_RELANCE]', [
+            'dossier_id' => $dossier->id,
+            'statut' => $dossier->statut,
+        ]);
+
+        return back()->with(
+            'success',
+            "Votre relance a été effectuée avec succès"
+        );
     }
 }

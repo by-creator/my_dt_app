@@ -124,15 +124,15 @@
                     </div>
                     <div class="modal-body">
                         <form id="rejectForm" method="POST">
-                             @if (session('success'))
-                            <script>
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Succès',
-                                    text: "{{ session('success') }}",
-                                    showConfirmButton: true
-                                });
-                            </script>
+                            @if (session('success'))
+                                <script>
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Succès',
+                                        text: "{{ session('success') }}",
+                                        showConfirmButton: true
+                                    });
+                                </script>
                             @endif
                             @csrf
                             @method('PUT')
@@ -147,9 +147,12 @@
                                     <option value="" disabled selected>
                                         -- Sélectionnez le motif du refus --
                                     </option>
-                                    <option value="Le BAD de ce dossier à déjà été traité">Le BAD de ce dossier à déjà été traité</option>
-                                    <option>Autre motif</option>
+                                    <option value="Le BAD de ce dossier a déjà été traité">
+                                        Le BAD de ce dossier a déjà été traité
+                                    </option>
+                                    <option value="autre">Autre motif</option>
                                 </select>
+
                             </div>
 
                             <div class="mb-3 d-none" id="autreMotifContainer">
@@ -175,6 +178,22 @@
     </div>
 
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const motifSelect = document.getElementById("motif");
+    const autreMotifContainer = document.getElementById("autreMotifContainer");
+
+    motifSelect.addEventListener("change", function () {
+        if (this.value === "autre") {
+            autreMotifContainer.classList.remove("d-none");
+        } else {
+            autreMotifContainer.classList.add("d-none");
+        }
+    });
+});
+</script>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

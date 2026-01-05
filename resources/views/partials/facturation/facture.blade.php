@@ -18,30 +18,32 @@
                 </thead>
                 <tbody>
                     @foreach ($dossiers as $dossier)
-                    <tr>
-                        <td>{{ $dossier->updated_at_date_formatted ?? '—' }}</td>
-                        <td>
-                            @php
-                            $user = $users->firstWhere('id', $dossier->user_id);
-                            @endphp
-                            {{ $user ? $user->name : 'Agent non défini' }}
-                        </td>
+                        <tr>
+                            <td>{{ $dossier->updated_at_date_formatted ?? '—' }}</td>
+                            <td>
+                                @php
+                                    $user = $users->firstWhere('id', $dossier->user_id);
+                                @endphp
+                                {{ $user ? $user->name : 'Agent non défini' }}
+                            </td>
 
-                        <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
-                        <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->compte : '—' }}</td>
+                            <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
+                            <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->compte : '—' }}</td>
 
-                        <td>{{ $dossier->statut ?? '—' }}</td>
-                        <td>{{ $dossier->time_elapsed_facture ?? '-' }}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-send" data-id="{{ $dossier->id }}" data-email="{{ $dossier->email }}" data-bs-toggle="modal" data-bs-target="#sendModal"><i class="fa-solid fa-envelope"></i> Envoyer</button>
-                        </td>
-                        <td>
+                            <td>{{ $dossier->statut ?? '—' }}</td>
+                            <td>{{ $dossier->time_elapsed_facture ?? '-' }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-send" data-id="{{ $dossier->id }}"
+                                    data-email="{{ $dossier->email }}" data-bs-toggle="modal"
+                                    data-bs-target="#sendModal"><i class="fa-solid fa-envelope"></i> Envoyer</button>
+                            </td>
+                            <td>
                                 <button type="button" class="btn btn-danger btn-reject" data-id="{{ $dossier->id }}"
                                     data-email="{{ $dossier->email }}" data-bs-toggle="modal"
                                     data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i>
                                     Rejeter</button>
                             </td>
-                    </tr>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -68,38 +70,33 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Sélectionner un ou plusieurs fichiers</label>
-                                <input
-                                    type="file"
-                                    name="facture[]"
-                                    class="form-control"
-                                    multiple
-                                    required>
+                                <input type="file" name="facture[]" class="form-control" multiple required>
                             </div>
 
                             @if (session('successFacture'))
-                            <script>
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Succès',
-                                    text: "{{ session('successFacture') }}"
-                                });
-                            </script>
+                                <script>
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Succès',
+                                        text: "{{ session('successFacture') }}"
+                                    });
+                                </script>
                             @elseif (session('infoFacture'))
-                            <script>
-                                Swal.fire({
-                                    icon: 'info',
-                                    title: 'Information',
-                                    text: "{{ session('infoFacture') }}"
-                                });
-                            </script>
+                                <script>
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: 'Information',
+                                        text: "{{ session('infoFacture') }}"
+                                    });
+                                </script>
                             @elseif (session('error'))
-                            <script>
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Erreur',
-                                    text: "{{ session('error') }}"
-                                });
-                            </script>
+                                <script>
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Erreur',
+                                        text: "{{ session('error') }}"
+                                    });
+                                </script>
                             @endif
                         </div>
 
@@ -127,15 +124,15 @@
                     </div>
                     <div class="modal-body">
                         <form id="rejectForm" method="POST">
-                             @if (session('success'))
-                            <script>
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Succès',
-                                    text: "{{ session('success') }}",
-                                    showConfirmButton: true
-                                });
-                            </script>
+                            @if (session('success'))
+                                <script>
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Succès',
+                                        text: "{{ session('success') }}",
+                                        showConfirmButton: true
+                                    });
+                                </script>
                             @endif
                             @csrf
                             @method('PUT')
@@ -150,9 +147,12 @@
                                     <option value="" disabled selected>
                                         -- Sélectionnez le motif du refus --
                                     </option>
-                                    <option value="La facture de ce dossier à déjà été traitée">La facture de ce dossier à déjà été traitée</option>
-                                    <option>Autre motif</option>
+                                    <option value="La facture de ce dossier a déjà été traitée">
+                                        La facture de ce dossier a déjà été traitée
+                                    </option>
+                                    <option value="autre">Autre motif</option>
                                 </select>
+
                             </div>
 
                             <div class="mb-3 d-none" id="autreMotifContainer">
@@ -182,6 +182,21 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const motifSelect = document.getElementById("motif");
+        const autreMotifContainer = document.getElementById("autreMotifContainer");
+
+        motifSelect.addEventListener("change", function() {
+            if (this.value === "autre") {
+                autreMotifContainer.classList.remove("d-none");
+            } else {
+                autreMotifContainer.classList.add("d-none");
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
         const table = document.getElementById('table1');
 
         // Event delegation pour send
@@ -191,7 +206,8 @@
 
             const id = btn.dataset.id;
             document.getElementById("factureId").value = id;
-            document.getElementById("sendFactureForm").action = "/dossier-facturation/facture/send/" + id;
+            document.getElementById("sendFactureForm").action = "/dossier-facturation/facture/send/" +
+                id;
         });
 
         // Event delegation pour rejeter

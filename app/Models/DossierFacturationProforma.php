@@ -11,7 +11,11 @@ class DossierFacturationProforma extends Model
     use HasFactory, ConvertsDates;
 
     protected $fillable = [
+        'dossier_facturation_id',
         'proforma',
+        'user',
+        'bl',
+        'statut',
         'time_elapsed'
     ];
 

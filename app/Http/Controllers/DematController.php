@@ -1,105 +1,82 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Mail\ValidationDematMail;
-use App\Models\RattachementBl;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\DematValidationRequest;
+use App\Services\Demat\{
+    DematService,
+    DematMailerService
+};
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-
-
 
 class DematController extends Controller
 {
+    public function __construct(
+        private DematService $service,
+        private DematMailerService $mailer
+    ) {}
 
     public function index()
     {
         return redirect()->route('login');
     }
 
-    public function validation(Request $request)
+    public function validation(DematValidationRequest $request)
     {
-
         try {
-            // Validation des champs
-            $data = $request->validate([
-                'prenom' => 'required|string|max:255',
-                'nom' => 'required|string|max:255',
-                'email' => 'required|email',
-                'bl' => 'required|string',
-                'compte' => 'required|string',
-                'documents.*' => 'file|max:20480', // 20480 Ko = 20 Mo
+            $data = $request->validated();
 
-            ]);
-
-            // Vérifier si le BL existe déjà
-           $blEnAttenteValidation = RattachementBl::where('bl', $data['bl'])
-            ->where('statut', 'EN ATTENTE VALIDATION')
-            ->exists();
-
-            $blValide = RattachementBl::where('bl', $data['bl'])
-            ->where('statut', 'VALIDE')
-            ->exists();
-
-            if ($blEnAttenteValidation) {
-                return redirect()
-                    ->back()
-                    ->with(
-                        'info',
-                        'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation'
-                    );
-            }
-            elseif ($blValide) {
-                return redirect()
-                    ->back()
-                    ->with(
-                        'info',
-                        'Ce BL est déjà validé !'
-                    );
+            // Vérifications BL
+            if ($this->service->blEnAttente($data['bl'])) {
+                return back()->with(
+                    'info',
+                    'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation'
+                );
             }
 
+            if ($this->service->blValide($data['bl'])) {
+                return back()->with(
+                    'info',
+                    'Ce BL est déjà validé !'
+                );
+            }
 
-            // Récupération des fichiers
+            // Gestion des fichiers (toujours tableau)
             $files = $request->file('documents');
             if ($files instanceof \Illuminate\Http\UploadedFile) {
-                $files = [$files]; // Transforme en tableau si un seul fichier
+                $files = [$files];
             }
 
-            // Destinataires
-            $destinataires = [
-                'sn004-proforma@dakar-terminal.com',
-                'sn004-facturation@dakar-terminal.com',
-                //'noreplysitedt@gmail.com',
-            ];
+            // Envoi mail
+            $this->mailer->send($data, $files);
 
-            // Envoi du mail
-            Mail::to($destinataires)
-                ->send(new ValidationDematMail($data, $files));
-
-            Log::info('Demande de validation envoyée', ['email' => $data['email']]);
-
-            $data_create = $request->validate([
-                'prenom' => 'required|string|max:255',
-                'nom' => 'required|string|max:255',
-                'email' => 'required|email',
-                'bl' => 'required|string',
-                'compte' => 'required|string',
-
+            Log::info('Demande de validation envoyée', [
+                'email' => $data['email'],
+                'bl' => $data['bl']
             ]);
 
-            RattachementBl::create($data_create);
+            // Création rattachement BL
+            $this->service->createRattachement([
+                'prenom' => $data['prenom'],
+                'nom' => $data['nom'],
+                'email' => $data['email'],
+                'bl' => $data['bl'],
+                'compte' => $data['compte'],
+            ]);
 
-            return redirect()->back()
-                ->with('success', 'Votre dossier sera disponible dans 10 minutes.');
-        } catch (\Exception $e) {
-            Log::error('Erreur mail validation : ' . $e->getMessage(), [
+            return back()->with(
+                'success',
+                'Votre dossier sera disponible dans 10 minutes.'
+            );
+        } catch (\Throwable $e) {
+            Log::error('Erreur mail validation DEMAT', [
+                'message' => $e->getMessage(),
                 'data' => $request->all()
             ]);
 
-            return redirect()->back()
-                ->with('error', 'Une erreur est survenue lors de l’envoi.');
+            return back()->with(
+                'error',
+                'Une erreur est survenue lors de l’envoi.'
+            );
         }
     }
 }
