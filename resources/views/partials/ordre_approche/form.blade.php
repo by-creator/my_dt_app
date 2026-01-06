@@ -23,12 +23,9 @@
                                     </datalist>
 
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa-solid fa-check-to-slot"></i>
+                                        <i class="fa-solid fa-check-to-slot"></i> Valider
                                     </button>
 
-                                    <button type="reset" class="btn btn-danger">
-                                        <i class="fa-solid fa-square-xmark"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
