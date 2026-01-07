@@ -30,6 +30,7 @@ use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Events\TicketAppeled;
 use App\Http\Controllers\GuichetController;
+use App\Http\Controllers\OperationController;
 
 Route::get('/', function () {
     return view('index');
@@ -53,14 +54,6 @@ Route::get('/ticket/{ticket}/download', [TicketController::class, 'download'])->
 Route::get('/display', [DisplayController::class, 'index']);
 
 
-
-
-
-Route::get('/test-ably', function () {
-    $ticket = Ticket::latest()->first();
-    event(new TicketAppeled($ticket));
-    return 'EVENT SENT';
-});
 
 /*********************************************************************************************************** */
 
@@ -297,4 +290,7 @@ Route::middleware(['auth'])->group(function () {
             ->latest()
             ->paginate(20);
     });
+
+    Route::post('/import-operations', [OperationController::class, 'import']);
+
 });
