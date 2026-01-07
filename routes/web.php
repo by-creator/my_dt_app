@@ -30,7 +30,7 @@ use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Events\TicketAppeled;
 use App\Http\Controllers\GuichetController;
-use App\Http\Controllers\OperationController;
+use App\Http\Controllers\PlanificationController;
 
 Route::get('/', function () {
     return view('index');
@@ -291,6 +291,7 @@ Route::middleware(['auth'])->group(function () {
             ->paginate(20);
     });
 
-    Route::post('/import-operations', [OperationController::class, 'import']);
+    Route::get('/planification/index', [PlanificationController::class, 'index'])->name('planification.index');
+    Route::post('/import-planification', [PlanificationController::class, 'import'])->name('planification.import');
 
 });

@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Imports\OperationsImport;
 use App\Exports\StatsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
-class OperationController extends Controller
+
+class PlanificationController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+        return view('planification.recap_debarquement',compact('user'));
+    }
+        
     public function import(Request $request)
     {
         $request->validate([

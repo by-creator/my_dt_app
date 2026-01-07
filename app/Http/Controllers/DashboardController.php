@@ -93,13 +93,20 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 5,
+                        'name' => 'Planification',
+                        'header' => 'Planification',
+                        'description' => 'Gestion de Planification',
+                        'route' => route('planification.index')
+                    ],
+                    [
+                        'id' => 6,
                         'name' => 'Stock',
                         'header' => 'Stock',
                         'description' => 'Gestion de Stock',
                         'route' => route('ordinateur.index')
                     ],
                     [
-                        'id' => 6,
+                        'id' => 7,
                         'name' => 'Ticket',
                         'header' => 'Ticket',
                         'description' => 'Gestion de Ticket',
@@ -145,10 +152,24 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 5,
+                        'name' => 'Planification',
+                        'header' => 'Planification',
+                        'description' => 'Gestion de Planification',
+                        'route' => route('planification.index')
+                    ],
+                    [
+                        'id' => 6,
                         'name' => 'Stock',
                         'header' => 'Stock',
                         'description' => 'Gestion de Stock',
                         'route' => route('ordinateur.index')
+                    ],
+                    [
+                        'id' => 7,
+                        'name' => 'Ticket',
+                        'header' => 'Ticket',
+                        'description' => 'Gestion de Ticket',
+                        'route' => route('agent.guichet.me')
                     ],
 
                 ];
