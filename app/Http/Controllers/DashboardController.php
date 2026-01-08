@@ -222,6 +222,21 @@ class DashboardController extends Controller
                 ];
 
                 break;
+
+                case "PLANIFICATION":
+                $cards = [
+
+                    [
+                        'id' => 1,
+                        'name' => 'Planification',
+                        'header' => 'Planification',
+                        'description' => 'Gestion de Planification',
+                        'route' => route('planification.index')
+                    ],
+
+                ];
+
+                break;
         }
 
         return view('dashboard', compact('cards', 'dossiers', 'rattachements','user'));
