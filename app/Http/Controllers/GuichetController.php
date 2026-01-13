@@ -19,6 +19,13 @@ class GuichetController extends Controller
             case "ADMIN":
                 $cards = [
                     [
+                        'id' => 0,
+                        'name' => 'Administration',
+                        'header' => 'Administration',
+                        'description' => 'Gestion administrative',
+                        'route' => route('admin.dashboard'),
+                    ],
+                    [
                         'id' => 1,
                         'name' => 'Guichet 1',
                         'header' => 'Guichet 1',
@@ -109,13 +116,7 @@ class GuichetController extends Controller
                         'description' => 'Gestion du guichet 13',
                         'route' => route('agent.guichet', ['guichet' => 13]),
                     ],
-                    [
-                        'id' => 14,
-                        'name' => 'Administration',
-                        'header' => 'Administration',
-                        'description' => 'Gestion administrative',
-                        'route' => route('admin.dashboard'),
-                    ],
+                    
                 ];
                 break;
             case "FACTURATION":
