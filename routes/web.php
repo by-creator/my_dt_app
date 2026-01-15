@@ -51,7 +51,9 @@ Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store')
 Route::get('/ticket/{ticket}/download', [TicketController::class, 'download'])->name('ticket.download');
 
 
-Route::get('/display', [DisplayController::class, 'index']);
+Route::get('/display', function () {
+    return redirect()->away('https://site-dt-app-production-e69724207a1f.herokuapp.com/');
+});
 
 
 

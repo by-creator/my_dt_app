@@ -58,7 +58,7 @@
 
                                     <div class="card-body">
                                         <p class="card-text">{{ $card['description'] }}</p>
-                                        <a href="{{ $card['route'] }}" class="btn btn-primary w-100">
+                                        <a href="{{ $card['route'] }}" target="_blank" class="btn btn-primary w-100">
                                             Ouvrir
                                         </a>
                                     </div>
