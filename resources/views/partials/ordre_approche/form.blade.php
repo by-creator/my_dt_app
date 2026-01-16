@@ -31,12 +31,6 @@
                         </div>
                     </div>
                 </form>
-
-                <form action="/import-operations" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="file" name="file" required>
-                    <button type="submit">Importer et générer statistiques</button>
-                </form>
                 <br>
             </div>
         </div>
