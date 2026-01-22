@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\ConvertsDates;
 
 
-class OrdreApproche extends Model
+class OrdreApprocheStaging extends Model
 {
     use HasFactory, ConvertsDates;
 
-    protected $table = 'ordre_approches';
+    protected $table = 'ordre_approches_staging';
 
     protected $fillable = [
         'terminal',

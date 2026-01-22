@@ -6,6 +6,9 @@ use App\Models\OrdreApproche;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\OrdreApprocheStagingImport;
 
 class OrdreApprocheController extends Controller
 {
@@ -14,7 +17,7 @@ class OrdreApprocheController extends Controller
     {
         $ordres = OrdreApproche::orderBy('id', 'desc')->get();
         $user = Auth::user();
-        return view('ordre_approche.index', compact('ordres','user'));
+        return view('ordre_approche.index', compact('ordres', 'user'));
     }
 
     public function list(Request $request)
@@ -24,10 +27,10 @@ class OrdreApprocheController extends Controller
         ]);
 
         // 🔍 Récupération de l'ordre
-        $ordre = OrdreApproche::where('ItemNumber', $request->ordre_id)->first();
+        $ordre = OrdreApproche::where('item_number', $request->ordre_id)->first();
         $user = Auth::user();
 
-        return view('ordre_approche.list', compact('ordre','user'));
+        return view('ordre_approche.list', compact('ordre', 'user'));
     }
 
 
@@ -39,18 +42,18 @@ class OrdreApprocheController extends Controller
 
         $data = [
             'date' => $date,
-            'ItemNumber' => $request->ItemNumber,
-            'Zone' => $request->Zone,
-            'TypeDeMarchandise' => $request->TypeDeMarchandise,
+            'item_number' => $request->ItemNumber,
+            'zone' => $request->Zone,
+            'type_de_marchandise' => $request->TypeDeMarchandise,
             'bae' => $request->bae,
-            'BlNumber' => $request->BlNumber,
-            'Vessel' => $request->Vessel,
-            'callNumber' => $request->callNumber,
-            'vesselarrivaldate' => $request->vesselarrivaldate,
-            'Shipowner' => $request->Shipowner,
-            'Item_Code' => $request->Item_Code,
-            'Item_Type' => $request->Item_Type,
-            'Description_' => $request->Description_,
+            'bl_number' => $request->BlNumber,
+            'vessel' => $request->Vessel,
+            'call_number' => $request->callNumber,
+            'vessel_arrival_date' => $request->vesselarrivaldate,
+            'shipowner' => $request->Shipowner,
+            'item_code' => $request->Item_Code,
+            'item_type' => $request->Item_Type,
+            'description' => $request->Description_,
             'client' => $request->client,
             'chauffeur' => $request->chauffeur,
             'permis' => $request->permis,
@@ -82,18 +85,18 @@ class OrdreApprocheController extends Controller
         $data = [
             'date' => Carbon::now(),
             'time' => Carbon::now(),
-            'ItemNumber' => $request->ItemNumber,
-            'Zone' => $request->Zone,
-            'TypeDeMarchandise' => $request->TypeDeMarchandise,
+            'item_number' => $request->ItemNumber,
+            'zone' => $request->Zone,
+            'type_de_marchandise' => $request->TypeDeMarchandise,
             'bae' => $request->bae,
-            'BlNumber' => $request->BlNumber,
-            'Vessel' => $request->Vessel,
-            'callNumber' => $request->callNumber,
-            'vesselarrivaldate' => $request->vesselarrivaldate,
-            'Shipowner' => $request->Shipowner,
-            'Item_Code' => $request->Item_Code,
-            'Item_Type' => $request->Item_Type,
-            'Description_' => $request->Description_,
+            'bl_number' => $request->BlNumber,
+            'vessel' => $request->Vessel,
+            'call_number' => $request->callNumber,
+            'vessel_arrival_date' => $request->vesselarrivaldate,
+            'shipowner' => $request->Shipowner,
+            'item_code' => $request->Item_Code,
+            'item_type' => $request->Item_Type,
+            'description' => $request->Description_,
             'bae' => $request->bae,
             'client' => $request->client,
             'chauffeur' => $request->chauffeur,
@@ -116,4 +119,69 @@ class OrdreApprocheController extends Controller
 
         return redirect()->route('ordre_approche.index')->with('delete', 'Ordre supprimé avec succès.');
     }
+
+    public function import(Request $request)
+    {
+        Log::info('📥 Début import OrdreApproche');
+
+        $request->validate([
+            'ordre_approche_file' => 'required|file|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('ordre_approche_file');
+
+        $path = $file->store('imports/ordre_approche', 'local');
+
+        Log::info('📦 Fichier stocké', [
+            'path' => $path,
+            'size' => $file->getSize(),
+        ]);
+
+        Excel::queueImport(
+            new OrdreApprocheStagingImport,
+            $path,
+            'local'
+        )->chain([
+            new \App\Jobs\ConsolidateOrdreApprocheJob($path),
+        ]);
+
+        Log::info('🚀 Import OrdreApproche mis en queue', [
+            'path' => $path,
+        ]);
+
+        return back()->with('success', 'Import lancé en arrière-plan');
+    }
+
+
+
+    /*public function import(Request $request)
+    {
+        Log::info('📥 Début import OrdreApproche');
+
+        $request->validate([
+            'ordre_approche_file' => 'required|file|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('ordre_approche_file');
+
+        // 📦 stockage sécurisé (OBLIGATOIRE pour la queue)
+        $path = $file->store('imports/ordre_approche', 'local');
+
+        Log::info('📦 Fichier stocké', [
+            'path' => $path,
+            'size' => $file->getSize(),
+        ]);
+
+        Excel::queueImport(
+            new OrdreApprocheStagingImport($path),
+            $path,
+            'local'
+        );
+
+        Log::info('🚀 Import OrdreApproche mis en queue', [
+            'path' => $path,
+        ]);
+
+        return back()->with('success', 'Import lancé en arrière-plan');
+    }*/
 }

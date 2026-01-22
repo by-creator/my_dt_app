@@ -1,0 +1,71 @@
+Informations sur modèles
+
+RapportInfosFacturation
+(
+    TerminalName
+    Company
+    Terminal
+    CategoryType
+    InvoiceTypeDescription
+    Service
+    Shipowner
+    Line_Operator
+    Category 
+    ValidationDate
+    InvoiceNumber
+    InvoiceStatus
+    StatusChangeReason
+    Somme de Amount_Excluding_Tax_InvoiceCurrency
+    Currency 
+    Somme de Amount_Excluding_Tax_LocalCurrency
+    BilledThirdParty
+    Client
+    BilledThirdPartyAccount
+    Sens 
+    ItemNumber
+    ItemType
+    Cycle
+    Commodity
+    Somme de Weight
+    Somme de Volume
+    NormalizedSize
+    TEU 
+    Unit
+    isReefer
+    Account_Number
+    Somme de InvoiceLine
+    Description 
+    ContractName
+    ContractType
+    section
+    rubric
+    DisbursementCode
+    Somme de Debit_InvoiceCurrency
+    Somme de Credit_InvoiceCurrency
+    AmountSignedInLocalCurrency = Somme (Somme de Debit_InvoiceCurrency + Somme de Credit_InvoiceCurrency)
+    CAPAmountSignedInLocalCurrency = AmountSignedInLocalCurrency 
+    CallNumber
+    VesselName
+    AvailabilityDate
+    BLNumber
+    FinalCountryDestination
+    InvoiceComment
+    
+)
+
+RapportInfosYard
+(
+    EquipmentTypeSize 
+
+    EventName
+
+    BLNumber
+
+    FinalDestination
+
+    IsEmpty
+
+    IsHazardous
+
+    VesselArrivalDate
+)

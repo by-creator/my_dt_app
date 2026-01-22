@@ -26,7 +26,7 @@
                                     <label for="ItemNumber">ItemNumber</label>
                                     <input type="text" id="ItemNumber" class="form-control"
                                         placeholder="Entrez une valeur pour ItemNumber" required name="ItemNumber"
-                                        value="{{ $ordre->ItemNumber ?? '' }}">
+                                        value="{{ $ordre->item_number ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -34,7 +34,7 @@
                                     <label for="zone">Zone</label>
                                     <input type="text" id="zone" class="form-control"
                                         placeholder="Entrez une valeur pour zone" required name="Zone"
-                                        value="{{ $ordre->Zone ?? '' }}">
+                                        value="{{ $ordre->zone ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -42,39 +42,39 @@
                                     <label for="TypeDeMarchandise">Type De Marchandise</label>
                                     <input type="text" id="TypeDeMarchandise" class="form-control"
                                         placeholder="Entrez une valeur pour TypeDeMarchandise" required name="TypeDeMarchandise"
-                                        value="{{ $ordre->TypeDeMarchandise ?? '' }}">
+                                        value="{{ $ordre->type_de_marchandise ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="BlNumber">BlNumber</label>
-                                    <input type="tex" id="BlNumber" class="form-control" required
+                                    <input type="text" id="BlNumber" class="form-control" required
                                         placeholder="Entrez une valeur pour BL" name="BlNumber"
-                                        value="{{ $ordre->BlNumber ?? '' }}">
+                                        value="{{ $ordre->bl_number ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="Vessel">Vessel</label>
-                                    <input type="tex" id="Vessel" class="form-control" required
+                                    <input type="text" id="Vessel" class="form-control" required
                                         placeholder="Entrez une valeur pour Vessel" name="Vessel"
-                                        value="{{ $ordre->Vessel ?? '' }}">
+                                        value="{{ $ordre->vessel ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="callNumber">callNumber</label>
-                                    <input type="tex" id="callNumber" class="form-control" required
+                                    <input type="text" id="callNumber" class="form-control" required
                                         placeholder="Entrez une valeur pour call number" name="callNumber"
-                                        value="{{ $ordre->callNumber ?? '' }}">
+                                        value="{{ $ordre->call_number ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="vesselarrivaldate">Vessel Arrival Date</label>
-                                    <input type="tex" id="vesselarrivaldate" class="form-control" required
+                                    <input type="text" id="vesselarrivaldate" class="form-control" required
                                         placeholder="Entrez une valeur pour vessel arrival date" name="vesselarrivaldate"
-                                        value="{{ $ordre->vesselarrivaldate ?? '' }}">
+                                        value="{{ $ordre->vessel_arrival_date ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -82,7 +82,7 @@
                                     <label for="Shipowner">Shipowner</label>
                                     <input type="text" id="Shipowner" class="form-control"
                                         placeholder="Entrez une valeur pour shipping line" required name="Shipowner"
-                                        value="{{ $ordre->Shipowner ?? '' }}">
+                                        value="{{ $ordre->shipowner ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -90,7 +90,7 @@
                                     <label for="Item_Code">Item_Code</label>
                                     <input type="text" id="Item_Code" class="form-control"
                                         placeholder="Entrez une valeur pour Item_Code" required name="Item_Code"
-                                        value="{{ $ordre->Item_Code ?? '' }}">
+                                        value="{{ $ordre->item_code ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -98,7 +98,7 @@
                                     <label for="Item_Type">Item_Type</label>
                                     <input type="text" id="Item_Type" class="form-control"
                                         placeholder="Entrez une valeur pour Item_Type" required name="Item_Type"
-                                        value="{{ $ordre->Item_Type ?? '' }}">
+                                        value="{{ $ordre->item_type ?? '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -106,7 +106,7 @@
                                     <label for="Description_">Description_</label>
                                     <input type="text" id="Description_" class="form-control"
                                         placeholder="Entrez une valeur pour Description_" required name="Description_"
-                                        value="{{ $ordre->Description_ ?? '' }}">
+                                        value="{{ $ordre->description ?? '' }}">
                                 </div>
                             </div>
                         </div>

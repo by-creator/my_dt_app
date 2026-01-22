@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" class="light">
+<html lang="en">
 
 <head>
     @include('partials.dashboard.head')
 </head>
 
 <body>
-
-    <nav>
+    <div id="app">
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
@@ -19,27 +18,28 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" width="300" alt="Logo" srcset=""></a>
+                <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
 
-                        <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                            <a href="{{ route('dashboard') }}" class="sidebar-link">
+                        <li class="sidebar-title">
+                            <a href="{{ route('dashboard') }}">
                                 <i class="fa-solid fa-home"></i>
                                 <span>Accueil</span>
                             </a>
                         </li>
-                        @if(Auth::user()->role->name == "CLIENT_FACTURATION")
-                        @include('partials.dossier_facturation.menu')
-                        @else
+
+                        @if($user->role->name == "ADMIN" || $user->role->name == "SUPER_U" || $user->role->name == "PLANIFICATION")
+                        @include('partials.rapport.menu')
                         @endif
+
+
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-gear"></i>
                                 <span>Paramètres</span>
                             </a>
                         </li>
-
                         <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -52,13 +52,24 @@
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
         </div>
-    </nav>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
 
-    <main class="py-4">
-        @yield('content')
-    </main>
+            <div class="page-heading">
+                <h3>Bienvenu(e) {{ $user->name }} </h3>
+            </div>
+            <div class="page-content">
+                @if($user->role->name == "ADMIN" || $user->role->name == "SUPER_U")
+                @include('partials.rapport.suivi_detail_facturation.index')
+                @endif
+            </div>
+        </div>
+    </div>
     @include('partials.dashboard.script')
-
 </body>
 
 </html>

@@ -23,7 +23,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UnifyController;
 use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserImportController;
+use App\Http\Controllers\RapportController;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -195,6 +195,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ordre-approche/update/{id}', [OrdreApprocheController::class, 'update'])->name('ordre_approche.update');
     Route::delete('/ordre-approche/delete/{id}', [OrdreApprocheController::class, 'delete'])->name('ordre_approche.delete');
 
+    Route::post('/ordre-approche/import', [OrdreApprocheController::class, 'import'])->name('ordre_approche.import');
+
     Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'])->name('dossier_facturation.index');
     Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
 
@@ -264,7 +266,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/agent/guichet', [GuichetController::class, 'guichet'])
-    ->name('agent.guichet.me');
+        ->name('agent.guichet.me');
 
     Route::get('/agent/guichet/{guichet}', [GuichetController::class, 'index'])
         ->name('agent.guichet');
@@ -296,4 +298,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/planification/index', [PlanificationController::class, 'index'])->name('planification.index');
     Route::post('/import-planification', [PlanificationController::class, 'import'])->name('planification.import');
 
+    Route::get('/rapport/index', [RapportController::class, 'index'])->name('rapport.index');
+    Route::post('/rapport/infos_facturation/import', [RapportController::class, 'infosFacturationImport'])->name('rapport.infos_facturation.import');
 });

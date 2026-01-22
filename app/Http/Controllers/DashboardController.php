@@ -113,6 +113,14 @@ class DashboardController extends Controller
                         'route' => route('agent.guichet.me')
                     ],
 
+                    [
+                        'id' => 8,
+                        'name' => 'Rapport',
+                        'header' => 'Rapport',
+                        'description' => 'Gestion de Rapport',
+                        'route' => route('rapport.index')
+                    ],
+
 
                 ];
 
