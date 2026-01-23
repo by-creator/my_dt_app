@@ -7,10 +7,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 use App\Imports\OrdreApprocheStagingImport;
 use App\Jobs\ConsolidateOrdreApprocheJob;
+use App\Jobs\ImportOrdreApprocheCsvJob;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrdreApprocheController extends Controller
 {
@@ -124,7 +126,7 @@ class OrdreApprocheController extends Controller
 
     public function import(Request $request)
     {
-        Log::info('📥 Début import infos ordre approche');
+        Log::info('📥 Début import infos ordre_approche');
 
         $request->validate([
             'ordre_approche_file' => 'required|file|mimes:xlsx,xls,csv',
@@ -132,31 +134,53 @@ class OrdreApprocheController extends Controller
 
         $file = $request->file('ordre_approche_file');
 
-        // 🔥 IMPORTANT : stream vers B2 (pas load en mémoire)
-        $path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
+        /** 1️⃣ Upload vers B2 (archivage) */
+        $b2Path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
 
         Storage::disk('b2')->writeStream(
-            $path,
+            $b2Path,
             fopen($file->getRealPath(), 'r')
         );
 
         Log::info('📦 Fichier uploadé sur B2', [
-            'path' => $path,
+            'path' => $b2Path,
             'size' => $file->getSize(),
         ]);
 
-        // 🚀 IMPORT ASYNC
+        /** 2️⃣ Préparer le stockage LOCAL (CRUCIAL) */
+        $localDir = storage_path('app/imports/tmp');
+
+        if (!File::exists($localDir)) {
+            File::makeDirectory($localDir, 0755, true);
+        }
+
+        /** 3️⃣ Copier le fichier en LOCAL */
+        $extension = $file->getClientOriginalExtension();
+        $localPath = 'imports/tmp/' . uniqid() . '.' . $extension;
+
+        Storage::disk('local')->put(
+            $localPath,
+            Storage::disk('b2')->get($b2Path)
+        );
+
+        if (!Storage::disk('local')->exists($localPath)) {
+            Log::error('❌ Fichier local non créé', ['path' => $localPath]);
+            return back()->withErrors('Erreur préparation fichier import');
+        }
+
+        Log::info('📄 Copie locale prête', ['path' => $localPath]);
+
+        /** 4️⃣ Import depuis le DISQUE LOCAL (HEROKU SAFE) */
         Excel::queueImport(
             new OrdreApprocheStagingImport,
-            $path,
-            'b2'
+            $localPath,
+            'local'
         )->chain([
-            new \App\Jobs\ConsolidateOrdreApprocheJob($path),
+            new \App\Jobs\ConsolidateOrdreApprocheJob($b2Path),
+            new \App\Jobs\DeleteLocalImportFileJob($localPath),
         ]);
 
-        Log::info('🚀 Import OrdreApproche mis en queue', [
-            'path' => $path,
-        ]);
+        Log::info('🚀 Import Ordre Approche mis en queue');
 
         return back()->with('success', 'Import lancé en arrière-plan 🚀');
     }

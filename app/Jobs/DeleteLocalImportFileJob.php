@@ -25,7 +25,7 @@ class DeleteLocalImportFileJob implements ShouldQueue
     {
         Storage::disk('local')->delete($this->path);
 
-        Log::info('🧹 Fichier XLSX local supprimé', [
+        Log::info('🧹 Fichier local supprimé', [
             'path' => $this->path,
         ]);
     }
