@@ -126,7 +126,7 @@ class OrdreApprocheController extends Controller
         Log::info('📥 Début import OrdreApproche');
 
         $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:csv,xlsx,xls',
+            'ordre_approche_file' => 'required|file|mimes:csv',
         ]);
 
         $file = $request->file('ordre_approche_file');
