@@ -1,123 +1,185 @@
-Comment faire la même chose pour ce modèle 
+Comment faire sachant que j'ai déjà configiré Blackblaze avec b2 et que je l'utilise bien pour le stockage des fichiers
 
-Voici le modèle
+Voici mon import
 
 <?php
 
-namespace App\Models;
+namespace App\Imports;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\ConvertsDates;
+use App\Models\RapportInfosFacturation;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-
-class OrdreApprocheStaging extends Model
+class RapportInfosFacturationImport implements ToModel,
+    WithHeadingRow,
+    WithChunkReading,
+    WithBatchInserts,
+    ShouldQueue
 {
-    use HasFactory, ConvertsDates;
+    public function model(array $row)
+    {
+        $amountSigned = ($row['debit_invoice_currency'] ?? 0)
+                      + ($row['credit_invoice_currency'] ?? 0);
 
-    protected $fillable = [
-        'Terminal',
-        'Shipowner',
-        'ItemNumber',
-        'Item_Type',
-        'Item_Code',
-        'BlNumber',
-        'FinalDestinationCountry',
-        'Description_',
-        'TEU',
-        'Volume',
-        'Weight_',
-        'YardZoneType',
-        'Zone',
-        'Type_Veh',
-        'TypeDeMarchandise',
-        'POD',
-        'YardZone',
-        'consignee',
-        'callNumber',
-        'Vessel',
-        'ETA',
-        'vesselarrivaldate',
-        'Cycle',
-        'Yard Quantity',
-        'DAYS SINCE IN',
-        'Dwelltime',
+        return new RapportInfosFacturation([
+            'terminal_name' => $row['terminalname'] ?? null,
+            'company' => $row['company'] ?? null,
+            'terminal' => $row['terminal'] ?? null,
+            'category_type' => $row['categorytype'] ?? null,
+            'invoice_type_description' => $row['invoicetypedescription'] ?? null,
+            'service' => $row['service'] ?? null,
+            'shipowner' => $row['shipowner'] ?? null,
+            'line_operator' => $row['line_operator'] ?? null,
+            'category' => $row['category'] ?? null,
+            'validation_date' => $row['validationdate'] ?? null,
+            'invoice_number' => $row['invoicenumber'] ?? null,
+            'invoice_status' => $row['invoicestatus'] ?? null,
+            'status_change_reason' => $row['statuschangereason'] ?? null,
+            'amount_excluding_tax_invoice_currency' => $row['amount_excluding_tax_invoicecurrency'] ?? 0,
+            'currency' => $row['currency'] ?? null,
+            'amount_excluding_tax_local_currency' => $row['amount_excluding_tax_localcurrency'] ?? 0,
+            'billed_third_party' => $row['billedthirdparty'] ?? null,
+            'client' => $row['client'] ?? null,
+            'billed_third_party_account' => $row['billedthirdpartyaccount'] ?? null,
+            'sens' => $row['sens'] ?? null,
+            'item_number' => $row['itemnumber'] ?? null,
+            'item_type' => $row['itemtype'] ?? null,
+            'cycle' => $row['cycle'] ?? null,
+            'commodity' => $row['commodity'] ?? null,
+            'weight' => $row['weight'] ?? 0,
+            'volume' => $row['volume'] ?? 0,
+            'normalized_size' => $row['normalizedsize'] ?? null,
+            'teu' => $row['teu'] ?? null,
+            'unit' => $row['unit'] ?? null,
+            'is_reefer' => $row['isreefer'] ?? false,
+            'account_number' => $row['account_number'] ?? null,
+            'invoice_line' => $row['invoiceline'] ?? null,
+            'description' => $row['description'] ?? null,
+            'contract_name' => $row['contractname'] ?? null,
+            'contract_type' => $row['contracttype'] ?? null,
+            'section' => $row['section'] ?? null,
+            'rubric' => $row['rubric'] ?? null,
+            'disbursement_code' => $row['disbursementcode'] ?? null,
+            'debit_invoice_currency' => $row['debit_invoice_currency'] ?? 0,
+            'credit_invoice_currency' => $row['credit_invoice_currency'] ?? 0,
+            'amount_signed_local_currency' => $amountSigned,
+            'cap_amount_signed_local_currency' => $amountSigned,
+            'call_number' => $row['callnumber'] ?? null,
+            'vessel_name' => $row['vesselname'] ?? null,
+            'availability_date' => $row['availabilitydate'] ?? null,
+            'bl_number' => $row['blnumber'] ?? null,
+            'final_country_destination' => $row['finalcountrydestination'] ?? null,
+            'invoice_comment' => $row['invoicecomment'] ?? null,
+        ]);
+    }
 
-        'date',
-        'time',
-        'bae',
-        'client',
-        'chauffeur',
-        'permis',
-        'pointeur',
-        'responsable',
-        'reserve',
-    ];
+    
+
+    /** Nombre de lignes lues à la fois */
+    public function chunkSize(): int
+    {
+        return 1000; // 🔥 idéal
+    }
+
+    /** Inserts groupés */
+    public function batchSize(): int
+    {
+        return 1000;
+    }
 }
 
-Voici la migration
+Voici le controleur 
 
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Http\Controllers;
 
-return new class extends Migration
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Imports\RapportInfosFacturationImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
+
+class RapportController extends Controller
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function index()
     {
-        Schema::create('ordre_approches_staging', function (Blueprint $table) {
-            $table->id();
-            $table->string('Terminal')->nullable();
-            $table->string('Shipowner')->nullable();
-            $table->string('ItemNumber')->nullable();
-            $table->string('Item_Type')->nullable();
-            $table->string('Item_Code')->nullable();
-            $table->string('BlNumber')->nullable();
-            $table->string('FinalDestinationCountry')->nullable();
-            $table->string('Description_')->nullable();
-            $table->string('TEU')->nullable();
-            $table->string('Volume')->nullable();
-            $table->string('Weight_')->nullable();
-            $table->string('YardZoneType')->nullable();
-            $table->string('Zone')->nullable();
-            $table->string('Type_Veh')->nullable();
-            $table->string('TypeDeMarchandise')->nullable();
-            $table->string('POD')->nullable();
-            $table->string('YardZone')->nullable();
-            $table->string('consignee')->nullable();
-            $table->string('callNumber')->nullable();
-            $table->string('Vessel')->nullable();
-            $table->string('ETA')->nullable();
-            $table->string('vesselarrivaldate')->nullable();
-            $table->string('Cycle')->nullable();
-            $table->string('Yard Quantity')->nullable();
-            $table->string('DAYS SINCE IN')->nullable();
-            $table->string('Dwelltime')->nullable();
-
-            $table->datetime('date')->nullable();
-            $table->datetime('time')->nullable();
-            
-            $table->string('bae')->nullable();
-            $table->string('client')->nullable();
-            $table->string('chauffeur')->nullable();
-            $table->string('permis')->nullable();
-            $table->string('pointeur')->nullable();
-            $table->string('responsable')->nullable();
-            $table->string('reserve')->nullable();
-            $table->timestamps();
-        });
+        $user = Auth::user();
+        return view('rapport.index', compact('user'));
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+
+    public function infosFacturationImport(Request $request)
     {
-        Schema::dropIfExists('ordre_approches');
+        Log::info('📥 Début import infos facturation');
+
+        Log::info('📌 Avant validation', [
+            'has_file' => $request->hasFile('facturation_file'),
+            'all' => $request->except('facturation_file'),
+        ]);
+
+        $request->validate([
+            'facturation_file' => 'required|file|mimes:xlsx,xls,csv'
+        ]);
+
+        Log::info('✅ Validation OK');
+
+        $file = $request->file('facturation_file');
+
+        $path = $file->store('imports/facturation', 'local');
+
+
+       Log::info('📦 Fichier stocké', [
+            'path' => $path,
+            'size' => $file->getSize(),
+        ]);
+
+        Excel::queueImport(
+            new RapportInfosFacturationImport,
+            $path,
+            'local'
+        )->chain([
+            new \App\Jobs\ConsolidateInfosFacturationJob($path),
+        ]);
+
+         Log::info('🚀 Import Infos Facturation mis en queue', [
+            'path' => $path,
+        ]);
+
+        return back()->with('success', 'Import lancé avec succès');
     }
-};
+}
+
+Mon Jobs
+
+<?php
+
+namespace App\Jobs;
+
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
+
+
+class ConsolidateInfosFacturationJob implements ShouldQueue
+{
+    use Queueable;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(
+        protected string $path
+    ) {}
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        Log::info('🚀 Début consolidation facturation');
+    }
+}

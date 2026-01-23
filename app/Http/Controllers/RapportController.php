@@ -21,39 +21,29 @@ class RapportController extends Controller
     {
         Log::info('📥 Début import infos facturation');
 
-        Log::info('📌 Avant validation', [
-            'has_file' => $request->hasFile('facturation_file'),
-            'all' => $request->except('facturation_file'),
-        ]);
-
         $request->validate([
-            'facturation_file' => 'required|file|mimes:xlsx,xls,csv'
+            'facturation_file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
-
-        Log::info('✅ Validation OK');
 
         $file = $request->file('facturation_file');
 
-        $path = $file->store('imports/facturation', 'local');
+        // ✅ stockage direct sur B2
+        $path = $file->store('imports/facturation', 'b2');
 
-
-       Log::info('📦 Fichier stocké', [
+        Log::info('📦 Fichier stocké sur B2', [
             'path' => $path,
             'size' => $file->getSize(),
         ]);
 
+        // 🚀 IMPORT ASYNC (worker)
         Excel::queueImport(
             new RapportInfosFacturationImport,
             $path,
-            'local'
+            'b2'
         )->chain([
             new \App\Jobs\ConsolidateInfosFacturationJob($path),
         ]);
 
-         Log::info('🚀 Import Infos Facturation mis en queue', [
-            'path' => $path,
-        ]);
-
-        return back()->with('success', 'Import lancé avec succès');
+        return back()->with('success', 'Import lancé en arrière-plan');
     }
 }
