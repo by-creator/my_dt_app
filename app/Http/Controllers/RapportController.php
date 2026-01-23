@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Imports\RapportInfosFacturationImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class RapportController extends Controller
 {
@@ -27,15 +28,20 @@ class RapportController extends Controller
 
         $file = $request->file('facturation_file');
 
-        // ✅ stockage direct sur B2
-        $path = $file->store('imports/facturation', 'b2');
+        // 🔥 IMPORTANT : stream vers B2 (pas load en mémoire)
+        $path = 'imports/facturation/' . uniqid() . '-' . $file->getClientOriginalName();
 
-        Log::info('📦 Fichier stocké sur B2', [
+        Storage::disk('b2')->writeStream(
+            $path,
+            fopen($file->getRealPath(), 'r')
+        );
+
+        Log::info('📦 Fichier uploadé sur B2', [
             'path' => $path,
             'size' => $file->getSize(),
         ]);
 
-        // 🚀 IMPORT ASYNC (worker)
+        // 🚀 IMPORT ASYNC
         Excel::queueImport(
             new RapportInfosFacturationImport,
             $path,
@@ -44,6 +50,10 @@ class RapportController extends Controller
             new \App\Jobs\ConsolidateInfosFacturationJob($path),
         ]);
 
-        return back()->with('success', 'Import lancé en arrière-plan');
+        Log::info('🚀 Import RapportInfosFacturation mis en queue', [
+            'path' => $path,
+        ]);
+
+        return back()->with('success', 'Import lancé en arrière-plan 🚀');
     }
 }

@@ -300,4 +300,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/rapport/index', [RapportController::class, 'index'])->name('rapport.index');
     Route::post('/rapport/infos_facturation/import', [RapportController::class, 'infosFacturationImport'])->name('rapport.infos_facturation.import');
+
+    
 });

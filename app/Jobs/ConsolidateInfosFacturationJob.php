@@ -31,6 +31,6 @@ class ConsolidateInfosFacturationJob implements ShouldQueue
         // 🧹 supprimer le fichier B2 après import
         Storage::disk('b2')->delete($this->path);
 
-        Log::info('✅ Consolidation terminée + fichier supprimé');
+        Log::info('✅ Consolidation facturation terminée + fichier supprimé');
     }
 }

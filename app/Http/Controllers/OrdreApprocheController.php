@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\OrdreApprocheStagingImport;
+use Illuminate\Support\Facades\Storage;
 
 class OrdreApprocheController extends Controller
 {
@@ -125,22 +126,30 @@ class OrdreApprocheController extends Controller
         Log::info('📥 Début import OrdreApproche');
 
         $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:csv,txt',
+            'ordre_approche_file' => 'required|file|mimes:csv,xlsx,xls',
         ]);
 
         $file = $request->file('ordre_approche_file');
 
-        $path = $file->store('imports/ordre_approche', 'local');
+        // 🔥 IMPORTANT : stream vers B2 (pas load en mémoire)
+        $path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
 
-        Log::info('📦 Fichier stocké', [
+        Storage::disk('b2')->writeStream(
+            $path,
+            fopen($file->getRealPath(), 'r')
+        );
+
+
+        Log::info('📦 Fichier uploadé sur B2', [
             'path' => $path,
             'size' => $file->getSize(),
         ]);
 
+
         Excel::queueImport(
             new OrdreApprocheStagingImport,
             $path,
-            'local'
+            'b2'
         )->chain([
             new \App\Jobs\ConsolidateOrdreApprocheJob($path),
         ]);
@@ -153,35 +162,4 @@ class OrdreApprocheController extends Controller
     }
 
 
-
-    /*public function import(Request $request)
-    {
-        Log::info('📥 Début import OrdreApproche');
-
-        $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:csv,txt',
-        ]);
-
-        $file = $request->file('ordre_approche_file');
-
-        // 📦 stockage sécurisé (OBLIGATOIRE pour la queue)
-        $path = $file->store('imports/ordre_approche', 'local');
-
-        Log::info('📦 Fichier stocké', [
-            'path' => $path,
-            'size' => $file->getSize(),
-        ]);
-
-        Excel::queueImport(
-            new OrdreApprocheStagingImport($path),
-            $path,
-            'local'
-        );
-
-        Log::info('🚀 Import OrdreApproche mis en queue', [
-            'path' => $path,
-        ]);
-
-        return back()->with('success', 'Import lancé en arrière-plan');
-    }*/
 }
