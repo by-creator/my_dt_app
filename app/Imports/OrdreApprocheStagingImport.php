@@ -7,15 +7,27 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\{
     ToModel,
     WithChunkReading,
-    WithBatchInserts
+    WithBatchInserts,
+    WithMultipleSheets
 };
 
 class OrdreApprocheStagingImport implements
     ToModel,
     WithChunkReading,
     WithBatchInserts,
+    WithMultipleSheets,
     ShouldQueue
 {
+
+    public function sheets(): array
+    {
+        // ⚠️ feuille 0 = première
+        // ⚠️ feuille 1 = deuxième (TRÈS SOUVENT celle avec les données)
+        return [
+            0 => $this, // ← adapte si besoin (0, 1, 2…)
+        ];
+    }
+
     public function chunkSize(): int
     {
         return 1000;
