@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\OrdreApprocheStagingImport;
+use App\Jobs\ConsolidateOrdreApprocheJob;
 use Illuminate\Support\Facades\Storage;
 
 class OrdreApprocheController extends Controller
@@ -121,42 +122,39 @@ class OrdreApprocheController extends Controller
         return redirect()->route('ordre_approche.index')->with('delete', 'Ordre supprimé avec succès.');
     }
 
-    public function import(Request $request)
+   public function import(Request $request)
     {
         Log::info('📥 Début import OrdreApproche');
 
         $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:csv',
+            'ordre_approche_file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
         $file = $request->file('ordre_approche_file');
 
-        // 🔥 IMPORTANT : stream vers B2 (pas load en mémoire)
-        $path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
+        // 🔹 Upload vers Backblaze B2
+        $b2Path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
 
         Storage::disk('b2')->writeStream(
-            $path,
+            $b2Path,
             fopen($file->getRealPath(), 'r')
         );
 
-
-        Log::info('📦 Fichier uploadé sur B2', [
-            'path' => $path,
+        Log::info('📦 Fichier XLSX uploadé sur B2', [
+            'path' => $b2Path,
             'size' => $file->getSize(),
         ]);
 
-
+        // 🔹 Import XLSX directement depuis B2 (cloud-safe)
         Excel::queueImport(
             new OrdreApprocheStagingImport,
-            $path,
+            $b2Path,
             'b2'
         )->chain([
-            new \App\Jobs\ConsolidateOrdreApprocheJob($path),
+            new ConsolidateOrdreApprocheJob($b2Path),
         ]);
 
-        Log::info('🚀 Import OrdreApproche mis en queue', [
-            'path' => $path,
-        ]);
+        Log::info('🚀 Import OrdreApproche mis en queue');
 
         return back()->with('success', 'Import lancé en arrière-plan');
     }

@@ -105,6 +105,8 @@ class ConsolidateOrdreApprocheJob implements ShouldQueue
         DB::table('ordre_approches_staging')->truncate();
         Storage::disk('b2')->delete($this->path);
 
+        Log::info('🚀 Fin consolidation ordre_approches');
+
         Log::info('✅ Consolidation ordre_approches terminée + fichier supprimé');
     }
 }

@@ -29,7 +29,10 @@ class OrdreApprocheStagingImport implements
     public function model(array $row)
     {
         // ❌ ignorer la ligne d’en-tête
-        if ($row[0] === 'Terminal') {
+        if (
+            isset($row[0]) &&
+            in_array(strtolower(trim($row[0])), ['terminal', 'term'])
+        ) {
             return null;
         }
 
