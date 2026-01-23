@@ -4,29 +4,27 @@ namespace App\Imports;
 
 use App\Models\OrdreApprocheStaging;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\{
     ToModel,
     WithChunkReading,
     WithBatchInserts,
-    WithMultipleSheets
+    WithStartRow
 };
 
 class OrdreApprocheStagingImport implements
     ToModel,
     WithChunkReading,
     WithBatchInserts,
-    WithMultipleSheets,
     ShouldQueue
 {
 
-    public function sheets(): array
+
+    public function startRow(): int
     {
-        // ⚠️ feuille 0 = première
-        // ⚠️ feuille 1 = deuxième (TRÈS SOUVENT celle avec les données)
-        return [
-            0 => $this, // ← adapte si besoin (0, 1, 2…)
-        ];
+        return 2; // 🔥 saute la ligne d’en-tête XLSX
     }
+
 
     public function chunkSize(): int
     {
@@ -40,15 +38,10 @@ class OrdreApprocheStagingImport implements
 
     public function model(array $row)
     {
-        // ❌ ignorer la ligne d’en-tête
-        if (
-            isset($row[0]) &&
-            in_array(strtolower(trim($row[0])), ['terminal', 'term'])
-        ) {
-            return null;
-        }
 
-        // ❌ ignorer lignes vides
+        Log::info('📄 Ligne lue', $row);
+
+        // ignorer lignes vides
         if (empty($row[2])) {
             return null;
         }
