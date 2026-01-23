@@ -9,7 +9,6 @@ use Maatwebsite\Excel\Concerns\{
     ToModel,
     WithChunkReading,
     WithBatchInserts,
-    WithStartRow
 };
 
 class OrdreApprocheStagingImport implements
@@ -18,13 +17,7 @@ class OrdreApprocheStagingImport implements
     WithBatchInserts,
     ShouldQueue
 {
-
-
-    public function startRow(): int
-    {
-        return 2; // 🔥 saute la ligne d’en-tête XLSX
-    }
-
+  
 
     public function chunkSize(): int
     {

@@ -124,51 +124,40 @@ class OrdreApprocheController extends Controller
 
     public function import(Request $request)
     {
-        Log::info('📥 Début import OrdreApproche');
+        Log::info('📥 Début import infos ordre approche');
 
         $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:csv,xlsx,xls',
+            'ordre_approche_file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
         $file = $request->file('ordre_approche_file');
 
-        // 1️⃣ Upload vers B2
-        $b2Path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
+        // 🔥 IMPORTANT : stream vers B2 (pas load en mémoire)
+        $path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
 
         Storage::disk('b2')->writeStream(
-            $b2Path,
+            $path,
             fopen($file->getRealPath(), 'r')
         );
 
-        Log::info('📦 Fichier XLSX uploadé sur B2', [
-            'path' => $b2Path,
+        Log::info('📦 Fichier uploadé sur B2', [
+            'path' => $path,
             'size' => $file->getSize(),
         ]);
 
-        // 🔥 2️⃣ COPIE LOCALE (CRUCIAL)
-        $localPath = 'imports/tmp/' . uniqid() . '.xlsx';
-
-        Storage::disk('local')->put(
-            $localPath,
-            Storage::disk('b2')->get($b2Path)
-        );
-
-        Log::info('📄 Copie locale XLSX créée', [
-            'local_path' => $localPath,
-        ]);
-
-        // 3️⃣ Import depuis le DISQUE LOCAL
+        // 🚀 IMPORT ASYNC
         Excel::queueImport(
             new OrdreApprocheStagingImport,
-            $localPath,
-            'local'
+            $path,
+            'b2'
         )->chain([
-            new \App\Jobs\ConsolidateOrdreApprocheJob($b2Path),
-            new \App\Jobs\DeleteLocalImportFileJob($localPath),
+            new \App\Jobs\ConsolidateOrdreApprocheJob($path),
         ]);
 
-        Log::info('🚀 Import OrdreApproche mis en queue');
+        Log::info('🚀 Import OrdreApproche mis en queue', [
+            'path' => $path,
+        ]);
 
-        return back()->with('success', 'Import lancé en arrière-plan');
+        return back()->with('success', 'Import lancé en arrière-plan 🚀');
     }
 }
