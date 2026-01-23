@@ -122,17 +122,17 @@ class OrdreApprocheController extends Controller
         return redirect()->route('ordre_approche.index')->with('delete', 'Ordre supprimé avec succès.');
     }
 
-   public function import(Request $request)
+    public function import(Request $request)
     {
         Log::info('📥 Début import OrdreApproche');
 
         $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:xlsx,xls,csv',
+            'ordre_approche_file' => 'required|file|mimes:csv,xlsx,xls',
         ]);
 
         $file = $request->file('ordre_approche_file');
 
-        // 🔹 Upload vers Backblaze B2
+        // 1️⃣ Upload vers B2
         $b2Path = 'imports/ordre_approche/' . uniqid() . '-' . $file->getClientOriginalName();
 
         Storage::disk('b2')->writeStream(
@@ -145,19 +145,30 @@ class OrdreApprocheController extends Controller
             'size' => $file->getSize(),
         ]);
 
-        // 🔹 Import XLSX directement depuis B2 (cloud-safe)
+        // 🔥 2️⃣ COPIE LOCALE (CRUCIAL)
+        $localPath = 'imports/tmp/' . uniqid() . '.xlsx';
+
+        Storage::disk('local')->put(
+            $localPath,
+            Storage::disk('b2')->get($b2Path)
+        );
+
+        Log::info('📄 Copie locale XLSX créée', [
+            'local_path' => $localPath,
+        ]);
+
+        // 3️⃣ Import depuis le DISQUE LOCAL
         Excel::queueImport(
             new OrdreApprocheStagingImport,
-            $b2Path,
-            'b2'
+            $localPath,
+            'local'
         )->chain([
-            new ConsolidateOrdreApprocheJob($b2Path),
+            new \App\Jobs\ConsolidateOrdreApprocheJob($b2Path),
+            new \App\Jobs\DeleteLocalImportFileJob($localPath),
         ]);
 
         Log::info('🚀 Import OrdreApproche mis en queue');
 
         return back()->with('success', 'Import lancé en arrière-plan');
     }
-
-
 }
