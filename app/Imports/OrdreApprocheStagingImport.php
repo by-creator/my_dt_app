@@ -9,15 +9,23 @@ use Maatwebsite\Excel\Concerns\{
     ToModel,
     WithChunkReading,
     WithBatchInserts,
+    WithStartRow
 };
 
 class OrdreApprocheStagingImport implements
     ToModel,
     WithChunkReading,
     WithBatchInserts,
+    WithStartRow,
     ShouldQueue
+
 {
-  
+
+
+    public function startRow(): int
+    {
+        return 2; // ← saute la ligne des en-têtes
+    }
 
     public function chunkSize(): int
     {
