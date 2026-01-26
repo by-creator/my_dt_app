@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('item_code')->nullable();
             $table->string('bl_number')->nullable();
             $table->string('final_destination_country')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('teu')->nullable();
             $table->string('volume')->nullable();
             $table->string('weight')->nullable();
