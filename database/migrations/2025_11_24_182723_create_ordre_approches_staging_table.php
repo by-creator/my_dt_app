@@ -14,37 +14,34 @@ return new class extends Migration
         Schema::create('ordre_approches_staging', function (Blueprint $table) {
             $table->id();
            
-             $table->string('terminal')->nullable();
-            $table->string('shipowner')->nullable();
-            $table->string('item_number')->nullable();
-            $table->string('item_type')->nullable();
-            $table->string('item_code')->nullable();
-            $table->string('bl_number')->nullable();
-            $table->string('final_destination_country')->nullable();
-            $table->text('description')->nullable();
-            $table->string('teu')->nullable();
-            $table->string('volume')->nullable();
-            $table->string('weight')->nullable();
-            $table->string('yard_zone_type')->nullable();
-            $table->string('zone')->nullable();
-            $table->string('type_veh')->nullable();
-            $table->text('type_de_marchandise')->nullable();
-            $table->string('pod')->nullable();
-            $table->string('yard_zone')->nullable();
+            $table->string('Terminal')->nullable();
+            $table->string('Shipowner')->nullable();
+            $table->string('ItemNumber')->nullable();
+            $table->string('Item_Type')->nullable();
+            $table->string('Item_Code')->nullable();
+            $table->string('BlNumber')->nullable();
+            $table->string('FinalDestinationCountry')->nullable();
+            $table->string('Description_')->nullable();
+            $table->string('TEU')->nullable();
+            $table->string('Volume')->nullable();
+            $table->string('Weight_')->nullable();
+            $table->string('YardZoneType')->nullable();
+            $table->string('Zone')->nullable();
+            $table->string('Type_Veh')->nullable();
+            $table->string('TypeDeMarchandise')->nullable();
+            $table->string('POD')->nullable();
+            $table->string('YardZone')->nullable();
             $table->string('consignee')->nullable();
-            $table->string('call_number')->nullable();
-            $table->string('vessel')->nullable();
-            $table->string('eta')->nullable();
-            $table->string('vessel_arrival_date')->nullable();
-            $table->string('cycle')->nullable();
-
-            $table->string('yard_quantity')->nullable();
-            $table->string('days_since_in')->nullable();
-            $table->string('dwelltime')->nullable();
-
+            $table->string('callNumber')->nullable();
+            $table->string('Vessel')->nullable();
+            $table->string('ETA')->nullable();
+            $table->string('vesselarrivaldate')->nullable();
+            $table->string('Cycle')->nullable();
+            $table->string('Yard Quantity')->nullable();
+            $table->string('DAYS SINCE IN')->nullable();
+            $table->string('Dwelltime')->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
-
             $table->string('bae')->nullable();
             $table->string('client')->nullable();
             $table->string('chauffeur')->nullable();
