@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('yard_zone_type')->nullable();
             $table->string('zone')->nullable();
             $table->string('type_veh')->nullable();
-            $table->string('type_de_marchandise')->nullable();
+            $table->text('type_de_marchandise')->nullable();
             $table->string('pod')->nullable();
             $table->string('yard_zone')->nullable();
             $table->string('consignee')->nullable();
