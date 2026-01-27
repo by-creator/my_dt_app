@@ -26,11 +26,11 @@
                             <div class="tm_grid_row tm_col_3 tm_col_2_sm tm_invoice_info_in tm_gray_bg tm_round_border">
                                 <div>
                                     <h6>Zone</h6> <br>
-                                    <b class="tm_primary_color">{{ $data['zone'] }}</b>
+                                    <b class="tm_primary_color">{{ $data['Zone'] }}</b>
                                 </div>
                                 <div>
                                     <h6>TYPE</h6> <br>
-                                    <b class="tm_primary_color">{{ $data['item_type'] }}</b>
+                                    <b class="tm_primary_color">{{ $data['Item_Type'] }}</b>
                                 </div>
                                 <div>
                                     <h6>Document N°</h6> <br>
@@ -53,30 +53,30 @@
                                         <tr>
                                             <td class="tm_width_2">
 
-                                                Chassis : {{ $data['item_number'] }}
+                                                Chassis : {{ $data['ItemNumber'] }}
                                                 <br>
-                                                Tranche de poids : {{ $data['type_de_marchandise'] }}
+                                                Tranche de poids : {{ $data['TypeDeMarchandise'] }}
                                                 <br>
                                                 N° BAE DOUANE : {{ $data['bae'] }}
                                                 <br>
-                                                BL / Booking : {{ $data['bl_number'] }}
+                                                BL / Booking : {{ $data['BlNumber'] }}
                                                 <br>
-                                                Vessel : {{ $data['vessel'] }}
+                                                Vessel : {{ $data['Vessel'] }}
                                                 <br>
-                                                Call Number : {{ $data['call_number'] }}
+                                                Call Number : {{ $data['callNumber'] }}
                                                 <br>
                                                 Vessel Arrival Date :
-                                                {{ $data['vessel_arrival_date'] }}
+                                                {{ $data['vesselarrivaldate'] }}
                                                 <br>
                                             </td>
                                             <td class="tm_width_2">
-                                                Shipping Line : {{ $data['shipowner'] }}
+                                                Shipping Line : {{ $data['Shipowner'] }}
                                                 <br>
-                                                Category : {{ $data['item_code'] }}
+                                                Category : {{ $data['Item_Code'] }}
                                                 <br>
-                                                Type : {{ $data['item_type'] }}
+                                                Type : {{ $data['Item_Type'] }}
                                                 <br>
-                                                Model : {{ $data['description'] }}
+                                                Model : {{ $data['Description_'] }}
                                                 <br>
                                                 Client Facturé : {{ $data['client'] }}
                                                 <br>

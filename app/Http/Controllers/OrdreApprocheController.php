@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class OrdreApprocheController extends Controller
 {
@@ -26,7 +28,7 @@ class OrdreApprocheController extends Controller
         ]);
 
         // 🔍 Récupération de l'ordre
-        $ordre = OrdreApproche::where('item_number', $request->ordre_id)->first();
+        $ordre = OrdreApproche::where('ItemNumber', $request->ordre_id)->first();
         $user = Auth::user();
 
         return view('ordre_approche.list', compact('ordre', 'user'));
@@ -34,42 +36,13 @@ class OrdreApprocheController extends Controller
 
 
 
-    public function create(Request $request)
-    {
-        $date = Carbon::now();
-        $time = Carbon::now();
 
-        $data = [
-            'date' => $date,
-            'item_number' => $request->ItemNumber,
-            'zone' => $request->Zone,
-            'type_de_marchandise' => $request->TypeDeMarchandise,
-            'bae' => $request->bae,
-            'bl_number' => $request->BlNumber,
-            'vessel' => $request->Vessel,
-            'call_number' => $request->callNumber,
-            'vessel_arrival_date' => $request->vesselarrivaldate,
-            'shipowner' => $request->Shipowner,
-            'item_code' => $request->Item_Code,
-            'item_type' => $request->Item_Type,
-            'description' => $request->Description_,
-            'client' => $request->client,
-            'chauffeur' => $request->chauffeur,
-            'permis' => $request->permis,
-            'pointeur' => $request->pointeur,
-            'responsable' => $request->responsable,
-            'reserve' => $request->reserve,
-
-        ];
-
-        //OrdreApproche::create($data);
-
-        return view('ordre_approche.fiche', compact('data'))->with('create', 'Ordre créé avec succès.');
-    }
 
     public function update(Request $request, $id)
     {
         $ordre = OrdreApproche::findOrFail($id);
+
+        Log::info('UPDATE OrdreApproche - données reçues', $request->all());
 
         $ordre->date = Carbon::now();
         $ordre->time = Carbon::now();
@@ -84,40 +57,52 @@ class OrdreApprocheController extends Controller
         $data = [
             'date' => Carbon::now(),
             'time' => Carbon::now(),
-            'item_number' => $request->ItemNumber,
-            'zone' => $request->Zone,
-            'type_de_marchandise' => $request->TypeDeMarchandise,
-            'bae' => $request->bae,
-            'bl_number' => $request->BlNumber,
-            'vessel' => $request->Vessel,
-            'call_number' => $request->callNumber,
-            'vessel_arrival_date' => $request->vesselarrivaldate,
-            'shipowner' => $request->Shipowner,
-            'item_code' => $request->Item_Code,
-            'item_type' => $request->Item_Type,
-            'description' => $request->Description_,
+            'Terminal' => $request->Terminal,
+            'Shipowner' => $request->Shipowner,
+            'ItemNumber' => $request->ItemNumber,
+            'Item_Type' => $request->Item_Type,
+            'Item_Code' => $request->Item_Code,
+            'BlNumber' => $request->BlNumber,
+            'FinalDestinationCountry' => $request->FinalDestinationCountry,
+            'Description_' => $request->Description_,
+            'TEU' => $request->TEU,
+            'Volume' => $request->Volume,
+            'Weight_' => $request->Weight_,
+            'YardZoneType' => $request->YardZoneType,
+            'Zone' => $request->Zone,
+            'Type_Veh' => $request->Type_Veh,
+            'TypeDeMarchandise' => $request->TypeDeMarchandise,
+            'POD' => $request->POD,
+            'YardZone' => $request->YardZone,
+            'consignee' => $request->consignee,
+            'callNumber' => $request->callNumber,
+            'Vessel' => $request->Vessel,
+            'ETA' => $request->ETA,
+            'vesselarrivaldate' => $request->vesselarrivaldate,
+            'Cycle' => $request->Cycle,
+            'Yard Quantity' => $request->YardQuantity,
+            'DAYS SINCE IN' => $request->DaysSinceIn,
+            'Dwelltime' => $request->Dwelltime,
             'bae' => $request->bae,
             'client' => $request->client,
             'chauffeur' => $request->chauffeur,
             'permis' => $request->permis,
             'pointeur' => $request->pointeur,
             'responsable' => $request->responsable,
-            'reserve' => $request->reserve,
+            'reserve' => $request->reserve
 
         ];
+
+        dd($ordre);
 
         $ordre->save();
 
         return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
     }
 
-    public function delete($id)
-    {
-        $ordre = OrdreApproche::findOrFail($id);
-        $ordre->delete();
+    //return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
 
-        return redirect()->route('ordre_approche.index')->with('delete', 'Ordre supprimé avec succès.');
-    }
+
 
     public function import(Request $request)
     {

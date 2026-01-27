@@ -37,7 +37,7 @@
 
                                     <datalist id="ordres_list">
                                         @foreach ($ordres as $ordre)
-                                            <option value="{{ $ordre->item_number }}">
+                                            <option value="{{ $ordre->ItemNumber }}">
                                         @endforeach
                                     </datalist>
                                     <button type="submit" class="btn btn-primary">

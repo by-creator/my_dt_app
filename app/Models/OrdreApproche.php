@@ -14,40 +14,12 @@ class OrdreApproche extends Model
     protected $table = 'ordre_approches';
 
     protected $fillable = [
-        'Terminal',
-        'Shipowner',
-        'ItemNumber',
-        'Item_Type',
-        'Item_Code',
-        'BlNumber',
-        'FinalDestinationCountry',
-        'Description_',
-        'TEU',
-        'Volume',
-        'Weight_',
-        'YardZoneType',
-        'Zone',
-        'Type_Veh',
-        'TypeDeMarchandise',
-        'POD',
-        'YardZone',
-        'consignee',
-        'callNumber',
-        'Vessel',
-        'ETA',
-        'vesselarrivaldate',
-        'Cycle',
-        'Yard Quantity',
-        'DAYS SINCE IN',
-        'Dwelltime',
-        'date',
-        'time',
-        'bae',
-        'client',
-        'chauffeur',
-        'permis',
-        'pointeur',
-        'responsable',
-        'reserve'
-    ];
+    'date','time','Terminal','Shipowner','ItemNumber','Item_Type',
+    'Item_Code','BlNumber','FinalDestinationCountry','Description_',
+    'TEU','Volume','Weight_','YardZoneType','Zone','Type_Veh',
+    'TypeDeMarchandise','POD','YardZone','consignee','callNumber',
+    'Vessel','ETA','vesselarrivaldate','Cycle','bae','client',
+    'chauffeur','permis','pointeur','responsable','reserve'
+];
+
 }
