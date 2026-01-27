@@ -93,8 +93,6 @@ class OrdreApprocheController extends Controller
 
         ];
 
-        dd($ordre);
-
         $ordre->save();
 
         return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
