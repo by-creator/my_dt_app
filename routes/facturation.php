@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\DematController;
-use App\Http\Controllers\DossierFacturationBonController;
-use App\Http\Controllers\DossierFacturationController;
-use App\Http\Controllers\DossierFacturationFactureController;
-use App\Http\Controllers\DossierFacturationProformaController;
-use App\Http\Controllers\IpakiExtranetServiceController;
-use App\Http\Controllers\RattachementController;
+use App\Http\Controllers\{
+    DematController,
+    DossierFacturationBonController,
+    DossierFacturationController,
+    DossierFacturationFactureController,
+    DossierFacturationProformaController,
+    IpakiExtranetServiceController,
+    RattachementController,
+};
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
