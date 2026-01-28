@@ -1,1 +1,7 @@
-d4d51f5 (HEAD -> main) update
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::middleware('auth')->group(function () {
+    // routes ici
+});
