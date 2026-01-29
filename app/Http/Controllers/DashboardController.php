@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use App\Models\Ticket;
-use App\Models\Service;
-use App\Models\Guichet;
+use Illuminate\Support\Facades\Log;
+
+
 
 class DashboardController extends Controller
 {
@@ -231,7 +231,7 @@ class DashboardController extends Controller
 
                 break;
 
-                case "PLANIFICATION":
+            case "PLANIFICATION":
                 $cards = [
 
                     [
@@ -246,8 +246,7 @@ class DashboardController extends Controller
 
                 break;
         }
-
-        return view('dashboard', compact('cards', 'dossiers', 'rattachements','user'));
+        return view('dashboard', compact('cards', 'dossiers', 'rattachements', 'user'));
     }
 
     public function logout()
@@ -258,56 +257,5 @@ class DashboardController extends Controller
         Session::regenerateToken();
 
         return redirect('/login');
-    }
-
-    public function dashboard()
-    {
-        $today = today();
-
-        // KPIs globaux
-        $totalTickets = Ticket::whereDate('created_at', $today)->count();
-
-        $enAttente = Ticket::where('statut', 'en_attente')->count();
-        $enCours   = Ticket::where('statut', 'en_cours')->count();
-        $termines  = Ticket::whereDate('fin_at', $today)
-            ->where('statut', 'termine')->count();
-        $absents   = Ticket::whereDate('fin_at', $today)
-            ->where('statut', 'absent')->count();
-
-        // Temps moyen d’attente (en minutes)
-        $tempsMoyen = Ticket::whereNotNull('appel_at')
-            ->whereDate('created_at', $today)
-            ->avg(DB::raw('TIMESTAMPDIFF(SECOND, created_at, appel_at)'));
-
-        $tempsMoyen = round(($tempsMoyen ?? 0) / 60, 2);
-
-        // Stats par service
-        $statsServices = Service::withCount([
-            'tickets as total',
-            'tickets as en_attente' => function ($q) {
-                $q->where('statut', 'en_attente');
-            },
-            'tickets as termines' => function ($q) {
-                $q->where('statut', 'termine');
-            }
-        ])->get();
-
-        // Performance guichets
-        $statsGuichets = Guichet::withCount([
-            'tickets as traites' => function ($q) {
-                $q->where('statut', 'termine');
-            }
-        ])->get();
-
-        return view('admin.dashboard', compact(
-            'totalTickets',
-            'enAttente',
-            'enCours',
-            'termines',
-            'absents',
-            'tempsMoyen',
-            'statsServices',
-            'statsGuichets'
-        ));
     }
 }

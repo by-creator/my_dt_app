@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
+    AuditController,
     DashboardController,
     RoleController,
     UserController,
@@ -50,3 +51,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
     Route::get('/user/export', [UserController::class, 'export'])->name('user.export');
 });
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/audit', [AuditController::class, 'index'])
+            ->name('audit');
+    });
+
+
