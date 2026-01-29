@@ -49,7 +49,7 @@
 
 
                         <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-secondary">
-                           ♻️ Réinitialiser
+                            ♻️ Réinitialiser
                         </a>
                     </div>
                 </form>
@@ -59,7 +59,10 @@
                         <tr>
                             <th>Date</th>
                             <th>Utilisateur</th>
-                            <th>Détails</th>
+                            <th>Action</th>
+                            <th>Role</th>
+                            <th>Méthode</th>
+                            <th>Route</th>
                             <th>IP</th>
                         </tr>
                     </thead>
@@ -68,12 +71,13 @@
                             <tr>
                                 <td>{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
                                 <td>{{ optional($log->causer)->email }}</td>
-                                <td>
-                                    <pre class="log-json">
-                                        {{ json_encode($log->properties, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}
-                                    </pre>
-                                </td>
+                                <td>{{ $log->description }}</td>
+                                <td>{{ optional($log->causer)->role->name }}</td>
+                                <td>{{ data_get($log->properties, 'method', '-') }}</td>
+                                <td>{{ data_get($log->properties, 'route', '-') }}</td>
                                 <td>{{ $log->properties['ip'] ?? '-' }}</td>
+                               
+
                             </tr>
                         @endforeach
                     </tbody>

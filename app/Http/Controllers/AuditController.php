@@ -22,7 +22,7 @@ class AuditController extends Controller
         $query->whereDate('created_at', '<=', $request->to);
     }
 
-    $activities = $query->paginate(2)->withQueryString();
+    $activities = $query->paginate(10)->withQueryString();
 
         return view('admin.audit.index', compact('activities', 'user'));
     }
