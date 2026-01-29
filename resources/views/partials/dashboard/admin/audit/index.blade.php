@@ -49,16 +49,7 @@
                         <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-secondary me-2">
                             ♻️ 
                         </a>
-                        <form method="POST" action="{{ route('admin.audit.archive') }}" class="d-inline">
-                            @csrf
-                            <input type="hidden" name="from" value="{{ request('from') }}">
-                            <input type="hidden" name="to" value="{{ request('to') }}">
-
-                            <button class="btn btn-sm btn-warning"
-                                onclick="return confirm('Archiver et vider les logs ?')">
-                                🗄️ 
-                            </button>
-                        </form>
+                        
 
                     </div>
                 </form>

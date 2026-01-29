@@ -28,14 +28,4 @@ class AuditController extends Controller
 
         return view('admin.audit.index', compact('activities', 'user'));
     }
-
-    public function archive(Request $request, AuditExportB2Service $service)
-    {
-        $service->storeAndClean(
-            $request->get('from'),
-            $request->get('to')
-        );
-
-        return back()->with('success', 'Audit archivé sur B2 et base nettoyée.');
-    }
 }

@@ -26,9 +26,7 @@ class AuditDailyB2Archive extends Command
      */
     public function handle(AuditExportB2Service $service)
     {
-        $yesterday = now()->subDay()->toDateString();
-
-        $service->storeAndClean($yesterday, $yesterday);
+        $service->storeAndClean();
 
         $this->info('Audit journalier archivé et nettoyé.');
     }

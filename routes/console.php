@@ -15,4 +15,4 @@ Schedule::command('rappel:rattachement-bl')
     ->between('8:00', '17:00'); // De 8h00 à 17h00
 
 Schedule::command('audit:b2-archive')
-    ->dailyAt('00:00');
+    ->dailyAt('23:59');
