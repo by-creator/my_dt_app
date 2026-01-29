@@ -1,7 +1,7 @@
 <div class="col-md-12 col-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><u>Liste des claviers</u></h4>
+            <h4 class="card-title"><u>Liste des logs</u></h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
