@@ -93,3 +93,9 @@ Route::get('/admin/audit/export/pdf', function () {
     return $pdf->download('audit_logs.pdf');
 
 })->middleware(['auth', 'admin'])->name('admin.audit.export.pdf');
+
+
+Route::post('/admin/audit/archive', [AuditController::class, 'archive'])
+    ->middleware(['auth', 'admin'])
+    ->name('admin.audit.archive');
+

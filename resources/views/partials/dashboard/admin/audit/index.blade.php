@@ -35,22 +35,31 @@
 
                     <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-sm btn-primary me-2">
-                            🔍 Filtrer
+                            🔍 
                         </button>
                         <a href="{{ route('admin.audit.export.excel', request()->query()) }}"
                             class="btn btn-sm btn-success me-2">
-                            📤 Excel
+                            📤 
                         </a>
 
                         <a href="{{ route('admin.audit.export.pdf', request()->query()) }}"
                             class="btn btn-sm btn-danger  me-2">
-                            📄 PDF
+                            📄 
                         </a>
-
-
-                        <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-secondary">
-                            ♻️ Réinitialiser
+                        <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-secondary me-2">
+                            ♻️ 
                         </a>
+                        <form method="POST" action="{{ route('admin.audit.archive') }}" class="d-inline">
+                            @csrf
+                            <input type="hidden" name="from" value="{{ request('from') }}">
+                            <input type="hidden" name="to" value="{{ request('to') }}">
+
+                            <button class="btn btn-sm btn-warning"
+                                onclick="return confirm('Archiver et vider les logs ?')">
+                                🗄️ 
+                            </button>
+                        </form>
+
                     </div>
                 </form>
 
@@ -76,7 +85,7 @@
                                 <td>{{ data_get($log->properties, 'method', '-') }}</td>
                                 <td>{{ data_get($log->properties, 'route', '-') }}</td>
                                 <td>{{ $log->properties['ip'] ?? '-' }}</td>
-                               
+
 
                             </tr>
                         @endforeach
