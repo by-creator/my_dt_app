@@ -9,12 +9,20 @@ use Spatie\Activitylog\Models\Activity;
 
 class AuditController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
          $user = Auth::user();
-        $activities = Activity::with('causer')
-            ->latest()
-            ->paginate(50);
+        $query = Activity::with('causer')->latest();
+
+    if ($request->filled('from')) {
+        $query->whereDate('created_at', '>=', $request->from);
+    }
+
+    if ($request->filled('to')) {
+        $query->whereDate('created_at', '<=', $request->to);
+    }
+
+    $activities = $query->paginate(2)->withQueryString();
 
         return view('admin.audit.index', compact('activities', 'user'));
     }
