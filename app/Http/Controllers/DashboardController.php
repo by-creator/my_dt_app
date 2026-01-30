@@ -119,6 +119,14 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Rapport',
                         'route' => route('rapport.index')
                     ],
+                    [
+                        'id' => 9,
+                        'name' => 'Douane',
+                        'header' => 'Douane',
+                        'description' => 'Gestion de Douane',
+                        'route' => route('douane.index')
+                    ],
+                
 
 
                 ];
