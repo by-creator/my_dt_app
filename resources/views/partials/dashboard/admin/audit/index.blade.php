@@ -34,21 +34,22 @@
                     </div>
 
                     <div class="col-md-3 d-flex align-items-end">
-                        <button type="submit" class="btn btn-sm btn-primary me-2">
-                            🔍 
+                        <button type="submit" class="btn btn-sm btn-outline-primary me-2">
+                            🔍 Filtrer
                         </button>
+                         <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-outline-primary me-2">
+                            ♻️ Actualiser
+                        </a>
                         <a href="{{ route('admin.audit.export.excel', request()->query()) }}"
-                            class="btn btn-sm btn-success me-2">
-                            📤 
+                            class="btn btn-sm btn-outline-primary me-2">
+                            📊 Excel
                         </a>
 
                         <a href="{{ route('admin.audit.export.pdf', request()->query()) }}"
-                            class="btn btn-sm btn-danger  me-2">
-                            📄 
+                            class="btn btn-sm btn-outline-primary  me-2">
+                            📋 PDF
                         </a>
-                        <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-secondary me-2">
-                            ♻️ 
-                        </a>
+                       
                         
 
                     </div>

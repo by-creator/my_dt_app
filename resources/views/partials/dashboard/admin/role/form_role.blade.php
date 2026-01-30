@@ -27,16 +27,16 @@
                                     <div class="position-relative">
                                         <input type="text" name="name" class="form-control" placeholder="Entrez un rôle" id="first-name-icon">
                                         <div class="form-control-icon">
-                                            <i class="fa-solid fa-user-lock"></i>
+                                            🔒
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit"
-                                    class="btn btn-primary me-1 mb-1"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
+                                    class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-check-to-slot"></i>✔️ Valider</button>
                                 <button type="reset"
-                                    class="btn btn-danger me-1 mb-1"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
+                                    class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-square-xmark"></i>✖️ Annuler</button>
                             </div>
                         </div>
                     </div>

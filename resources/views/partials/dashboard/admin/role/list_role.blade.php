@@ -15,10 +15,10 @@
                     <tr>
                         <td>{{ $role->name }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $role->id }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-id="{{ $role->id }}" data-name="{{ $role->name }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i>✏️ Modifier</button>
                         </td> 
                         <td>
-                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i>✖️ Supprimer</button>
                         </td>
                     </tr>
                     @endforeach
@@ -53,8 +53,8 @@
                                 <input type="text" class="form-control" name="name" id="editName" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">✏️ Modifier</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal">✖️ Annuler</button>
                             </div>
                         </form>
                     </div>
@@ -86,8 +86,8 @@
                             @method('DELETE')
                             <input type="hidden" id="deleteId" name="id">
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary"><i>✏️</i> Oui</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal">✖️ Non</button>
                             </div>
                         </form>
                     </div>

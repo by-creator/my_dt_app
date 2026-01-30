@@ -8,8 +8,8 @@
                 @csrf
                 <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
                 <br>
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Importer</button>
-                <a href="{{ route('user.export') }}" class="btn btn-danger"><i class="fa-solid fa-download"></i> Exporter</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary me-1 mb-1">⬆️ Importer</button>
+                <a href="{{ route('user.export') }}" class="btn btn-sm btn-outline-primary me-1 mb-1">⬇️ Exporter</a>
             </form>
             <br>
             <table class="table table-striped" id="table1">
@@ -34,10 +34,10 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->telephone }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-telephone="{{ $user->telephone }}"  data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-telephone="{{ $user->telephone }}"  data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal">✏️ Modifier</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">✖️ Supprimer</button>
                         </td>
                     </tr>
                     @endforeach
@@ -93,8 +93,8 @@
                                 <input type="password" class="form-control" id="editPassword" required name="password">
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Fermer</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">✏️ Modifier</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal">✖️ Fermer</button>
                             </div>
                         </form>
                     </div>
@@ -126,8 +126,8 @@
                             @method('DELETE')
                             <input type="hidden" id="deleteId" name="id">
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">✏️ Oui</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal">✖️ Non</button>
                             </div>
                         </form>
                     </div>
