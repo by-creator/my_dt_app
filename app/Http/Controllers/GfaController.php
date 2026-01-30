@@ -221,7 +221,7 @@ class GfaController extends Controller
                 break;
         }
 
-        return view('agent.dashboard', compact('cards', 'guichet', 'user'));
+        return view('gfa.dashboard', compact('cards', 'guichet', 'user'));
     }
 
     public function display()
