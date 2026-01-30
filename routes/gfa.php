@@ -5,6 +5,8 @@
     use App\Http\Controllers\GfaController;
     use Illuminate\Support\Facades\Route;
 
+    Route::get('/display', [GfaController::class, 'display'])->name('gfa.display');
+
     Route::middleware('auth')->group(function () {
 
         Route::get('/gfa/guichet', [GfaController::class, 'guichet'])->name('gfa.guichet.me');
@@ -13,5 +15,5 @@
 
         Route::get('/gfa/dashboard', [GfaController::class, 'dashboard'])->name('gfa.dashboard');
 
-        Route::get('/display', [GfaController::class, 'display'])->name('gfa.display');
+        
     });
