@@ -14,7 +14,7 @@
                             <input type="date" id="date-column" class="form-control"
                                 name="creation_date">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-calendar"></i>
+                                📅
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez un sigle" name="sigle">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-file-lines"></i>
+                                🧾
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez un ninea" name="ninea">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                💲
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez un registre de commerce" name="rc">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                💲
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez un titre d'exonération" name="exo">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                💲
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez une forme juridique" name="juridic_form">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-receipt"></i>
+                                🧾
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez un statut juridique" name="juridic_status">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-receipt"></i>
+                                🧾
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez un groupe" name="group">
                             <div class="form-control-icon">
-                                <i class="fa-solid fa-layer-group"></i>
+                                🧾
                             </div>
                         </div>
                     </div>

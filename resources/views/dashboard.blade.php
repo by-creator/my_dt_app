@@ -31,7 +31,7 @@
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="input-group mb-3">
-                                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                            <span class="input-group-text">🔎</i></span>
                                             <input type="search" id="searchInput"
                                                 class="form-control text-center"
                                                 placeholder="Saisissez les éléments de recherche">
