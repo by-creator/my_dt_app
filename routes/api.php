@@ -27,6 +27,3 @@ Route::get('/ping', function () {
     return response()->json(['message' => 'API is working ✅']);
 });
 
-//ordre-approche-vehicule
-Route::post('/powerbi/fetch', [PowerBiController::class, 'fetch'])->middleware('powerbi.token')->name('powerbi.fetch');
-

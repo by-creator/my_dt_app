@@ -36,3 +36,4 @@ require __DIR__.'/ordre_approche.php';
 require __DIR__.'/planification.php';
 require __DIR__.'/rapport.php';
 require __DIR__.'/informatique.php';
+require __DIR__.'/gfa.php';

@@ -14,8 +14,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/user-accounts/import', [UserAccountController::class, 'import'])->name('user_accounts.import');
     Route::get('/user-accounts/export', [UserAccountController::class, 'export'])->name('user_accounts.export');
 
-    Route::get('/agent/guichet', [GuichetController::class, 'guichet'])
-        ->name('agent.guichet.me');
-
 
 });

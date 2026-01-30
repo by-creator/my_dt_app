@@ -110,9 +110,8 @@ class DashboardController extends Controller
                         'name' => 'Ticket',
                         'header' => 'Ticket',
                         'description' => 'Gestion de Ticket',
-                        'route' => route('agent.guichet.me')
+                        'route' => route('gfa.guichet.me')
                     ],
-
                     [
                         'id' => 8,
                         'name' => 'Rapport',
@@ -177,7 +176,7 @@ class DashboardController extends Controller
                         'name' => 'Ticket',
                         'header' => 'Ticket',
                         'description' => 'Gestion de Ticket',
-                        'route' => route('agent.guichet.me')
+                        'route' => route('gfa.guichet.me')
                     ],
 
                 ];
@@ -198,7 +197,7 @@ class DashboardController extends Controller
                         'name' => 'Ticket',
                         'header' => 'Ticket',
                         'description' => 'Gestion de Ticket',
-                        'route' => route('agent.guichet.me')
+                        'route' => route('gfa.guichet.me')
                     ],
 
                 ];
@@ -210,7 +209,7 @@ class DashboardController extends Controller
                         'name' => 'Ticket',
                         'header' => 'Ticket',
                         'description' => 'Gestion de Ticket',
-                        'route' => route('agent.guichet.me')
+                        'route' => route('gfa.guichet.me')
                     ],
 
                 ];
