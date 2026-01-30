@@ -12,4 +12,6 @@
         Route::get('gfa/guichet/{guichet}', [GfaController::class, 'index'])->name('gfa.guichet');
 
         Route::get('/gfa/dashboard', [GfaController::class, 'dashboard'])->name('gfa.dashboard');
+
+        Route::get('/display', [GfaController::class, 'display'])->name('gfa.display');
     });

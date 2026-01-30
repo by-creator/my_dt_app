@@ -224,6 +224,13 @@ class GfaController extends Controller
         return view('agent.dashboard', compact('cards', 'guichet', 'user'));
     }
 
+    public function display()
+    {
+        return redirect()->away(
+            "https://site-dt-app-production-e69724207a1f.herokuapp.com"
+        );
+    }
+
     public function index($guichet)
     {
         return redirect()->away(
