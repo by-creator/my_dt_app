@@ -32,12 +32,12 @@
                                 <label for="date">Item number</label>
                                 <div class="d-flex gap-2">
 
-                                    <input list="ordres_list" name="ordre_id" class="form-control"
+                                    <input list="ordres_list" name="ItemNumber" class="form-control"
                                         placeholder="Saisir ou choisir un item" required>
 
                                     <datalist id="ordres_list">
-                                        @foreach ($ordres as $ordre)
-                                            <option value="{{ $ordre->ItemNumber }}">
+                                        @foreach ($itemNumbers as $itemNumber)
+                                            <option value="{{ $itemNumber }}">
                                         @endforeach
                                     </datalist>
                                     <div class="col-md-6 d-flex align-items-end">

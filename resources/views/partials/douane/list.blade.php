@@ -12,10 +12,10 @@
                              placeholder="Saisir ou choisir un item" required value="{{ request('ItemNumber') }}">
 
                          <datalist id="ordres_list">
-                             @foreach ($ordres as $ordre)
-                                 <option value="{{ $ordre->ItemNumber }}">
-                             @endforeach
-                         </datalist>
+                                        @foreach ($itemNumbers as $itemNumber)
+                                            <option value="{{ $itemNumber }}">
+                                        @endforeach
+                                    </datalist>
                      </div>
 
                      <div class="col-md-3 d-flex align-items-end">
@@ -43,23 +43,6 @@
                                  <td>{{ $ordre->BlNumber }}</td>
                                  <td>{{ $ordre->Item_Type }}</td>
                                  <td>{{ $ordre->Description_ }}</td>
-                                 <td>
-                                     <button type="button" class="btn btn-primary btn-edit"
-                                         data-id="{{ $ordre->id }}"
-                                         data-date_reception="{{ $ordre->date_reception }}"
-                                         data-date_deploiement="{{ $ordre->date_deploiement }}"
-                                         data-marque="{{ $ordre->marque }}"
-                                         data-utilisateur="{{ $ordre->utilisateur }}" data-bs-toggle="modal"
-                                         data-bs-target="#editModal">
-                                         <i class="fa-solid fa-pen-to-square"></i> Modifier
-                                     </button>
-                                 </td>
-                                 <td>
-                                     <button type="button" class="btn btn-danger btn-delete"
-                                         data-id="{{ $ordre->id }}" data-bs-toggle="modal"
-                                         data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i>
-                                         Supprimer</button>
-                                 </td>
                              </tr>
                          @endforeach
                      </tbody>

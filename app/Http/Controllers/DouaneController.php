@@ -11,18 +11,23 @@ class DouaneController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $user = Auth::user();
 
         $query = OrdreApproche::latest();
-        
+
         if ($request->filled('ItemNumber')) {
             $query->where('ItemNumber', $request->ItemNumber);
         }
-        
+
         $ordres = $query->paginate(3)->withQueryString();
 
 
-        return view('douane.index', compact('ordres', 'user'));
+        $itemNumbers = OrdreApproche::select('ItemNumber')
+            ->distinct()
+            ->orderBy('id', 'desc')
+            ->pluck('ItemNumber');
+
+        return view('douane.index', compact('ordres', 'itemNumbers', 'user'));
     }
 }
