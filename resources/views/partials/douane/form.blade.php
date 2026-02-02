@@ -6,7 +6,7 @@
         <div class="card-content">
             <div class="card-body">
                 @if ($user->role->name == 'ADMIN')
-                    <form action="{{ route('ordre_approche.import') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('yard.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">

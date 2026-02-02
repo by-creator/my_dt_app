@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+
 
 
 
@@ -47,9 +49,11 @@ class DashboardController extends Controller
         $rattachements = RattachementBl::where('email', $email)->get();
 
 
+
         $user = Auth::user();
 
         $cards = [];
+
 
         switch ($user->role->name) {
 
@@ -63,6 +67,13 @@ class DashboardController extends Controller
                         'route' => route('role.index')
                     ],
                     [
+                        'id' => 9,
+                        'name' => 'Douane',
+                        'header' => 'Douane',
+                        'description' => 'Gestion de Douane',
+                        'route' => route('douane.index')
+                    ],
+                    [
                         'id' => 1,
                         'name' => 'Facturation',
                         'header' => 'Facturation',
@@ -83,34 +94,12 @@ class DashboardController extends Controller
                         'description' => 'Gestion des ordre d\'approches',
                         'route' => route('ordre_approche.index')
                     ],
-
-                    [
-                        'id' => 4,
-                        'name' => 'Ressources Humanines',
-                        'header' => 'Ressources Humaines',
-                        'description' => 'Gestion des Ressources Humaines',
-                        'route' => route('ordre_approche.index')
-                    ],
                     [
                         'id' => 5,
                         'name' => 'Planification',
                         'header' => 'Planification',
                         'description' => 'Gestion de Planification',
                         'route' => route('planification.index')
-                    ],
-                    [
-                        'id' => 6,
-                        'name' => 'Stock',
-                        'header' => 'Stock',
-                        'description' => 'Gestion de Stock',
-                        'route' => route('ordinateur.index')
-                    ],
-                    [
-                        'id' => 7,
-                        'name' => 'Ticket',
-                        'header' => 'Ticket',
-                        'description' => 'Gestion de Ticket',
-                        'route' => route('gfa.guichet.me')
                     ],
                     [
                         'id' => 8,
@@ -120,22 +109,33 @@ class DashboardController extends Controller
                         'route' => route('rapport.index')
                     ],
                     [
-                        'id' => 9,
-                        'name' => 'Douane',
-                        'header' => 'Douane',
-                        'description' => 'Gestion de Douane',
-                        'route' => route('douane.index')
+                        'id' => 4,
+                        'name' => 'Ressources Humanines',
+                        'header' => 'Ressources Humaines',
+                        'description' => 'Gestion des Ressources Humaines',
+                        'route' => route('ordre_approche.index')
                     ],
-                
-
-
+                    [
+                        'id' => 6,
+                        'name' => 'Stock',
+                        'header' => 'Stock',
+                        'description' => 'Gestion de Stock',
+                        'route' => route('ordinateur.index')
+                    ],
+                    [
+                        'id' => 7,
+                        'name' => 'Ticket',
+                        'header' => 'Ticket',
+                        'description' => 'Gestion de Ticket',
+                        'route' => route('gfa.guichet.me')
+                    ],
                 ];
-
                 break;
+
+
 
             case "SUPER_U":
                 $cards = [
-
                     [
                         'id' => 1,
                         'name' => 'Facturation',
@@ -157,20 +157,19 @@ class DashboardController extends Controller
                         'description' => 'Gestion des ordre d\'approches',
                         'route' => route('ordre_approche.index')
                     ],
-
-                    [
-                        'id' => 4,
-                        'name' => 'Ressources Humanines',
-                        'header' => 'Ressources Humaines',
-                        'description' => 'Gestion des Ressources Humaines',
-                        'route' => route('ordre_approche.index')
-                    ],
                     [
                         'id' => 5,
                         'name' => 'Planification',
                         'header' => 'Planification',
                         'description' => 'Gestion de Planification',
                         'route' => route('planification.index')
+                    ],
+                    [
+                        'id' => 4,
+                        'name' => 'Ressources Humanines',
+                        'header' => 'Ressources Humaines',
+                        'description' => 'Gestion des Ressources Humaines',
+                        'route' => route('ordre_approche.index')
                     ],
                     [
                         'id' => 6,
@@ -186,13 +185,11 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Ticket',
                         'route' => route('gfa.guichet.me')
                     ],
-
                 ];
-
                 break;
+
             case "FACTURATION":
                 $cards = [
-
                     [
                         'id' => 1,
                         'name' => 'Facturation',
@@ -207,9 +204,9 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Ticket',
                         'route' => route('gfa.guichet.me')
                     ],
-
                 ];
                 break;
+
             case "CAISSE":
                 $cards = [
                     [
@@ -219,13 +216,11 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Ticket',
                         'route' => route('gfa.guichet.me')
                     ],
-
                 ];
-
                 break;
+
             case "OPERATIONS":
                 $cards = [
-
                     [
                         'id' => 1,
                         'name' => 'Orde d\'approches',
@@ -233,14 +228,12 @@ class DashboardController extends Controller
                         'description' => 'Gestion des ordre d\'approches',
                         'route' => route('ordre_approche.index')
                     ],
-
                 ];
-
                 break;
+
 
             case "PLANIFICATION":
                 $cards = [
-
                     [
                         'id' => 1,
                         'name' => 'Planification',
@@ -248,11 +241,11 @@ class DashboardController extends Controller
                         'description' => 'Gestion de Planification',
                         'route' => route('planification.index')
                     ],
-
                 ];
-
                 break;
         }
+
+        
         return view('dashboard', compact('cards', 'dossiers', 'rattachements', 'user'));
     }
 
