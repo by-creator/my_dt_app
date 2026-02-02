@@ -61,21 +61,21 @@ class DashboardController extends Controller
                         'header' => 'Administration',
                         'description' => 'Gestion administrative',
                         'route' => route('role.index')
-                    ],/*
+                    ],
                     [
                         'id' => 1,
                         'name' => 'Facturation',
                         'header' => 'Facturation',
                         'description' => 'Gestion Facturation',
                         'route' => route('rattachement.index')
-                    ],*/
+                    ],
                     [
                         'id' => 2,
                         'name' => 'Informatique',
                         'header' => 'Informatique',
                         'description' => 'Gestion Informatique',
                         'route' => route('user_accounts.index')
-                    ],/*
+                    ],
                     [
                         'id' => 3,
                         'name' => 'Orde d\'approches',
@@ -97,14 +97,14 @@ class DashboardController extends Controller
                         'header' => 'Planification',
                         'description' => 'Gestion de Planification',
                         'route' => route('planification.index')
-                    ],*/
+                    ],
                     [
                         'id' => 6,
                         'name' => 'Stock',
                         'header' => 'Stock',
                         'description' => 'Gestion de Stock',
                         'route' => route('ordinateur.index')
-                    ],/*
+                    ],
                     [
                         'id' => 7,
                         'name' => 'Ticket',
@@ -125,7 +125,7 @@ class DashboardController extends Controller
                         'header' => 'Douane',
                         'description' => 'Gestion de Douane',
                         'route' => route('douane.index')
-                    ],*/
+                    ],
                 
 
 

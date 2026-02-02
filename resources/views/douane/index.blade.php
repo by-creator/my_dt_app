@@ -29,8 +29,8 @@
                             </a>
                         </li>
 
-                        @if($user->role->name == "ADMIN" || $user->role->name == "SUPER_U" || $user->role->name == "OPERATIONS" || $user->role->name == "QHSE")
-                        @include('partials.ordre_approche.menu')
+                        @if($user->role->name == "ADMIN")
+                        @include('partials.douane.menu')
                         @endif
 
 
@@ -63,8 +63,9 @@
                 <h3>Bienvenu(e) {{ $user->name }} </h3>
             </div>
             <div class="page-content">
-                @if($user->role->name == "ADMIN" || $user->role->name == "SUPER_U" || $user->role->name == "OPERATIONS" || $user->role->name == "QHSE")
-                @include('partials.ordre_approche.form')
+                @if($user->role->name == "ADMIN")
+                @include('partials.douane.form')
+                @include('partials.douane.list')
                 @endif
             </div>
         </div>
