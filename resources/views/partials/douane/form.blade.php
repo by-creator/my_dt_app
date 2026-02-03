@@ -13,7 +13,7 @@
                             <label>Importer les informations (CSV)</label>
 
                             <div class="d-flex gap-2">
-                                <input type="file" name="ordre_approche_file" class="form-control"
+                                <input type="file" name="file" class="form-control"
                                     accept=".xlsx, .xls, .csv" required>
 
                                 <button class="btn btn-primary" type="submit">

@@ -1,28 +1,64 @@
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Utilisateur</th>
-            <th>Rôle</th>
-            <th>Action</th>
-            <th>Détails</th>
-            <th>IP</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($activities as $log)
-        <tr>
-            <td>{{ $log->created_at }}</td>
-            <td>{{ optional($log->causer)->email }}</td>
-            <td>{{ $log->properties['role']['name'] ?? '-' }}</td>
-            <td>{{ $log->description }}</td>
-            <td>
-                <pre>{{ json_encode($log->properties, JSON_PRETTY_PRINT) }}</pre>
-            </td>
-            <td>{{ $log->properties['ip'] ?? '-' }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+public function import(Request $request)
+    {
+        Log::info('📥 Import Yard démarré');
 
-{{ $activities->links() }}
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:csv', 'max:102400'],
+        ]);
+
+        DB::disableQueryLog();
+
+        $file = $request->file('file');
+        $path = $file->storeAs(
+            'imports',
+            'yard_' . now()->format('Ymd_His') . '.csv'
+        );
+
+        $fullPath = str_replace('\\', '/', storage_path("app/$path"));
+
+        Log::info('📁 Fichier stocké', ['path' => $fullPath]);
+
+        DB::table('yard_stagings')->truncate();
+        Log::info('🧹 Staging nettoyé');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::statement('SET UNIQUE_CHECKS=0');
+
+        try {
+
+            Log::info('🚀 LOAD DATA INFILE démarré');
+
+            DB::statement(/* SQL CI-DESSUS */);
+
+            $count = DB::table('yard_stagings')->count();
+            Log::info('✅ LOAD DATA terminé', ['rows' => $count]);
+
+            DB::statement("
+            INSERT INTO yards
+            SELECT * FROM yard_stagings s
+            WHERE NOT EXISTS (
+                SELECT 1 FROM yards y
+                WHERE y.item_number = s.item_number
+            )
+        ");
+
+            Log::info('📦 Insertion finale terminée');
+        } catch (\Throwable $e) {
+
+            Log::error('❌ Erreur import Yard', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            throw $e;
+        }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        DB::statement('SET UNIQUE_CHECKS=1');
+
+        Storage::delete($path);
+
+        Log::info('🏁 Import Yard terminé avec succès');
+
+        return back()->with('success', 'Import terminé 🚀');
+    }
