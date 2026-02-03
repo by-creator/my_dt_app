@@ -28,37 +28,51 @@ class YardStagingService
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (
-        @c1,  @c2,  @c3,  @c4,  @c5,
-        @c6,  @c7,  @c8,  @c9,  @c10,
-        @c11, @c12, @c13, @c14, @c15,
-        @c16, @c17, @c18,
+        @c1,  -- Terminal
+        @c2,  -- Shipowner
+        @c3,  -- ItemNumber 
+        @c4,  -- Item Type
+        @c5,  -- Item Code
+        @c6,  -- BL Number
+        @c7,  -- Final Destination Country
+        @c8,  -- Description
+        @c9,  -- TEU
+        @c10, -- Volume
+        @c11, -- Weight
+        @c12, -- Yard Zone Type
+        @c13, -- Zone
+        @c14, -- Type Veh
+        @c15, -- Type De Marchandise
+        @c16, -- POD
+        @c17, -- Yard Zone
+        @c18, -- Consignee
+        @c19, -- Call Number
 
         @eta_day, @eta_month, @eta_year,
 
-        @c19,
+        @c20, -- Vessel
 
         @vad_day, @vad_month, @vad_year,
 
-        @c20,
-        @c21,
-        @c22,
-        @c23,
-        @c24,
-        @c25,
-        @c26,
-        @c27,
-        @c28,
-        @c29,
-        @c30,
-        @c31,
-        @c32,
-        @c33,
-        @c34
+        @c21, -- Cycle
+        @c22, -- Yard Quantity
+        @c23, -- Days Since In
+        @c24, -- Dwelltime
+        @c25, -- BAE
+        @c26, -- Client
+        @c27, -- Bloque
+        @c28, -- Date
+        @c29, -- Time
+        @c30, -- Chauffeur
+        @c31, -- Permis
+        @c32, -- Pointeur
+        @c33, -- Responsable
+        @c34  -- Reserve
     )
     SET
         terminal = @c1,
         shipowner = @c2,
-        item_number = @c3,
+        item_number = @c3,      -- ✅ FIX
         item_type = @c4,
         item_code = @c5,
         bl_number = @c6,

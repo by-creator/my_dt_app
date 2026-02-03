@@ -27,11 +27,19 @@ class YardFinalizeService
 
     public function cleanup(string $storedPath): void
     {
-        Storage::delete($storedPath);
+        // 🔥 Nettoyage staging APRÈS import
+        DB::table('yard_stagings')->truncate();
 
+        // ♻️ Réactivation des checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::statement('SET UNIQUE_CHECKS=1');
 
-        Log::info('🧽 [YARD] Cleanup terminé');
+        // 🗑️ Suppression du fichier importé
+        Storage::disk('local')->delete($storedPath);
+
+        Log::info('🧽 [YARD] Cleanup terminé', [
+            'staging_truncated' => true,
+            'file_deleted' => $storedPath,
+        ]);
     }
 }
