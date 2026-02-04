@@ -59,8 +59,8 @@ class YardStagingService
         @c23, -- Days Since In
         @c24, -- Dwelltime
         @c25, -- BAE
-        @c26, -- Client
-        @c27, -- Bloque
+        @c26, -- Bloque
+        @c27, -- Client
         @c28, -- Date
         @c29, -- Time
         @c30, -- Chauffeur
