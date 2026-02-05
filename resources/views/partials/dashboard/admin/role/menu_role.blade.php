@@ -16,5 +16,7 @@
         <li class="submenu-item">
 
             <a href="{{ route('admin.audit') }}"><i class="fa-solid fa-rectangle-list"></i> Suivi des logs</a>
+
+        </li>
     </ul>
 </li>

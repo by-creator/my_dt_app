@@ -17,6 +17,12 @@ class RapportController extends Controller
         return view('rapport.index', compact('user'));
     }
 
+    public function yard()
+    {
+        $user = Auth::user();
+        return view('rapport.yard', compact('user'));
+    }
+
 
     public function infosFacturationImport(Request $request)
     {
