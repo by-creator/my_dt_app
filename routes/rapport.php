@@ -10,5 +10,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/infos_facturation/import', [RapportController::class, 'infosFacturationImport'])->name('infos_facturation.import');
 
         Route::get('/yard', [RapportController::class, 'yard'])->name('yard');
+         Route::post('/yard/list', [RapportController::class, 'list'])->name('yard.list');
     });
 });

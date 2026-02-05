@@ -8,12 +8,12 @@
                  <form method="GET" action="{{ route('douane.index') }}" class="row g-2 mb-3">
                      <div class="col-md-3">
                          <label class="form-label small">Item Number</label>
-                         <input list="ordres_list" name="ItemNumber" class="form-control"
-                             placeholder="Saisir ou choisir un item" required value="{{ request('ItemNumber') }}">
+                         <input list="yards_list" name="item_number" class="form-control"
+                             placeholder="Saisir ou choisir un item" required value="{{ request('item_number') }}">
 
-                         <datalist id="ordres_list">
-                                        @foreach ($itemNumbers as $itemNumber)
-                                            <option value="{{ $itemNumber }}">
+                         <datalist id="yards_list">
+                                        @foreach ($item_numbers as $item_number)
+                                            <option value="{{ $item_number }}">
                                         @endforeach
                                     </datalist>
                      </div>
@@ -34,15 +34,17 @@
                              <th>BL Number</th>
                              <th>Type</th>
                              <th>Description</th>
+                             <th>Bloqué</th>
                          </tr>
                      </thead>
                      <tbody>
-                         @foreach ($ordres as $ordre)
+                         @foreach ($yards as $yard)
                              <tr>
-                                 <td>{{ $ordre->ItemNumber }}</td>
-                                 <td>{{ $ordre->BlNumber }}</td>
-                                 <td>{{ $ordre->Item_Type }}</td>
-                                 <td>{{ $ordre->Description_ }}</td>
+                                 <td>{{ $yard->item_number }}</td>
+                                 <td>{{ $yard->bl_number }}</td>
+                                 <td>{{ $yard->item_type }}</td>
+                                 <td>{{ $yard->description }}</td>
+                                 <td>{{ $yard->bloque }}</td>
                              </tr>
                          @endforeach
                      </tbody>
@@ -50,12 +52,12 @@
              </div>
              <div class="d-flex justify-content-between align-items-center mt-3">
                  <div class="small text-muted">
-                     Affichage de {{ $ordres->firstItem() }} à {{ $ordres->lastItem() }}
-                     sur {{ $ordres->total() }} résultats
+                     Affichage de {{ $yards->firstItem() }} à {{ $yards->lastItem() }}
+                     sur {{ $yards->total() }} résultats
                  </div>
 
                  <div>
-                     {{ $ordres->links() }}
+                     {{ $yards->links() }}
                  </div>
              </div>
          </div>
