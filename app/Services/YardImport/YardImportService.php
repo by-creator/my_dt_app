@@ -16,44 +16,32 @@ class YardImportService
 
     public function handle(Request $request): void
     {
-        DB::disableQueryLog();
         Log::info('📥 [YARD] Début import (Service)');
 
-        try {
-            $this->validate($request);
-
-            [$storedPath, $extension] = $this->fileService->store($request);
-
-            $storedPath = $this->fileService->convertXlsxToCsvIfNeeded($storedPath, $extension);
-
-            $fullPath = $this->fileService->getFullPath($storedPath);
-
-            $this->stagingService->prepare();
-            $this->stagingService->load($fullPath);
-
-            $this->finalizeService->insertFinal();
-            $this->finalizeService->cleanup($storedPath);
-
-            Log::info('✅ [YARD] Import terminé avec succès');
-
-        } catch (\Throwable $e) {
-
-            Log::error('❌ [YARD] Erreur import', [
-                'message' => $e->getMessage(),
-                'file'    => $e->getFile(),
-                'line'    => $e->getLine(),
-            ]);
-
-            throw $e;
-        }
-    }
-
-    private function validate(Request $request): void
-    {
         $request->validate([
-            'file' => ['required', 'file', 'mimes:csv,xlsx', 'max:102400'],
+            'file' => ['required', 'file', 'mimes:csv,xlsx'],
         ]);
 
-        Log::info('✅ [YARD] Validation OK');
+        // 1️⃣ Upload
+        [$storedPath, $extension] = $this->fileService->store($request);
+        $fullPath = $this->fileService->getFullPath($storedPath);
+
+        // 2️⃣ Préparation staging
+        $this->stagingService->prepare();
+
+        // 3️⃣ Import selon type
+        if ($extension === 'csv') {
+            $this->stagingService->load($fullPath);
+        }
+
+        if ($extension === 'xlsx') {
+            $this->stagingService->loadFromXlsx($fullPath);
+        }
+
+        // 4️⃣ Insertion finale + cleanup
+        $this->finalizeService->insertFinal();
+        $this->finalizeService->cleanup($storedPath);
+
+        Log::info('✅ [YARD] Import terminé avec succès');
     }
 }
