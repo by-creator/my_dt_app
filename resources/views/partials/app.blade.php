@@ -25,7 +25,7 @@
 
                         <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                             <a href="{{ route('dashboard') }}" class="sidebar-link">
-                                <i class="fa-solid fa-home"></i>
+                                🏠
                                 <span>Accueil</span>
                             </a>
                         </li>
@@ -35,14 +35,14 @@
                         @endif
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
-                                <i class="fa-solid fa-gear"></i>
+                                ⚙️
                                 <span>Paramètres</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
-                                <i class="fa-solid fa-right-from-bracket"></i>
+                                🔚
                                 <span>Déconnexion</span>
                             </a>
                         </li>
