@@ -1,57 +1,57 @@
 <li class="sidebar-item  has-sub ">
     <a href="#" class='sidebar-link'>
-        📋
+        📁
         <span>Validation </span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('rattachement.index') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion validations</a>
+            <a class='sidebar-link' href="{{ route('rattachement.index') }}">📋 Gestion validations</a>
         </li>
         <li class="submenu-item ">
-            <a class='sidebar-link' href="{{ route('rattachement.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste validations</a>
+            <a class='sidebar-link' href="{{ route('rattachement.list') }}">📋 Liste validations</a>
         </li>
     </ul>
 </li>
 
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
-        📋
+        📁
         <span>Proformas</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.proforma') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion proformas</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.proforma') }}">📋 Gestion proformas</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.proforma.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste proformas</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.proforma.list') }}">📋 Liste proformas</a>
         </li>
     </ul>
 </li>
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
-        📋
+        📁
         <span>Factures</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item ">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.facture') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion factures</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.facture') }}">📋 Gestion factures</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.facture.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste factures</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.facture.list') }}">📋 Liste factures</a>
         </li>
     </ul>
 </li>
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
-        📋
+        📁
         <span>Bons à délivrer </span>
     </a>
     <ul class="submenu">
         <li class="submenu-item ">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.bon') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion BAD</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.bon') }}">📋 Gestion BAD</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('dossier_facturation.bon.list') }}"><i class="fa-solid fa-clipboard-list"></i> Liste BAD</a>
+            <a class='sidebar-link' href="{{ route('dossier_facturation.bon.list') }}">📋 Liste BAD</a>
         </li>
     </ul>
 </li>
@@ -74,12 +74,12 @@
 @endif
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
-        📋
+        📁
         <span>Unify</span>
     </a>
     <ul class="submenu">
         <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('unify.index') }}"><i class="fa-solid fa-clipboard-list"></i> Formulaire Unify</a>
+            <a class='sidebar-link' href="{{ route('unify.index') }}">📋 Formulaire Unify</a>
         </li>
         <li class="submenu-item ">
             <a class='sidebar-link' href="{{ route('ipaki.list') }}"><i class="fa-solid fa-list"></i> Liste tiers</a>
