@@ -1,6 +1,6 @@
 <li class="sidebar-item  has-sub active">
     <a href="#" class='sidebar-link'>
-        <i class="fa-solid fa-rectangle-list"></i>
+        📦
         <span>Stock</span>
     </a>
     <ul class="submenu">
@@ -26,6 +26,9 @@
         </li>
         <li class="submenu-item ">
             <a href="{{ route('telephone-fixe.index') }}"><i class="fa-solid fa-phone"></i> Postes fixes</a>
+        </li>
+        <li class="submenu-item ">
+            <a href="{{ route('telephone-mobiles.index') }}"><i class="fa-solid fa-mobile"></i> Postes mobiles</a>
         </li>
     </ul>
 </li>

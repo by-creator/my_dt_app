@@ -1,64 +1,132 @@
-public function import(Request $request)
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\TelephoneMobile;
+use App\Imports\TelephoneMobileImport;
+use App\Exports\TelephoneMobileExport;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
+
+class TelephoneMobileController extends Controller
+{
+    /**
+     * 📄 Liste des téléphones
+     */
+    public function index(Request $request)
     {
-        Log::info('📥 Import Yard démarré');
+         $user = Auth::user();
 
-        $request->validate([
-            'file' => ['required', 'file', 'mimes:csv', 'max:102400'],
-        ]);
+         $query = TelephoneMobile::latest();
 
-        DB::disableQueryLog();
-
-        $file = $request->file('file');
-        $path = $file->storeAs(
-            'imports',
-            'yard_' . now()->format('Ymd_His') . '.csv'
-        );
-
-        $fullPath = str_replace('\\', '/', storage_path("app/$path"));
-
-        Log::info('📁 Fichier stocké', ['path' => $fullPath]);
-
-        DB::table('yard_stagings')->truncate();
-        Log::info('🧹 Staging nettoyé');
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        DB::statement('SET UNIQUE_CHECKS=0');
-
-        try {
-
-            Log::info('🚀 LOAD DATA INFILE démarré');
-
-            DB::statement(/* SQL CI-DESSUS */);
-
-            $count = DB::table('yard_stagings')->count();
-            Log::info('✅ LOAD DATA terminé', ['rows' => $count]);
-
-            DB::statement("
-            INSERT INTO yards
-            SELECT * FROM yard_stagings s
-            WHERE NOT EXISTS (
-                SELECT 1 FROM yards y
-                WHERE y.item_number = s.item_number
-            )
-        ");
-
-            Log::info('📦 Insertion finale terminée');
-        } catch (\Throwable $e) {
-
-            Log::error('❌ Erreur import Yard', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            throw $e;
+        if ($request->filled('matricule')) {
+            $query->where('matricule', $request->matricule);
         }
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
-        DB::statement('SET UNIQUE_CHECKS=1');
+        $telephones = $query->paginate(3)->withQueryString();
 
-        Storage::delete($path);
-
-        Log::info('🏁 Import Yard terminé avec succès');
-
-        return back()->with('success', 'Import terminé 🚀');
+        return view('stock.telephone_mobiles.index', compact('telephones', 'user'));
     }
+
+    /**
+     * ➕ Formulaire de création
+     */
+    public function create()
+    {
+        return view('telephone_mobiles.create');
+    }
+
+    /**
+     * 💾 Enregistrement d’un téléphone
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'matricule'           => 'nullable|string|max:50',
+            'nom'                 => 'nullable|string|max:100',
+            'prenom'              => 'nullable|string|max:100',
+            'service'             => 'nullable|string|max:100',
+            'destination'         => 'nullable|string|max:100',
+            'modele_telephone'    => 'nullable|string|max:100',
+            'reference_telephone' => 'nullable|string|max:100',
+            'montant_forfait_ttc' => 'nullable|string|max:100',
+            'numero_sim'          => 'nullable|string|max:50',
+        ]);
+
+        TelephoneMobile::create($validated);
+
+        return redirect()
+            ->route('telephone-mobiles.index')
+            ->with('success', 'Téléphone ajouté avec succès');
+    }
+
+    /**
+     * ✏️ Formulaire d’édition
+     */
+    public function edit(TelephoneMobile $telephoneMobile)
+    {
+        return view('telephone_mobiles.edit', compact('telephoneMobile'));
+    }
+
+    /**
+     * 🔄 Mise à jour
+     */
+    public function update(Request $request, TelephoneMobile $telephoneMobile)
+    {
+        $validated = $request->validate([
+            'matricule'           => 'nullable|string|max:50',
+            'nom'                 => 'nullable|string|max:100',
+            'prenom'              => 'nullable|string|max:100',
+            'service'             => 'nullable|string|max:100',
+            'destination'         => 'nullable|string|max:100',
+            'modele_telephone'    => 'nullable|string|max:100',
+            'reference_telephone' => 'nullable|string|max:100',
+            'montant_forfait_ttc' => 'nullable|numeric',
+            'numero_sim'          => 'nullable|string|max:50',
+        ]);
+
+        $telephoneMobile->update($validated);
+
+        return redirect()
+            ->route('telephone-mobiles.index')
+            ->with('success', 'Téléphone mis à jour avec succès');
+    }
+
+    /**
+     * 🗑️ Suppression
+     */
+    public function destroy(TelephoneMobile $telephoneMobile)
+    {
+        $telephoneMobile->delete();
+
+        return redirect()
+            ->route('telephone-mobiles.index')
+            ->with('success', 'Téléphone supprimé avec succès');
+    }
+
+    /**
+     * 📥 Import Excel
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new TelephoneMobileImport, $request->file('file'));
+
+        return back()->with('success', 'Import effectué avec succès');
+    }
+
+    /**
+     * 📤 Export Excel
+     */
+    public function export()
+    {
+        return Excel::download(
+            new TelephoneMobileExport,
+            'telephone_mobiles.xlsx'
+        );
+    }
+}

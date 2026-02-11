@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     SourisControlller,
     EcranController,
     StationController,
-    TelephoneFixeController
+    TelephoneFixeController,
+    TelephoneMobileController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,6 @@ Route::middleware('auth')->group(function () {
         Route::post('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
     });
-
 });
 Route::middleware('auth')->group(function () {
 
@@ -32,7 +32,6 @@ Route::middleware('auth')->group(function () {
         Route::post('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
     });
-
 });
 Route::middleware('auth')->group(function () {
 
@@ -44,7 +43,6 @@ Route::middleware('auth')->group(function () {
         Route::post('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
     });
-
 });
 Route::middleware('auth')->group(function () {
 
@@ -56,7 +54,6 @@ Route::middleware('auth')->group(function () {
         Route::post('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
     });
-
 });
 Route::middleware('auth')->group(function () {
 
@@ -68,7 +65,6 @@ Route::middleware('auth')->group(function () {
         Route::post('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
     });
-
 });
 Route::middleware('auth')->group(function () {
 
@@ -80,5 +76,22 @@ Route::middleware('auth')->group(function () {
         Route::post('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
     });
-
 });
+Route::middleware('auth')->group(function () {
+
+    Route::prefix('telephone-mobiles')
+        ->name('telephone-mobiles.')
+        ->controller(TelephoneMobileController::class)
+        ->group(function () {
+
+            Route::get('/', 'index')->name('index');
+            Route::post('/store', 'store')->name('store');
+
+            Route::put('/{telephoneMobile}', 'update')->name('update');
+            Route::delete('/{telephoneMobile}', 'destroy')->name('destroy');
+
+            Route::post('/import', 'import')->name('import');
+            Route::get('/export', 'export')->name('export');
+        });
+});
+

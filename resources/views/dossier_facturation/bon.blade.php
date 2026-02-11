@@ -24,7 +24,7 @@
 
                         <li class="sidebar-title">
                             <a href="{{ route('dashboard') }}">
-                                <i class="fa-solid fa-home"></i>
+                                🏠
                                 <span>Accueil</span>
                             </a>
                         </li>

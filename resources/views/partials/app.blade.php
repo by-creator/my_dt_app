@@ -33,6 +33,7 @@
                         @include('partials.dossier_facturation.menu')
                         @else
                         @endif
+                        @yield('sidebar-menu')
                         <li class="sidebar-item">
                             <a href="{{ route('settings') }}" class='sidebar-link'>
                                 ⚙️
@@ -58,6 +59,9 @@
         @yield('content')
     </main>
     @include('partials.dashboard.script')
+    @stack('scripts')
+
+
 
 </body>
 

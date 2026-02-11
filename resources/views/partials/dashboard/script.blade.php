@@ -56,6 +56,24 @@
 
 <!-- toastify -->
 <script src="{{asset('templates/mazer/dist/assets/vendors/toastify/toastify.js')}}"></script>
+<!-- ✅ SweetAlert2 (OBLIGATOIRE) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',   // 🔥 en haut à droite
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+</script>
+
 
 <!-- filepond -->
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
