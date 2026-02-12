@@ -6,29 +6,29 @@
     <ul class="submenu">
         <li class="submenu-item">
 
-            <a href="{{ route('ordinateur.index') }}"><i class="fa-solid fa-computer"></i> Ordinateur</a>
+            <a href="{{ route('ordinateur.index') }}">🖥️ Ordinateur</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('clavier.index') }}"><i class="fa-solid fa-keyboard"></i> Clavier</a>
+            <a href="{{ route('clavier.index') }}">⌨️ Clavier</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('souris.index') }}"><i class="fa-solid fa-computer-mouse"></i> Souris</a>
+            <a href="{{ route('souris.index') }}">🖱️ Souris</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('ecran.index') }}"><i class="fa-solid fa-desktop"></i> Ecran</a>
+            <a href="{{ route('ecran.index') }}">🖥️ Ecran</a>
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('station.index') }}"><i class="fa-solid fa-shuffle"></i> Station</a>
+            <a href="{{ route('station.index') }}">🔄 Station</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('telephone-fixe.index') }}"><i class="fa-solid fa-phone"></i> Postes fixes</a>
+            <a href="{{ route('telephone-fixe.index') }}">📞 Postes fixes</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('telephone-mobiles.index') }}"><i class="fa-solid fa-mobile"></i> Postes mobiles</a>
+            <a href="{{ route('telephone-mobiles.index') }}">📱 Postes mobiles</a>
         </li>
     </ul>
 </li>
