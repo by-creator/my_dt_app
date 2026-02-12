@@ -22,10 +22,10 @@
         </li>
         <li class="submenu-item">
 
-            <a href="{{ route('station.index') }}">🔄 Station</a>
+            <a href="{{ route('station.index') }}">🔌 Station</a>
         </li>
         <li class="submenu-item ">
-            <a href="{{ route('telephone-fixe.index') }}">📞 Postes fixes</a>
+            <a href="{{ route('telephone-fixe.index') }}">☎️ Postes fixes</a>
         </li>
         <li class="submenu-item ">
             <a href="{{ route('telephone-mobiles.index') }}">📱 Postes mobiles</a>
