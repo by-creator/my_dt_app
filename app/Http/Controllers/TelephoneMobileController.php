@@ -15,19 +15,51 @@ class TelephoneMobileController extends Controller
     /**
      * 📄 Liste
      */
-     public function index(Request $request)
+    public function index(Request $request)
     {
-         $user = Auth::user();
+        $user = Auth::user();
 
-         $query = TelephoneMobile::latest();
+        $filters = ['matricule', 'nom', 'prenom', 'numero_sim'];
 
-        if ($request->filled('matricule')) {
-            $query->where('matricule', $request->matricule);
+        $query = TelephoneMobile::query();
+
+        foreach ($filters as $field) {
+            if ($request->filled($field)) {
+                $query->where($field, $request->$field);
+            }
         }
 
-        $telephones = $query->paginate(3)->withQueryString();
+        $telephones = $query
+            ->latest()
+            ->paginate(3)
+            ->withQueryString();
 
         return view('stock.telephone_mobiles.index', compact('telephones', 'user'));
+    }
+
+
+    public function datalist(Request $request)
+    {
+        $field = $request->get('field'); // matricule | nom | prenom | numero_sim
+        $query = $request->get('q');
+
+        // 🔐 Sécurité : champs autorisés
+        if (!in_array($field, ['matricule', 'nom', 'prenom', 'numero_sim'])) {
+            return response()->json([]);
+        }
+
+        $results = TelephoneMobile::query()
+            ->whereNotNull($field)
+            ->when(
+                $query,
+                fn($q) =>
+                $q->where($field, 'LIKE', "%{$query}%")
+            )
+            ->distinct()
+            ->limit(10) // ⚡ limite pour perf
+            ->pluck($field);
+
+        return response()->json($results);
     }
 
     /**

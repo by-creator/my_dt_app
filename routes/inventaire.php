@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
 
             Route::get('/', 'index')->name('index');
+            Route::get('/datalist', 'datalist')->name('datalist');
             Route::post('/store', 'store')->name('store');
 
             Route::put('/{telephoneMobile}', 'update')->name('update');
@@ -94,4 +95,3 @@ Route::middleware('auth')->group(function () {
             Route::get('/export', 'export')->name('export');
         });
 });
-
