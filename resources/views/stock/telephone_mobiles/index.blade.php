@@ -31,5 +31,4 @@
                 @endif
             </div>
         </div>
-        @include('partials.dashboard.script')
 @endsection
