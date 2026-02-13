@@ -6,7 +6,7 @@
         <div class="card-content">
             <div class="card-body">
                 
-                <form method="POST" action="{{ route('rapport.yard.list') }}">
+                <form method="POST" action="{{ route('yard.list') }}">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 ">

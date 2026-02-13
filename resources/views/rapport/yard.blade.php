@@ -25,6 +25,7 @@
             <div class="page-content">
                 @if($user->role->name == "ADMIN")
                  @include('partials.rapport.yard.index')
+                 @include('partials.rapport.yard.list')
                 @endif
             </div>
         </div>

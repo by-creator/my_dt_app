@@ -31,16 +31,28 @@ class DouaneController extends Controller
         return view('douane.index', compact('yards', 'item_numbers', 'user'));
     }
 
-     public function list(Request $request)
+    public function datalist(Request $request)
     {
-        $request->validate([
-            'ordre_id' => 'required|string'
-        ]);
+        $field = $request->get('field'); 
+        $query = $request->get('q');
 
-        // 🔍 Récupération de l'ordre
-        $yard = Yard::where('item_number', $request->yard)->first();
-        $user = Auth::user();
+        // 🔐 Sécurité : champs autorisés
+        if (!in_array($field, ['item_number' ])) {
+            return response()->json([]);
+        }
 
-        return view('douane.list', compact('yard', 'user'));
+        $results = Yard::query()
+            ->whereNotNull($field)
+            ->when(
+                $query,
+                fn($q) =>
+                $q->where($field, 'LIKE', "%{$query}%")
+            )
+            ->distinct()
+            ->limit(10) // ⚡ limite pour perf
+            ->pluck($field);
+
+        return response()->json($results);
     }
+    
 }

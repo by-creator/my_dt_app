@@ -3,27 +3,27 @@
 
         <div class="card-header">
             <h4 class="card-title">
-                <u>Liste des téléphones mobiles</u>
+                <u>Liste des items</u>
             </h4>
         </div>
 
         <div class="card-body">
 
             {{-- 🔍 Filtres --}}
-            @include('partials.stock.telephone_mobiles.filters')
+            @include('partials.rapport.yard.filters')
 
             {{-- 📋 Tableau --}}
-            @include('partials.stock.telephone_mobiles.table')
+            @include('partials.rapport.yard.table')
 
             {{-- 📑 Pagination --}}
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <div class="small text-muted">
-                    Affichage de {{ $telephones->firstItem() }} à {{ $telephones->lastItem() }}
-                    sur {{ $telephones->total() }} résultats
+                    Affichage de {{ $yards->firstItem() }} à {{ $yards->lastItem() }}
+                    sur {{ $yards->total() }} résultats
                 </div>
 
                 <div>
-                    {{ $telephones->links() }}
+                    {{ $yards->links() }}
                 </div>
             </div>
 
@@ -31,12 +31,8 @@
     </div>
 </div>
 
-{{-- ✏️ Modals --}}
-@include('partials.stock.telephone_mobiles.modals.edit')
-@include('partials.stock.telephone_mobiles.modals.delete')
-
 {{-- 🔔 Toasts --}}
-@include('partials.stock.telephone_mobiles.toasts')
+@include('partials.toasts')
 
 {{-- ⚙️ Scripts JS --}}
-@include('partials.stock.telephone_mobiles.scripts')
+@include('partials.rapport.yard.scripts')

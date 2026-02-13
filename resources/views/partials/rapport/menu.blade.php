@@ -11,7 +11,7 @@
             </a>
         </li>
         <li class="submenu-item">
-            <a href="{{ route('rapport.yard') }}">
+            <a href="{{ route('yard.index') }}">
                 📋
                 <span>Suivi Yard</span>
             </a>
