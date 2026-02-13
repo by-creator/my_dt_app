@@ -55,23 +55,20 @@
         </li>
     </ul>
 </li>
-<li class="sidebar-item">
-    <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-video-index') }}"class='sidebar-link'>
-        ❓
-        <span>Comment ça marche ?</span>
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        📁
+        <span>Remises </span>
     </a>
+    <ul class="submenu">
+        <li class="submenu-item ">
+            <a class='sidebar-link' href="#">📋 Gestion remises</a>
+        </li>
+        <li class="submenu-item">
+            <a class='sidebar-link' href="#">📋 Liste remises</a>
+        </li>
+    </ul>
 </li>
-
-
-@if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
-<li class="sidebar-item">
-    <a class='sidebar-link' href="{{ route('dossier_facturation.list_client') }}"class='sidebar-link'>
-        👥
-        <span>Liste des clients</span>
-    </a>
-</li>
-@include('partials.ies.menu_ies')
-@endif
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         📁
@@ -92,6 +89,25 @@
         </li>
     </ul>
 </li>
+@if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
+<li class="sidebar-item">
+    <a class='sidebar-link' href="{{ route('dossier_facturation.list_client') }}"class='sidebar-link'>
+        👥
+        <span>Liste des clients</span>
+    </a>
+</li>
+@include('partials.ies.menu_ies')
+@endif
+
+<li class="sidebar-item">
+    <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-video-index') }}"class='sidebar-link'>
+        ❓
+        <span>Comment ça marche ?</span>
+    </a>
+</li>
+
+
+
 
 @if (session('error'))
 <script>
