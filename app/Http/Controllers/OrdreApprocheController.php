@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ImportOrdreApprocheCsvJob;
 use App\Models\OrdreApproche;
+use App\Models\Yard;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,24 +15,64 @@ use Illuminate\Support\Facades\Log;
 class OrdreApprocheController extends Controller
 {
 
-    public function index(Request $request)
+     public function index(Request $request)
     {
-        $ordres = OrdreApproche::orderBy('id', 'desc')->get();
         $user = Auth::user();
-        return view('ordre_approche.index', compact('ordres', 'user'));
+
+        $filters = ['item_number'];
+
+        $query = Yard::query();
+
+        foreach ($filters as $field) {
+            if ($request->filled($field)) {
+                $query->where($field, $request->$field);
+            }
+        }
+
+        $yards = $query
+            ->latest()
+            ->paginate(3)
+            ->withQueryString();
+
+        return view('ordre_approche.index', compact('yards', 'user'));
+    }
+
+    public function datalist(Request $request)
+    {
+        $field = $request->get('field'); 
+        $query = $request->get('q');
+
+        // 🔐 Sécurité : champs autorisés
+        if (!in_array($field, ['item_number' ])) {
+            return response()->json([]);
+        }
+
+        $results = Yard::query()
+            ->whereNotNull($field)
+            ->when(
+                $query,
+                fn($q) =>
+                $q->where($field, 'LIKE', "%{$query}%")
+            )
+            ->distinct()
+            ->limit(10) // ⚡ limite pour perf
+            ->pluck($field);
+
+        return response()->json($results);
     }
 
     public function list(Request $request)
     {
         $request->validate([
-            'ordre_id' => 'required|string'
+            'item_number' => 'required|string'
         ]);
 
         // 🔍 Récupération de l'ordre
-        $ordre = OrdreApproche::where('ItemNumber', $request->ordre_id)->first();
+        $ordre = Yard::where('item_number', $request->item_number)->first();
+
         $user = Auth::user();
 
-        return view('ordre_approche.list', compact('ordre', 'user'));
+        return view('ordre_approche.list', compact('ordre','user'));
     }
 
 
@@ -40,15 +81,13 @@ class OrdreApprocheController extends Controller
 
     public function update(Request $request, $id)
     {
-        $ordre = OrdreApproche::findOrFail($id);
+        $ordre = Yard::findOrFail($id);
 
-        Log::info('UPDATE OrdreApproche - données reçues', $request->all());
+        Log::info('UPDATE Yard - données reçues', $request->all());
 
         $ordre->date = Carbon::now();
         $ordre->time = Carbon::now();
-        $ordre->bae = $request->bae;
         $ordre->reserve = $request->reserve;
-        $ordre->client = $request->client;
         $ordre->chauffeur = $request->chauffeur;
         $ordre->permis = $request->permis;
         $ordre->pointeur = $request->pointeur;
@@ -57,34 +96,33 @@ class OrdreApprocheController extends Controller
         $data = [
             'date' => Carbon::now(),
             'time' => Carbon::now(),
-            'Terminal' => $request->Terminal,
-            'Shipowner' => $request->Shipowner,
-            'ItemNumber' => $request->ItemNumber,
-            'Item_Type' => $request->Item_Type,
-            'Item_Code' => $request->Item_Code,
-            'BlNumber' => $request->BlNumber,
-            'FinalDestinationCountry' => $request->FinalDestinationCountry,
-            'Description_' => $request->Description_,
-            'TEU' => $request->TEU,
-            'Volume' => $request->Volume,
-            'Weight_' => $request->Weight_,
-            'YardZoneType' => $request->YardZoneType,
-            'Zone' => $request->Zone,
-            'Type_Veh' => $request->Type_Veh,
-            'TypeDeMarchandise' => $request->TypeDeMarchandise,
-            'POD' => $request->POD,
-            'YardZone' => $request->YardZone,
+            'terminal' => $request->terminal,
+            'shipowner' => $request->shipowner,
+            'item_number' => $request->item_number,
+            'item_type' => $request->item_type,
+            'item_code' => $request->item_code,
+            'bl_number' => $request->bl_number,
+            'final_destination_counrty' => $request->final_destination_counrty,
+            'description' => $request->description,
+            'teu' => $request->teu,
+            'volume' => $request->volume,
+            'weight' => $request->weight,
+            'yard_zone_type' => $request->yard_zone_type,
+            'zone' => $request->zone,
+            'type_veh' => $request->type_veh,
+            'type_de_marchandise' => $request->type_de_marchandise,
+            'pod' => $request->pod,
+            'yard_zone' => $request->yard_zone,
             'consignee' => $request->consignee,
-            'callNumber' => $request->callNumber,
-            'Vessel' => $request->Vessel,
-            'ETA' => $request->ETA,
-            'vesselarrivaldate' => $request->vesselarrivaldate,
-            'Cycle' => $request->Cycle,
-            'Yard Quantity' => $request->YardQuantity,
-            'DAYS SINCE IN' => $request->DaysSinceIn,
-            'Dwelltime' => $request->Dwelltime,
+            'call_number' => $request->call_number,
+            'vessel' => $request->vessel,
+            'eta' => $request->eta,
+            'vessel_arrival_date' => $request->vessel_arrival_date,
+            'cycle' => $request->cycle,
+            'yard_quantity' => $request->yard_quantity,
+            'days_since_in' => $request->days_since_in,
+            'dwelltime' => $request->dwelltime,
             'bae' => $request->bae,
-            'client' => $request->client,
             'chauffeur' => $request->chauffeur,
             'permis' => $request->permis,
             'pointeur' => $request->pointeur,

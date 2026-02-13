@@ -9,11 +9,7 @@
             <a href="#" class="burger-btn d-block d-xl-none">
                 <i class="bi bi-justify fs-3"></i>
             </a>
-        </header>
-
-        <div class="page-heading">
-            <h3>Bienvenu(e) {{ $user->name }} </h3>
-        </div>
+        </header
 
         <div class="page-content">
             <div id="main-content">

@@ -39,7 +39,6 @@ class YardStaging extends Model
         'date',
         'time',
         'bae',
-        'client',
         'chauffeur',
         'permis',
         'pointeur',
@@ -47,3 +46,4 @@ class YardStaging extends Model
         'reserve',
     ];
 }
+

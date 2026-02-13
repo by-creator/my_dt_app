@@ -39,11 +39,15 @@ class Yard extends Model
         'date',
         'time',
         'bae',
-        'client',
         'chauffeur',
         'permis',
         'pointeur',
         'responsable',
         'reserve',
     ];
+
+    protected $casts = [
+    'vessel_arrival_date' => 'date',
+];
+
 }

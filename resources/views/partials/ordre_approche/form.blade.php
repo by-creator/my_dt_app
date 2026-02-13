@@ -1,56 +1,82 @@
-<div>
-    <div class="card">
-        <div class="card-header">
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card w-50">
+        <div class="card-header text-center">
             <h4 class="card-title"><u>Formulaire ordre approche</u></h4>
         </div>
         <div class="card-content">
             <div class="card-body">
-                @if($user->role->name == "ADMIN" )
-                <form action="{{ route('ordre_approche.import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
 
-                    <div class="form-group">
-                        <label>Importer Ordres d’approche (CSV)</label>
-
-                        <div class="d-flex gap-2">
-                            <input type="file" name="ordre_approche_file" class="form-control" accept=".xlsx, .xls, .csv"
-                                required>
-
-                            <button class="btn btn-primary" type="submit">
-                                Importer
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <hr>
-                @endif
                 <form method="POST" action="{{ route('ordre_approche.list') }}">
                     @csrf
-                    <div class="row">
-                        <div class="col-md-6 col-12">
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-12">
                             <div class="form-group">
-                                <label for="date">Item number</label>
-                                <div class="d-flex gap-2">
+                                <label>Item number</label>
+                                <input type="text" class="form-control"
+                                       name="item_number"
+                                       id="input-item_number"
+                                       list="datalist-item_number"
+                                       placeholder="Saisir un numéro d'item">
+                                <datalist id="datalist-item_number"></datalist>
+                            </div>
 
-                                    <input list="ordres_list" name="ordre_id" class="form-control"
-                                        placeholder="Saisir ou choisir un item" required>
-
-                                    <datalist id="ordres_list">
-                                        @foreach ($ordres as $ordre)
-                                            <option value="{{ $ordre->ItemNumber }}">
-                                        @endforeach
-                                    </datalist>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa-solid fa-check-to-slot"></i> Valider
-                                    </button>
-
-                                </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="submit" class="btn btn-sm btn-outline-success me-2">
+                                    ✅ Valider
+                                </button>
+                                <button type="reset" class="btn btn-sm btn-outline-danger">
+                                    🟥 Annuler
+                                </button>
                             </div>
                         </div>
                     </div>
+
                 </form>
-                <br>
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+function setupDatalist(inputId, datalistId, field) {
+    const input = document.getElementById(inputId);
+    const datalist = document.getElementById(datalistId);
+    let controller;
+
+    input.addEventListener('input', function () {
+        const value = this.value.trim();
+
+        if (value.length < 1) {
+            datalist.innerHTML = '';
+            return;
+        }
+
+        // ⛔ annule la requête précédente
+        if (controller) controller.abort();
+        controller = new AbortController();
+
+        fetch(`{{ route('ordre_approche.datalist') }}?field=${field}&q=${encodeURIComponent(value)}`, {
+            signal: controller.signal
+        })
+        .then(res => res.json())
+        .then(data => {
+            datalist.innerHTML = '';
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item;
+                datalist.appendChild(option);
+            });
+        })
+        .catch(err => {
+            if (err.name !== 'AbortError') console.error(err);
+        });
+    });
+}
+
+// 🔌 Initialisation
+setupDatalist('input-item_number', 'datalist-item_number', 'item_number');
+
+
+</script>

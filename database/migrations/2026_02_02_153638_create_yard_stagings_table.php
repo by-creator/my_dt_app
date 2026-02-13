@@ -42,7 +42,6 @@ return new class extends Migration
             $table->string('dwelltime')->nullable();
             $table->string('bae')->nullable();
             $table->string('bloque')->nullable();
-            $table->string('client')->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->string('chauffeur')->nullable();

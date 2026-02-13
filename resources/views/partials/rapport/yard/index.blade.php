@@ -10,20 +10,24 @@
     <div class="card-body">
         <div class="row">
             <!-- Formulaire 1 -->
-            <div class="col-md-6 col-12">
+            <div class="col-md-12 col-12">
                 <form action="{{ route('yard.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
-                        <label>Importer les informations (CSV)</label>
+                        <label>Importer des données Yard</label>
 
-                        <div class="d-flex gap-2">
-                            <input type="file" name="file" class="form-control" accept=".xlsx, .xls, .csv"
-                                required>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <input type="file" name="file" class="form-control" accept=".xlsx,.xls,.csv"
+                                    required>
+                            </div>
 
-                            <button class="btn btn-primary" type="submit">
-                                Importer
-                            </button>
+                            <div class="col-md-3 col-12 d-flex align-items-end">
+                                <button class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
+                                    ⬆️ Importer
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -32,3 +36,32 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+@if (session('success'))
+<script>
+Toast.fire({
+    icon: 'success',
+    title: @json(session('success'))
+});
+</script>
+@endif
+
+@if ($errors->any())
+<script>
+Toast.fire({
+    icon: 'error',
+    title: 'Une erreur est survenue, veuillez vérifier le formulaire'
+});
+</script>
+@endif
+
+@if (session('info'))
+<script>
+Toast.fire({
+    icon: 'info',
+    title: @json(session('info'))
+});
+</script>
+@endif
+@endpush

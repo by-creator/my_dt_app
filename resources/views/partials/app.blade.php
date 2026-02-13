@@ -19,7 +19,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" width="300" alt="Logo" srcset=""></a>
+                <a href="{{ route('dashboard') }}"><img
+                        src="{{ asset('templates/mazer/dist/assets/images/logo/logo.png') }}" width="300"
+                        alt="Logo" srcset=""></a>
                 <div class="sidebar-menu">
                     <ul class="menu">
 
@@ -29,8 +31,8 @@
                                 <span>Accueil</span>
                             </a>
                         </li>
-                        @if(Auth::user()->role->name == "CLIENT_FACTURATION")
-                        @include('partials.dossier_facturation.menu')
+                        @if (Auth::user()->role->name == 'CLIENT_FACTURATION')
+                            @include('partials.dossier_facturation.menu')
                         @else
                         @endif
                         @yield('sidebar-menu')
@@ -55,7 +57,8 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main class="py-2">
+       
         @yield('content')
     </main>
     @include('partials.dashboard.script')

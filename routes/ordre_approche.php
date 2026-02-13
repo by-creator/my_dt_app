@@ -13,5 +13,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', [OrdreApprocheController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [OrdreApprocheController::class, 'delete'])->name('delete');
         Route::post('/import', [OrdreApprocheController::class, 'import'])->name('import');
+        Route::get('/datalist', 'datalist')->name('datalist');
     });
 });

@@ -8,5 +8,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('yard')->name('yard.')->controller(YardController::class)->group(function () {
 
         Route::post('/import', [YardController::class, 'import'])->name('import');
+        Route::get('/datalist', 'datalist')->name('datalist');
     });
 });
