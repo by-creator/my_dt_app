@@ -7,12 +7,14 @@ use App\Models\TiersIpaki;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class UnifyController extends Controller
 {
     public function index()
     {
-        return view('facturation.index');
+        $user = Auth::user();
+        return view('facturation.index', compact('user'));
     }
 
     public function create()

@@ -13,7 +13,7 @@
                         <div class="position-relative">
                             <input required type="date" id="date-column" class="form-control" name="date">
                             <div class="form-control-icon">
-                                📅
+                                <i class="fa-solid fa-calendar"></i>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                                 <option value="PHYSIQUE">PHYSIQUE</option>
                             </select>
                             <div class="form-control-icon">
-                                👤
+                                <i class="fa-solid fa-user"></i>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                             <input required type="number" id="ipaki-id-column" class="form-control"
                                 placeholder="Saisissez un numéro de compte Ipaki" name="ipaki_id">
                             <div class="form-control-icon">
-                                🧾
+                                <i class="fa-solid fa-clipboard"></i>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             <input required type="text" id="neptune-id-column" class="form-control"
                                 placeholder="Saisissez un numéro de compte Neptune" name="neptune_id">
                             <div class="form-control-icon">
-                                🧾
+                                <i class="fa-solid fa-clipboard"></i>
                             </div>
                         </div>
                     </div>

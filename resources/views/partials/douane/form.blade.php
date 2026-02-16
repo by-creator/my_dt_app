@@ -24,10 +24,10 @@
                                     </datalist>
                                     <div class="col-md-6 d-flex align-items-end">
                                         <button type="submit" class="btn btn-sm btn-outline-primary me-2">
-                                            🔒 Bloquer
+                                            <i class="fa-solid fa-lock"></i> Bloquer
                                         </button>
                                         <button type="submit" class="btn btn-sm btn-outline-primary me-2">
-                                            🔓 Débloquer
+                                            <i class="fa-solid fa-unlock"></i> Débloquer
                                         </button>
                                     </div>
                                 </div>

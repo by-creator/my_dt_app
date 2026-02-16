@@ -22,12 +22,12 @@
 
                                     <div class="col-md-3 col-12 d-flex align-items-end">
                                         <button class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
-                                            ⬆️ Importer
+                                            <i class="fa-solid fa-upload"></i> Importer
                                         </button>
 
                                         <a href="{{ route('telephone-mobiles.export') }}"
-                                            class="btn btn-sm btn-outline-success w-100">
-                                            ⬇️ Exporter
+                                            class="btn btn-sm btn-outline-primary w-100">
+                                            <i class="fa-solid fa-download"></i> Exporter
                                         </a>
                                     </div>
                                 </div>
@@ -188,11 +188,11 @@
 
                                 {{-- Actions --}}
                                 <div class="col-12 d-flex justify-content-end mt-2">
-                                    <button type="submit" class="btn btn-sm btn-outline-success me-1">
-                                        ✅ Valider
+                                    <button type="submit" class="btn btn-sm btn-outline-primary me-1">
+                                        <i class="fa-solid fa-check-to-slot"></i> Valider
                                     </button>
-                                    <button type="reset" class="btn btn-sm btn-outline-danger">
-                                        🟥 Annuler
+                                    <button type="reset" class="btn btn-sm btn-outline-primary">
+                                        <i class="fa-solid fa-square-xmark"></i> Annuler
                                     </button>
                                 </div>
 

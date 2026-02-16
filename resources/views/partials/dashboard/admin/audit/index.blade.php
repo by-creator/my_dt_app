@@ -35,19 +35,19 @@
 
                     <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-sm btn-outline-primary me-2">
-                            🔍 Filtrer
+                            <i class="fa-solid fa-filter"></i> Filtrer
                         </button>
                          <a href="{{ route('admin.audit') }}" class="btn btn-sm btn-outline-primary me-2">
-                            ♻️ Actualiser
+                            <i class="fa-solid fa-rotate-right"></i> Actualiser
                         </a>
                         <a href="{{ route('admin.audit.export.excel', request()->query()) }}"
                             class="btn btn-sm btn-outline-primary me-2">
-                            📊 Excel
+                            <i class="fa-solid fa-table"></i> Excel
                         </a>
 
                         <a href="{{ route('admin.audit.export.pdf', request()->query()) }}"
                             class="btn btn-sm btn-outline-primary  me-2">
-                            📋 PDF
+                            <i class="fa-solid fa-clipboard"></i> PDF
                         </a>
                        
                         

@@ -34,10 +34,10 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->telephone }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-telephone="{{ $user->telephone }}"  data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal">✏️ Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-edit" data-id="{{ $user->id }}" data-role="{{ $user->role_id }}" data-name="{{ $user->name }}" data-telephone="{{ $user->telephone }}"  data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">✖️ Supprimer</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash"></i> Supprimer</button>
                         </td>
                     </tr>
                     @endforeach
@@ -93,8 +93,8 @@
                                 <input type="password" class="form-control" id="editPassword" required name="password">
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-sm btn-outline-primary">✏️ Modifier</button>
-                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal">✖️ Fermer</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-check-to-slot"></i> Modifier</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Fermer</button>
                             </div>
                         </form>
                     </div>
@@ -126,8 +126,8 @@
                             @method('DELETE')
                             <input type="hidden" id="deleteId" name="id">
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-sm btn-outline-primary">✏️ Oui</button>
-                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal">✖️ Non</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-check-to-slot"></i> Oui</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="modal"><i class="fa-solid fa-square-xmark"></i> Non</button>
                             </div>
                         </form>
                     </div>

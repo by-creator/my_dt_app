@@ -13,7 +13,7 @@
                         <div class="position-relative">
                             <input required type="text" id="name-column" class="form-control" placeholder="Saisissez une raison sociale" name="social_reason">
                             <div class="form-control-icon">
-                                🧾
+                                <i class="fa-solid fa-file"></i>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <div class="position-relative">
                             <input required type="text" id="telephone-column" class="form-control" placeholder="Saisissez un numéro de téléphone" name="telephone">
                             <div class="form-control-icon">
-                                📱
+                                <i class="fa-solid fa-phone"></i>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <div class="position-relative">
                             <input type="email" id="email-column" class="form-control" placeholder="Saisissez une adresse mail" name="email">
                             <div class="form-control-icon">
-                                📧
+                                <i class="fa-solid fa-envelope"></i>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="position-relative">
                             <input required type="text" id="adresse" class="form-control" placeholder="Saisissez une adresse" name="address">
                             <div class="form-control-icon">
-                                🏠
+                                <i class="fa-solid fa-house"></i>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <div class="position-relative">
                             <input required type="text" id="ville-column" class="form-control" placeholder="Saisissez le nom d'une ville" name="city" value="DAKAR">
                             <div class="form-control-icon">
-                                📍
+                                <i class="fa-solid fa-city"></i>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="position-relative">
                             <input required type="text" id="pays-column" class="form-control" placeholder="Saisissez le nom d'un pays" name="country" value="SENEGAL">
                             <div class="form-control-icon">
-                                🏴󠁫󠁲󠀲󠀹󠁿
+                                <i class="fa-solid fa-flag"></i>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <div class="position-relative">
                             <input type="text" id="numero-cni-column" class="form-control" placeholder="Saisissez le numéro de CNI" name="cni">
                             <div class="form-control-icon">
-                                🪪
+                                <i class="fa-solid fa-rectangle-list"></i>
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         <div class="position-relative">
                             <input type="date" id="date-column" class="form-control" name="expiration_date">
                             <div class="form-control-icon">
-                                📅
+                                <i class="fa-solid fa-calendar"></i>
                             </div>
                         </div>
                     </div>

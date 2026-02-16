@@ -38,7 +38,7 @@
     {{-- ➕ Ajoute les autres filtres ici --}}
 
     <div class="col-md-2 d-flex align-items-end">
-        <button class="btn btn-sm btn-outline-primary me-2">🔍 Filtrer</button>
-        <a href="{{ route('telephone-mobiles.index') }}" class="btn btn-sm btn-outline-success">♻️ Actualiser</a>
+        <button class="btn btn-sm btn-outline-primary me-2"><i class="fa-solid fa-filter"></i> Filtrer</button>
+        <a href="{{ route('telephone-mobiles.index') }}" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-rotate-right"></i> Actualiser</a>
     </div>
 </form>

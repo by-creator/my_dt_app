@@ -22,11 +22,11 @@
                             </div>
 
                             <div class="d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-sm btn-outline-success me-2">
-                                    ✅ Valider
+                                <button type="submit" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fa-solid fa-check-to-slot"></i> Valider
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-outline-danger">
-                                    🟥 Annuler
+                                <button type="reset" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-square-xmark"></i> Annuler
                                 </button>
                             </div>
                         </div>

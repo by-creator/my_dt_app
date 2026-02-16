@@ -1,58 +1,18 @@
-<!DOCTYPE html>
-<html lang="fr">
+@extends('partials.app')
 
-<head>
-    @include('partials.dashboard.head')
-</head>
+@section('title', 'Dashboard')
 
-<body>
-    <div id="app">
-        <div id="sidebar" class="active">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                        </div>
-                        <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <a href="{{ route('dashboard') }}"><img src="{{asset('templates/mazer/dist/assets/images/logo/logo.png')}}" width="300" alt="Logo" srcset=""></a>
-                <div class="sidebar-menu">
-                    <ul class="menu">
+@section('sidebar-menu')
+    @auth
+    @if(auth()->user()->role->name === "ADMIN")
+       @include('partials.douane.menu')
+    @endif
+@endauth
 
-                        <li class="sidebar-title">
-                            <a href="{{ route('dashboard') }}">
-                                🏠
-                                <span>Accueil</span>
-                            </a>
-                        </li>
+@endsection
 
-                        @if($user->role->name == "ADMIN")
-                        @include('partials.douane.menu')
-                        @endif
-
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('settings') }}" class='sidebar-link'>
-                                ⚙️
-                                <span>Paramètres</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('dashboard.logout') }}" class='sidebar-link'>
-                                🔚
-                                <span>Déconnexion</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-            </div>
-        </div>
-        <div id="main">
+@section('content')
+    <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
@@ -64,13 +24,9 @@
             </div>
             <div class="page-content">
                 @if($user->role->name == "ADMIN")
-                @include('partials.douane.form')
+                 @include('partials.douane.form')
                 @include('partials.douane.list')
                 @endif
             </div>
         </div>
-    </div>
-    @include('partials.dashboard.script')
-</body>
-
-</html>
+@endsection

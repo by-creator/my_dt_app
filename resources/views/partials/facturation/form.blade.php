@@ -22,9 +22,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-12 d-flex justify-content-center">
-                    <button type="submit" name="submit" value="fiche" class="btn btn-sm btn-outline-primary me-1 mb-1">📋 Imprimer Fiche </button>
-                    <button type="submit" name="submit" value="attestation" class="btn btn-sm btn-outline-primary me-1 mb-1">📋 Imprimer Attestation </button>
-                    <button type="submit" name="submit" value="sendTiers" class="btn btn-sm btn-outline-primary me-1 mb-1">📋 Envoyer le tiers</button>
+                    <button type="submit" name="submit" value="fiche" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-clipboard"></i> Imprimer Fiche </button>
+                    <button type="submit" name="submit" value="attestation" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-clipboard"></i> Imprimer Attestation </button>
+                    <button type="submit" name="submit" value="sendTiers" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-clipboard"></i> Envoyer le tiers</button>
                 </div>
             </div>
         </div>

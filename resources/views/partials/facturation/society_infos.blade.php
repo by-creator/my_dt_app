@@ -14,7 +14,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez le nom du Directeur Général" name="dg">
                             <div class="form-control-icon">
-                                👤
+                                <i class="fa-solid fa-user"></i>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                         <div class="position-relative">
                             <input type="text" id="telephone-column" class="form-control" placeholder="Saisissez son numéro de téléphone" name="dg_phone">
                             <div class="form-control-icon">
-                                📱
+                                <i class="fa-solid fa-phone"></i>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             <input type="text" id="name-column" class="form-control"
                                 placeholder="Saisissez le nom du Directeur Financier" name="daf">
                             <div class="form-control-icon">
-                                👤
+                                <i class="fa-solid fa-user"></i>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div class="position-relative">
                             <input type="text" id="telephone-column" class="form-control" placeholder="Saisissez son numéro de téléphone" name="daf_phone">
                             <div class="form-control-icon">
-                               📱
+                               <i class="fa-solid fa-phone"></i>
                             </div>
                         </div>
                     </div>

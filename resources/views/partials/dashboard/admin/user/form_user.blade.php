@@ -32,7 +32,7 @@
                                             @endforeach
                                         </select>
                                         <div class="form-control-icon">
-                                            🔒
+                                            <i class="fa-solid fa-lock"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                         <input name="name" id="name" type="text" class="form-control"
                                             placeholder="Saisissez votre nom et prénom" required>
                                         <div class="form-control-icon">
-                                            👤
+                                            <i class="fa-solid fa-user"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                                         <input name="email" id="username" type="email"
                                             class="form-control" placeholder="Saisissez votre adresse mail" required>
                                         <div class="form-control-icon">
-                                            📧
+                                            <i class="fa-solid fa-envelope"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         <input name="telephone" id="telephone" type="number" class="form-control"
                                             placeholder="Saisissez votre numéro de téléphone" required>
                                         <div class="form-control-icon">
-                                            📱
+                                            <i class="fa-solid fa-phone"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                         <input name="password" id="password" type="password"
                                             class="form-control" placeholder="Saisissez un mot de passe" required>
                                         <div class="form-control-icon">
-                                            🔑
+                                            <i class="fa-solid fa-key"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -103,15 +103,15 @@
                                         <input name="password_confirmation" id="password_confirmation" type="password"
                                             class="form-control" placeholder="Saisissez à nouveau votre mot de passe" required>
                                         <div class="form-control-icon">
-                                            🔑
+                                            <i class="fa-solid fa-key"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-check-to-slot"></i>✔️ Valider</button>
-                                <button type="reset" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-square-xmark"></i>✖️ Annuler</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-check-to-slot"></i> Valider</button>
+                                <button type="reset" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-square-xmark"></i> Annuler</button>
                             </div>
                         </div>
                     </div>
