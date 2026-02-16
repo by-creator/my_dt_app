@@ -25,7 +25,7 @@
 
                             <div class="col-md-3 col-12 d-flex align-items-end">
                                 <button class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
-                                    ⬆️ Importer
+                                    <i class="fa-solid fa-upload"></i> Importer
                                 </button>
                             </div>
                         </div>
