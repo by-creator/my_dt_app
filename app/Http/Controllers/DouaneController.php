@@ -23,21 +23,21 @@ class DouaneController extends Controller
         $yards = $query->paginate(3)->withQueryString();
 
 
-        $item_numbers = Yard::select('item_number')
-            ->distinct()
-            ->orderBy('id', 'desc')
-            ->pluck('item_number');
+        $item_numbers = Yard::orderBy('id', 'desc')
+            ->pluck('item_number')
+            ->unique()
+            ->values();
 
         return view('douane.index', compact('yards', 'item_numbers', 'user'));
     }
 
     public function datalist(Request $request)
     {
-        $field = $request->get('field'); 
+        $field = $request->get('field');
         $query = $request->get('q');
 
         // 🔐 Sécurité : champs autorisés
-        if (!in_array($field, ['item_number' ])) {
+        if (!in_array($field, ['item_number'])) {
             return response()->json([]);
         }
 
@@ -54,5 +54,4 @@ class DouaneController extends Controller
 
         return response()->json($results);
     }
-    
 }
