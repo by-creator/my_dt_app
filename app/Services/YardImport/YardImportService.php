@@ -31,11 +31,11 @@ class YardImportService
 
         // 3️⃣ Import selon type
         if ($extension === 'csv') {
-            $this->stagingService->load($fullPath);
+            $this->stagingService->loadCsv($fullPath);
         }
 
         if ($extension === 'xlsx') {
-            $this->stagingService->loadFromXlsx($fullPath);
+            $this->stagingService->loadXlsx($fullPath);
         }
 
         // 4️⃣ Insertion finale + cleanup
