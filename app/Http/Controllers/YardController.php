@@ -34,11 +34,11 @@ class YardController extends Controller
 
     public function datalist(Request $request)
     {
-        $field = $request->get('field'); 
+        $field = $request->get('field');
         $query = $request->get('q');
 
         // 🔐 Sécurité : champs autorisés
-        if (!in_array($field, ['item_number' ])) {
+        if (!in_array($field, ['item_number'])) {
             return response()->json([]);
         }
 
@@ -59,6 +59,7 @@ class YardController extends Controller
         private YardImportService $yardImportService
     ) {}
 
+    
     public function import(Request $request)
     {
         Log::info('📥 [YARD] Début import (Controller)');
@@ -66,5 +67,52 @@ class YardController extends Controller
         $this->yardImportService->handle($request);
 
         return back()->with('success', 'Import Yard terminé avec succès 🚀');
+    }
+
+    public function convert(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,txt'
+        ]);
+
+        $file = $request->file('file');
+
+        // 🔥 Lire le fichier
+        $handle = fopen($file->getRealPath(), 'r');
+
+        $data = [];
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+
+            foreach ($row as &$value) {
+
+                if (strtoupper($value) === 'TRUE') {
+                    $value = 1;
+                }
+
+                if (strtoupper($value) === 'FALSE') {
+                    $value = 0;
+                }
+            }
+
+            $data[] = $row;
+        }
+
+        fclose($handle);
+
+        // 🔥 Générer le CSV temporaire
+        $filename = 'converted_' . time() . '.csv';
+        $tempPath = storage_path('app/' . $filename);
+
+        $output = fopen($tempPath, 'w');
+
+        foreach ($data as $line) {
+            fputcsv($output, $line);
+        }
+
+        fclose($output);
+
+        // 🔥 Télécharger automatiquement
+        return response()->download($tempPath)->deleteFileAfterSend(true);
     }
 }

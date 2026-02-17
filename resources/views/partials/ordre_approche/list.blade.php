@@ -167,11 +167,11 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-12 d-flex justify-content-center">
-                                <button type="submit" class="btn btn-sm btn-outline-success me-3">
-                                    ✅ Valider
+                                <button type="submit" class="btn btn-sm btn-outline-primary me-3">
+                                    <i class="fa-solid fa-check-to-slot"></i> Valider
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-outline-danger">
-                                    🟥 Annuler
+                                <button type="reset" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-square-xmark"></i> Annuler
                                 </button>
                             </div>
                         </div>

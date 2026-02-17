@@ -27,95 +27,89 @@ class YardStagingService
         Log::info('🚀 [YARD] LOAD DATA LOCAL INFILE démarré');
 
         DB::statement("
-        LOAD DATA LOCAL INFILE '{$fullPath}'
-        INTO TABLE yard_stagings
-        FIELDS TERMINATED BY ','
-        ENCLOSED BY '\"'
-        LINES TERMINATED BY '\n'
-        IGNORE 1 LINES
-        (
-            @c1,  -- Terminal
-            @c2,  -- Shipowner
-            @c3,  -- ItemNumber
-            @c4,  -- Item Type
-            @c5,  -- Item Code
-            @c6,  -- BL Number
-            @c7,  -- Final Destination Country
-            @c8,  -- Description
-            @c9,  -- TEU
-            @c10, -- Volume
-            @c11, -- Weight
-            @c12, -- Yard Zone Type
-            @c13, -- Zone
-            @c14, -- Type Veh
-            @c15, -- Type De Marchandise
-            @c16, -- POD
-            @c17, -- Yard Zone
-            @c18, -- Consignee
-            @c19, -- Call Number
+LOAD DATA LOCAL INFILE '{$fullPath}' 
+INTO TABLE yard_stagings 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '\"' 
+LINES TERMINATED BY '\n' 
+IGNORE 1 LINES
+(
+    @terminal,
+    @shipowner,
+    @item_number,
+    @item_type,
+    @item_code,
+    @bl_number,
+    @final_destination_country,
+    @description,
+    @teu,
+    @volume,
+    @weight,
+    @yard_zone_type,
+    @zone,
+    @type_veh,
+    @type_de_marchandise,
+    @pod,
+    @yard_zone,
+    @consignee,
+    @call_number,
+    @vessel,
+    @eta,
+    @vessel_arrival_date,
+    @cycle,
+    @yard_quantity,
+    @days_since_in,
+    @dwelltime,
+    @bloque,
+    @bae,
+    @date,
+    @time,
+    @chauffeur,
+    @permis,
+    @pointeur,
+    @responsable,
+    @reserve
+)
+SET
+    terminal = @terminal,
+    shipowner = @shipowner,
+    item_number = @item_number,
+    item_type = @item_type,
+    item_code = @item_code,
+    bl_number = @bl_number,
+    final_destination_country = @final_destination_country,
+    description = @description,
+    teu = @teu,
+    volume = @volume,
+    weight = @weight,
+    yard_zone_type = @yard_zone_type,
+    zone = @zone,
+    type_veh = @type_veh,
+    type_de_marchandise = @type_de_marchandise,
+    pod = @pod,
+    yard_zone = @yard_zone,
+    consignee = @consignee,
+    call_number = @call_number,
+    vessel = @vessel,
+    eta = @eta,
+    vessel_arrival_date = @vessel_arrival_date,
+    cycle = @cycle,
+    yard_quantity = @yard_quantity,
+    days_since_in = @days_since_in,
+    dwelltime = @dwelltime,
+    bloque = @bloque,
+    bae = @bae,
+    date = @date,
+    time = @time,
+    chauffeur = @chauffeur,
+    permis = @permis,
+    pointeur = @pointeur,
+    responsable = @responsable,
+    reserve = @reserve,
+    created_at = NOW(),
+    updated_at = NOW()
+");
 
-            @eta_year,
-            @eta_month,
-            @eta_day,
-
-            @vessel,
-
-            @vad_year,
-            @vad_month,
-            @vad_day,
-
-            @cycle,
-            @yard_quantity,
-            @days_since_in,
-            @dwelltime,
-            @bae,
-            @bloque
-        )
-        SET
-            terminal = @c1,
-            shipowner = @c2,
-            item_number = @c3,
-            item_type = @c4,
-            item_code = @c5,
-            bl_number = @c6,
-            final_destination_country = @c7,
-            description = @c8,
-            teu = @c9,
-            volume = @c10,
-            weight = @c11,
-            yard_zone_type = @c12,
-            zone = @c13,
-            type_veh = @c14,
-            type_de_marchandise = @c15,
-            pod = @c16,
-            yard_zone = @c17,
-            consignee = @c18,
-            call_number = @c19,
-
-            -- ✅ ETA (Year + Month name + Day)
-            eta = STR_TO_DATE(
-                CONCAT(@eta_year,'-',@eta_month,'-',LPAD(@eta_day,2,'0')),
-                '%Y-%M-%d'
-            ),
-
-            vessel = @vessel,
-
-            -- ✅ Vessel arrival date
-            vessel_arrival_date = STR_TO_DATE(
-                CONCAT(@vad_year,'-',@vad_month,'-',LPAD(@vad_day,2,'0')),
-                '%Y-%M-%d'
-            ),
-
-            cycle = @cycle,
-            yard_quantity = @yard_quantity,
-            days_since_in = @days_since_in,
-            dwelltime = @dwelltime,
-            bae = @bae,
-            bloque = @bloque,
-
-            created_at = NOW(),
-            updated_at = NOW()
-    ");
 
         Log::info('✅ [YARD] LOAD DATA terminé', [
             'rows' => DB::table('yard_stagings')->count(),

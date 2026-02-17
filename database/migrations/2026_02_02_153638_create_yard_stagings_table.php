@@ -33,15 +33,15 @@ return new class extends Migration
             $table->string('yard_zone')->nullable();
             $table->string('consignee')->nullable();
             $table->string('call_number')->nullable();
-            $table->string('eta')->nullable();
             $table->string('vessel')->nullable();
+            $table->string('eta')->nullable();
             $table->string('vessel_arrival_date')->nullable();
             $table->string('cycle')->nullable();
             $table->string('yard_quantity')->nullable();
             $table->string('days_since_in')->nullable();
             $table->string('dwelltime')->nullable();
-            $table->string('bae')->nullable();
             $table->string('bloque')->nullable();
+            $table->string('bae')->nullable();
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->string('chauffeur')->nullable();
