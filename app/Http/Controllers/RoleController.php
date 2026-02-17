@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -10,7 +11,8 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::orderBy('id', 'desc')->get();
-        return view('role.index', compact('roles'));
+        $user = Auth::user();
+        return view('role.index', compact('roles','user'));
     }
 
     public function create(Request $request)

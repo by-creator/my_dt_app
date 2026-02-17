@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Numéro de téléphone)</label>
+                                <label>Numéro de téléphone</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group has-icon-left">

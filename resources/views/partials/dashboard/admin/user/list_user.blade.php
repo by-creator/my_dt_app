@@ -8,8 +8,8 @@
                 @csrf
                 <input class="form-control form-control-md" id="formFileLg" type="file" name="file" accept=".xlsx" required>
                 <br>
-                <button type="submit" class="btn btn-sm btn-outline-primary me-1 mb-1">⬆️ Importer</button>
-                <a href="{{ route('user.export') }}" class="btn btn-sm btn-outline-primary me-1 mb-1">⬇️ Exporter</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-upload"></i> Importer</button>
+                <a href="{{ route('user.export') }}" class="btn btn-sm btn-outline-primary me-1 mb-1"><i class="fa-solid fa-download"></i> Exporter</a>
             </form>
             <br>
             <table class="table table-striped" id="table1">

@@ -9,7 +9,7 @@ use App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Models\Role;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 
@@ -24,8 +24,9 @@ class UserController extends Controller
             ->get();
 
         $roles = Role::all();
+        $user = Auth::user();
 
-        return view('user.index', compact('users', 'roles'));
+        return view('user.index', compact('users', 'roles','user'));
     }
 
 
