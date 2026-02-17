@@ -19,7 +19,7 @@
 
                         <div class="row">
                             <div class="col-md-6 col-12">
-                                <input type="file" name="file" class="form-control" accept=".xlsx,.xls,.csv"
+                                <input type="file" name="file" class="form-control" accept=".csv"
                                     required>
                             </div>
 
@@ -27,6 +27,9 @@
                                 <button class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
                                     <i class="fa-solid fa-upload"></i> Importer
                                 </button>
+                                 <a href="https://www.freeconvert.com/xls-to-csv" target="_blank" class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
+                                    <i class="fa-solid fa-bolt"></i> XLSX TO CSV
+                                </a>
                             </div>
                         </div>
                     </div>
