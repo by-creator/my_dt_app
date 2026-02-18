@@ -6,7 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
+
 
 
 
@@ -33,5 +34,7 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
+
+        Schema::defaultStringLength(191);
     }
 }
