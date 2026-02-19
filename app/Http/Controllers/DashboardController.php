@@ -152,9 +152,9 @@ class DashboardController extends Controller
                     ],
                     [
                         'id' => 3,
-                        'name' => 'Orde d\'approches',
-                        'header' => 'Orde d\'approches',
-                        'description' => 'Gestion des ordre d\'approches',
+                        'name' => 'Opérations',
+                        'header' => 'Opérations',
+                        'description' => 'Gestion des opérations',
                         'route' => route('ordre_approche.index')
                     ],
                     [
@@ -223,9 +223,9 @@ class DashboardController extends Controller
                 $cards = [
                     [
                         'id' => 1,
-                        'name' => 'Orde d\'approches',
-                        'header' => 'Orde d\'approches',
-                        'description' => 'Gestion des ordre d\'approches',
+                        'name' => 'Opérations',
+                        'header' => 'Opérations',
+                        'description' => 'Gestion des opérations',
                         'route' => route('ordre_approche.index')
                     ],
                 ];
