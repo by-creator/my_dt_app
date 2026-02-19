@@ -167,11 +167,14 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-12 d-flex justify-content-center">
-                                <button type="submit" class="btn btn-sm btn-outline-primary me-3">
-                                    <i class="fa-solid fa-check-to-slot"></i> Valider
+                                <button type="submit" name="submit" value="vehicule" class="btn btn-sm btn-outline-primary me-3">
+                                    <i class="fa-solid fa-check-to-slot"></i> Ordre d'approche véhicule
                                 </button>
-                                <button type="reset" class="btn btn-sm btn-outline-primary">
-                                    <i class="fa-solid fa-square-xmark"></i> Annuler
+                                <button type="submit" name="submit" value="tc" class="btn btn-sm btn-outline-primary me-3">
+                                    <i class="fa-solid fa-check-to-slot"></i> Ordre de chargement tc
+                                </button>
+                                <button type="submit" name="submit" value="bulk" class="btn btn-sm btn-outline-primary me-3">
+                                    <i class="fa-solid fa-check-to-slot"></i> Ordre de chargement bulk
                                 </button>
                             </div>
                         </div>

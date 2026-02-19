@@ -12,7 +12,7 @@
                                     class="w-full h-auto"></div>
                         </div>
                         <div class="tm_invoice_right tm_text_right">
-                            <b class="tm_f20 tm_medium tm_primary_color">ORDRE APPROCHE</b>
+                            <b class="tm_f20 tm_medium tm_primary_color">{{ $titre }}</b>
                         </div>
                     </div>
                     <div class="tm_invoice_info tm_mb25">

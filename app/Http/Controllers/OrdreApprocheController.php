@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 class OrdreApprocheController extends Controller
 {
 
-     public function index(Request $request)
+    public function index(Request $request)
     {
         $user = Auth::user();
 
@@ -39,11 +39,11 @@ class OrdreApprocheController extends Controller
 
     public function datalist(Request $request)
     {
-        $field = $request->get('field'); 
+        $field = $request->get('field');
         $query = $request->get('q');
 
         // 🔐 Sécurité : champs autorisés
-        if (!in_array($field, ['item_number' ])) {
+        if (!in_array($field, ['item_number'])) {
             return response()->json([]);
         }
 
@@ -72,8 +72,9 @@ class OrdreApprocheController extends Controller
 
         $user = Auth::user();
 
-        return view('ordre_approche.list', compact('ordre','user'));
+        return view('ordre_approche.list', compact('ordre', 'user'));
     }
+
 
 
 
@@ -133,7 +134,29 @@ class OrdreApprocheController extends Controller
 
         $ordre->save();
 
-        return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
+        $action = $request->input('submit');
+
+        switch ($action) {
+            case 'vehicule':
+                $titre = "ORDRE D'APPROCHE VEHICULE";
+                break;
+            case 'tc':
+                $titre = "ORDRE DE CHARGEMENT TC";
+                break;
+            case 'bulk':
+                $titre = "ORDRE DE CHARGEMENT BULK";
+                break;
+            default:
+                $titre = "Ordre";
+        }
+
+        return view('ordre_approche.fiche', compact('data', 'titre'))
+            ->with('update', 'Ordre modifié avec succès.');
+
+
+
+
+        return view('ordre_approche.fiche', compact('data', 'titre'))->with('update', 'Ordre modifié avec succès.');
     }
 
     //return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
