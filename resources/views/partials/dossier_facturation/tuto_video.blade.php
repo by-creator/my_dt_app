@@ -9,10 +9,23 @@
     </u>
 
     <!-- Barre de recherche -->
-    <div class="mb-4">
-        <input type="text" id="searchInput" class="form-control"
-            placeholder="🔍 Rechercher une vidéo par titre...">
-    </div>
+    <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center"><u>Effectuer une recherche</u></h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                            <input type="search" id="searchInput"
+                                                class="form-control text-center"
+                                                placeholder="Saisissez les éléments de recherche">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
     <div class="row" id="videoContainer">
 

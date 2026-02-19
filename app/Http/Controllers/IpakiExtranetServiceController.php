@@ -8,7 +8,7 @@ use App\Mail\LinkIesMail;
 use App\Mail\ResetPasswordIpakiExtranetServiceMail;
 use App\Mail\ValidationIesMail;
 use App\Mail\ValideAccountIesMail;
-use App\Models\RattachementBl;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -17,26 +17,31 @@ class IpakiExtranetServiceController extends Controller
 {
     public function validation()
     {
+        $user = Auth::user();
+
         $users = User::whereHas('role', function ($query) {
             $query->where('name', 'FACTURATION');
         })->get();
 
 
-        return view('ies.validation', compact('users'));
+        return view('ies.validation', compact('users', 'user'));
     }
     public function create()
     {
-        return view('ies.create');
+        $user = Auth::user();
+        return view('ies.create', compact('user'));
     }
 
     public function resetPassword()
     {
-        return view('ies.reset-password');
+         $user = Auth::user();
+        return view('ies.reset-password', compact('user'));
     }
 
     public function link()
     {
-        return view('ies.link');
+         $user = Auth::user();
+        return view('ies.link', compact('user'));
     }
     public function sendValidationAccount(Request $request)
     {
