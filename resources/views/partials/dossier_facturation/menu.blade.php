@@ -12,7 +12,7 @@
     </a>
 </li>
 <li class="sidebar-item">
-    <a class='sidebar-link' href="#" class='sidebar-link' id="reductionLink">
+    <a class='sidebar-link' href="{{ route('dossier_facturation.remise-index') }}" class='sidebar-link' id="reductionLink">
         📋
         <span>Demande de réduction</span>
     </a>
@@ -23,16 +23,3 @@
         <span>Comment ça marche ?</span>
     </a>
 </li>
-
-<script>
-document.getElementById('reductionLink').addEventListener('click', function (e) {
-    e.preventDefault(); // empêche le lien de changer de page
-
-    Swal.fire({
-        icon: 'info',
-        title: 'Information',
-        text: 'Ce menu n\'est pas encore disponible.',
-        confirmButtonText: 'OK'
-    });
-});
-</script>

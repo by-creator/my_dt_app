@@ -8,9 +8,9 @@
         <!-- Accueil -->
         <div class="text-center tab-pane fade show active" id="home">
           <img src="{{asset('templates/site/images/hero_12.jpeg')}}" class="img-fluid rounded mb-3" alt="Accueil">
-          <h3><u>FORMULAIRE DE DEMANDE DE VALIDATION</u></h3>
-          <p>Veuillez remplir le formulaire ci-dessous pour demander la validation de votre dossier.</p>
-          <form method="POST" action="{{ route('demat.validation') }}" enctype="multipart/form-data" class="form">
+          <h3><u>FORMULAIRE DE DEMANDE DE REMISE</u></h3>
+          <p>Veuillez remplir le formulaire ci-dessous pour demander la remise de votre dossier.</p>
+          <form method="POST" action="{{ route('dossier_facturation.remise') }}" enctype="multipart/form-data" class="form">
             @csrf
             <div class="mb-3">
               <input type="text" name="nom" class="text-center form-control" required placeholder="Nom du transitaire (ex : THIAW)">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="mb-3">
-              <label>BL</label>
+              <label>FACTURE DAKAR-TERMINAL</label>
               <input type="file" required name="documents[]" class="form-control" multiple>
             </div>
 
@@ -48,7 +48,7 @@
             </div>
 
 
-            <button type="submit" class="btn btn-gradient w-100">ENVOYER LA DEMANDE DE VALIDATION</button>
+            <button type="submit" class="btn btn-gradient w-100">ENVOYER LA DEMANDE DE REMISE</button>
           </form>
 
         </div>

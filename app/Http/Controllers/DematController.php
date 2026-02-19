@@ -79,4 +79,40 @@ class DematController extends Controller
             );
         }
     }
+
+    public function remise(DematValidationRequest $request)
+    {
+        try {
+            $data = $request->validated();
+
+            // Gestion des fichiers (toujours tableau)
+            $files = $request->file('documents');
+            if ($files instanceof \Illuminate\Http\UploadedFile) {
+                $files = [$files];
+            }
+
+            // Envoi mail
+            $this->mailer->sendRemise($data, $files);
+
+            Log::info('Demande de remise envoyée', [
+                'email' => $data['email'],
+                'bl' => $data['bl']
+            ]);
+
+            return back()->with(
+                'success',
+                'Votre demande de remise a été envoyée avec succès.'
+            );
+        } catch (\Throwable $e) {
+            Log::error('Erreur mail remise DEMAT', [
+                'message' => $e->getMessage(),
+                'data' => $request->all()
+            ]);
+
+            return back()->with(
+                'error',
+                'Une erreur est survenue lors de l’envoi de la demande de remise.'
+            );
+        }
+        }
 }
