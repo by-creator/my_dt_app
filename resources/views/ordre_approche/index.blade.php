@@ -24,6 +24,7 @@
                         $user->role->name == 'OPERATIONS' ||
                         $user->role->name == 'QHSE')
                     @include('partials.ordre_approche.form')
+                    @include('partials.ordre_approche.list_table')
                 @endif
             </div>
     </div>

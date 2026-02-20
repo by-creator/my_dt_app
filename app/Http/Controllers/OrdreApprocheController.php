@@ -19,6 +19,14 @@ class OrdreApprocheController extends Controller
     {
         $user = Auth::user();
 
+        $yards = $this->getYards($request); // requête normale
+        $yard_list = $this->getYardsWithTime($request); // requête avec time not null
+
+        return view('ordre_approche.index', compact('yards', 'yard_list', 'user'));
+    }
+
+    private function getYards(Request $request)
+    {
         $filters = ['item_number'];
 
         $query = Yard::query();
@@ -29,12 +37,29 @@ class OrdreApprocheController extends Controller
             }
         }
 
-        $yards = $query
+        return $query
             ->latest()
             ->paginate(3)
             ->withQueryString();
+    }
 
-        return view('ordre_approche.index', compact('yards', 'user'));
+    private function getYardsWithTime(Request $request)
+    {
+        $filters = ['item_number'];
+
+        $query_list = Yard::query()
+            ->whereNotNull('time');
+
+        foreach ($filters as $field) {
+            if ($request->filled($field)) {
+                $query_list->where($field, $request->$field);
+            }
+        }
+
+        return $query_list
+            ->latest()
+            ->paginate(3)
+            ->withQueryString();
     }
 
     public function datalist(Request $request)
@@ -95,8 +120,8 @@ class OrdreApprocheController extends Controller
         $ordre->responsable = $request->responsable;
 
         $data = [
-            'date' => Carbon::now(),
-            'time' => Carbon::now(),
+            'date' => Carbon::now()->format('d-m-Y'),
+            'time' => Carbon::now()->format('H:i'),
             'terminal' => $request->terminal,
             'shipowner' => $request->shipowner,
             'item_number' => $request->item_number,
@@ -159,44 +184,45 @@ class OrdreApprocheController extends Controller
         return view('ordre_approche.fiche', compact('data', 'titre'))->with('update', 'Ordre modifié avec succès.');
     }
 
-    //return view('ordre_approche.fiche', compact('data'))->with('update', 'Ordre modifié avec succès.');
-
-
-
-    public function import(Request $request)
+    public function printOrdre(Yard $yard, $type)
     {
-        $request->validate([
-            'ordre_approche_file' => 'required|file|mimes:csv,txt',
-        ]);
-
-        $file = $request->file('ordre_approche_file');
-
-        // 1️⃣ Upload B2
-        $b2Path = 'imports/ordre_approche/' . uniqid() . '.csv';
-        Storage::disk('b2')->writeStream(
-            $b2Path,
-            fopen($file->getRealPath(), 'r')
-        );
-
-        // 2️⃣ Créer dossier local
-        $localDir = storage_path('app/imports/tmp');
-        if (!is_dir($localDir)) {
-            mkdir($localDir, 0755, true);
+        switch ($type) {
+            case 'vehicule':
+                $titre = "ORDRE D'APPROCHE VEHICULE";
+                break;
+            case 'tc':
+                $titre = "ORDRE DE CHARGEMENT TC";
+                break;
+            case 'bulk':
+                $titre = "ORDRE DE CHARGEMENT BULK";
+                break;
+            default:
+                abort(404); // sécurité
         }
 
-        // 3️⃣ Copier en local
-        $localPath = 'imports/tmp/' . uniqid() . '.csv';
-        Storage::disk('local')->put(
-            $localPath,
-            Storage::disk('b2')->get($b2Path)
-        );
+        $data = [
+            'date' => Carbon::parse($yard->date)->format('d-m-Y'),
+            'time' => Carbon::parse($yard->time)->format('H:i'),
+            'zone' => $yard->zone,
+            'item_type' => $yard->item_type,
+            'item_number' => $yard->item_number,
+            'type_de_marchandise' => $yard->type_de_marchandise,
+            'bae' => $yard->bae,
+            'bl_number' => $yard->bl_number,
+            'vessel' => $yard->vessel,
+            'call_number' => $yard->call_number,
+            'vessel_arrival_date' => Carbon::parse($yard->vessel_arrival_date)->format('d-m-Y'),
+            'shipowner' => $yard->shipowner,
+            'item_code' => $yard->item_code,
+            'description' => $yard->description,
+            'consignee' => $yard->consignee,
+            'chauffeur' => $yard->chauffeur,
+            'permis' => $yard->permis,
+            'reserve' => $yard->reserve,
+            'pointeur' => $yard->pointeur,
+            'responsable' => $yard->responsable,
+        ];
 
-        // 4️⃣ Lancer le job CSV natif
-        ImportOrdreApprocheCsvJob::dispatch(
-            $localPath,
-            $b2Path
-        );
-
-        return back()->with('success', 'Import CSV lancé');
+        return view('ordre_approche.fiche', compact('data', 'titre'))->with('update', 'Ordre imprimé avec succès.');
     }
 }

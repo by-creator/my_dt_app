@@ -49,6 +49,7 @@ class Yard extends Model
     protected $casts = [
     'vessel_arrival_date' => 'date',
     'eta' => 'date',
+    'date' => 'date',
 ];
 
 }

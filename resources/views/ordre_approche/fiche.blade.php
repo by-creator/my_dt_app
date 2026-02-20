@@ -19,7 +19,7 @@
                         <div class="tm_invoice_info_left">
                             <p class="tm_mb17">
                                 <b class="tm_f18 tm_primary_color"><u>DATE DU JOUR</u></b> <br><br>
-                                <b class="tm_primary_color">{{ $data['date']->format('d-m-Y : H:i') }}</b>
+                                <b class="tm_primary_color">{{ $data['date'] }} : {{ $data['time'] }}</b>
                             </p>
                         </div>
                         <div class="tm_invoice_info_right">

@@ -14,5 +14,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete/{id}', [OrdreApprocheController::class, 'delete'])->name('delete');
         Route::post('/import', [OrdreApprocheController::class, 'import'])->name('import');
         Route::get('/datalist', 'datalist')->name('datalist');
+        Route::get('/{yard}/{type}', [OrdreApprocheController::class, 'printOrdre'])->name('print');
     });
 });
