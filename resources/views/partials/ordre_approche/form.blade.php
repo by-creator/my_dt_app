@@ -1,7 +1,7 @@
 <div class="container mt-5 d-flex justify-content-center">
     <div class="card w-50">
         <div class="card-header text-center">
-            <h4 class="card-title"><u>Formulaire ordre approche</u></h4>
+            <h4 class="card-title"><u>Entrez un numéro d'item</u></h4>
         </div>
         <div class="card-content">
             <div class="card-body">
