@@ -62,10 +62,10 @@
     </a>
     <ul class="submenu">
         <li class="submenu-item ">
-            <a class='sidebar-link' href="#"><i class="fa-solid fa-clipboard"></i> Gestion remises</a>
+            <a class='sidebar-link' href="{{ route('rattachement.index_remise') }}"><i class="fa-solid fa-clipboard"></i> Gestion remises</a>
         </li>
         <li class="submenu-item">
-            <a class='sidebar-link' href="#"><i class="fa-solid fa-clipboard"></i> Liste remises</a>
+            <a class='sidebar-link' href="{{ route('rattachement.list_remise') }}"><i class="fa-solid fa-clipboard"></i> Liste remises</a>
         </li>
     </ul>
 </li>

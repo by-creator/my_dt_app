@@ -39,6 +39,22 @@ class RattachementController extends Controller
         ]);
     }
 
+    public function indexRemise()
+    {
+        $user = Auth::user();
+
+        return view('rattachement_bl.index_remise', [
+            'rattachements' => RattachementBl::latest()->get(),
+            'rattachement_validations' => RattachementBl::where(
+                'statut',
+                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
+                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
+            )->latest()->get(),
+            'users' => User::all(),
+            'user' => $user
+        ]);
+    }
+
     public function list()
     {
         return view('rattachement_bl.list', [

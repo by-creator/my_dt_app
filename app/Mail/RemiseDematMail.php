@@ -45,7 +45,7 @@ class RemiseDematMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.validation_demat',
+            markdown: 'emails.remise_demat',
             with: [
                 'nom' => strtoupper($this->data['nom']),
                 'prenom' => strtoupper($this->data['prenom']),
