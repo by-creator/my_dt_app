@@ -132,21 +132,21 @@
                             <div class="col-md-2 col-12">
                                 <div class="form-group">
                                     <label for="chauffeur">Nom Chauffeur</label>
-                                    <input type="text" id="chauffeur" class="form-control"
+                                    <input type="text" id="chauffeur" class="form-control" 
                                         placeholder="Entrez une valeur pour chauffeur" name="chauffeur">
                                 </div>
                             </div>
                             <div class="col-md-2 col-12">
                                 <div class="form-group">
                                     <label for="permis">N° Permis</label>
-                                    <input type="text" id="permis" class="form-control"
+                                    <input type="text" id="permis" class="form-control" 
                                         placeholder="Entrez une valeur pour permis" name="permis">
                                 </div>
                             </div>
                             <div class="col-md-2 col-12">
                                 <div class="form-group">
                                     <label for="pointeur">Nom Pointeur Livreur</label>
-                                    <input type="text" id="pointeur" class="form-control"
+                                    <input type="text" id="pointeur" class="form-control" 
                                         placeholder="Entrez une valeur pour pointeur" name="pointeur">
                                 </div>
                             </div>

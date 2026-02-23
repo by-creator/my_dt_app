@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DematValidationRequest;
+use App\Enums\StatutDossier;
 use App\Services\Demat\{
     DematService,
     DematMailerService
@@ -97,6 +98,16 @@ class DematController extends Controller
             Log::info('Demande de remise envoyée', [
                 'email' => $data['email'],
                 'bl' => $data['bl']
+            ]);
+
+            // Création rattachement BL
+            $this->service->createRattachement([
+                'prenom' => $data['prenom'],
+                'nom' => $data['nom'],
+                'email' => $data['email'],
+                'bl' => $data['bl'],
+                'compte' => $data['compte'],
+                'statut' => StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
             ]);
 
             return back()->with(

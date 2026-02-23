@@ -3,7 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,12 +13,16 @@ class RemiseDematMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
+    public $files;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($data, $files)
     {
-        //
+        $this->data = $data;
+        $this->files = $files;
     }
 
     /**
@@ -27,7 +31,11 @@ class RemiseDematMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Remise Demat Mail',
+            from: new \Illuminate\Mail\Mailables\Address(
+            $this->data['email'], // adresse e-mail de l’expéditeur
+            strtoupper($this->data['prenom'] . ' ' . $this->data['nom']) // nom visible
+        ),
+            subject: 'Demande de remise - ' . $this->data['bl']
         );
     }
 
@@ -37,7 +45,14 @@ class RemiseDematMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.remise_demat',
+            markdown: 'emails.validation_demat',
+            with: [
+                'nom' => strtoupper($this->data['nom']),
+                'prenom' => strtoupper($this->data['prenom']),
+                'email' => $this->data['email'],
+                'bl' => strtoupper($this->data['bl']),
+                'compte' => strtoupper($this->data['compte']),
+            ]
         );
     }
 
@@ -48,6 +63,16 @@ class RemiseDematMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        
+        $attachments = [];
+
+        foreach ($this->files as $file) {
+            $attachments[] = Attachment::fromData(
+                fn() => file_get_contents($file->getRealPath()),
+                $file->getClientOriginalName()
+            )->withMime($file->getMimeType());
+        }
+
+        return $attachments;
     }
 }

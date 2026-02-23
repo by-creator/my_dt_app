@@ -15,9 +15,9 @@ class DematMailerService
     ];
 
     private array $destinataires_remise = [
-        'sn004-proforma@dakar-terminal.com',
-        'sn004-facturation@dakar-terminal.com',
-        //'noreplysitedt@gmail.com'
+        //'sn004-proforma@dakar-terminal.com',
+        //'sn004-facturation@dakar-terminal.com',
+        'noreplysitedt@gmail.com'
     ];
 
     public function send(array $data, array $files): void
@@ -29,6 +29,6 @@ class DematMailerService
     public function sendRemise(array $data, array $files): void
     {
         Mail::to($this->destinataires_remise)
-            ->send(new RemiseDematMail($data, $files, 'Demande de remise'));
+            ->send(new RemiseDematMail($data, $files));
     }
 }

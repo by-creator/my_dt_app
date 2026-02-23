@@ -53,36 +53,36 @@
                                         <tr>
                                             <td class="tm_width_2">
 
-                                                Chassis : {{ $data['item_number'] }}
+                                               <b class="tm_primary_color"> Chassis : {{ $data['item_number'] }}</b>
                                                 <br>
-                                                Tranche de poids : {{ $data['type_de_marchandise'] }}
+                                               <b class="tm_primary_color"> Tranche de poids : {{ $data['type_de_marchandise'] }} </b>
                                                 <br>
-                                                N° BAE DOUANE : {{ $data['bae'] }}
+                                                <b class="tm_primary_color"> N° BAE DOUANE : <b class="tm_primary_color">{{ $data['bae'] }}</b>
                                                 <br>
-                                                BL / Booking : {{ $data['bl_number'] }}
+                                                <b class="tm_primary_color"> BL / Booking :  {{ $data['bl_number'] }}</b>
                                                 <br>
-                                                Vessel : {{ $data['vessel'] }}
+                                                <b class="tm_primary_color"> Vessel : {{ $data['vessel'] }} </b>
                                                 <br>
-                                                Call Number : {{ $data['call_number'] }}
+                                                <b class="tm_primary_color"> Call Number : {{ $data['call_number'] }} </b>
                                                 <br>
-                                                Vessel Arrival Date :
-                                                {{ $data['vessel_arrival_date'] }}
+                                                <b class="tm_primary_color"> Vessel Arrival Date :
+                                                {{ $data['vessel_arrival_date'] }} </b>
                                                 <br>
                                             </td>
                                             <td class="tm_width_2">
-                                                Shipping Line : {{ $data['shipowner'] }}
+                                                <b class="tm_primary_color">Shipping Line : {{ $data['shipowner'] }}</b>
                                                 <br>
-                                                Category : {{ $data['item_code'] }}
+                                                <b class="tm_primary_color">Category : {{ $data['item_code'] }}</b>
                                                 <br>
-                                                Type : {{ $data['item_type'] }}
+                                                <b class="tm_primary_color">Type : {{ $data['item_type'] }}</b>
                                                 <br>
-                                                Model : {{ $data['description'] }}
+                                                <b class="tm_primary_color">Model : {{ $data['description'] }}</b>
                                                 <br>
-                                                Client Facturé : {{ $data['consignee'] }}
+                                                <b class="tm_primary_color"> Client Facturé : {{ $data['consignee'] }}</b>
                                                 <br>
-                                                Nom du chauffeur : {{ $data['chauffeur'] }}
+                                                <b class="tm_primary_color"> Nom du chauffeur : {{ $data['chauffeur'] }}</b>
                                                 <br>
-                                                N° Permis : {{ $data['permis'] }}
+                                                <b class="tm_primary_color"> N° Permis : {{ $data['permis'] }}</b>
                                             </td>
 
                                         </tr>
