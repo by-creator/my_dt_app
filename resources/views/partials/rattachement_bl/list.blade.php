@@ -18,15 +18,6 @@
                     @foreach ($rattachements as $rattachement)
                     <tr>
                         <td>{{ $rattachement->created_at_date_formatted ?? '—' }}</td>
-                         
-                        <!--
-                            <td>
-                                @php
-                                    $user = $users->firstWhere('id', $dossier->user_id);
-                                @endphp
-                                {{ $user ? $user->name : 'Agent non défini' }}
-                            </td>
-                        -->
                         
                         <td>{{ $rattachement->nom }} {{ $rattachement->prenom }}</td>
                         <td>{{ $rattachement->bl }}</td>
