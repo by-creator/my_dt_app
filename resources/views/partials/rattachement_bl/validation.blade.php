@@ -8,29 +8,28 @@
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
-                        <th>Agent</th>
                         <th>Nom & Prénom</th>
                         <th>BL</th>
                         <th>Compte</th>
                         <th>Statut</th>
-                        <th>Durée</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($rattachement_validations as $rattachement_validation)
                         <tr>
                             <td>{{ $rattachement_validation->created_at_date_formatted ?? '—' }}</td>
+                            <!--
                             <td>
                                 @php
-                                    $user = $users->firstWhere('id', $rattachement_validation->user_id);
+                                    $user = $users->firstWhere('id', $dossier->user_id);
                                 @endphp
                                 {{ $user ? $user->name : 'Agent non défini' }}
                             </td>
+                        -->
                             <td>{{ $rattachement_validation->nom }} {{ $rattachement_validation->prenom }}</td>
                             <td>{{ $rattachement_validation->bl }}</td>
                             <td>{{ $rattachement_validation->compte }}</td>
                             <td>{{ $rattachement_validation->statut }}</td>
-                            <td>{{ $rattachement_validation->time_elapsed ?? '—' }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-delete"
                                     data-id="{{ $rattachement_validation->id }}"

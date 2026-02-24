@@ -9,9 +9,7 @@
                     <thead>
                         <tr>
                             <th>Numéro BL</th>
-                            <th>Agent</th>
                             <th>Statut</th>
-                            <th>Durée de traitement</th>
                             <th>Fichier facture</th>
                             <th>Actions</th>
                         </tr>
@@ -22,9 +20,7 @@
                                 @foreach ($facture->facture['facture'] ?? [] as $f)
                                     <tr>
                                         <td>{{ $facture->bl }}</td>
-                                        <td>{{ $facture->user }}</td>
                                         <td>{{ $facture->statut }}</td>
-                                        <td>{{ $facture->time_elapsed }}</td>
 
                                         {{-- Nom original --}}
                                         <td>{{ $f['original'] ?? '-' }}</td>

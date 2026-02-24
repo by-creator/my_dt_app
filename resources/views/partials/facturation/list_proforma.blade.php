@@ -9,9 +9,7 @@
                     <thead>
                         <tr>
                             <th>Numéro BL</th>
-                            <th>Agent</th>
                             <th>Statut</th>
-                            <th>Durée de traitement</th>
                             <th>Fichier Proforma</th>
                             <th>Actions</th>
                         </tr>
@@ -22,9 +20,7 @@
                                @foreach(($proforma->proforma['proforma'] ?? []) as $p)
                                     <tr>
                                         <td>{{ $proforma->bl }}</td>
-                                        <td>{{ $proforma->user }}</td>
                                         <td>{{ $proforma->statut }}</td>
-                                        <td>{{ $proforma->time_elapsed }}</td>
 
                                         {{-- Nom original --}}
                                         <td>{{ $p['original'] ?? '-' }}</td>

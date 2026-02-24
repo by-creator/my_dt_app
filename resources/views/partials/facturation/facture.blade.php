@@ -8,11 +8,9 @@
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
-                        <th>Agent</th>
                         <th>Numéro BL</th>
                         <th>Compte</th>
                         <th>Statut</th>
-                        <th>Durée</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -20,18 +18,18 @@
                     @foreach ($dossiers as $dossier)
                         <tr>
                             <td>{{ $dossier->updated_at_date_formatted ?? '—' }}</td>
+                            <!--
                             <td>
                                 @php
                                     $user = $users->firstWhere('id', $dossier->user_id);
                                 @endphp
                                 {{ $user ? $user->name : 'Agent non défini' }}
                             </td>
-
+                        -->
                             <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->bl : '—' }}</td>
                             <td>{{ $dossier->rattachement_bl ? $dossier->rattachement_bl->compte : '—' }}</td>
 
                             <td>{{ $dossier->statut ?? '—' }}</td>
-                            <td>{{ $dossier->time_elapsed_facture ?? '-' }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-send" data-id="{{ $dossier->id }}"
                                     data-email="{{ $dossier->email }}" data-bs-toggle="modal"

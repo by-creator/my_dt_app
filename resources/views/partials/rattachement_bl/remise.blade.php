@@ -1,38 +1,41 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><u>Gestion des demandes de validation</u></h4>
+            <h4 class="card-title"><u>Gestion des demandes de remise</u></h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table1">
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
-                        <th>Client</th>
+                        <th>Nom & Prénom</th>
                         <th>BL</th>
+                        <th>Compte</th>
                         <th>Statut</th>
+                        <th>Durée</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rattachement_validations as $rattachement_validation)
+                    @foreach ($rattachement_remises as $rattachement_remise)
                         <tr>
-                            <td>{{ $rattachement_validation->created_at_date_formatted ?? '—' }}</td>
-                    
-                            <td>{{ $rattachement_validation->nom }} {{ $rattachement_validation->prenom }}</td>
-                            <td>{{ $rattachement_validation->bl }}</td>
-                            <td>{{ $rattachement_validation->statut }}</td>
+                            <td>{{ $rattachement_remise->created_at_date_formatted ?? '—' }}</td>
+                            <td>{{ $rattachement_remise->nom }} {{ $rattachement_remise->prenom }}</td>
+                            <td>{{ $rattachement_remise->bl }}</td>
+                            <td>{{ $rattachement_remise->compte }}</td>
+                            <td>{{ $rattachement_remise->statut }}</td>
+                            <td>{{ $rattachement_remise->time_elapsed ?? '—' }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-delete"
-                                    data-id="{{ $rattachement_validation->id }}"
-                                    data-email="{{ $rattachement_validation->email }}" data-bs-toggle="modal"
+                                    data-id="{{ $rattachement_remise->id }}"
+                                    data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
                                     data-bs-target="#valideModal"><i class="fa-solid fa-check-to-slot"></i>
                                     Valider</button>
 
                             </td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-edit"
-                                    data-id="{{ $rattachement_validation->id }}"
-                                    data-email="{{ $rattachement_validation->email }}" data-bs-toggle="modal"
+                                    data-id="{{ $rattachement_remise->id }}"
+                                    data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
                                     data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i>
                                     Rejeter</button>
 
@@ -131,7 +134,7 @@
                             <option value="" disabled selected>
                                 -- Sélectionnez le motif du refus --
                             </option>
-                            <option value="Le débarquement n'est pas encore effectif">Les documents ne sont pas valables</option>
+                            <option value="Le débarquement n'est pas encore effectif">Le débarquement n'est pas encore effectif</option>
                             <option value="autre">Autre motif</option>
                         </select>
                     </div>
@@ -160,48 +163,65 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-    const motifSelect = document.getElementById("motif");
-    const autreMotifDiv = document.getElementById("autreMotifDiv");
+        const table = document.getElementById('table1');
 
-    // Lorsque l'utilisateur sélectionne un motif
-    motifSelect.addEventListener("change", function() {
-        if (motifSelect.value === "autre") {
-            // Afficher le champ texte si "Autre motif" est sélectionné
-            autreMotifDiv.style.display = "block";
-        } else {
-            // Cacher le champ texte si une autre option est sélectionnée
-            autreMotifDiv.style.display = "none";
-        }
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-send');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+
+            const form = document.getElementById("sendProformaForm");
+            form.action = `/dossier-facturation/proforma/send/${id}`;
+
+            document.getElementById("proformaId").value = id;
+        });
     });
+</script>
 
-    const table = document.getElementById('table1');
 
-    // Event delegation pour valider
-    table.addEventListener('click', function(e) {
-        const btn = e.target.closest('.btn-delete');
-        if (!btn) return;
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById('table1');
+        const motifSelect = document.getElementById("motif");
+        const autreMotifContainer = document.getElementById("autreMotifContainer");
 
-        const id = btn.dataset.id;
-        const email = btn.dataset.email;
-        document.getElementById("deleteId").value = id;
-        document.getElementById("deleteEmail").value = email;
-        document.getElementById("deleteForm").action = "/rattachement/create/" + id;
+        // Event delegation pour envoyer des documents
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-send');
+            if (!btn) return;
+
+            const id = btn.dataset.id;
+            document.getElementById("proformaId").value = id;
+            document.getElementById("sendProformaForm").action = "/dossier-facturation/proforma/send/" +
+                id;
+        });
+
+        // Event delegation pour rejeter un dossier
+        table.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-reject');
+            if (!btn) return; // Si ce n'est pas un bouton reject, on ignore
+
+            const id = btn.dataset.id;
+            const email = btn.dataset.email;
+
+            document.getElementById("rejectId").value = id;
+            document.getElementById("rejectEmail").value = email;
+            document.getElementById("rejectForm").action = "/dossier-facturation/proforma/reject/" + id;
+        });
+
+        // Affichage du champ 'Autre motif' selon la sélection
+        motifSelect.addEventListener("change", function() {
+            if (motifSelect.value === "autre") {
+                // Afficher le champ texte si "Autre motif" est sélectionné
+                autreMotifContainer.classList.remove("d-none");
+            } else {
+                // Cacher le champ texte si une autre option est sélectionnée
+                autreMotifContainer.classList.add("d-none");
+            }
+        });
+
+        // Initialiser la datatable
+        new simpleDatatables.DataTable("#table1");
     });
-
-    // Event delegation pour rejeter
-    table.addEventListener('click', function(e) {
-        const btn = e.target.closest('.btn-edit');
-        if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
-
-        const id = btn.dataset.id;
-        const email = btn.dataset.email;
-        document.getElementById("editId").value = id;
-        document.getElementById("editEmail").value = btn.dataset.email || '';
-        document.getElementById("editForm").action = "/rattachement/update/" + id;
-    });
-
-    // Initialiser la datatable
-    new simpleDatatables.DataTable("#table1");
-});
-
 </script>

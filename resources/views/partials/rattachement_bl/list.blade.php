@@ -8,14 +8,10 @@
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
-                        
-                        <th>Agent</th>
-                        
                         <th>Nom & Prénom</th>
                         <th>BL</th>
                         <th>Compte</th>
                         <th>Statut</th>
-                        <th>Durée</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,18 +19,19 @@
                     <tr>
                         <td>{{ $rattachement->created_at_date_formatted ?? '—' }}</td>
                          
-                        <td>
-                            @php
-                            $user = $users->firstWhere('id', $rattachement->user_id);
-                            @endphp
-                            {{ $user ? $user->name : 'Agent non défini' }}
-                        </td>
+                        <!--
+                            <td>
+                                @php
+                                    $user = $users->firstWhere('id', $dossier->user_id);
+                                @endphp
+                                {{ $user ? $user->name : 'Agent non défini' }}
+                            </td>
+                        -->
                         
                         <td>{{ $rattachement->nom }} {{ $rattachement->prenom }}</td>
                         <td>{{ $rattachement->bl }}</td>
                         <td>{{ $rattachement->compte }}</td>
                         <td>{{ $rattachement->statut }}</td>
-                        <td>{{ $rattachement->time_elapsed }}</td>
 
                     </tr>
                     @endforeach

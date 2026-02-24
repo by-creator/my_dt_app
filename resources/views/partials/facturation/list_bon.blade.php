@@ -9,9 +9,7 @@
                     <thead>
                         <tr>
                             <th>Numéro BL</th>
-                            <th>Agent</th>
                             <th>Statut</th>
-                            <th>Durée de traitement</th>
                             <th>Fichier bon</th>
                             <th>Actions</th>
                         </tr>
@@ -22,9 +20,7 @@
                                 @foreach ($bon->bon['bon'] ?? [] as $b)
                                     <tr>
                                         <td>{{ $bon->bl }}</td>
-                                        <td>{{ $bon->user }}</td>
                                         <td>{{ $bon->statut }}</td>
-                                        <td>{{ $bon->time_elapsed }}</td>
 
                                         {{-- Nom original --}}
                                         <td>{{ $b['original'] ?? '-' }}</td>

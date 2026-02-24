@@ -45,7 +45,7 @@ class RattachementController extends Controller
 
         return view('rattachement_bl.index_remise', [
             'rattachements' => RattachementBl::latest()->get(),
-            'rattachement_validations' => RattachementBl::where(
+            'rattachement_remises' => RattachementBl::where(
                 'statut',
                 StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
                 StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
