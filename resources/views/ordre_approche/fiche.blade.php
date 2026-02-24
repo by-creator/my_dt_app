@@ -53,7 +53,7 @@
                                         <tr>
                                             <td class="tm_width_2">
 
-                                               <b class="tm_primary_color"> Chassis : {{ $data['item_number'] }}</b>
+                                               <b class="tm_primary_color"> Numéro : {{ $data['item_number'] }}</b>
                                                 <br>
                                                <b class="tm_primary_color"> Tranche de poids : {{ $data['type_de_marchandise'] }} </b>
                                                 <br>
