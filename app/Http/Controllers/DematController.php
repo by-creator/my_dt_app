@@ -86,6 +86,22 @@ class DematController extends Controller
         try {
             $data = $request->validated();
 
+            // Vérifications BL
+            if ($this->service->RemiseEnAttente($data['bl'])) {
+                return back()->with(
+                    'info',
+                    'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation'
+                );
+            }
+
+            if ($this->service->RemiseValide($data['bl'])) {
+                return back()->with(
+                    'info',
+                    'Ce BL est déjà validé !'
+                );
+            }
+
+
             // Gestion des fichiers (toujours tableau)
             $files = $request->file('documents');
             if ($files instanceof \Illuminate\Http\UploadedFile) {

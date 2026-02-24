@@ -21,6 +21,23 @@ class DematService
             ->exists();
     }
 
+    public function RemiseEnAttente(string $bl): bool
+    {
+        return RattachementBl::where('bl', $bl)
+            ->whereIn('statut', [
+                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
+                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
+            ])
+            ->exists();
+    }
+
+    public function RemiseValide(string $bl): bool
+    {
+        return RattachementBl::where('bl', $bl)
+            ->where('statut', StatutDossier::REMISE_VALIDE)
+            ->exists();
+    }
+
     public function createRattachement(array $data): RattachementBl
     {
         return RattachementBl::create($data);
