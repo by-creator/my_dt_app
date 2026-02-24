@@ -58,7 +58,24 @@ class RattachementController extends Controller
     public function list()
     {
         return view('rattachement_bl.list', [
-            'rattachements' => RattachementBl::latest()->get(),
+            'rattachements' => RattachementBl::where(
+                'statut',
+                StatutDossier::VALIDE,
+                StatutDossier::REJETE
+            )->latest()->get(),
+            'users' => User::all(),
+            'user' => Auth::user()
+        ]);
+    }
+
+    public function listRemise()
+    {
+        return view('rattachement_bl.list_remise', [
+            'rattachements' => RattachementBl::where(
+                'statut',
+                StatutDossier::REMISE_VALIDE,
+                StatutDossier::REMISE_REJETE
+            )->latest()->get(),
             'users' => User::all(),
             'user' => Auth::user()
         ]);
