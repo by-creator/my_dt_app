@@ -4,7 +4,7 @@
 
 @section('sidebar-menu')
     @auth
-        @if ($user->role->name == 'ADMIN' || $user->role->name == 'FACTURATION' || $user->role->name == 'SUPER_U')
+        @if ($user->role->name == 'ADMIN' || $user->role->name == 'FACTURATION' || $user->role->name == 'SUPER_U' || $user->role->name == 'DIRECTION_GENERALE')
             @include('partials.facturation.menu_validation')
         @else
         @endif
@@ -24,7 +24,7 @@
             <h3>Bienvenu(e) {{ $user->name }} </h3>
         </div>
         <div class="page-content">
-            @if ($user->role->name == 'ADMIN' || $user->role->name == 'FACTURATION' || $user->role->name == 'SUPER_U')
+            @if ($user->role->name == 'ADMIN' || $user->role->name == 'FACTURATION' || $user->role->name == 'SUPER_U' || $user->role->name == 'DIRECTION_GENERALE')
                 @include('partials.rattachement_bl.remise')
             @else
             @endif

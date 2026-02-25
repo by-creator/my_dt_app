@@ -23,7 +23,7 @@
                             <td>{{ $rattachement_remise->bl }}</td>
                             <td>{{ $rattachement_remise->statut }}</td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-delete"
+                                <button type="button" class="btn btn-primary btn-validate"
                                     data-id="{{ $rattachement_remise->id }}"
                                     data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
                                     data-bs-target="#valideModal"><i class="fa-solid fa-check-to-slot"></i>
@@ -31,7 +31,7 @@
 
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-edit"
+                                <button type="button" class="btn btn-danger btn-reject"
                                     data-id="{{ $rattachement_remise->id }}"
                                     data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
                                     data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i>
@@ -73,11 +73,26 @@
                                 });
                             </script>
                         @endif
-                        <form id="deleteForm" method="POST">
+                        <form id="sendRemiseForm" method="POST">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" id="deleteId" name="id">
-                            <input type="hidden" id="deleteEmail" name="email">
+                            <input type="hidden" id="sendRemiseId" name="id">
+                            <input type="hidden" id="sendRemiseEmail" name="email">
+                             @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
+                                <div class="mb-3">
+                                    <label for="pourcentage" class="form-label">
+                                        Pourcentage de remise (%)
+                                    </label>
+                                    <input type="number"
+                                        name="pourcentage"
+                                        id="pourcentage"
+                                        class="form-control"
+                                        min="0"
+                                        max="100"
+                                        step="0.01"
+                                        required>
+                                </div>
+                            @endif
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i>
                                     Oui</button>
@@ -119,11 +134,11 @@
                             });
                         </script>
                     @endif
-                    <form id="editForm" method="POST">
+                    <form id="rejectRemiseForm" method="POST">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" id="editId" name="id">
-                        <input type="hidden" id="editEmail" name="email">
+                        <input type="hidden" id="rejectRemiseId" name="id">
+                        <input type="hidden" id="rejectRemiseEmail" name="email">
                         <div class="mb-3">
                             <label for="motif" class="form-label">
                                 Êtes-vous sûr de vouloir rejeter ce dossier ?
@@ -180,27 +195,27 @@
 
         // Event delegation pour valider
         table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-delete');
+            const btn = e.target.closest('.btn-validate');
             if (!btn) return;
 
             const id = btn.dataset.id;
             const email = btn.dataset.email;
-            document.getElementById("deleteId").value = id;
-            document.getElementById("deleteEmail").value = email;
-            document.getElementById("sendFactureForm").action = "/dossier-facturation/remise/send/" +
+            document.getElementById("sendRemiseId").value = id;
+            document.getElementById("sendRemiseEmail").value = email;
+            document.getElementById("sendRemiseForm").action = "/dossier-facturation/remise/send/" +
             id;
         });
 
         // Event delegation pour rejeter
         table.addEventListener('click', function(e) {
-            const btn = e.target.closest('.btn-edit');
+            const btn = e.target.closest('.btn-reject');
             if (!btn) return; // Si ce n'est pas un bouton edit, on ignore
 
             const id = btn.dataset.id;
             const email = btn.dataset.email;
-            document.getElementById("editId").value = id;
-            document.getElementById("editEmail").value = btn.dataset.email || '';
-            document.getElementById("rejectForm").action = "/dossier-facturation/remise/reject/" + id;
+            document.getElementById("rejectRemiseId").value = id;
+            document.getElementById("rejectRemiseEmail").value = btn.dataset.email || '';
+            document.getElementById("rejectRemiseForm").action = "/dossier-facturation/remise/reject/" + id;
         });
 
         // Initialiser la datatable

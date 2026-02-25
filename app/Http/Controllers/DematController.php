@@ -90,14 +90,14 @@ class DematController extends Controller
             if ($this->service->RemiseEnAttente($data['bl'])) {
                 return back()->with(
                     'info',
-                    'Ce BL est en cours de validation. Merci de patienter le mail de réponse de la facturation'
+                    'Ce dossier est en cours de validation. Merci de patienter le mail de réponse de la facturation'
                 );
             }
 
             if ($this->service->RemiseValide($data['bl'])) {
                 return back()->with(
                     'info',
-                    'Ce BL est déjà validé !'
+                    'Ce dossier est déjà validé !'
                 );
             }
 

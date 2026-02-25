@@ -68,7 +68,7 @@
   <script>
     Swal.fire({
       icon: 'success',
-      title: 'Demande de validation envoyée ✅',
+      title: 'Demande de remise envoyée ✅',
       text: "{{ session('success') }}",
       showConfirmButton: true
     });

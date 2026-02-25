@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/dossier-facturation/import', [DossierFacturationController::class, 'import'])->name('dossier_facturation.import');
     Route::get('/dossier-facturation/export', [DossierFacturationController::class, 'export'])->name('dossier_facturation.export');
 
-     Route::post('/dossier-facturation/remise/send/{id}', [DossierFacturationRemiseController::class, 'sendDocuments'])->name('dossier_facturation.remise.send');
-    Route::put('/dossier-facturation/remise/reject/{id}', [DossierFacturationRemiseController::class, 'rejectDocuments'])->name('dossier_facturation.remise.reject');
+    Route::put('/dossier-facturation/remise/send/{id}', [RattachementController::class, 'validateRemise'])->name('remise.validate');
 
+    Route::put('/dossier-facturation/remise/reject/{id}', [RattachementController::class, 'rejectRemise'])->name('remise.reject');
 });

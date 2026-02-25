@@ -27,7 +27,7 @@
                                 <button class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
                                     <i class="fa-solid fa-upload"></i> Importer
                                 </button>
-                                 <a href="https://www.freeconvert.com/xls-to-csv" target="_blank" class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
+                                 <a href="https://www.freeconvert.com/xlsx-to-csv" target="_blank" class="btn btn-sm btn-outline-primary w-100 me-2" type="submit">
                                     <i class="fa-solid fa-bolt"></i> XLSX TO CSV
                                 </a>
                             </div>

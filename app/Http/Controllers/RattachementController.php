@@ -134,4 +134,26 @@ class RattachementController extends Controller
             return back()->with('error', 'Une erreur est survenue lors du rejet.');
         }
     }
+
+    public function validateRemise($id)
+    {
+        $rattachement = $this->service->getOrFail($id);
+        $this->service->ensureRemisePending($rattachement);
+
+        try {
+            //$this->workflow->validateRemise($rattachement);
+
+            return back()->with('success', 'Dossier de remise validé avec succès !');
+        } catch (\Throwable $e) {
+            Log::error('Erreur validation remise rattachement', [
+                'id' => $id,
+                'message' => $e->getMessage(),
+            ]);
+
+            return back()->with('error', 'Une erreur est survenue lors de la validation.');
+        }
+        return back()->with('success', 'Dossier de remise validé avec succès !');
+    }
+
+    
 }

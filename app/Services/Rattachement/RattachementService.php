@@ -18,4 +18,14 @@ class RattachementService
             abort(403, 'Dossier déjà traité.');
         }
     }
+
+    public function ensureRemisePending(RattachementBl $rattachement): void
+    {
+        if (!in_array($rattachement->statut, [
+            StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
+            StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
+        ])) {
+            abort(403, 'Dossier déjà traité.');
+        }
+    }
 }

@@ -1,3 +1,4 @@
+@if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "FACTURATION" )
 <li class="sidebar-item  has-sub ">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-folder"></i>
@@ -89,6 +90,13 @@
         </li>
     </ul>
 </li>
+<li class="sidebar-item">
+    <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-video-index') }}"class='sidebar-link'>
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Comment ça marche ?</span>
+    </a>
+</li>
+@endif
 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('dossier_facturation.list_client') }}"class='sidebar-link'>
@@ -99,12 +107,7 @@
 @include('partials.ies.menu_ies')
 @endif
 
-<li class="sidebar-item">
-    <a class='sidebar-link' href="{{ route('dossier_facturation.tuto-video-index') }}"class='sidebar-link'>
-        <i class="fa-solid fa-circle-info"></i>
-        <span>Comment ça marche ?</span>
-    </a>
-</li>
+
 
 
 

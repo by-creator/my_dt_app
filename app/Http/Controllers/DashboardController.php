@@ -188,6 +188,18 @@ class DashboardController extends Controller
                 ];
                 break;
 
+                case "DIRECTION_GENERALE":
+                $cards = [
+                    [
+                        'id' => 1,
+                        'name' => 'Facturation',
+                        'header' => 'Facturation',
+                        'description' => 'Gestion Facturation',
+                        'route' => route('rattachement.index')
+                    ],
+                ];
+                break;
+
             case "FACTURATION":
                 $cards = [
                     [
