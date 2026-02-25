@@ -59,20 +59,6 @@
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-folder"></i>
-        <span>Remises </span>
-    </a>
-    <ul class="submenu">
-        <li class="submenu-item ">
-            <a class='sidebar-link' href="{{ route('rattachement.index_remise') }}"><i class="fa-solid fa-clipboard"></i> Gestion remises</a>
-        </li>
-        <li class="submenu-item">
-            <a class='sidebar-link' href="{{ route('rattachement.list_remise') }}"><i class="fa-solid fa-clipboard"></i> Liste remises</a>
-        </li>
-    </ul>
-</li>
-<li class="sidebar-item  has-sub">
-    <a href="#" class='sidebar-link'>
-        <i class="fa-solid fa-folder"></i>
         <span>Unify</span>
     </a>
     <ul class="submenu">
@@ -97,6 +83,12 @@
     </a>
 </li>
 @endif
+<li class="sidebar-item">
+    <a class='sidebar-link' href="{{ route('rattachement.index_remise') }}"class='sidebar-link'>
+        <i class="fa-solid fa-percent"></i>
+        <span>Gestion des remises</span>
+    </a>
+</li>
 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('dossier_facturation.list_client') }}"class='sidebar-link'>

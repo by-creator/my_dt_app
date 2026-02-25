@@ -192,10 +192,10 @@ class DashboardController extends Controller
                 $cards = [
                     [
                         'id' => 1,
-                        'name' => 'Facturation',
-                        'header' => 'Facturation',
-                        'description' => 'Gestion Facturation',
-                        'route' => route('rattachement.index')
+                        'name' => 'Remises',
+                        'header' => 'Remises',
+                        'description' => 'Gestion Des Remises',
+                        'route' => route('rattachement.index_remise')
                     ],
                 ];
                 break;
