@@ -18,14 +18,7 @@
                     @foreach ($rattachement_validations as $rattachement_validation)
                         <tr>
                             <td>{{ $rattachement_validation->created_at_date_formatted ?? '—' }}</td>
-                            <!--
-                            <td>
-                                @php
-                                    $user = $users->firstWhere('id', $dossier->user_id);
-                                @endphp
-                                {{ $user ? $user->name : 'Agent non défini' }}
-                            </td>
-                        -->
+                            
                             <td>{{ $rattachement_validation->nom }} {{ $rattachement_validation->prenom }}</td>
                             <td>{{ $rattachement_validation->bl }}</td>
                             <td>{{ $rattachement_validation->compte }}</td>
