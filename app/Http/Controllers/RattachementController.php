@@ -39,20 +39,64 @@ class RattachementController extends Controller
         ]);
     }
 
-    public function indexRemise()
+    public function indexRemise(Request $request)
     {
         $user = Auth::user();
 
+        $filters = ['bl'];
+
+        $query = RattachementBl::whereIn('statut', [
+            StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
+            StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION,
+            StatutDossier::REMISE_VALIDE,
+            StatutDossier::REMISE_REJETE,
+        ]);
+
+        foreach ($filters as $field) {
+            if ($request->filled($field)) {
+                $query->where($field, $request->$field);
+            }
+        }
+
+        $remises = $query
+            ->latest()
+            ->paginate(3)
+            ->withQueryString();
+
         return view('rattachement_bl.index_remise', [
+            'remises' => $remises,
             'rattachements' => RattachementBl::latest()->get(),
-            'rattachement_remises' => RattachementBl::where(
-                'statut',
+            'rattachement_remises' => RattachementBl::whereIn('statut', [
                 StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
                 StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
-            )->latest()->get(),
+            ])->latest()->get(),
             'users' => User::all(),
             'user' => $user
         ]);
+    }
+
+    public function datalist(Request $request)
+    {
+        $field = $request->get('field');
+        $query = $request->get('q');
+
+        // 🔐 Sécurité : champs autorisés
+        if (!in_array($field, ['bl'])) {
+            return response()->json([]);
+        }
+
+        $results = RattachementBl::query()
+            ->whereNotNull($field)
+            ->when(
+                $query,
+                fn($q) =>
+                $q->where($field, 'LIKE', "%{$query}%")
+            )
+            ->distinct()
+            ->limit(3)
+            ->pluck($field);
+
+        return response()->json($results);
     }
 
     public function list()
@@ -154,6 +198,4 @@ class RattachementController extends Controller
         }
         return back()->with('success', 'Dossier de remise validé avec succès !');
     }
-
-    
 }

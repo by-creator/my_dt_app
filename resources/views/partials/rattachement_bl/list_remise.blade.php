@@ -1,33 +1,38 @@
-<section class="section">
+<div class="col-md-12 col-12">
     <div class="card">
+
         <div class="card-header">
-            <h4 class="card-title"><u>Liste des remises</u></h4>
+            <h4 class="card-title">
+                <u>Liste des items</u>
+            </h4>
         </div>
+
         <div class="card-body">
-            <table class="table table-striped" id="table1">
-                <thead>
-                    <tr>
-                        <th>Date & Heure</th>
-                        <th>Nom & Prénom</th>
-                        <th>Email</th>
-                        <th>BL</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($rattachements as $rattachement)
-                    <tr>
-                        <td>{{ $rattachement->created_at_date_formatted ?? '—' }}</td>
-                        
-                        <td>{{ $rattachement->nom }} {{ $rattachement->prenom }}</td>
-                        <td>{{ $rattachement->email }}</td>
-                        <td>{{ $rattachement->bl }}</td>
-                        <td>{{ $rattachement->statut }}</td>
 
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            {{-- 🔍 Filtres --}}
+            @include('partials.rattachement_bl.filters_remise')
+
+            {{-- 📋 Tableau --}}
+            @include('partials.rattachement_bl.table_remise')
+
+            {{-- 📑 Pagination --}}
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="small text-muted">
+                    Affichage de {{ $remises->firstItem() }} à {{ $remises->lastItem() }}
+                    sur {{ $remises->total() }} résultats
+                </div>
+
+                <div>
+                    {{ $remises->links() }}
+                </div>
+            </div>
+
         </div>
+    </div>
+</div>
 
-</section>
+{{-- 🔔 Toasts --}}
+@include('partials.toasts')
+
+{{-- ⚙️ Scripts JS --}}
+@include('partials.rattachement_bl.scripts_remise')

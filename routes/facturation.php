@@ -26,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/rattachement/update/{id}', [RattachementController::class, 'update'])->name('rattachement.update');
     Route::put('/rattachement/delete/{id}', [RattachementController::class, 'delete'])->name('rattachement.delete');
 
+    Route::put('/rattachement/remise/send/{id}', [RattachementController::class, 'validateRemise'])->name('remise.validate');
+    Route::put('/rattachement/remise/reject/{id}', [RattachementController::class, 'rejectRemise'])->name('remise.reject');
+
+    Route::get('/datalist', [RattachementController::class, 'datalist'])->name('datalist');
+
 
 
     Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'])->name('dossier_facturation.index');
@@ -94,7 +99,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/dossier-facturation/import', [DossierFacturationController::class, 'import'])->name('dossier_facturation.import');
     Route::get('/dossier-facturation/export', [DossierFacturationController::class, 'export'])->name('dossier_facturation.export');
 
-    Route::put('/dossier-facturation/remise/send/{id}', [RattachementController::class, 'validateRemise'])->name('remise.validate');
-
-    Route::put('/dossier-facturation/remise/reject/{id}', [RattachementController::class, 'rejectRemise'])->name('remise.reject');
 });

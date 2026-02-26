@@ -26,6 +26,7 @@
         <div class="page-content">
             @if ($user->role->name == 'ADMIN' || $user->role->name == 'FACTURATION' || $user->role->name == 'SUPER_U' || $user->role->name == 'DIRECTION_GENERALE')
                 @include('partials.rattachement_bl.remise')
+                @include('partials.rattachement_bl.list_remise')
             @else
             @endif
         </div>

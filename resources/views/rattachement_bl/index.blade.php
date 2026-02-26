@@ -26,6 +26,7 @@
         <div class="page-content">
             @if ($user->role->name == 'ADMIN' || $user->role->name == 'FACTURATION' || $user->role->name == 'SUPER_U')
                 @include('partials.rattachement_bl.validation')
+                
             @else
             @endif
         </div>

@@ -4,7 +4,7 @@
             <h4 class="card-title"><u>Gestion des demandes de remise</u></h4>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="table1">
+            <table class="table" id="table1">
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
@@ -12,6 +12,7 @@
                         <th>Email</th>
                         <th>BL</th>
                         <th>Statut</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,22 +23,22 @@
                             <td>{{ $rattachement_remise->email }}</td>
                             <td>{{ $rattachement_remise->bl }}</td>
                             <td>{{ $rattachement_remise->statut }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-validate"
+                            <td class="d-flex gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-primary me-2 btn-validate"
                                     data-id="{{ $rattachement_remise->id }}"
                                     data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
-                                    data-bs-target="#valideModal"><i class="fa-solid fa-check-to-slot"></i>
-                                    Valider</button>
+                                    data-bs-target="#valideModal">
+                                    <i class="fa-solid fa-check-to-slot"></i> Valider
+                                </button>
 
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-reject"
+                                <button type="button" class="btn btn-sm btn-outline-danger me-2 btn-reject"
                                     data-id="{{ $rattachement_remise->id }}"
                                     data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
-                                    data-bs-target="#rejetModal"><i class="fa-solid fa-square-xmark"></i>
-                                    Rejeter</button>
-
+                                    data-bs-target="#rejetModal">
+                                    <i class="fa-solid fa-square-xmark"></i> Rejeter
+                                </button>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -78,19 +79,13 @@
                             @method('PUT')
                             <input type="hidden" id="sendRemiseId" name="id">
                             <input type="hidden" id="sendRemiseEmail" name="email">
-                             @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
+                            @if (Auth::user()->role->name == 'ADMIN' || Auth::user()->role->name == 'DIRECTION_GENERALE')
                                 <div class="mb-3">
                                     <label for="pourcentage" class="form-label">
                                         Pourcentage de remise (%)
                                     </label>
-                                    <input type="number"
-                                        name="pourcentage"
-                                        id="pourcentage"
-                                        class="form-control"
-                                        min="0"
-                                        max="100"
-                                        step="0.01"
-                                        required>
+                                    <input type="number" name="pourcentage" id="pourcentage" class="form-control"
+                                        min="0" max="100" step="0.01" required>
                                 </div>
                             @endif
                             <div class="modal-footer">
@@ -157,7 +152,8 @@
                             <label for="autreMotif" class="form-label">
                                 Veuillez spécifier votre motif :
                             </label>
-                            <textarea class="form-control" name="autreMotif" id="autreMotif" rows="3" placeholder="Entrez votre motif ici"></textarea>
+                            <textarea class="form-control" name="autreMotif" id="autreMotif" rows="3"
+                                placeholder="Entrez votre motif ici"></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -202,8 +198,8 @@
             const email = btn.dataset.email;
             document.getElementById("sendRemiseId").value = id;
             document.getElementById("sendRemiseEmail").value = email;
-            document.getElementById("sendRemiseForm").action = "/dossier-facturation/remise/send/" +
-            id;
+            document.getElementById("sendRemiseForm").action = "/rattachement/remise/send/" +
+                id;
         });
 
         // Event delegation pour rejeter
@@ -215,7 +211,7 @@
             const email = btn.dataset.email;
             document.getElementById("rejectRemiseId").value = id;
             document.getElementById("rejectRemiseEmail").value = btn.dataset.email || '';
-            document.getElementById("rejectRemiseForm").action = "/dossier-facturation/remise/reject/" + id;
+            document.getElementById("rejectRemiseForm").action = "/rattachement/remise/reject/" + id;
         });
 
         // Initialiser la datatable
