@@ -201,6 +201,7 @@ class RattachementController extends Controller
 
                 $rattachement->statut = StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION;
                 $rattachement->user_id = $user->id;
+                $this->mailer->sendRemiseNotificationToDirection($rattachement);
                 $rattachement->save();
 
                 return back()->with('valide', 'Remise transmise à la Direction pour validation.');

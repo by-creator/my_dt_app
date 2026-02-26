@@ -13,12 +13,17 @@ class RattachementRemiseNotificationDirectionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $bl, $nom, $prenom;
+
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($bl, $nom, $prenom)
     {
-        //
+        $this->bl = $bl;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
     }
 
     /**
@@ -27,7 +32,7 @@ class RattachementRemiseNotificationDirectionMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rattachement Remise Notification Direction Mail',
+            subject: 'Demande de remise en attente BL - ' . $this->bl,
         );
     }
 

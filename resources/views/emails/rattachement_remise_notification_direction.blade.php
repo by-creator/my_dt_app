@@ -1,12 +1,25 @@
-<x-mail::message>
-# Introduction
+@component('mail::message')
 
-The body of your message.
+<p style="text-align: center;">
+    <img src="https://site-dt-production-98050a853413.herokuapp.com/templates/site/images/logo.png" 
+         alt="Logo" width="150" style="margin-bottom: 20px;">
+</p>
 
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
+# Demande de remise en attente de validation
 
-Thanks,<br>
-{{ config('app.name') }}
-</x-mail::message>
+Bonjour,
+
+Vous avez une demande de remise en attente de validation pour le dossier ci-dessous :  
+
+ **Numéro de BL** : **{{ $bl }}**.
+
+
+Merci de bien vouloir vous connecter à la plateforme afin de traiter cette demande.
+
+@component('mail::button', ['url' => 'https://site-dt-production-98050a853413.herokuapp.com/demat'])
+ACCÉDER À LA PLATEFORME
+@endcomponent
+
+---
+DAKAR TERMINAL
+@endcomponent
