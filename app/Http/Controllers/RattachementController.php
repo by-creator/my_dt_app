@@ -43,36 +43,44 @@ class RattachementController extends Controller
     {
         $user = Auth::user();
 
-        $filters = ['bl'];
+        // 🎯 Statut selon rôle
+        $statutsEnAttente = match ($user->role->name) {
+            'FACTURATION' => [
+                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION
+            ],
+            'DIRECTION_GENERALE' => [
+                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
+            ],
+            default => []
+        };
 
-        $query = RattachementBl::whereIn('statut', [
-            StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
-            StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION,
-            StatutDossier::REMISE_VALIDE,
-            StatutDossier::REMISE_REJETE,
-        ]);
-
-        foreach ($filters as $field) {
-            if ($request->filled($field)) {
-                $query->where($field, $request->$field);
-            }
+        // 🔐 Sécurité
+        if (empty($statutsEnAttente)) {
+            abort(403);
         }
 
-        $remises = $query
+        // ✅ Liste à valider uniquement
+        $remisesAValider = RattachementBl::whereIn('statut', $statutsEnAttente)
             ->latest()
-            ->paginate(3)
-            ->withQueryString();
+            ->paginate(5);
 
-        return view('rattachement_bl.index_remise', [
-            'remises' => $remises,
-            'rattachements' => RattachementBl::latest()->get(),
-            'rattachement_remises' => RattachementBl::whereIn('statut', [
-                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_FACTURATION,
-                StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION
-            ])->latest()->get(),
-            'users' => User::all(),
-            'user' => $user
-        ]);
+        // ✅ Liste déjà traitées (séparée)
+        $remisesTraitees = RattachementBl::whereIn('statut', [
+            StatutDossier::REMISE_VALIDE,
+            StatutDossier::REMISE_REJETE
+        ])->latest()->get();
+        $remisesTraitees = RattachementBl::whereIn('statut', [
+            StatutDossier::REMISE_VALIDE,
+            StatutDossier::REMISE_REJETE
+        ])
+            ->latest()
+            ->paginate(3);   // ✅ au lieu de get()
+
+        return view('rattachement_bl.index_remise', compact(
+            'remisesAValider',
+            'remisesTraitees',
+            'user'
+        ));
     }
 
     public function datalist(Request $request)
@@ -197,5 +205,32 @@ class RattachementController extends Controller
             return back()->with('error', 'Une erreur est survenue lors de la validation.');
         }
         return back()->with('success', 'Dossier de remise validé avec succès !');
+    }
+
+    public function rejectRemise($id, Request $request)
+    {
+        $rattachement = $this->service->getOrFail($id);
+        $this->service->ensureRemisePending($rattachement);
+
+        $motif = $request->motif;
+
+        if ($motif === 'autre' && !empty($request->autreMotif)) {
+            $motif = $request->autreMotif;
+        }
+
+        try {
+            $this->workflow->rejectRemise($rattachement);
+
+            $this->mailer->sendRemiseRejete($rattachement, $motif);
+
+            return back()->with('success', 'Dossier de remise rejeté avec succès !');
+        } catch (\Throwable $e) {
+            Log::error('Erreur rejet remise rattachement', [
+                'id' => $id,
+                'message' => $e->getMessage(),
+            ]);
+
+            return back()->with('error', 'Une erreur est survenue lors du rejet.');
+        }
     }
 }

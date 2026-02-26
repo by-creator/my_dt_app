@@ -12,9 +12,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($remises as $remise)
+            @foreach ($remisesTraitees as $remise)
                 <tr>
-                    <td>{{ optional($remise->created_at)->format('d/m/Y') }}</td>
+                    <td>{{ optional($remise->created_at)->format('d/m/Y H:i') }}</td>
                     <td>{{ $remise->nom }} {{ $remise->prenom }}</td>
                     <td>{{ $remise->email }}</td>
                     <td>{{ $remise->bl }}</td>

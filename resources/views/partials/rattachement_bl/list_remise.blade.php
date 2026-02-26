@@ -18,12 +18,12 @@
             {{-- 📑 Pagination --}}
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <div class="small text-muted">
-                    Affichage de {{ $remises->firstItem() }} à {{ $remises->lastItem() }}
-                    sur {{ $remises->total() }} résultats
+                    Affichage de {{ $remisesTraitees->firstItem() }} à {{ $remisesTraitees->lastItem() }}
+                    sur {{ $remisesTraitees->total() }} résultats
                 </div>
 
                 <div>
-                    {{ $remises->links() }}
+                    {{ $remisesTraitees->links() }}
                 </div>
             </div>
 

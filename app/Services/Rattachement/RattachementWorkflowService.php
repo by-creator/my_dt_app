@@ -32,4 +32,12 @@ class RattachementWorkflowService
 
         $rattachement->save();
     }
+
+    public function rejectRemise(RattachementBl $rattachement): void
+    {
+        $rattachement->user_id = Auth::id();
+        $rattachement->statut = StatutDossier::REMISE_REJETE;
+
+        $rattachement->save();
+    }
 }

@@ -16,24 +16,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rattachement_remises as $rattachement_remise)
+                    @foreach ($remisesAValider as $remise)
                         <tr>
-                            <td>{{ $rattachement_remise->created_at_date_formatted ?? '—' }}</td>
-                            <td>{{ $rattachement_remise->nom }} {{ $rattachement_remise->prenom }}</td>
-                            <td>{{ $rattachement_remise->email }}</td>
-                            <td>{{ $rattachement_remise->bl }}</td>
-                            <td>{{ $rattachement_remise->statut }}</td>
+                            <td>{{ $remise->created_at_date_formatted ?? '—' }}</td>
+                            <td>{{ $remise->nom }} {{ $remise->prenom }}</td>
+                            <td>{{ $remise->email }}</td>
+                            <td>{{ $remise->bl }}</td>
+                            <td>{{ $remise->statut }}</td>
                             <td class="d-flex gap-2">
                                 <button type="button" class="btn btn-sm btn-outline-primary me-2 btn-validate"
-                                    data-id="{{ $rattachement_remise->id }}"
-                                    data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
+                                    data-id="{{ $remise->id }}"
+                                    data-email="{{ $remise->email }}" data-bs-toggle="modal"
                                     data-bs-target="#valideModal">
                                     <i class="fa-solid fa-check-to-slot"></i> Valider
                                 </button>
 
                                 <button type="button" class="btn btn-sm btn-outline-danger me-2 btn-reject"
-                                    data-id="{{ $rattachement_remise->id }}"
-                                    data-email="{{ $rattachement_remise->email }}" data-bs-toggle="modal"
+                                    data-id="{{ $remise->id }}"
+                                    data-email="{{ $remise->email }}" data-bs-toggle="modal"
                                     data-bs-target="#rejetModal">
                                     <i class="fa-solid fa-square-xmark"></i> Rejeter
                                 </button>
@@ -89,9 +89,9 @@
                                 </div>
                             @endif
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i>
+                                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-check-to-slot"></i>
                                     Oui</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
                                         class="fa-solid fa-square-xmark"></i> Non</button>
                             </div>
                         </form>
@@ -142,7 +142,8 @@
                                 <option value="" disabled selected>
                                     -- Sélectionnez le motif du refus --
                                 </option>
-                                <option value="Le débarquement n'est pas encore effectif">La documentation n'est pas
+                                <option value="La documentation n'est pas
+                                    valide">La documentation n'est pas
                                     valide</option>
                                 <option value="autre">Autre motif</option>
                             </select>
@@ -157,9 +158,9 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check-to-slot"></i>
+                            <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-check-to-slot"></i>
                                 Oui</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i
                                     class="fa-solid fa-square-xmark"></i> Non</button>
                         </div>
                     </form>
