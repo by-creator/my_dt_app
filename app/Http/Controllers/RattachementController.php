@@ -187,24 +187,53 @@ class RattachementController extends Controller
         }
     }
 
-    public function validateRemise($id)
+    public function validateRemise($id, Request $request)
     {
         $rattachement = $this->service->getOrFail($id);
         $this->service->ensureRemisePending($rattachement);
 
-        try {
-            //$this->workflow->validateRemise($rattachement);
+        $user = Auth::user();
 
-            return back()->with('success', 'Dossier de remise validé avec succès !');
+        try {
+
+            // ✅ CAS 1 : FACTURATION
+            if ($user->role->name === 'FACTURATION') {
+
+                $rattachement->statut = StatutDossier::REMISE_EN_ATTENTE_VALIDATION_DIRECTION;
+                $rattachement->user_id = $user->id;
+                $rattachement->save();
+
+                return back()->with('valide', 'Remise transmise à la Direction pour validation.');
+            }
+
+            // ✅ CAS 2 : DIRECTION GENERALE
+            if ($user->role->name === 'DIRECTION_GENERALE') {
+
+                $request->validate([
+                    'pourcentage' => 'required|numeric|min:0|max:100'
+                ]);
+
+                $pourcentage = $request->pourcentage;
+
+                // Workflow
+                $this->workflow->validateRemise($rattachement);
+
+                // Envoi mail
+                $this->mailer->sendRemiseValide($rattachement, $pourcentage);
+
+                return back()->with('valide', 'Remise validée et email envoyé.');
+            }
+
+            abort(403);
         } catch (\Throwable $e) {
-            Log::error('Erreur validation remise rattachement', [
+
+            Log::error('Erreur validation remise', [
                 'id' => $id,
                 'message' => $e->getMessage(),
             ]);
 
-            return back()->with('error', 'Une erreur est survenue lors de la validation.');
+            return back()->with('error', 'Une erreur est survenue.');
         }
-        return back()->with('success', 'Dossier de remise validé avec succès !');
     }
 
     public function rejectRemise($id, Request $request)
