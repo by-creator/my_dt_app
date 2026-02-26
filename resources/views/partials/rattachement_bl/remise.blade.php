@@ -8,7 +8,7 @@
                 <thead>
                     <tr>
                         <th>Date & Heure</th>
-                        <th>Nom & Prénom</th>
+                        <th>Client</th>
                         <th>Email</th>
                         <th>BL</th>
                         <th>Statut</th>
