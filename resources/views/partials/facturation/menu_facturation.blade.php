@@ -13,7 +13,27 @@
         </li>
     </ul>
 </li>
-
+<li class="sidebar-item  has-sub">
+    <a href="#" class='sidebar-link'>
+        <i class="fa-solid fa-folder"></i>
+        <span>Unify</span>
+    </a>
+    <ul class="submenu">
+        <li class="submenu-item">
+            <a class='sidebar-link' href="{{ route('unify.index') }}"><i class="fa-solid fa-clipboard"></i> Formulaire Unify</a>
+        </li>
+        <li class="submenu-item ">
+            <a class='sidebar-link' href="{{ route('ipaki.list') }}"><i class="fa-solid fa-list"></i> Liste tiers</a>
+        </li>
+        <li class="submenu-item ">
+            <a class='sidebar-link' href="{{ route('unify.tutorial') }}"><i class="fa-solid fa-circle-info"></i> Tutoriel Unify</a>
+        </li>
+        <li class="submenu-item ">
+            <a class='sidebar-link' href="{{ route('ipaki.admin') }}"><i class="fa-solid fa-toolbox"></i> Admin</a>
+        </li>
+    </ul>
+</li>
+<!--
 <li class="sidebar-item  has-sub">
     <a href="#" class='sidebar-link'>
         <i class="fa-solid fa-folder"></i>
@@ -81,7 +101,7 @@
         <i class="fa-solid fa-circle-info"></i>
         <span>Comment ça marche ?</span>
     </a>
-</li>
+</li>-->
 @endif
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('rattachement.index_remise') }}"class='sidebar-link'>
