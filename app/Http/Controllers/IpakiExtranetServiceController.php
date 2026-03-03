@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Mail;
 
 class IpakiExtranetServiceController extends Controller
 {
+    public function dematerialisation()
+    {   
+        return view('ies.dematerialisation');
+    }
+    
     public function validation()
     {
         $user = Auth::user();
