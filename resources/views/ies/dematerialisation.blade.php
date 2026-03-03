@@ -109,6 +109,23 @@
                 height: 120px;
             }
         }
+
+        /* Force toutes les cartes à avoir la même hauteur */
+        .food-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            /* Permet de remplir la hauteur de la colonne parent */
+        }
+
+        /* Body de la carte prend le reste de l'espace pour que l'image reste en haut */
+        .food-card .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Permet de séparer titre et texte du bas si nécessaire */
+        }
     </style>
 </head>
 
@@ -144,21 +161,23 @@
 
 
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url('#') }}" class="card food-card text-decoration-none">
+                <a href="{{ url('ies/index-validation') }}" class="card food-card text-decoration-none">
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/demande_validation.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de rattachement à votre maison de transit</h6>
+                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de rattachement à votre
+                            maison de transit</h6>
                     </div>
                 </a>
             </div>
 
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url('#') }}" class="card food-card text-decoration-none">
+                <a href="{{ url('https://ies.aglgroup.com/dkrp/login') }}" class="card food-card text-decoration-none">
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/facturation.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Générez vos factures proforma et factures définitives</h6>
+                        <h6 class="card-title text-capitalize text-dark">Générez vos factures proforma et factures
+                            définitives</h6>
                     </div>
                 </a>
             </div>
@@ -168,7 +187,8 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/paiement.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Payez vos factures via les opérateurs Wave / Yass / Orange Money</h6>
+                        <h6 class="card-title text-capitalize text-dark">Payez vos factures via les opérateurs Wave /
+                            Yass / Orange Money</h6>
                     </div>
                 </a>
             </div>
@@ -178,7 +198,8 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/demande_remise.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de remise et recevez une réduction</h6>
+                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de remise et recevez une
+                            réduction</h6>
                     </div>
                 </a>
             </div>

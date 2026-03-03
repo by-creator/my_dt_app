@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DossierFacturationController;
 use App\Http\Controllers\IpakiExtranetServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get('/dematerialisation', [IpakiExtranetServiceController::class, 'dematerialisation'])->name('dematerialisation');
+Route::get('/ies/dematerialisation', [IpakiExtranetServiceController::class, 'dematerialisation'])->name('ies.dematerialisation');
+
+ Route::get('ies/index-validation', [DossierFacturationController::class, 'indexValidation'])->name('dossier_facturation.validation-index');
+    Route::get('ies/index-remise', [DossierFacturationController::class, 'indexRemise'])->name('dossier_facturation.remise-index');

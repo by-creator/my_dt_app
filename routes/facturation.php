@@ -36,8 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dossier-facturation', [DossierFacturationController::class, 'index'])->name('dossier_facturation.index');
     Route::post('/dossier-facturation/store', [DossierFacturationController::class, 'store'])->name('dossier_facturation.store');
 
-    Route::get('dossier-facturation/index-validation', [DossierFacturationController::class, 'indexValidation'])->name('dossier_facturation.validation-index');
-    Route::get('dossier-facturation/index-remise', [DossierFacturationController::class, 'indexRemise'])->name('dossier_facturation.remise-index');
+
     Route::get('dossier-facturation/index-paiement', [DossierFacturationController::class, 'indexPaiement'])->name('dossier_facturation.paiement-index');
 
     Route::get('dossier-facturation/index-tuto-video', [DossierFacturationController::class, 'indexTutoVideo'])->name('dossier_facturation.tuto-video-index');
@@ -100,3 +99,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/dossier-facturation/export', [DossierFacturationController::class, 'export'])->name('dossier_facturation.export');
 
 });
+
+   
