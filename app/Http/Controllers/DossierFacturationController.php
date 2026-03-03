@@ -31,9 +31,7 @@ class DossierFacturationController extends Controller
     ) {}
 
     public function index() { return view('dossier_facturation.form'); }
-    public function indexValidation() { return view('dossier_facturation.validation'); }
-    public function indexPaiement() { return view('dossier_facturation.paiement'); }
-    public function indexRemise() { return view('dossier_facturation.remise'); }
+    
 
     public function indexTutoVideo()
     {

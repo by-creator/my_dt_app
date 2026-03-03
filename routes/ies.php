@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DematController;
 use App\Http\Controllers\DossierFacturationController;
 use App\Http\Controllers\IpakiExtranetServiceController;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +22,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/ies/dematerialisation', [IpakiExtranetServiceController::class, 'dematerialisation'])->name('ies.dematerialisation');
 
- Route::get('ies/index-validation', [DossierFacturationController::class, 'indexValidation'])->name('dossier_facturation.validation-index');
-    Route::get('ies/index-remise', [DossierFacturationController::class, 'indexRemise'])->name('dossier_facturation.remise-index');
+Route::get('ies/index-validation', [DematController::class, 'indexValidation'])->name('ies.validation-index');
+Route::get('ies/index-remise', [DematController::class, 'indexRemise'])->name('ies.remise-index');
+Route::post('/ies/remise', [DematController::class, 'remise'])->name('ies.remise');

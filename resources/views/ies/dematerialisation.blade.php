@@ -194,7 +194,7 @@
             </div>
 
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url('#') }}" class="card food-card text-decoration-none">
+                <a href="{{ url('ies/index-remise') }}" class="card food-card text-decoration-none">
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/demande_remise.png') }}"
                         class="card-img-top">
                     <div class="card-body">

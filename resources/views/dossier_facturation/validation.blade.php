@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    @include('partials.dashboard.head')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire de validation</title>
@@ -10,6 +12,12 @@
 
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.8.20/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.8.20/dist/sweetalert2.all.min.js"></script>
 
     <style>
         /* Corps de page */
@@ -24,7 +32,7 @@
             background: #fff;
             border-radius: 20px;
             padding: 40px 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             max-width: 900px;
             margin: 50px auto;
         }
@@ -40,7 +48,7 @@
         /* Titres */
         .premium-card h3 {
             margin-bottom: 20px;
-            color: #0d6efd;
+            color: #555;
             text-align: center;
         }
 
@@ -59,7 +67,7 @@
 
         /* Bouton gradient */
         .btn-gradient {
-            background: linear-gradient(135deg,#0d6efd,#3d8bfd);
+            background: linear-gradient(135deg, #0d6efd, #3d8bfd);
             border: none;
             color: white;
             font-weight: 600;
@@ -71,7 +79,7 @@
 
         .btn-gradient:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         /* Labels */
@@ -91,7 +99,7 @@
         }
 
         /* Responsive cards */
-        @media(max-width:768px){
+        @media(max-width:768px) {
             .premium-card {
                 padding: 30px 20px;
                 margin: 30px 15px;
@@ -99,72 +107,103 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="premium-card">
-    <h3>Formulaire de validation</h3>
+    <div class="premium-card">
 
-    <!-- Image hero -->
-    <img src="{{asset('templates/site/images/hero_12.jpeg')}}" alt="Image hero" class="img-fluid">
+        <a href="{{ url("ies/dematerialisation") }}" class="btn btn-primary btn-sm">
+            ← Retour
+        </a>
+        <br>
+        <br>
+        <h3> <u> Formulaire de demande de validation </u></h3>
+        <!-- Image hero -->
+        <img src="{{ asset('templates/site/images/hero_12.jpeg') }}" width="100%" alt="Image hero" class="img-fluid">
 
-    <!-- Formulaire -->
-    <form id="validationForm" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="mb-3">
-            <label for="nom">Nom</label>
-            <input type="text" class="form-control text-center" id="nom" name="nom" placeholder="Votre nom" required>
-        </div>
+        <!-- Formulaire -->
+        <form id="validationForm" method="POST" action="{{ route('demat.validation') }}" enctype="multipart/form-data">
+            @csrf
 
-        <div class="mb-3">
-            <label for="prenom">Prénom</label>
-            <input type="text" class="form-control text-center" id="prenom" name="prenom" placeholder="Votre prénom" required>
-        </div>
 
-        <div class="mb-3">
-            <label for="email">Email</label>
-            <input type="email" class="form-control text-center" id="email" name="email" placeholder="Votre email" required>
-        </div>
+            <div class="mb-3">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control text-center" id="nom" name="nom"
+                    placeholder="Votre nom" required>
+            </div>
 
-        <div class="mb-3">
-            <label for="fichier">Fichier à joindre</label>
-            <input type="file" class="form-control" id="fichier" name="fichier" required>
-        </div>
+            <div class="mb-3">
+                <label for="prenom">Prénom</label>
+                <input type="text" class="form-control text-center" id="prenom" name="prenom"
+                    placeholder="Votre prénom" required>
+            </div>
 
-        <button type="submit" class="btn btn-gradient">ENVOYER LA DEMANDE DE VALIDATION</button>
-    </form>
-</div>
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <input type="email" class="form-control text-center" id="email" name="email"
+                    placeholder="Votre email" required>
+            </div>
 
-<footer>
-    &copy; 2026 MonSite. Tous droits réservés.
-</footer>
+            <div class="mb-3">
+                <label for="bl">Numéro de BL</label>
+                <input type="text" class="form-control text-center" id="bl" name="bl"
+                    placeholder="Votre numéro de BL" required>
+            </div>
 
-<!-- Bootstrap 5 JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="mb-3">
+                <label for="compte">Maison de transit</label>
+                <input type="text" class="form-control text-center" id="compte" name="compte"
+                    placeholder="Votre maison de transit" required>
+            </div>
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.8.20/dist/sweetalert2.all.min.js"></script>
+            <div class="mb-3">
+                <label for="bl">BL</label>
+                <input type="file" class="form-control" id="bl" name="documents[]" multiple required>
+            </div>
 
-<script>
-    // SweetAlert avant soumission
-    const form = document.getElementById('validationForm');
-    form.addEventListener('submit', function(e){
-        e.preventDefault(); // Empêche envoi direct
+            <div class="mb-3">
+                <label for="bad_shipping">BAD SHIPPING</label>
+                <input type="file" class="form-control" id="bad_shipping" name="documents[]" multiple required>
+            </div>
 
-        Swal.fire({
-            title: 'Confirmer l’envoi',
-            text: "Voulez-vous envoyer cette demande de validation ?",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Oui, envoyer',
-            cancelButtonText: 'Annuler',
-            reverseButtons: true
-        }).then((result) => {
-            if(result.isConfirmed){
-                form.submit(); // Soumission réelle
-            }
-        });
-    });
-</script>
+            <div class="mb-3">
+                <label for="declaration">DECLARATION</label>
+                <input type="file" class="form-control" id="declaration" name="documents[]" multiple required>
+            </div>
+
+            <button type="submit" class="btn btn-gradient">ENVOYER LA DEMANDE DE VALIDATION</button>
+        </form>
+        <!-- Après le formulaire et avant </body> -->
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Information',
+                    text: "{{ session('success') }}",
+                    showConfirmButton: true
+                });
+            </script>
+        @elseif (session('info'))
+            <script>
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Information',
+                    text: "{{ session('info') }}",
+                    showConfirmButton: true
+                });
+            </script>
+        @endif
+    </div>
+
+    <footer>
+        &copy; 2026 MonSite. Tous droits réservés.
+    </footer>
+
+
+    @include('partials.dashboard.script')
+
+
 
 </body>
+
 </html>

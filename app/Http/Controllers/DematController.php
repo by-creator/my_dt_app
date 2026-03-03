@@ -21,6 +21,10 @@ class DematController extends Controller
         return redirect()->route('login');
     }
 
+    public function indexValidation() { return view('dossier_facturation.validation'); }
+    public function indexPaiement() { return view('dossier_facturation.paiement'); }
+    public function indexRemise() { return view('dossier_facturation.remise'); }
+
     public function validation(DematValidationRequest $request)
     {
         try {
