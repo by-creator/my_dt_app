@@ -17,7 +17,8 @@ class DematMailerService
     private array $destinataires_remise = [
         //'sn004-proforma@dakar-terminal.com',
         //'sn004-facturation@dakar-terminal.com',
-        'noreplysitedt@gmail.com'
+        'noreplysitedt@gmail.com',
+        'iosid242@gmail.com'
     ];
 
     public function send(array $data, array $files): void
