@@ -152,7 +152,7 @@
             </div>
 
             <h2 class="fw-bold">Tout faire à distance</h2>
-            <p>Bienvenu(e) dans notre service de dématérialisation de nos activités</p>
+            <p>Bienvenu(e) sur notre plateforme</p>
         </div>
 
 
