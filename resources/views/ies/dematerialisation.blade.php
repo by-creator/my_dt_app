@@ -20,7 +20,7 @@
         .menu-hero {
             background: linear-gradient(135deg, #0d6efd, #3d8bfd);
             color: white;
-            padding: 40px 20px 50px 20px;
+            padding: 40px 20px 10px 20px;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
             text-align: center;
@@ -183,7 +183,7 @@
             </div>
 
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url('#') }}" class="card food-card text-decoration-none">
+                <a href="{{ url('https://mytouchpoint.net/dakar_terminal') }}" class="card food-card text-decoration-none">
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/paiement.png') }}"
                         class="card-img-top">
                     <div class="card-body">
