@@ -7,11 +7,11 @@
     <title>Dakar-Terminal</title>
 
     <link rel="icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -183,14 +183,15 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/facturation.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Générez vos factures proforma et factures
-                            définitives</h6>
+                        <h6 class="card-title text-capitalize text-dark">Générez vos factures proforma / factures
+                            définitives / BAD</h6>
                     </div>
                 </a>
             </div>
 
             <div class="col-6 col-md-4 col-lg-3">
-                <a href="{{ url('https://mytouchpoint.net/dakar_terminal') }}" class="card food-card text-decoration-none">
+                <a href="{{ url('https://mytouchpoint.net/dakar_terminal') }}"
+                    class="card food-card text-decoration-none">
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/paiement.png') }}"
                         class="card-img-top">
                     <div class="card-body">
@@ -217,7 +218,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-   
+
 
 </body>
 
