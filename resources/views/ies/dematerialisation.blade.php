@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dakar-Terminal</title>
 
-    @include("partials.dashboard.head")
+    <link rel="icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="{{ asset('templates/fiche/assets/img/logo.png') }}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -212,7 +217,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    @include("partials.dashboard.script")
+   
 
 </body>
 
