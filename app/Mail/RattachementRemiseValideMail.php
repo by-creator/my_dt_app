@@ -13,16 +13,17 @@ class RattachementRemiseValideMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $bl, $nom, $prenom, $pourcentage;
+    public $bl, $nom, $prenom, $date, $pourcentage;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($bl, $nom, $prenom, $pourcentage)
+    public function __construct($bl, $nom, $prenom, $date, $pourcentage)
     {
         $this->bl = $bl;
         $this->nom = $nom;
         $this->prenom = $prenom;
+        $this->date = $date;
         $this->pourcentage = $pourcentage;
     }
 

@@ -157,13 +157,23 @@
             </div>
 
             <div class="mb-3">
-                <label for="facture">FACTURE</label>
-                <input type="file" class="form-control" id="facture" name="documents[]" multiple required>
+                <label for="demande">DEMANDE MANUSCRITE</label>
+                <input type="file" class="form-control" id="demande" name="documents[]" multiple required>
             </div>
 
             <div class="mb-3">
                 <label for="bad_shipping">BAD SHIPPING</label>
                 <input type="file" class="form-control" id="bad_shipping" name="documents[]" multiple required>
+            </div>
+
+             <div class="mb-3">
+                <label for="bl">BL</label>
+                <input type="file" class="form-control" id="bl" name="documents[]" multiple required>
+            </div>
+
+            <div class="mb-3">
+                <label for="facture">FACTURE</label>
+                <input type="file" class="form-control" id="facture" name="documents[]" multiple required>
             </div>
 
             <div class="mb-3">

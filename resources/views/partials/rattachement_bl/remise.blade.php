@@ -80,6 +80,13 @@
                             <input type="hidden" id="sendRemiseId" name="id">
                             <input type="hidden" id="sendRemiseEmail" name="email">
                             @if (Auth::user()->role->name == 'ADMIN' || Auth::user()->role->name == 'DIRECTION_GENERALE')
+                            <div class="mb-3">
+                                    <label for="pourcentage" class="form-label">
+                                        Date de validité de la remise
+                                    </label>
+                                    <input type="date" name="date" id="date" class="form-control"
+                                        min="0" max="100" step="0.01" required>
+                                </div>
                                 <div class="mb-3">
                                     <label for="pourcentage" class="form-label">
                                         Pourcentage de remise (%)

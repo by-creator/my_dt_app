@@ -5,13 +5,15 @@
          alt="Logo" width="150" style="margin-bottom: 20px;">
 </p>
 
-# Demande de remise validée
+# Demande de remise validée ✅
 
 Bonjour {{ $prenom }} {{ $nom }},
 
 Votre demande de remise pour le BL **{{ $bl }}** a été validée.
 
-✅ **Pourcentage accordé : {{ $pourcentage }} %**
+**Pourcentage accordé : {{ $pourcentage }} %**
+
+**Date de validité : {{ $date->format('d/m/Y') }}**
 
 Merci pour votre confiance.
 

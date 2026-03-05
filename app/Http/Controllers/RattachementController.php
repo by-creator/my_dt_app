@@ -12,6 +12,7 @@ use App\Services\Rattachement\{
     RattachementWorkflowService,
     RattachementMailerService
 };
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -211,16 +212,18 @@ class RattachementController extends Controller
             if ($user->role->name === 'DIRECTION_GENERALE') {
 
                 $request->validate([
+                    'date' => 'required|date',
                     'pourcentage' => 'required|numeric|min:0|max:100'
                 ]);
 
+                $date = Carbon::parse($request->date);
                 $pourcentage = $request->pourcentage;
 
                 // Workflow
                 $this->workflow->validateRemise($rattachement);
 
                 // Envoi mail
-                $this->mailer->sendRemiseValide($rattachement, $pourcentage);
+                $this->mailer->sendRemiseValide($rattachement, $date, $pourcentage);
 
                 return back()->with('valide', 'Remise validée et email envoyé.');
             }

@@ -59,7 +59,7 @@ class RattachementMailerService
             );
     }
 
-    public function sendRemiseValide($rattachement, $pourcentage)
+    public function sendRemiseValide($rattachement, $date, $pourcentage)
     {
         Mail::to($rattachement->email)
             ->cc($this->cc_remise)
@@ -67,6 +67,7 @@ class RattachementMailerService
                 $rattachement->bl,
                 $rattachement->nom,
                 $rattachement->prenom,
+                $date,
                 $pourcentage
             ));
     }
