@@ -15,7 +15,9 @@ Route::post('/login', [LoginController::class, 'store'])
     ->middleware(['guest'])
     ->name('login.custom.store');
 
-Route::get('/demat', [DematController::class, 'index'])->name('demat.index');
+//Route::get('/demat', [DematController::class, 'index'])->name('demat.index');
+Route::get('/demat', [IpakiExtranetServiceController::class, 'dematerialisation'])->name('ies.dematerialisation');
+
 
 
 Route::post('/demat/send-validation', [IpakiExtranetServiceController::class, 'sendValidation'])->name('ies.send-validation');
