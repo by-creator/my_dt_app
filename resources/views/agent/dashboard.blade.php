@@ -1,10 +1,4 @@
-@extends('partials.app')
-
-@push('head')
-    <meta name="pusher-key" content="{{ config('broadcasting.connections.pusher.key') }}">
-    <meta name="pusher-cluster" content="{{ config('broadcasting.connections.pusher.options.cluster') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-@endpush
+@extends('layouts.agent')
 
 @section('content')
     <style>
