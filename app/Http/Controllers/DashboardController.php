@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DossierFacturation;
 use App\Models\RattachementBl;
 use App\Models\Agent;
+use App\Models\Service;
 use App\Models\Ticket;
 use App\Exports\TicketsDetailExport;
 use Carbon\Carbon;
@@ -303,5 +304,18 @@ class DashboardController extends Controller
             new TicketsDetailExport($request),
             "{$date}_tickets_detail.xlsx"
         );
+    }
+
+    public function fileAttenteOverview()
+    {
+        $services = Service::withCount([
+            'tickets as en_attente' => fn($q) => $q->where('statut', Ticket::EN_ATTENTE),
+            'tickets as en_cours'   => fn($q) => $q->where('statut', Ticket::EN_COURS),
+            'tickets as termine'    => fn($q) => $q->where('statut', Ticket::TERMINE),
+            'tickets as incomplet'  => fn($q) => $q->where('statut', Ticket::INCOMPLET),
+            'tickets as absent'     => fn($q) => $q->where('statut', Ticket::ABSENT),
+        ])->get();
+
+        return view('file_attente.overview', compact('services'));
     }
 }

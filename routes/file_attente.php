@@ -71,3 +71,7 @@ Route::get('/gfa/tickets-detail',
 Route::get('/gfa/tickets-detail/export',
     [DashboardController::class, 'gfaExportTicketsDetail']
 )->name('gfa.tickets-detail.export');
+
+Route::get('/file-attente/overview',
+    [DashboardController::class, 'fileAttenteOverview']
+)->name('file-attente.overview');

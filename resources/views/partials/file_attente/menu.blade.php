@@ -1,5 +1,12 @@
 <li class="sidebar-title">File d'attente</li>
 
+<li class="sidebar-item {{ request()->routeIs('file-attente.overview') ? 'active' : '' }}">
+    <a href="{{ route('file-attente.overview') }}" class="sidebar-link">
+        <i class="fa-solid fa-chart-bar"></i>
+        <span>Vue globale</span>
+    </a>
+</li>
+
 <li class="sidebar-item {{ request()->routeIs('agents.*') ? 'active' : '' }}">
     <a href="{{ route('agents.index') }}" class="sidebar-link">
         <i class="fa-solid fa-user-tie"></i>
