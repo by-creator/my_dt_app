@@ -1,4 +1,4 @@
-import Ably from "ably";
+import Pusher from "pusher-js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🟢 [AGENT] Dashboard ready");
@@ -14,13 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const agentId   = window.AGENT_CONFIG.agentId;
     const serviceId = window.AGENT_CONFIG.serviceId;
 
-    /* ── Ably ─────────────────────────────────────────────────── */
-    const ablyKey = document.querySelector('meta[name="ably-key"]')?.content;
-    const client  = new Ably.Realtime({ key: ablyKey });
-    const channel = client.channels.get(`agent.${agentId}`);
+    /* ── Pusher ───────────────────────────────────────────────── */
+    const pusherKey     = document.querySelector('meta[name="pusher-key"]')?.content;
+    const pusherCluster = document.querySelector('meta[name="pusher-cluster"]')?.content;
 
-    channel.subscribe("TicketCalled", (msg) => {
-        const data = msg.data;
+    const pusher  = new Pusher(pusherKey, { cluster: pusherCluster, forceTLS: true });
+    const channel = pusher.subscribe(`agent.${agentId}`);
+
+    channel.bind("TicketCalled", (data) => {
         console.log("📣 [AGENT] TicketCalled", data);
         if (data.agent !== agentId) return;
 
@@ -33,16 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    channel.subscribe("TicketCreated", (msg) => {
-        const data = msg.data;
+    channel.bind("TicketCreated", (data) => {
         if (data.service_id !== serviceId) return;
         if (waitingCountEl) {
             waitingCountEl.innerText = Number(waitingCountEl.innerText) + 1;
         }
     });
 
-    channel.subscribe("TicketClosed", (msg) => {
-        const data = msg.data;
+    channel.bind("TicketClosed", (data) => {
         if (!currentTicketId || data.ticket_id !== Number(currentTicketId)) return;
         currentTicketId = null;
         currentClientEl.innerText = "—";

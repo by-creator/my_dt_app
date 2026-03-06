@@ -1,7 +1,7 @@
-import Ably from "ably";
+import Pusher from "pusher-js";
 
-let audioUnlocked   = false;
-let speechUnlocked  = false;
+let audioUnlocked  = false;
+let speechUnlocked = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("🟢 [SCREEN] Ready");
@@ -31,13 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
         audio.play().catch(err => console.warn("🔴 Ding bloqué", err));
     };
 
-    /* ── Ably ──────────────────────────────────────────────────── */
-    const ablyKey = document.querySelector('meta[name="ably-key"]')?.content;
-    const client  = new Ably.Realtime({ key: ablyKey });
-    const channel = client.channels.get("tickets");
+    /* ── Pusher ──────────────────────────────────────────────── */
+    const pusherKey     = document.querySelector('meta[name="pusher-key"]')?.content;
+    const pusherCluster = document.querySelector('meta[name="pusher-cluster"]')?.content;
 
-    channel.subscribe("TicketCalled", (msg) => {
-        const data = msg.data;
+    const pusher  = new Pusher(pusherKey, { cluster: pusherCluster, forceTLS: true });
+    const channel = pusher.subscribe("tickets");
+
+    channel.bind("TicketCalled", (data) => {
         console.log("📣 TicketCalled", data);
         agentLine.innerText  = `Agent — Guichet ${data.agent}`;
         clientLine.innerText = `Client — ${data.code}`;
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         playDingThenSpeak(`Le client ${readableCode}. Veuillez vous présenter au guichet ${data.agent}.`);
     });
 
-    channel.subscribe("TicketClosed", () => {
+    channel.bind("TicketClosed", () => {
         agentLine.innerText  = "Agent —";
         clientLine.innerText = "Client —";
     });
