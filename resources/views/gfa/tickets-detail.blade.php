@@ -1,5 +1,9 @@
 @extends('partials.app')
 
+@section('sidebar-menu')
+    @include('partials.file_attente.menu')
+@endsection
+
 @section('content')
     <style>
         body { background: #f5f7fb; }
