@@ -1,231 +1,242 @@
-@extends('layouts.agent')
+@extends('partials.app')
 
 @section('content')
-    <style>
-        .agent-wrapper {
-            background: #f5f7fb;
-            padding: 30px;
-            min-height: 100vh;
-        }
+<style>
+    .agent-wrapper {
+        background: #f5f7fb;
+        padding: 30px;
+        min-height: 100vh;
+    }
 
-        .main-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, .05);
-            margin-bottom: 30px;
-        }
+    .main-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 15px 30px rgba(0,0,0,.05);
+        margin-bottom: 30px;
+    }
 
-        .guichet {
-            font-size: 36px;
-            font-weight: 700;
-            color: #1e3a8a;
-        }
+    .guichet-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1e3a8a;
+    }
 
-        .client-current {
-            font-size: 44px;
-            font-weight: 800;
-            margin: 10px 0;
-            color: #1e293b;
-        }
+    .client-current {
+        font-size: 42px;
+        font-weight: 800;
+        margin: 10px 0;
+        color: #1e293b;
+    }
 
-        .sub-info {
-            color: #64748b;
-            font-size: 16px;
-        }
+    .sub-info {
+        color: #64748b;
+        font-size: 16px;
+    }
 
-        .panel {
-            background: #fff;
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
-            height: 100%;
-        }
+    .actions-bar {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
 
-        .panel h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #1e293b;
-        }
+    .actions-bar .btn {
+        min-width: 130px;
+        padding: 12px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 10px;
+    }
 
-        .tabs {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #e5e7eb;
-        }
+    .panel {
+        background: #fff;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.05);
+        height: 100%;
+    }
 
-        .tabs span {
-            padding-bottom: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #64748b;
-        }
+    .panel h4 {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #1e293b;
+    }
 
-        .tabs span.active {
-            color: #1e40af;
-            border-bottom: 3px solid #1e40af;
-        }
+    .tabs {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
 
-        .ticket-btn {
-            background: #4f46e5;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 10px;
-            font-weight: 600;
-            text-decoration: none;
-        }
-    </style>
+    .tabs span {
+        padding-bottom: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        color: #64748b;
+    }
 
-    <div class="agent-wrapper">
+    .tabs span.active {
+        color: #1e40af;
+        border-bottom: 3px solid #1e40af;
+    }
 
-        {{-- HEADER --}}
-        <div class="main-card">
-            <div class="guichet">Guichet N° {{ $agent->id }}</div>
+    .ticket-btn {
+        background: #4f46e5;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        display: inline-block;
+        margin-top: 10px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+</style>
 
-            <div class="client-current">
-                Client en cours :
-                <span id="current-client" data-ticket-id="{{ $currentTicket?->id }}">
-                    {{ $currentTicket?->code ?? '—' }}
-                </span>
-            </div>
+<div id="main" class="agent-wrapper">
 
-            <div class="sub-info">
-                {{ $waitingTickets->count() === 0 ? 'Aucun client en attente' : '' }}
-            </div>
+    {{-- HEADER --}}
+    <div class="main-card">
+        <div class="guichet-title">Guichet N° {{ $agent->id }}</div>
+
+        <div class="client-current">
+            Client en cours :
+            <span id="current-client" data-ticket-id="{{ $currentTicket?->id }}">
+                {{ $currentTicket?->code ?? '—' }}
+            </span>
         </div>
 
-        {{-- ACTIONS --}}
-        <div class="d-flex gap-3 flex-wrap mb-4">
-            <button type="button" class="btn btn-primary agent-action" data-action="call">
-                📣 Suivant
-            </button>
-            <button type="button" class="btn btn-secondary agent-action" data-action="rappel">
-                🔁 Rappel
-            </button>
-            <button type="button" class="btn btn-success agent-action" data-action="termine">
-                ✅ Terminé
-            </button>
-            <button type="button" class="btn btn-warning text-white agent-action" data-action="incomplet">
-                ⚠️ Incomplet
-            </button>
-            <button type="button" class="btn btn-danger agent-action" data-action="absent">
-                🚫 Absent
-            </button>
+        <div class="sub-info">
+            {{ $waitingTickets->count() === 0 ? 'Aucun client en attente' : '' }}
         </div>
-
-        {{-- PANELS --}}
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <div class="panel">
-                    <h4>
-                        CLIENT(S) EN ATTENTE :
-                        <span id="waiting-count">{{ $waitingTickets->count() }}</span>
-                    </h4>
-
-                    <div class="tabs">
-                        <span class="active">Client</span>
-                        <span>Personnel</span>
-                        <span>Rapports</span>
-                    </div>
-
-                    <p>
-                        Pour les clients qui ne peuvent pas scanner,
-                        cliquez sur le bouton ci-dessous :
-                    </p>
-
-                    <a href="{{ route('ticket.create') }}" target="_blank" class="ticket-btn">
-                        TICKET
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <div class="panel">
-                    <h4>Guide d'utilisation</h4>
-                    <ul>
-                        <li><strong>Suivant</strong> : appeler le prochain client</li>
-                        <li><strong>Rappel</strong> : rappeler le client</li>
-                        <li><strong>Incomplet</strong> : dossier incomplet</li>
-                        <li><strong>Terminé</strong> : traitement terminé</li>
-                        <li><strong>Absent</strong> : client absent</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <script src="https://js.pusher.com/8.2/pusher.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const csrf         = document.querySelector('meta[name="csrf-token"]').content;
-            const currentClientEl = document.getElementById("current-client");
-            const waitingCountEl  = document.getElementById("waiting-count");
-            let currentTicketId   = currentClientEl?.dataset.ticketId || null;
+    {{-- ACTIONS --}}
+    <div class="actions-bar">
+        <button type="button" class="btn btn-primary agent-action" data-action="call">
+            📣 Suivant
+        </button>
+        <button type="button" class="btn btn-secondary agent-action" data-action="rappel">
+            🔁 Rappel
+        </button>
+        <button type="button" class="btn btn-success agent-action" data-action="termine">
+            ✅ Terminé
+        </button>
+        <button type="button" class="btn btn-warning text-white agent-action" data-action="incomplet">
+            ⚠️ Incomplet
+        </button>
+        <button type="button" class="btn btn-danger agent-action" data-action="absent">
+            🚫 Absent
+        </button>
+    </div>
 
-            const agentId   = window.AGENT_CONFIG.agentId;
-            const serviceId = window.AGENT_CONFIG.serviceId;
+    {{-- PANELS --}}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="panel">
+                <h4>
+                    CLIENT(S) EN ATTENTE :
+                    <span id="waiting-count">{{ $waitingTickets->count() }}</span>
+                </h4>
 
-            const pusherKey     = document.querySelector('meta[name="pusher-key"]').content;
-            const pusherCluster = document.querySelector('meta[name="pusher-cluster"]').content;
-            const pusher  = new Pusher(pusherKey, { cluster: pusherCluster, forceTLS: true });
-            const channel = pusher.subscribe("agent." + agentId);
+                <div class="tabs">
+                    <span class="active">Client</span>
+                    <span>Personnel</span>
+                    <span>Rapports</span>
+                </div>
 
-            channel.bind("TicketCalled", (data) => {
-                if (data.agent !== agentId) return;
-                currentTicketId = data.id;
-                currentClientEl.innerText = data.code;
-                currentClientEl.dataset.ticketId = data.id;
-                if (waitingCountEl) waitingCountEl.innerText = Math.max(0, Number(waitingCountEl.innerText) - 1);
-            });
+                <p>Pour les clients qui ne peuvent pas scanner, cliquez sur le bouton ci-dessous :</p>
 
-            channel.bind("TicketCreated", (data) => {
-                if (data.service_id !== serviceId) return;
-                if (waitingCountEl) waitingCountEl.innerText = Number(waitingCountEl.innerText) + 1;
-            });
+                <a href="{{ route('ticket.create') }}" target="_blank" class="ticket-btn">TICKET</a>
+            </div>
+        </div>
 
-            channel.bind("TicketClosed", (data) => {
-                if (!currentTicketId || data.ticket_id !== Number(currentTicketId)) return;
-                currentTicketId = null;
-                currentClientEl.innerText = "—";
-                currentClientEl.dataset.ticketId = "";
-            });
+        <div class="col-md-6 mb-3">
+            <div class="panel">
+                <h4>Guide d'utilisation</h4>
+                <ul>
+                    <li><strong>Suivant</strong> : appeler le prochain client</li>
+                    <li><strong>Rappel</strong> : rappeler le client</li>
+                    <li><strong>Incomplet</strong> : dossier incomplet</li>
+                    <li><strong>Terminé</strong> : traitement terminé</li>
+                    <li><strong>Absent</strong> : client absent</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-            document.addEventListener("click", (e) => {
-                const button = e.target.closest(".agent-action");
-                if (!button) return;
-                const action = button.dataset.action;
-                let url = null;
-                switch (action) {
-                    case "call":    url = window.AGENT_CONFIG.callUrl; break;
-                    case "rappel":
-                        if (!currentTicketId) { alert("Aucun ticket en cours"); return; }
-                        url = window.AGENT_CONFIG.rappelUrl; break;
-                    case "termine": case "incomplet": case "absent":
-                        if (!currentTicketId) { alert("Aucun ticket en cours"); return; }
-                        url = window.AGENT_CONFIG.closeUrlTemplate
-                            .replace("{ticket}", currentTicketId).replace("{status}", action); break;
-                    default: return;
-                }
-                fetch(url, { method: "POST", headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" } })
-                    .then(r => r.json()).then(d => console.log("✅", action, d))
-                    .catch(err => console.error("❌", action, err));
-            });
+</div>
+
+<script src="https://js.pusher.com/8.2/pusher.min.js"></script>
+<script>
+    window.AGENT_CONFIG = {
+        agentId: {{ $agent->id }},
+        serviceId: {{ $agent->service_id }},
+        closeUrlTemplate: "/agent/{{ $agent->id }}/close/{ticket}/{status}",
+        callUrl: "{{ route('agent.call', $agent) }}",
+        rappelUrl: "{{ route('agent.rappel', $agent) }}"
+    };
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const csrf            = document.querySelector('meta[name="csrf-token"]').content;
+        const currentClientEl = document.getElementById("current-client");
+        const waitingCountEl  = document.getElementById("waiting-count");
+        let currentTicketId   = currentClientEl?.dataset.ticketId || null;
+
+        const agentId   = window.AGENT_CONFIG.agentId;
+        const serviceId = window.AGENT_CONFIG.serviceId;
+
+        const pusherKey     = document.querySelector('meta[name="pusher-key"]').content;
+        const pusherCluster = document.querySelector('meta[name="pusher-cluster"]').content;
+        const pusher  = new Pusher(pusherKey, { cluster: pusherCluster, forceTLS: true });
+        const channel = pusher.subscribe("agent." + agentId);
+
+        channel.bind("TicketCalled", (data) => {
+            if (data.agent !== agentId) return;
+            currentTicketId = data.id;
+            currentClientEl.innerText = data.code;
+            currentClientEl.dataset.ticketId = data.id;
+            if (waitingCountEl) waitingCountEl.innerText = Math.max(0, Number(waitingCountEl.innerText) - 1);
         });
-    </script>
 
-    <script>
-        window.AGENT_CONFIG = {
-            agentId: {{ $agent->id }},
-            serviceId: {{ $agent->service_id }},
-            closeUrlTemplate: "/agent/{{ $agent->id }}/close/{ticket}/{status}",
-            callUrl: "{{ route('agent.call', $agent) }}",
-            rappelUrl: "{{ route('agent.rappel', $agent) }}"
-        };
-    </script>
+        channel.bind("TicketCreated", (data) => {
+            if (data.service_id !== serviceId) return;
+            if (waitingCountEl) waitingCountEl.innerText = Number(waitingCountEl.innerText) + 1;
+        });
+
+        channel.bind("TicketClosed", (data) => {
+            if (!currentTicketId || data.ticket_id !== Number(currentTicketId)) return;
+            currentTicketId = null;
+            currentClientEl.innerText = "—";
+            currentClientEl.dataset.ticketId = "";
+        });
+
+        document.addEventListener("click", (e) => {
+            const button = e.target.closest(".agent-action");
+            if (!button) return;
+            const action = button.dataset.action;
+            let url = null;
+            switch (action) {
+                case "call":    url = window.AGENT_CONFIG.callUrl; break;
+                case "rappel":
+                    if (!currentTicketId) { alert("Aucun ticket en cours"); return; }
+                    url = window.AGENT_CONFIG.rappelUrl; break;
+                case "termine": case "incomplet": case "absent":
+                    if (!currentTicketId) { alert("Aucun ticket en cours"); return; }
+                    url = window.AGENT_CONFIG.closeUrlTemplate
+                        .replace("{ticket}", currentTicketId).replace("{status}", action); break;
+                default: return;
+            }
+            fetch(url, { method: "POST", headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" } })
+                .then(r => r.json()).then(d => console.log("✅", action, d))
+                .catch(err => console.error("❌", action, err));
+        });
+    });
+</script>
+
 @endsection
