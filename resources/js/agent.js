@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     channel.bind("TicketCalled", (data) => {
         console.log("📣 [AGENT] TicketCalled", data);
 
-        if (data.agent_id !== agentId) return;
+        if (data.agent !== agentId) return;
 
         currentTicketId = data.id;
         currentClientEl.innerText = data.code;

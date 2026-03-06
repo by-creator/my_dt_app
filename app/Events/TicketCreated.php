@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Agent;
 use App\Models\Ticket;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -15,9 +16,15 @@ class TicketCreated implements ShouldBroadcast
 
     public function __construct(public Ticket $ticket) {}
 
-    public function broadcastOn(): Channel
+    public function broadcastOn(): array
     {
-        return new Channel('tickets');
+        // Canal public pour l'écran + un canal par agent du même service
+        $agentChannels = Agent::where('service_id', $this->ticket->service_id)
+            ->pluck('id')
+            ->map(fn($id) => new Channel("agent.{$id}"))
+            ->all();
+
+        return array_merge([new Channel('tickets')], $agentChannels);
     }
 
     public function broadcastAs(): string

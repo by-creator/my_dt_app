@@ -16,7 +16,8 @@ Route::post('/login', [LoginController::class, 'store'])
     ->name('login.custom.store');
 
 //Route::get('/demat', [DematController::class, 'index'])->name('demat.index');
-Route::get('/demat', [IpakiExtranetServiceController::class, 'dematerialisation'])->name('ies.dematerialisation');
+// Route définie dans ies.php : Route::get('/ies/dematerialisation', ...)->name('ies.dematerialisation')
+Route::get('/demat', [IpakiExtranetServiceController::class, 'dematerialisation']);
 
 
 

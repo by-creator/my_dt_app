@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\GuichetController;
 use App\Http\Controllers\UserAccountController;
 use Illuminate\Support\Facades\Route;
 

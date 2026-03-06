@@ -3,7 +3,7 @@
 use App\Http\Controllers\{
     OrdinateurController,
     ClavierController,
-    SourisControlller,
+    SourisController,
     EcranController,
     StationController,
     TelephoneFixeController,
@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware('auth')->group(function () {
 
-    Route::prefix('souris')->name('souris.')->controller(SourisControlller::class)->group(function () {
+    Route::prefix('souris')->name('souris.')->controller(SourisController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'create')->name('create');
         Route::put('{id}', 'update')->name('update');

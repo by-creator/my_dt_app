@@ -15,9 +15,12 @@ class TicketClosed implements ShouldBroadcast
 
     public function __construct(public Ticket $ticket) {}
 
-    public function broadcastOn(): Channel
+    public function broadcastOn(): array
     {
-        return new Channel('tickets');
+        return [
+            new Channel('tickets'),
+            new Channel('agent.' . $this->ticket->agent_id),
+        ];
     }
 
     public function broadcastAs(): string

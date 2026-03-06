@@ -7,8 +7,6 @@ use App\Http\Controllers\{
     DossierFacturationController,
     DossierFacturationFactureController,
     DossierFacturationProformaController,
-    DossierFacturationRemiseController,
-    GuichetController,
     IpakiExtranetServiceController,
     RattachementController,
 };
