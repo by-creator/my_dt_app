@@ -16,3 +16,11 @@ Schedule::command('rappel:rattachement-bl')
 
 Schedule::command('audit:b2-archive')
     ->dailyAt('23:59');
+
+// GFA – File d'attente
+Schedule::command('tickets:export-and-truncate')
+    ->weekdays()
+    ->dailyAt('17:01');
+
+Schedule::command('app:delete-token')
+    ->everyFiveMinutes();

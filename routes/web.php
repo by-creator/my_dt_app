@@ -39,5 +39,6 @@ require __DIR__.'/planification.php';
 require __DIR__.'/rapport.php';
 require __DIR__.'/informatique.php';
 require __DIR__.'/gfa.php';
-require __DIR__.'/doaune.php';
+require __DIR__.'/douane.php';
 require __DIR__.'/yard.php';
+require __DIR__.'/file_attente.php';
