@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>Écran d'appel clients</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="pusher-key" content="{{ config('broadcasting.connections.pusher.key') }}">
-    <meta name="pusher-cluster" content="{{ config('broadcasting.connections.pusher.options.cluster') }}">
+    <meta name="ably-key" content="{{ config('broadcasting.connections.ably.key') }}">
     <script src="/js/qrcode.min.js"></script>
     <style>
         * { box-sizing: border-box; }
@@ -158,7 +157,7 @@
 
     <audio id="ding" src="/ding.mp3" preload="auto"></audio>
 
-    @vite('resources/js/display.js')
+    @vite('resources/js/queue/screen.js')
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

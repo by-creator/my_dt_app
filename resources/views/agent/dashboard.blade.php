@@ -160,7 +160,7 @@
 
     </div>
 
-    @vite('resources/js/agent.js')
+    @vite('resources/js/queue/agent.js')
 
     <script>
         window.AGENT_CONFIG = {

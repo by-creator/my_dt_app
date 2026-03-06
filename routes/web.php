@@ -43,3 +43,4 @@ require __DIR__.'/gfa.php';
 require __DIR__.'/douane.php';
 require __DIR__.'/yard.php';
 require __DIR__.'/file_attente.php';
+require __DIR__.'/edi.php';
