@@ -37,7 +37,7 @@
     .stat-card.absent   { border-color: #ef4444; }
 </style>
 
-<div class="overview-wrapper">
+<div id="main" class="overview-wrapper">
     <h1>📊 Informations générales</h1>
 
     @forelse($services as $service)
