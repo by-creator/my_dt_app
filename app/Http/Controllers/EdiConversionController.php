@@ -132,12 +132,26 @@ class EdiConversionController extends Controller
             $outputName   = Str::slug($originalName) . '_' . now()->format('Ymd_His') . '.xlsx';
             $outputPath   = storage_path("app/edi_tmp/{$outputName}");
 
-            $headers = $this->parser->getHeaders();
-            $this->xlsxExporter->export($records, $headers, $outputPath);
+            $xlsxHeaders = $this->parser->getHeaders();
+            $this->xlsxExporter->export($records, $xlsxHeaders, $outputPath);
 
-            return response()->download($outputPath, $outputName, [
-                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            ])->deleteFileAfterSend(true);
+            $fileSize = filesize($outputPath);
+
+            return response()->streamDownload(function () use ($outputPath) {
+                // Vider tous les buffers PHP avant d'envoyer le binaire
+                while (ob_get_level() > 0) {
+                    ob_end_clean();
+                }
+                $fp = fopen($outputPath, 'rb');
+                fpassthru($fp);
+                fclose($fp);
+                @unlink($outputPath);
+            }, $outputName, [
+                'Content-Type'   => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Length' => $fileSize,
+                'Cache-Control'  => 'no-cache, no-store',
+                'Pragma'         => 'no-cache',
+            ]);
         } catch (\Throwable $e) {
             Log::error('XLSX download failed', ['message' => $e->getMessage()]);
             return redirect()->route('edi.index')

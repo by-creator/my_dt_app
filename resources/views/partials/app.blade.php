@@ -3,6 +3,8 @@
 
 <head>
     @include('partials.dashboard.head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @stack('head')
 </head>
 
 <body>
