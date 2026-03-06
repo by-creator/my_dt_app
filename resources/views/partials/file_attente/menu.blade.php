@@ -20,3 +20,10 @@
         <span>Tickets</span>
     </a>
 </li>
+
+<li class="sidebar-item {{ request()->routeIs('public.screen') ? 'active' : '' }}">
+    <a href="{{ route('public.screen') }}" class="sidebar-link" target="_blank">
+        <i class="fa-solid fa-display"></i>
+        <span>Écran d'affichage</span>
+    </a>
+</li>
