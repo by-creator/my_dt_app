@@ -12,6 +12,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/agent.js',
                 'resources/js/display.js',
+                'resources/js/queue/agent.js',
+                'resources/js/queue/screen.js',
             ],
             refresh: true,
         }),
