@@ -121,13 +121,6 @@ class DashboardController extends Controller
                         'route' => route('ordre_approche.index')
                     ],
                     [
-                        'id' => 6,
-                        'name' => 'Stock',
-                        'header' => 'Stock',
-                        'description' => 'Gestion de Stock',
-                        'route' => route('ordinateur.index')
-                    ],
-                    [
                         'id' => 7,
                         'name' => 'Ticket',
                         'header' => 'Ticket',
@@ -175,13 +168,6 @@ class DashboardController extends Controller
                         'header' => 'Ressources Humaines',
                         'description' => 'Gestion des Ressources Humaines',
                         'route' => route('ordre_approche.index')
-                    ],
-                    [
-                        'id' => 6,
-                        'name' => 'Stock',
-                        'header' => 'Stock',
-                        'description' => 'Gestion de Stock',
-                        'route' => route('ordinateur.index')
                     ],
                     [
                         'id' => 7,

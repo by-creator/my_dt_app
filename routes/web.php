@@ -30,7 +30,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
-require __DIR__.'/inventaire.php';
 require __DIR__.'/facturation.php';
 require __DIR__.'/ipaki.php';
 require __DIR__.'/unify.php';
