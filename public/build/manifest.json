@@ -1,0 +1,66 @@
+{
+  "_pusher-CkpODVbU.js": {
+    "file": "assets/pusher-CkpODVbU.js",
+    "name": "pusher"
+  },
+  "_pusher-fRh0JaJW.js": {
+    "file": "assets/pusher-fRh0JaJW.js",
+    "name": "pusher",
+    "imports": [
+      "_pusher-CkpODVbU.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-BcQRh59P.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/agent.js": {
+    "file": "assets/agent-2BzsNvdq.js",
+    "name": "agent",
+    "src": "resources/js/agent.js",
+    "isEntry": true,
+    "imports": [
+      "_pusher-fRh0JaJW.js",
+      "_pusher-CkpODVbU.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-l0sNRNKZ.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/display.js": {
+    "file": "assets/display-BZwnxwc7.js",
+    "name": "display",
+    "src": "resources/js/display.js",
+    "isEntry": true,
+    "imports": [
+      "_pusher-fRh0JaJW.js",
+      "_pusher-CkpODVbU.js"
+    ]
+  },
+  "resources/js/queue/agent.js": {
+    "file": "assets/agent-BwaVTDJu.js",
+    "name": "agent",
+    "src": "resources/js/queue/agent.js",
+    "isEntry": true,
+    "imports": [
+      "_pusher-CkpODVbU.js"
+    ]
+  },
+  "resources/js/queue/screen.js": {
+    "file": "assets/screen-C1bZJFjb.js",
+    "name": "screen",
+    "src": "resources/js/queue/screen.js",
+    "isEntry": true,
+    "imports": [
+      "_pusher-CkpODVbU.js"
+    ]
+  }
+}
