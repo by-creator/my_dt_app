@@ -5,8 +5,13 @@
     </a>
     <ul class="submenu">
         <li class="submenu-item">
-
             <a href="{{ route('user_accounts.index') }}"><i class="fa-solid fa-clipboard-list"></i> Gestion des comptes</a>
+        </li>
+        <li class="submenu-item">
+            <a href="{{ route('machines.index') }}"><i class="fa-solid fa-desktop"></i> Machine</a>
+        </li>
+        <li class="submenu-item">
+            <a href="{{ route('poste_fixes.index') }}"><i class="fa-solid fa-phone"></i> Poste Fixe</a>
         </li>
     </ul>
 </li>
