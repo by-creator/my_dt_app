@@ -163,7 +163,7 @@
 
                 <p style="margin-top:12px;">Pour les clients qui ne peuvent pas scanner, cliquez sur le bouton ci-dessous :</p>
 
-                <a href="{{ route('ticket.create') }}" target="_blank" class="ticket-btn">TICKET</a>
+                <a href="{{ route('ticket.scan') }}" target="_blank" class="ticket-btn">TICKET</a>
             </div>
         </div>
 
