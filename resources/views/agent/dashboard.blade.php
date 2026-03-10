@@ -314,7 +314,7 @@
             fetch(url, { method: "POST", headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" } })
                 .then(r => {
                     if (r.status === 409) {
-                        return r.json().then(err => { throw { type: 'busy', message: err.message }; });
+                        return r.json().then(err => { throw { type: err.error, title: err.title, message: err.message }; });
                     }
                     return r.json();
                 })
@@ -344,10 +344,10 @@
                     resetReloadTimer();
                 })
                 .catch(err => {
-                    if (err && err.type === 'busy') {
+                    if (err && err.message) {
                         Swal.fire({
-                            icon: 'warning',
-                            title: 'Appel en cours',
+                            icon: err.type === 'service_busy' ? 'info' : 'warning',
+                            title: err.title || 'Attention',
                             text: err.message,
                             confirmButtonText: 'OK',
                             confirmButtonColor: '#1e3a8a',

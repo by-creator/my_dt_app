@@ -27,21 +27,37 @@ class AgentPanelController extends Controller
 
     public function call(Agent $agent)
     {
-        $active = Ticket::where('service_id', $agent->service_id)
-            ->where('statut', Ticket::EN_COURS)
-            ->first();
-
-        if ($active) {
+        // Ce guichet a déjà un client en cours
+        if ($agent->tickets()->where('statut', Ticket::EN_COURS)->exists()) {
             return response()->json([
-                'error'   => 'busy',
-                'message' => 'Un appel est déjà en cours (client ' . $active->code . '). Veuillez patienter la fin de cet appel avant d\'en lancer un nouveau.',
+                'error'   => 'own_busy',
+                'title'   => 'Client en cours de traitement',
+                'message' => 'Vous avez un client en cours de traitement, merci de finir son traitement avant d\'appeler le suivant.',
             ], 409);
         }
 
+        // Un autre agent du même service est en train d'annoncer
+        if (Ticket::where('service_id', $agent->service_id)->where('statut', Ticket::EN_COURS)->exists()) {
+            return response()->json([
+                'error'   => 'service_busy',
+                'title'   => 'Annonce en cours',
+                'message' => 'Un appel est en cours sur ce service. Veuillez patienter la fin de l\'annonce avant d\'appeler.',
+            ], 409);
+        }
+
+        // Aucun client en attente
         $ticket = Ticket::where('service_id', $agent->service_id)
             ->where('statut', 'en_attente')
             ->orderBy('created_at')
-            ->firstOrFail();
+            ->first();
+
+        if (!$ticket) {
+            return response()->json([
+                'error'   => 'no_waiting',
+                'title'   => 'File vide',
+                'message' => 'Il n\'y a aucun client en attente.',
+            ], 409);
+        }
 
         $ticket->update([
             'statut'   => 'en_cours',
@@ -66,8 +82,21 @@ class AgentPanelController extends Controller
 
         if (!$ticket) {
             return response()->json([
-                'error'   => 'busy',
+                'error'   => 'no_ticket',
+                'title'   => 'Aucun client',
                 'message' => 'Aucun client en cours à rappeler pour ce guichet.',
+            ], 409);
+        }
+
+        // Un autre agent est en train d'annoncer (cohérence multi-agents)
+        if (Ticket::where('service_id', $agent->service_id)
+                ->where('statut', Ticket::EN_COURS)
+                ->where('agent_id', '!=', $agent->id)
+                ->exists()) {
+            return response()->json([
+                'error'   => 'service_busy',
+                'title'   => 'Annonce en cours',
+                'message' => 'Un appel est en cours sur ce service. Veuillez patienter la fin de l\'annonce avant de rappeler.',
             ], 409);
         }
 
