@@ -67,6 +67,16 @@ class AgentPanelController extends Controller
         return response()->json(['status' => 'Client rappelé.']);
     }
 
+    public function waiting(Agent $agent)
+    {
+        $tickets = Ticket::where('service_id', $agent->service_id)
+            ->where('statut', Ticket::EN_ATTENTE)
+            ->orderBy('created_at')
+            ->get(['id', 'code', 'created_at']);
+
+        return response()->json($tickets);
+    }
+
     public function close(Agent $agent, Ticket $ticket, string $status)
     {
         abort_if($ticket->agent_id !== $agent->id, 403);

@@ -50,10 +50,11 @@ Route::post('/tickets/truncate', [TicketController::class, 'truncate'])->name('t
 /* =====================================================
    PANEL AGENT
    ===================================================== */
-Route::get('/agent/{agent}',                        [AgentPanelController::class, 'index'])->name('agent.dashboard');
-Route::post('/agent/{agent}/call',                  [AgentPanelController::class, 'call'])->name('agent.call');
-Route::post('/agent/{agent}/rappel',                [AgentPanelController::class, 'rappel'])->name('agent.rappel');
+Route::get('/agent/{agent}',                          [AgentPanelController::class, 'index'])->name('agent.dashboard');
+Route::post('/agent/{agent}/call',                    [AgentPanelController::class, 'call'])->name('agent.call');
+Route::post('/agent/{agent}/rappel',                  [AgentPanelController::class, 'rappel'])->name('agent.rappel');
 Route::post('/agent/{agent}/close/{ticket}/{status}', [AgentPanelController::class, 'close'])->name('agent.close');
+Route::get('/agent/{agent}/waiting',                  [AgentPanelController::class, 'waiting'])->name('agent.waiting');
 
 /* =====================================================
    ADMIN – SERVICES & AGENTS (CRUD)

@@ -30,10 +30,14 @@ class TicketCalled implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
+        $agentName = optional(\App\Models\Agent::find($this->ticket->agent_id))->name
+                     ?? 'Guichet ' . $this->ticket->agent_id;
+
         return [
-            'id'    => $this->ticket->id,
-            'code'  => $this->ticket->code,
-            'agent' => $this->ticket->agent_id,
+            'id'         => $this->ticket->id,
+            'code'       => $this->ticket->code,
+            'agent'      => $this->ticket->agent_id,
+            'agent_name' => $agentName,
         ];
     }
 }

@@ -149,7 +149,19 @@
                     <span>Rapports</span>
                 </div>
 
-                <p>Pour les clients qui ne peuvent pas scanner, cliquez sur le bouton ci-dessous :</p>
+                {{-- Liste temps réel des tickets en attente --}}
+                <ul id="waiting-list" style="list-style:none;padding:0;margin:12px 0;max-height:220px;overflow-y:auto;">
+                    @forelse($waitingTickets as $t)
+                    <li data-ticket-id="{{ $t->id }}" style="display:flex;align-items:center;gap:10px;padding:6px 10px;margin-bottom:6px;background:#f1f5f9;border-radius:8px;">
+                        <span style="background:#1e40af;color:#fff;border-radius:6px;padding:3px 10px;font-size:14px;font-weight:700;">{{ $t->code }}</span>
+                        <span style="font-size:12px;color:#64748b;">{{ $t->created_at->format('H:i') }}</span>
+                    </li>
+                    @empty
+                    <li id="no-waiting-msg" style="color:#64748b;font-size:14px;padding:6px 0;">Aucun client en attente</li>
+                    @endforelse
+                </ul>
+
+                <p style="margin-top:12px;">Pour les clients qui ne peuvent pas scanner, cliquez sur le bouton ci-dessous :</p>
 
                 <a href="{{ route('ticket.create') }}" target="_blank" class="ticket-btn">TICKET</a>
             </div>
@@ -191,6 +203,22 @@
         const agentId   = window.AGENT_CONFIG.agentId;
         const serviceId = window.AGENT_CONFIG.serviceId;
 
+        const waitingListEl = document.getElementById("waiting-list");
+
+        const refreshNoWaitingMsg = () => {
+            const existing = waitingListEl.querySelector("#no-waiting-msg");
+            const items = waitingListEl.querySelectorAll("li[data-ticket-id]");
+            if (items.length === 0 && !existing) {
+                const li = document.createElement("li");
+                li.id = "no-waiting-msg";
+                li.style = "color:#64748b;font-size:14px;padding:6px 0;";
+                li.innerText = "Aucun client en attente";
+                waitingListEl.appendChild(li);
+            } else if (items.length > 0 && existing) {
+                existing.remove();
+            }
+        };
+
         const pusherKey     = document.querySelector('meta[name="pusher-key"]').content;
         const pusherCluster = document.querySelector('meta[name="pusher-cluster"]').content;
         const pusher  = new Pusher(pusherKey, { cluster: pusherCluster, forceTLS: true });
@@ -201,11 +229,26 @@
             currentTicketId = data.id;
             currentClientEl.innerText = data.code;
             currentClientEl.dataset.ticketId = data.id;
-            if (waitingCountEl) waitingCountEl.innerText = Math.max(0, Number(waitingCountEl.innerText) - 1);
+            // Retirer le ticket appelé de la liste
+            const calledItem = waitingListEl.querySelector(`li[data-ticket-id="${data.id}"]`);
+            if (calledItem) calledItem.remove();
+            const newCount = Math.max(0, Number(waitingCountEl.innerText) - 1);
+            if (waitingCountEl) waitingCountEl.innerText = newCount;
+            refreshNoWaitingMsg();
         });
 
         channel.bind("TicketCreated", (data) => {
             if (data.service_id !== serviceId) return;
+            // Ajouter le nouveau ticket à la liste
+            const noMsg = waitingListEl.querySelector("#no-waiting-msg");
+            if (noMsg) noMsg.remove();
+            const li = document.createElement("li");
+            li.dataset.ticketId = data.id;
+            li.style = "display:flex;align-items:center;gap:10px;padding:6px 10px;margin-bottom:6px;background:#f1f5f9;border-radius:8px;";
+            const now = new Date();
+            const hhmm = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
+            li.innerHTML = `<span style="background:#1e40af;color:#fff;border-radius:6px;padding:3px 10px;font-size:14px;font-weight:700;">${data.code}</span><span style="font-size:12px;color:#64748b;">${hhmm}</span>`;
+            waitingListEl.appendChild(li);
             if (waitingCountEl) waitingCountEl.innerText = Number(waitingCountEl.innerText) + 1;
         });
 
@@ -215,6 +258,36 @@
             currentClientEl.innerText = "—";
             currentClientEl.dataset.ticketId = "";
         });
+
+        // Polling de synchronisation toutes les 30s (filet de sécurité)
+        const waitingUrl = `/agent/${agentId}/waiting`;
+        const syncWaitingList = () => {
+            fetch(waitingUrl, { headers: { Accept: "application/json" } })
+                .then(r => r.json())
+                .then(tickets => {
+                    // Reconstruit la liste complète
+                    waitingListEl.innerHTML = "";
+                    if (tickets.length === 0) {
+                        const li = document.createElement("li");
+                        li.id = "no-waiting-msg";
+                        li.style = "color:#64748b;font-size:14px;padding:6px 0;";
+                        li.innerText = "Aucun client en attente";
+                        waitingListEl.appendChild(li);
+                    } else {
+                        tickets.forEach(t => {
+                            const li = document.createElement("li");
+                            li.dataset.ticketId = t.id;
+                            li.style = "display:flex;align-items:center;gap:10px;padding:6px 10px;margin-bottom:6px;background:#f1f5f9;border-radius:8px;";
+                            const hhmm = t.created_at ? t.created_at.substring(11,16) : "";
+                            li.innerHTML = `<span style="background:#1e40af;color:#fff;border-radius:6px;padding:3px 10px;font-size:14px;font-weight:700;">${t.code}</span><span style="font-size:12px;color:#64748b;">${hhmm}</span>`;
+                            waitingListEl.appendChild(li);
+                        });
+                    }
+                    if (waitingCountEl) waitingCountEl.innerText = tickets.length;
+                })
+                .catch(err => console.warn("Sync waiting list failed", err));
+        };
+        setInterval(syncWaitingList, 30000);
 
         document.addEventListener("click", (e) => {
             const button = e.target.closest(".agent-action");

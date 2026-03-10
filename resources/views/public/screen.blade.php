@@ -193,9 +193,11 @@
             const channel = pusher.subscribe("tickets");
 
             channel.bind("TicketCalled", (data) => {
-                agentLine.innerText  = `Agent — Guichet ${data.agent}`;
+                const guichetLabel = data.agent_name || `Guichet ${data.agent}`;
+                agentLine.innerText  = `Agent — ${guichetLabel}`;
                 clientLine.innerText = `Client — ${data.code}`;
-                playDingThenSpeak(`Le client ${data.code.replace("-", " ")}. Veuillez vous présenter au guichet ${data.agent}.`);
+                const codeReadable = data.code.replace("-", " ");
+                playDingThenSpeak(`Le client ${codeReadable}. Veuillez vous présenter au ${guichetLabel}.`);
             });
 
             channel.bind("TicketClosed", () => {
