@@ -131,8 +131,20 @@
 
         <div class="call-wrapper">
             <div class="call-card">
-                <div id="agent-line" class="agent-line">Agent —</div>
-                <div id="client-line" class="client-line">Client —</div>
+                <div id="agent-line" class="agent-line">
+                    @if($lastCalled)
+                        Agent — {{ optional($lastCalled->agent)->name ?? 'Guichet '.$lastCalled->agent_id }}
+                    @else
+                        Agent —
+                    @endif
+                </div>
+                <div id="client-line" class="client-line">
+                    @if($lastCalled)
+                        Client — {{ $lastCalled->code }}
+                    @else
+                        Client —
+                    @endif
+                </div>
             </div>
         </div>
 

@@ -9,6 +9,7 @@ class ScreenController extends Controller
     public function index()
     {
         $lastCalled = Ticket::where('statut', 'en_cours')
+            ->with(['agent', 'service'])
             ->latest('appel_at')
             ->first();
 

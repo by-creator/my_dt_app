@@ -287,7 +287,7 @@
                 })
                 .catch(err => console.warn("Sync waiting list failed", err));
         };
-        setInterval(syncWaitingList, 30000);
+        setInterval(syncWaitingList, 5000);
 
         document.addEventListener("click", (e) => {
             const button = e.target.closest(".agent-action");
