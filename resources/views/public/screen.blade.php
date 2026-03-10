@@ -170,10 +170,10 @@
 
     <audio id="ding" src="/ding.mp3" preload="auto"></audio>
 
-    <script src="https://js.pusher.com/8.2/pusher.min.js"></script>
     <script>
         let audioUnlocked  = false;
         let speechUnlocked = false;
+        let lastCode       = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             const agentLine  = document.getElementById("agent-line");
@@ -181,6 +181,10 @@
             const audio      = document.getElementById("ding");
             const overlay    = document.getElementById("audio-overlay");
             const enableBtn  = document.getElementById("enable-sound");
+
+            // Initialiser lastCode depuis l'état serveur au chargement
+            const initialCode = clientLine.innerText.replace("Client — ", "").trim();
+            lastCode = (initialCode && initialCode !== "—") ? initialCode : null;
 
             const playDingThenSpeak = (text) => {
                 if (!audioUnlocked) return;
@@ -196,26 +200,32 @@
                     if (frVoice) msg.voice = frVoice;
                     speechSynthesis.speak(msg);
                 };
-                audio.play().catch(err => console.warn("🔴 Ding bloqué", err));
+                audio.play().catch(err => console.warn("Ding bloqué", err));
             };
 
-            const pusherKey     = document.querySelector('meta[name="pusher-key"]').content;
-            const pusherCluster = document.querySelector('meta[name="pusher-cluster"]').content;
-            const pusher  = new Pusher(pusherKey, { cluster: pusherCluster, forceTLS: true });
-            const channel = pusher.subscribe("tickets");
+            // Polling toutes les 3s pour mettre à jour l'affichage
+            const pollStatus = () => {
+                fetch("{{ route('public.screen.status') }}", { headers: { Accept: "application/json" } })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.active) {
+                            agentLine.innerText  = `Agent — ${data.agent_name}`;
+                            clientLine.innerText = `Client — ${data.code}`;
+                            if (data.code !== lastCode) {
+                                const codeReadable = data.code.replace("-", " ");
+                                playDingThenSpeak(`Le client ${codeReadable}. Veuillez vous présenter au ${data.agent_name}.`);
+                                lastCode = data.code;
+                            }
+                        } else {
+                            agentLine.innerText  = "Agent —";
+                            clientLine.innerText = "Client —";
+                            lastCode = null;
+                        }
+                    })
+                    .catch(err => console.warn("Poll screen status failed", err));
+            };
 
-            channel.bind("TicketCalled", (data) => {
-                const guichetLabel = data.agent_name || `Guichet ${data.agent}`;
-                agentLine.innerText  = `Agent — ${guichetLabel}`;
-                clientLine.innerText = `Client — ${data.code}`;
-                const codeReadable = data.code.replace("-", " ");
-                playDingThenSpeak(`Le client ${codeReadable}. Veuillez vous présenter au ${guichetLabel}.`);
-            });
-
-            channel.bind("TicketClosed", () => {
-                agentLine.innerText  = "Agent —";
-                clientLine.innerText = "Client —";
-            });
+            setInterval(pollStatus, 3000);
 
             enableBtn?.addEventListener("click", () => {
                 audio.play().then(() => {
@@ -223,7 +233,7 @@
                     audioUnlocked = true; speechUnlocked = true;
                     overlay?.classList.add("hidden");
                     enableBtn.disabled = true;
-                }).catch(err => console.warn("🔴 Déblocage audio refusé", err));
+                }).catch(err => console.warn("Déblocage audio refusé", err));
             });
         });
     </script>

@@ -16,6 +16,8 @@ use Illuminate\Support\Str;
    ===================================================== */
 Route::get('/screen', [ScreenController::class, 'index'])
     ->name('public.screen');
+Route::get('/screen/status', [ScreenController::class, 'status'])
+    ->name('public.screen.status');
 
 /* =====================================================
    PRISE DE TICKET (QR CODE → SCAN → CREATE → SHOW)

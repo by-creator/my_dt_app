@@ -287,7 +287,12 @@
                 })
                 .catch(err => console.warn("Sync waiting list failed", err));
         };
-        setInterval(syncWaitingList, 5000);
+        // Reload automatique toutes les 5s – remis à zéro après chaque action
+        let reloadTimer = setTimeout(() => location.reload(), 5000);
+        const resetReloadTimer = () => {
+            clearTimeout(reloadTimer);
+            reloadTimer = setTimeout(() => location.reload(), 5000);
+        };
 
         document.addEventListener("click", (e) => {
             const button = e.target.closest(".agent-action");
@@ -305,28 +310,30 @@
                         .replace("{ticket}", currentTicketId).replace("{status}", action); break;
                 default: return;
             }
+            clearTimeout(reloadTimer); // suspendre le reload pendant le fetch
             fetch(url, { method: "POST", headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" } })
                 .then(r => r.json())
                 .then(d => {
                     if (action === "call" && d.ticket_id && d.code) {
-                        // Mise à jour immédiate de l'UI sans attendre Pusher
                         currentTicketId = d.ticket_id;
                         currentClientEl.innerText = d.code;
                         currentClientEl.dataset.ticketId = d.ticket_id;
-                        // Retirer le ticket appelé de la liste d'attente
                         const calledItem = waitingListEl.querySelector(`li[data-ticket-id="${d.ticket_id}"]`);
                         if (calledItem) calledItem.remove();
                         const newCount = Math.max(0, Number(waitingCountEl.innerText) - 1);
                         if (waitingCountEl) waitingCountEl.innerText = newCount;
                         refreshNoWaitingMsg();
-                    } else if ((action === "termine" || action === "incomplet" || action === "absent")) {
-                        // Réinitialiser l'affichage client en cours
+                    } else if (action === "termine" || action === "incomplet" || action === "absent") {
                         currentTicketId = null;
                         currentClientEl.innerText = "—";
                         currentClientEl.dataset.ticketId = "";
                     }
+                    resetReloadTimer(); // relancer le timer après l'action
                 })
-                .catch(err => console.error("❌", action, err));
+                .catch(err => {
+                    console.error("❌", action, err);
+                    resetReloadTimer();
+                });
         });
     });
 </script>
