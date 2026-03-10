@@ -31,6 +31,7 @@ class ScreenController extends Controller
             'active'     => true,
             'code'       => $ticket->code,
             'agent_name' => optional($ticket->agent)->name ?? 'Guichet ' . $ticket->agent_id,
+            'appel_at'   => $ticket->appel_at?->toIso8601String(),
         ]);
     }
 }

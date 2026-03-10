@@ -323,6 +323,14 @@
                         const newCount = Math.max(0, Number(waitingCountEl.innerText) - 1);
                         if (waitingCountEl) waitingCountEl.innerText = newCount;
                         refreshNoWaitingMsg();
+                    } else if (action === "rappel") {
+                        // Retour visuel : flash vert sur le bouton
+                        const btn = document.querySelector('[data-action="rappel"]');
+                        const orig = btn.style.cssText;
+                        btn.style.background = "#16a34a";
+                        btn.style.color = "#fff";
+                        btn.innerText = "✔ Rappel envoyé";
+                        setTimeout(() => { btn.style.cssText = orig; btn.innerHTML = "🔁 Rappel"; }, 1500);
                     } else if (action === "termine" || action === "incomplet" || action === "absent") {
                         currentTicketId = null;
                         currentClientEl.innerText = "—";

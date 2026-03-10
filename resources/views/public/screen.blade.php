@@ -173,7 +173,7 @@
     <script>
         let audioUnlocked  = false;
         let speechUnlocked = false;
-        let lastCode       = null;
+        let lastAppelAt    = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             const agentLine  = document.getElementById("agent-line");
@@ -181,10 +181,6 @@
             const audio      = document.getElementById("ding");
             const overlay    = document.getElementById("audio-overlay");
             const enableBtn  = document.getElementById("enable-sound");
-
-            // Initialiser lastCode depuis l'état serveur au chargement
-            const initialCode = clientLine.innerText.replace("Client — ", "").trim();
-            lastCode = (initialCode && initialCode !== "—") ? initialCode : null;
 
             const playDingThenSpeak = (text) => {
                 if (!audioUnlocked) return;
@@ -211,15 +207,16 @@
                         if (data.active) {
                             agentLine.innerText  = `Agent — ${data.agent_name}`;
                             clientLine.innerText = `Client — ${data.code}`;
-                            if (data.code !== lastCode) {
+                            // Jouer le son si nouveau ticket OU rappel (appel_at change)
+                            if (data.appel_at !== lastAppelAt) {
                                 const codeReadable = data.code.replace("-", " ");
                                 playDingThenSpeak(`Le client ${codeReadable}. Veuillez vous présenter au ${data.agent_name}.`);
-                                lastCode = data.code;
+                                lastAppelAt = data.appel_at;
                             }
                         } else {
                             agentLine.innerText  = "Agent —";
                             clientLine.innerText = "Client —";
-                            lastCode = null;
+                            lastAppelAt = null;
                         }
                     })
                     .catch(err => console.warn("Poll screen status failed", err));
