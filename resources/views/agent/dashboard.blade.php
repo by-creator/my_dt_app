@@ -306,7 +306,26 @@
                 default: return;
             }
             fetch(url, { method: "POST", headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" } })
-                .then(r => r.json()).then(d => console.log("✅", action, d))
+                .then(r => r.json())
+                .then(d => {
+                    if (action === "call" && d.ticket_id && d.code) {
+                        // Mise à jour immédiate de l'UI sans attendre Pusher
+                        currentTicketId = d.ticket_id;
+                        currentClientEl.innerText = d.code;
+                        currentClientEl.dataset.ticketId = d.ticket_id;
+                        // Retirer le ticket appelé de la liste d'attente
+                        const calledItem = waitingListEl.querySelector(`li[data-ticket-id="${d.ticket_id}"]`);
+                        if (calledItem) calledItem.remove();
+                        const newCount = Math.max(0, Number(waitingCountEl.innerText) - 1);
+                        if (waitingCountEl) waitingCountEl.innerText = newCount;
+                        refreshNoWaitingMsg();
+                    } else if ((action === "termine" || action === "incomplet" || action === "absent")) {
+                        // Réinitialiser l'affichage client en cours
+                        currentTicketId = null;
+                        currentClientEl.innerText = "—";
+                        currentClientEl.dataset.ticketId = "";
+                    }
+                })
                 .catch(err => console.error("❌", action, err));
         });
     });

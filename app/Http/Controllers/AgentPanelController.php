@@ -47,6 +47,7 @@ class AgentPanelController extends Controller
         return response()->json([
             'status'    => 'Client appelé',
             'ticket_id' => $ticket->id,
+            'code'      => $ticket->code,
         ]);
     }
 
