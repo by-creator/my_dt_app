@@ -312,7 +312,12 @@
             }
             clearTimeout(reloadTimer); // suspendre le reload pendant le fetch
             fetch(url, { method: "POST", headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" } })
-                .then(r => r.json())
+                .then(r => {
+                    if (r.status === 409) {
+                        return r.json().then(err => { throw { type: 'busy', message: err.message }; });
+                    }
+                    return r.json();
+                })
                 .then(d => {
                     if (action === "call" && d.ticket_id && d.code) {
                         currentTicketId = d.ticket_id;
@@ -336,10 +341,20 @@
                         currentClientEl.innerText = "—";
                         currentClientEl.dataset.ticketId = "";
                     }
-                    resetReloadTimer(); // relancer le timer après l'action
+                    resetReloadTimer();
                 })
                 .catch(err => {
-                    console.error("❌", action, err);
+                    if (err && err.type === 'busy') {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Appel en cours',
+                            text: err.message,
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#1e3a8a',
+                        });
+                    } else {
+                        console.error("❌", action, err);
+                    }
                     resetReloadTimer();
                 });
         });

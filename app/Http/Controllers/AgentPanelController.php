@@ -27,8 +27,15 @@ class AgentPanelController extends Controller
 
     public function call(Agent $agent)
     {
-        if ($agent->tickets()->where('statut', 'en_cours')->exists()) {
-            abort(409, 'Agent déjà occupé');
+        $active = Ticket::where('service_id', $agent->service_id)
+            ->where('statut', Ticket::EN_COURS)
+            ->first();
+
+        if ($active) {
+            return response()->json([
+                'error'   => 'busy',
+                'message' => 'Un appel est déjà en cours (client ' . $active->code . '). Veuillez patienter la fin de cet appel avant d\'en lancer un nouveau.',
+            ], 409);
         }
 
         $ticket = Ticket::where('service_id', $agent->service_id)
@@ -58,7 +65,10 @@ class AgentPanelController extends Controller
             ->first();
 
         if (!$ticket) {
-            return response()->json(['status' => 'Impossible de rappeler ce client.']);
+            return response()->json([
+                'error'   => 'busy',
+                'message' => 'Aucun client en cours à rappeler pour ce guichet.',
+            ], 409);
         }
 
         $ticket->update(['appel_at' => now()]);
