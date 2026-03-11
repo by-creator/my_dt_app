@@ -88,16 +88,27 @@ class EdiExporter
 
         $bl         = $d['bl_number']      ?? '';
         $callNum    = trim($d['call_number'] ?? '');
-        $loadPort   = trim($d['port_of_loading'] ?? '');
+
+        // BUG-B : Le swap précédent était incorrect. EdiRecord::fromLine() fournit
+        // port_of_loading et reception_location dans le bon ordre — on les utilise directement.
+        $loadPort   = trim($d['port_of_loading']    ?? '');
         $discharge  = trim($d['reception_location'] ?? '');
+
         $transship1 = trim($d['transshipment_port_1'] ?? '');
         $transship2 = trim($d['transshipment_port_2'] ?? '');
         $transpMode = trim($d['transport_mode'] ?? '');
         $container  = trim($d['blitem_yard_item_number'] ?? '');
         $itemCode   = trim($d['blitem_yard_item_code'] ?? '');
         $itemDesc   = trim($d['blitem_comment'] ?? '');
-        $weight     = $d['bl_weight']      ?? '';
-        $volume     = $d['bl_volume']      ?? '';
+
+        // POIDS : EdiRecord stocke en tonnes.
+        // bl_weight = total BL → ×1000 pour KGM dans segment MEA.
+        $rawWeight  = (float)($d['bl_weight'] ?? 0);
+        $weight     = $rawWeight > 0 ? (string)(int)round($rawWeight * 1000) : '';
+        // VOLUMES : déjà en m³. bl_volume = total BL.
+        $rawVolume  = (float)($d['bl_volume'] ?? 0);
+        $volume     = $rawVolume > 0 ? rtrim(rtrim(number_format($rawVolume, 3, '.', ''), '0'), '.') : '';
+
         $seal1      = $this->cleanSeal($d['blitem_seal_number_1'] ?? '');
         $seal2      = $this->cleanSeal($d['blitem_seal_number_2'] ?? '');
         $shipperName = trim($d['shipper_name'] ?? '');

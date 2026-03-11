@@ -34,6 +34,9 @@ class EdiParser
         }
 
         // ── Agrégation des BLs multi-lignes ──────────────────────────────────
+        // Note BUG-02 : EdiRecord::fromLine() stocke les poids en tonnes (÷1000) et les volumes
+        // en m³ (÷1000). Les agrégats ci-dessous restent dans ces unités internes.
+        // La conversion vers kg / m³ entiers est faite par chaque exporteur (XlsxExporter, EdiExporter).
         $blCounts  = $records->groupBy(fn($r) => $r->data['bl_number'])->map->count();
         $blVolumes = $records->groupBy(fn($r) => $r->data['bl_number'])
             ->map(fn($group) => $group->sum(fn($r) => (float)($r->data['bl_volume'] ?? 0)));
@@ -48,19 +51,103 @@ class EdiParser
                 $record->data['number_of_yard_items'] = (string)$count;
                 $record->data['number_of_packages']   = (string)$count;
 
-                $totalVol = round($blVolumes[$bl] ?? 0, 3);
+                // Agrégation : bl_volume/bl_weight = TOTAL du BL (somme de tous les items).
+                // blitem_commodity_volume/blitem_commodity_weight = valeur INDIVIDUELLE de cet item
+                // (déjà stockée par EdiRecord::fromLine()). On ne les touche PAS lors de l'agrégation.
+                $totalVol = round($blVolumes[$bl] ?? 0, 6);
                 if ($totalVol > 0) {
-                    $record->data['bl_volume']               = (string)$totalVol;
-                    $record->data['blitem_commodity_volume'] = (string)$totalVol;
+                    $record->data['bl_volume'] = (string)$totalVol;
+                    // blitem_commodity_volume conserve sa valeur individuelle d'origine — ne pas écraser
                 }
 
-                $totalWgt = round($blWeights[$bl] ?? 0, 3);
+                $totalWgt = round($blWeights[$bl] ?? 0, 6);
                 if ($totalWgt > 0) {
-                    $record->data['bl_weight']               = (string)$totalWgt;
-                    $record->data['blitem_commodity_weight'] = (string)$totalWgt;
+                    $record->data['bl_weight'] = (string)$totalWgt;
+                    // blitem_commodity_weight conserve sa valeur individuelle d'origine — ne pas écraser
                 }
             }
+
+            // BUG-03 : Pour les véhicules (transport_mode = 'R'), le champ seal_number_1
+            // contient à tort la marque du véhicule (ex: 'PEUGEOT|') lue depuis la même
+            // position que vehicle_model dans le fichier TXT fixe. On le vide si sa valeur
+            // (nettoyée du séparateur |) est un préfixe du vehicle_model.
+            if (($record->data['transport_mode'] ?? '') === 'R') {
+                $seal1 = trim($record->data['blitem_seal_number_1'] ?? '');
+                if ($seal1 !== '') {
+                    $sealClean = rtrim($seal1, '| ');
+                    $model     = trim($record->data['blitem_vehicle_model'] ?? '');
+                    // Si le seal est la marque (1er mot du modèle) → ce n'est pas un vrai numéro de scellé
+                    $firstWord = strtok($model, ' ');
+                    if ($firstWord && strcasecmp($sealClean, $firstWord) === 0) {
+                        $record->data['blitem_seal_number_1'] = '';
+                    }
+                }
+
+                // BUG-D : seal_number_2 peut contenir un code parasite de grade/destination
+                // lu depuis un mauvais offset TXT. Deux cas :
+                // 1. Valeur pure comme 'NGCGRAD|', 'NFGRADE|' → vider entièrement.
+                // 2. Valeur mixte comme '4660   NGCGRAD|' → le vrai scellé est la partie
+                //    avant les espaces ('4660'), le reste est débordement de lecture.
+                $seal2c = $record->data['blitem_seal_number_2'] ?? '';
+                if ($seal2c !== '') {
+                    // Si la valeur contient des espaces internes, le vrai scellé est avant
+                    if (preg_match('/^(\S+)\s{2,}.*[A-Z]{3,}\|$/', trim($seal2c), $m)) {
+                        $record->data['blitem_seal_number_2'] = $m[1];
+                    } else {
+                        // Valeur pure : vider si c'est un code de grade (lettres + GRAD/GRADE)
+                        $seal2Clean = rtrim(trim($seal2c), '| ');
+                        if (preg_match('/^[YN]?[A-Z]*GR(?:AD|ADE|ADES?)$/', $seal2Clean) ||
+                            preg_match('/^[A-Z]*GRADE?$/', $seal2Clean)) {
+                            $record->data['blitem_seal_number_2'] = '';
+                        }
+                    }
+                }
+            }
+
+            // BUG-10 : Le champ final_destination_country contient parfois 'TRANSIT:...'
+            // alors qu'il doit être vide dans le XLSX.
+            $fdc = trim($record->data['final_destination_country'] ?? '');
+            if (str_starts_with($fdc, 'TRANSIT:')) {
+                $record->data['final_destination_country'] = '';
+            }
+
+            // BUG-F : Les numéros de téléphone internationaux perdent leur '+' initial.
+            // On le réinjecte sur les champs d'adresse/notify qui contiennent un numéro pur.
+            $phoneFields = ['adresse_2', 'adresse_3', 'adresse_4', 'adresse_5',
+                            'notify2', 'notify3', 'notify4', 'notify5'];
+            foreach ($phoneFields as $f) {
+                $val = trim($record->data[$f] ?? '');
+                if (preg_match('/^[1-9][0-9]{7,14}$/', $val)) {
+                    $record->data[$f] = '+' . $val;
+                }
+                // Cas '1 E-Mail:…' ou 'h Mr …' : préfixe parasite de 1-2 chars non-alphanums
+                // suivi d'un espace. EdiRecord lit avec un offset décalé de 2 positions.
+                // Si la valeur commence par 1-2 chars + espace et que le reste ressemble
+                // à du texte normal, on strip le préfixe.
+                elseif (preg_match('/^([a-z0-9]{1,2}) ([A-Z].{5,})$/', $val, $m)) {
+                    $record->data[$f] = $m[2];
+                }
+            }
+
+            // BUG-H : number_of_yard_items peut contenir une valeur aberrante (ex: 2026, 11099)
+            // pour des BLs qui n'ont qu'une seule ligne dans le fichier. Cela indique un mauvais
+            // offset de lecture (date ou autre entier lu à la place du compteur d'items).
+            // On force la valeur à '1' si elle dépasse raisonnablement le nombre d'items possibles.
+            $nyi = (int)($record->data['number_of_yard_items'] ?? 1);
+            if ($nyi > 999) {
+                $record->data['number_of_yard_items'] = '1';
+                $record->data['number_of_packages']   = '1';
+            }
+
         }
+
+        // ── BUG-01 / BUG-04 : Tri stable par bl_number puis par numéro d'équipement ──
+        // Sans ce tri, l'ordre des lignes diffère du fichier attendu et les BLItems
+        // d'un même BL sont dans un ordre non déterministe.
+        $records = $records->sortBy([
+            fn($a, $b) => strcmp($a->data['bl_number'] ?? '', $b->data['bl_number'] ?? ''),
+            fn($a, $b) => strcmp($a->data['blitem_yard_item_number'] ?? '', $b->data['blitem_yard_item_number'] ?? ''),
+        ])->values();
 
         return $records;
     }
