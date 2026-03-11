@@ -39,8 +39,71 @@ class XlsxExporter
         // ── Write data rows ───────────────────────────────────────────────────
         $row = 2;
         foreach ($records as $record) {
-            $col = 1;
+            $col  = 1;
             $data = $record->toArray();
+
+            // ── Corrections XLSX uniquement ───────────────────────────────────
+            //
+            // POIDS : EdiRecord stocke les poids en tonnes.
+            // bl_weight = total du BL (agrégé) → ×1000 → kg
+            // blitem_commodity_weight = poids individuel de l'item → ×1000 → kg
+            $rawWeight = (float)($data['bl_weight'] ?? 0);
+            $data['bl_weight'] = $rawWeight > 0 ? (string)(int)round($rawWeight * 1000) : '';
+
+            $rawItemWeight = (float)($data['blitem_commodity_weight'] ?? 0);
+            $data['blitem_commodity_weight'] = $rawItemWeight > 0 ? (string)(int)round($rawItemWeight * 1000) : '';
+
+            // VOLUMES : EdiRecord stocke les volumes directement en m³.
+            // bl_volume = total du BL (agrégé).
+            // blitem_commodity_volume = volume individuel de l'item.
+            // On nettoie les erreurs de virgule flottante avec number_format.
+            $rawVolume = (float)($data['bl_volume'] ?? 0);
+            if ($rawVolume > 0) {
+                $data['bl_volume'] = rtrim(rtrim(number_format($rawVolume, 3, '.', ''), '0'), '.');
+            } else {
+                $data['bl_volume'] = (($data['yard_item_type'] ?? '') === 'CONTENEUR') ? '0' : '';
+            }
+
+            $rawItemVol = (float)($data['blitem_commodity_volume'] ?? 0);
+            if ($rawItemVol > 0) {
+                $data['blitem_commodity_volume'] = rtrim(rtrim(number_format($rawItemVol, 3, '.', ''), '0'), '.');
+            } else {
+                $data['blitem_commodity_volume'] = (($data['blitem_yard_item_type'] ?? '') === 'CONTENEUR') ? '0' : '';
+            }
+
+            // CATÉGORIE VEHICULE : recalcul sur le poids individuel de l'item (blitem_commodity_weight),
+            // déjà converti en kg ci-dessus. On ne se base pas sur bl_weight (total multi-items).
+            $itemWeightKg = (float)($data['blitem_commodity_weight'] ?? 0);
+            if (str_starts_with(trim($data['blitem_commodity'] ?? ''), 'VEH ') && $itemWeightKg > 0) {
+                if ($itemWeightKg <= 1500) {
+                    $data['blitem_commodity'] = 'VEH 0-1500Kgs';
+                } elseif ($itemWeightKg <= 3000) {
+                    $data['blitem_commodity'] = 'VEH 1501-3000Kgs';
+                } elseif ($itemWeightKg <= 5000) {
+                    $data['blitem_commodity'] = 'VEH 3001-5000Kgs';
+                } else {
+                    $data['blitem_commodity'] = 'VEH +5000Kgs';
+                }
+            }
+
+            // BUG-08 : 'consignee' doit être vide dans le XLSX (le fichier attendu
+            // ne l'exporte pas). La valeur reste disponible dans $data pour EdiExporter.
+            $data['consignee'] = '';
+
+            // BUG-09 : 'shipper_name' idem — vide dans le XLSX.
+            $data['shipper_name'] = '';
+
+            // BUG-07 : Les ports de transbordement ne doivent pas figurer dans le XLSX.
+            $data['transshipment_port_1'] = '';
+            $data['transshipment_port_2'] = '';
+
+            // BUG-B (ex BUG-06) : Le swap port_of_loading ↔ reception_location était incorrect.
+            // EdiRecord::fromLine() fournit déjà les bonnes valeurs dans les bons champs —
+            // le swap précédent créait une double inversion. On le supprime.
+            // (Aucune modification nécessaire : $data['port_of_loading'] et $data['reception_location']
+            //  sont utilisés tels quels.)
+            // ─────────────────────────────────────────────────────────────────
+
             foreach (array_keys($headers) as $key) {
                 $colLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col);
                 $sheet->getCell("{$colLetter}{$row}")->setValue($data[$key] ?? '');
