@@ -61,7 +61,6 @@ class TicketController extends Controller
             $scanToken = ScanToken::where('token', $request->token)
                 ->where('used', false)
                 ->where('expires_at', '>', now())
-                ->where('ip_address', $request->ip())
                 ->lockForUpdate()
                 ->first();
 
@@ -104,10 +103,6 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket, Request $request)
     {
-        if ($ticket->ip_address !== $request->ip()) {
-            abort(403, 'Accès interdit');
-        }
-
         return response()
             ->view('ticket.show', compact('ticket'))
             ->header('Cache-Control', 'no-store, no-cache, must-revalidate')
