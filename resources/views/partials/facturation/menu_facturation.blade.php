@@ -102,6 +102,7 @@
         <span>Comment ça marche ?</span>
     </a>
 </li>-->
+@include('partials.ies.menu_ies')
 @endif
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('rattachement.index_remise') }}"class='sidebar-link'>
@@ -116,7 +117,6 @@
         <span>Liste des clients</span>
     </a>
 </li>
-@include('partials.ies.menu_ies')
 @endif
 
 
