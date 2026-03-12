@@ -102,14 +102,15 @@
         <span>Comment ça marche ?</span>
     </a>
 </li>-->
-@include('partials.ies.menu_ies')
-@endif
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('rattachement.index_remise') }}"class='sidebar-link'>
         <i class="fa-solid fa-percent"></i>
         <span>Gestion des remises</span>
     </a>
 </li>
+@include('partials.ies.menu_ies')
+@endif
+
 @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" )
 <li class="sidebar-item">
     <a class='sidebar-link' href="{{ route('dossier_facturation.list_client') }}"class='sidebar-link'>
