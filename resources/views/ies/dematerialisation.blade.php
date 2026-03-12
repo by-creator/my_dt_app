@@ -206,8 +206,7 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/demande_remise.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de remise et recevez une
-                            réduction</h6>
+                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de remise</h6>
                     </div>
                 </a>
             </div>
