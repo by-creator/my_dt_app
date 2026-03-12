@@ -5,7 +5,7 @@
 
 @section('sidebar-menu')
     @auth
-       @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
+       @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "FACTURATION")
                         @include('partials.facturation.menu_facturation')
                         @else
                         @endif
@@ -25,7 +25,7 @@
             <h3>Bienvenu(e) {{ $user->name }} </h3>
         </div>
          <div class="page-content">
-                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U")
+                @if(Auth::user()->role->name == "ADMIN" || Auth::user()->role->name == "SUPER_U" || Auth::user()->role->name == "FACTURATION")
                 @if (session('validation'))
                 <script>
                     Swal.fire({

@@ -172,7 +172,7 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/demande_validation.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de rattachement à votre
+                        <h6 class="card-title text-capitalize text-dark"><u>VALIDATION </u> : Effectuez une demande de rattachement à votre
                             maison de transit</h6>
                     </div>
                 </a>
@@ -183,7 +183,7 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/facturation.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Générez vos factures proforma / factures
+                        <h6 class="card-title text-capitalize text-dark"><u>FACTURATION </u> : Générez vos factures proforma / factures
                             définitives / BAD</h6>
                     </div>
                 </a>
@@ -195,7 +195,7 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/paiement.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Payez vos factures via les opérateurs Wave /
+                        <h6 class="card-title text-capitalize text-dark"><u>CAISSE </u> : Payez vos factures via les opérateurs Wave /
                             Yass / Orange Money</h6>
                     </div>
                 </a>
@@ -206,8 +206,7 @@
                     <img src="{{ asset('templates/mazer/dist/assets/images/demat/demande_remise.png') }}"
                         class="card-img-top">
                     <div class="card-body">
-                        <h6 class="card-title text-capitalize text-dark">Effectuez une demande de remise et recevez une
-                            réduction</h6>
+                        <h6 class="card-title text-capitalize text-dark"><u>REMISE </u> : Effectuez une demande de remise</h6>
                     </div>
                 </a>
             </div>
