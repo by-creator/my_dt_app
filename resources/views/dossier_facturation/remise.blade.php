@@ -172,7 +172,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="facture">FACTURE</label>
+                <label for="facture">FACTURE ACCONAGE PAYEE</label>
                 <input type="file" class="form-control" id="facture" name="documents[]" multiple required>
             </div>
 
